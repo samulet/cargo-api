@@ -3,6 +3,7 @@ namespace Account;
 
 use ZF\Apigility\ApigilityModuleInterface;
 use Account\Model\AccountModel;
+
 class Module implements ApigilityModuleInterface
 {
     public function getConfig()
@@ -27,8 +28,13 @@ class Module implements ApigilityModuleInterface
                 'Account\Model\AccountModel' => function ($sm) {
                     $acc = new AccountModel();
                     return $acc;
-                }
+                },
+                'Account\V1\Rest\Account\AccountResource' => function ($sm) {
+                    $model = $sm->get('Account\Model\AccountModel');
+                    $acc = new V1\Rest\Account\AccountResource($model);
+                    return $acc;
+                },
             ),
         );
     }
-} 
+}

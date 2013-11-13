@@ -20,7 +20,6 @@ return array(
     ),
     'service_manager' => array(
         'invokables' => array(
-            'Account\\V1\\Rest\\Account\\AccountResource' => 'Account\\V1\\Rest\\Account\\AccountResource',
         ),
     ),
     'zf-rest' => array(

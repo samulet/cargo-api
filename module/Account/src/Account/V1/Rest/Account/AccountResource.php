@@ -10,6 +10,12 @@ class AccountResource extends AbstractResourceListener
 {
     protected $serviceLocator;
     protected $accountModel;
+
+    public function __construct($model = null)
+    {
+        $this->accountModel = $model;
+    }
+
     /**
      * Create a resource
      *
@@ -67,10 +73,9 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-      //  $this->
-        $serviceLocator = $this->getServiceLocator();
-        die(var_dump($serviceLocator->get('Account\Model\AccountModel')));
-        return new ApiProblem(405, 'The GET method has not been defined for collections2');
+        // Как-то так должно выглядеть
+        // return $this->accountModel->fetchAll();
+        return array();
     }
 
     /**
@@ -107,13 +112,4 @@ class AccountResource extends AbstractResourceListener
     {
         return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
     }
-
-    public function getServiceLocator()
-    {
-        if (!$this->serviceLocator) {
-            $this->serviceLocator = ServiceManagerFactory::getServiceManager();
-        }
-        return $this->serviceLocator;
-    }
-
 }
