@@ -3,9 +3,13 @@ namespace Account\V1\Rest\Account;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use Zend\View\Model\JsonModel;
+use Account\ServiceManagerFactory;
 
 class AccountResource extends AbstractResourceListener
 {
+    protected $serviceLocator;
+    protected $accountModel;
     /**
      * Create a resource
      *
@@ -47,7 +51,12 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        $serviceLocator   = ServiceManagerFactory::getServiceManager();
+        die(var_dump($serviceLocator));
+        return new JsonModel(array(
+            'data' =>''
+        ));
+        //return new ApiProblem(405, 'The GET method has not been defined for individual resources');
     }
 
     /**
@@ -58,7 +67,10 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+      //  $this->
+        $serviceLocator = $this->getServiceLocator();
+        die(var_dump($serviceLocator->get('Account\Model\AccountModel')));
+        return new ApiProblem(405, 'The GET method has not been defined for collections2');
     }
 
     /**
@@ -95,4 +107,13 @@ class AccountResource extends AbstractResourceListener
     {
         return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
     }
+
+    public function getServiceLocator()
+    {
+        if (!$this->serviceLocator) {
+            $this->serviceLocator = ServiceManagerFactory::getServiceManager();
+        }
+        return $this->serviceLocator;
+    }
+
 }

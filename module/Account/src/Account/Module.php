@@ -2,7 +2,7 @@
 namespace Account;
 
 use ZF\Apigility\ApigilityModuleInterface;
-
+use Account\Model\AccountModel;
 class Module implements ApigilityModuleInterface
 {
     public function getConfig()
@@ -17,6 +17,17 @@ class Module implements ApigilityModuleInterface
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__,
                 ),
+            ),
+        );
+    }
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'Account\Model\AccountModel' => function ($sm) {
+                    $acc = new AccountModel();
+                    return $acc;
+                }
             ),
         );
     }

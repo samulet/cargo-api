@@ -22,7 +22,9 @@
         "zendframework/zendframework": "dev-develop",
         "rwoverdijk/assetmanager": "dev-master",
         "zfcampus/zf-apigility": "dev-master",
-        "zfcampus/zf-configuration": "dev-master"
+        "zfcampus/zf-configuration": "dev-master",
+        "gedmo/doctrine-extensions": "*",
+        "bladeofsteel/zfc-user-doctrine-mongo-odm": "@dev"
     },
     "require-dev": {
         "zendframework/zftool": "dev-master",
