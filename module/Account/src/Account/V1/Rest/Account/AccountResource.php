@@ -57,11 +57,9 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $serviceLocator   = ServiceManagerFactory::getServiceManager();
-        die(var_dump($serviceLocator));
-        return new JsonModel(array(
-            'data' =>''
-        ));
+     //   return new JsonModel(array(
+    //        'data' =>''
+     //   ));
         //return new ApiProblem(405, 'The GET method has not been defined for individual resources');
     }
 
@@ -74,7 +72,7 @@ class AccountResource extends AbstractResourceListener
     public function fetchAll($params = array())
     {
         // Как-то так должно выглядеть
-        // return $this->accountModel->fetchAll();
+        die(var_dump($this->accountModel));
         return array();
     }
 

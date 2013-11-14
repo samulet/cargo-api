@@ -26,7 +26,8 @@ class Module implements ApigilityModuleInterface
         return array(
             'factories' => array(
                 'Account\Model\AccountModel' => function ($sm) {
-                    $acc = new AccountModel();
+                    $objectManager = $sm->get('doctrine.documentmanager.odm_default');
+                    $acc = new AccountModel($objectManager);
                     return $acc;
                 },
                 'Account\V1\Rest\Account\AccountResource' => function ($sm) {

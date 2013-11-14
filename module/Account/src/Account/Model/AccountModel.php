@@ -19,36 +19,34 @@ use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use User\Entity\User;
 
-class AccountModel implements ServiceLocatorAwareInterface
+class AccountModel
 {
     protected $companyModel;
     protected $companyUserModel;
+    protected $objectManager;
 
-    public function __construct()
+    public function __construct($objectManager)
     {
-
+        $this->objectManager=$objectManager;
     }
 
     protected $serviceLocator;
 
     public function getOrgIdByUUID($accUuid)
     {
-        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $qb = $objectManager->getRepository('Account\Entity\Account')->findOneBy(array('uuid' => $accUuid));
+        $qb = $this->objectManager->getRepository('Account\Entity\Account')->findOneBy(array('uuid' => $accUuid));
         return $qb->getId();
     }
 
     public function getComIdByUUID($accUuid)
     {
-        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $qb = $objectManager->getRepository('Account\Entity\Company')->findOneBy(array('uuid' => $accUuid));
+        $qb = $this->objectManager->getRepository('Account\Entity\Company')->findOneBy(array('uuid' => $accUuid));
         return $qb->getId();
     }
 
     public function returnAccounts($orgId, $number = '30', $page = '1')
     {
-        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $org_obj = $objectManager->getRepository('Account\Entity\Account')->getMyAvailableAccount($orgId);
+        $org_obj = $this->objectManager->getRepository('Account\Entity\Account')->getMyAvailableAccount($orgId);
         if (empty($org_obj)) {
             return null;
         }
@@ -65,24 +63,12 @@ class AccountModel implements ServiceLocatorAwareInterface
         array_push($orgs, array('org' => $acc, 'com' => $com));
         return $orgs;
     }
-
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-    }
-
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
-    }
-
     public function createAccount($post, $user_id, $accId)
     {
-        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
         $propArray = get_object_vars($post);
 
         if (!empty($accId)) {
-            $acc = $objectManager->getRepository('Account\Entity\Account')->findOneBy(
+            $acc = $this->objectManager->getRepository('Account\Entity\Account')->findOneBy(
                 array('id' => new \MongoId($accId))
             );
         }
@@ -93,8 +79,8 @@ class AccountModel implements ServiceLocatorAwareInterface
         $acc->lastItemNumber = 0;
         $acc->setActivated(1);
         $accUuid = $acc->getUUID();
-        $objectManager->persist($acc);
-        $objectManager->flush();
+        $this->objectManager->persist($acc);
+        $this->objectManager->flush();
 
 
         $accId = $this->getOrgIdByUUID($accUuid);
@@ -108,8 +94,7 @@ class AccountModel implements ServiceLocatorAwareInterface
 
     public function increaseLastItemNumber($orgId, $lastItemNumber)
     {
-        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $objectManager->getRepository('Account\Entity\Account')->createQueryBuilder()
+        $this->objectManager->getRepository('Account\Entity\Account')->createQueryBuilder()
 
             ->findAndUpdate()
             ->field('id')->equals(new \MongoId($orgId))
@@ -123,16 +108,15 @@ class AccountModel implements ServiceLocatorAwareInterface
         if (empty($id)) {
             return null;
         }
-        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $acc = $objectManager->getRepository('Account\Entity\Account')->findOneBy(array('uuid' => $id));
+        $acc = $this->objectManager->getRepository('Account\Entity\Account')->findOneBy(array('uuid' => $id));
         if (empty($acc)) {
-            $acc = $objectManager->getRepository('Account\Entity\Account')->findOneBy(array('id' => new \MongoId($id)));
+            $acc = $this->objectManager->getRepository('Account\Entity\Account')->findOneBy(array('id' => new \MongoId($id)));
         }
         if (empty($acc)) {
             return null;
         }
 
-        $user = $objectManager->find('User\Entity\User', $acc->getOwnerId());
+        $user = $this->objectManager->find('User\Entity\User', $acc->getOwnerId());
 
         if (empty($user)) {
             return null;
@@ -142,8 +126,7 @@ class AccountModel implements ServiceLocatorAwareInterface
 
     public function addIntNumber()
     {
-        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $orgs = $objectManager->getRepository('Account\Entity\Account')->createQueryBuilder()
+        $orgs = $this->objectManager->getRepository('Account\Entity\Account')->createQueryBuilder()
             ->field('lastItemNumber')->equals(null)
             ->getQuery()
             ->execute()->toArray();
@@ -158,20 +141,20 @@ class AccountModel implements ServiceLocatorAwareInterface
             }
             $lastItemNumber = 1;
             if (!empty($id)) {
-                $tickets = $objectManager->getRepository('Ticket\Entity\Ticket')->createQueryBuilder()
+                $tickets = $this->objectManager->getRepository('Ticket\Entity\Ticket')->createQueryBuilder()
                     ->field('ownerAccId')->equals($id)
                     ->field('numberInt')->equals(null)
                     ->getQuery()
                     ->execute();
             } else {
-                $tickets = $objectManager->getRepository('Ticket\Entity\Ticket')->createQueryBuilder()
+                $tickets = $this->objectManager->getRepository('Ticket\Entity\Ticket')->createQueryBuilder()
                     ->field('numberInt')->equals(null)
                     ->getQuery()
                     ->execute();
             }
             foreach ($tickets as $ticket) {
 
-                $objectManager->getRepository('Ticket\Entity\Ticket')->createQueryBuilder()
+                $this->objectManager->getRepository('Ticket\Entity\Ticket')->createQueryBuilder()
                     ->findAndUpdate()
                     ->field('id')->equals(new \MongoId($ticket->id))
                     ->field('numberInt')->set($lastItemNumber)
@@ -207,46 +190,43 @@ class AccountModel implements ServiceLocatorAwareInterface
 
     public function deleteAccount($accId)
     {
-
-        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-
-        $qb = $objectManager->getRepository('Account\Entity\Account')->find(new \MongoId($accId));
+        $qb = $this->objectManager->getRepository('Account\Entity\Account')->find(new \MongoId($accId));
         if (!$qb) {
             throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $accId);
         }
-        $objectManager->remove($qb);
-        $objectManager->flush();
+        $this->objectManager->remove($qb);
+        $this->objectManager->flush();
 
-        $qb2 = $objectManager->createQueryBuilder('Account\Entity\CompanyUser');
+        $qb2 = $this->objectManager->createQueryBuilder('Account\Entity\CompanyUser');
         $qb2->remove()->field('orgId')->equals(new \MongoId($accId))->getQuery()
             ->execute();
 
-        $qb3 = $objectManager->getRepository('Account\Entity\Company')->findBy(
+        $qb3 = $this->objectManager->getRepository('Account\Entity\Company')->findBy(
             array('ownerAccId' => new \MongoId($accId))
         );
         if (!$qb3) {
             throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $accId);
         }
-        $objectManager->remove($qb3);
-        $objectManager->flush();
+        $this->objectManager->remove($qb3);
+        $this->objectManager->flush();
 
-        $qb4 = $objectManager->getRepository('Resource\Entity\Resource')->findBy(
+        $qb4 = $this->objectManager->getRepository('Resource\Entity\Resource')->findBy(
             array('ownerAccId' => new \MongoId($accId))
         );
         if (!$qb4) {
             throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $accId);
         }
-        $objectManager->remove($qb4);
-        $objectManager->flush();
+        $this->objectManager->remove($qb4);
+        $this->objectManager->flush();
 
-        $qb5 = $objectManager->getRepository('Ticket\Entity\Ticket')->findBy(
+        $qb5 = $this->objectManager->getRepository('Ticket\Entity\Ticket')->findBy(
             array('ownerAccId' => new \MongoId($accId))
         );
         if (!$qb5) {
             throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $accId);
         }
-        $objectManager->remove($qb5);
-        $objectManager->flush();
+        $this->objectManager->remove($qb5);
+        $this->objectManager->flush();
 
     }
 
