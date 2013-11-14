@@ -8,7 +8,6 @@ use Account\ServiceManagerFactory;
 
 class AccountResource extends AbstractResourceListener
 {
-    protected $serviceLocator;
     protected $accountModel;
 
     public function __construct($model = null)
@@ -72,8 +71,9 @@ class AccountResource extends AbstractResourceListener
     public function fetchAll($params = array())
     {
         // Как-то так должно выглядеть
+
         die(var_dump($this->accountModel));
-        return array();
+        return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
     }
 
     /**

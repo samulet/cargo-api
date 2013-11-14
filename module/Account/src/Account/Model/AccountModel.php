@@ -25,12 +25,11 @@ class AccountModel
     protected $companyUserModel;
     protected $objectManager;
 
+
     public function __construct($objectManager)
     {
         $this->objectManager=$objectManager;
     }
-
-    protected $serviceLocator;
 
     public function getOrgIdByUUID($accUuid)
     {
@@ -63,8 +62,10 @@ class AccountModel
         array_push($orgs, array('org' => $acc, 'com' => $com));
         return $orgs;
     }
+
     public function createAccount($post, $user_id, $accId)
     {
+        $this->objectManager = $this->getServiceLocator()->get('');
         $propArray = get_object_vars($post);
 
         if (!empty($accId)) {
