@@ -24,6 +24,7 @@ class Account
         $uuid_gen = new UuidGenerator();
         $this->setUUID($uuid_gen->generateV4());
         $this->setOwnerId(new \MongoId($ownerId));
+        $this->lastItemNumber=0;
     }
 
     /**
@@ -90,6 +91,7 @@ class Account
                     }
                 }
             }
+        return $this;
 
     }
 
