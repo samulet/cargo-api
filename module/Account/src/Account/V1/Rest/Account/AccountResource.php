@@ -56,7 +56,7 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $data=$this->accountModel->fetch($id);
+        $data=$this->accountModel->fetch(array('uuid'=>$id,'activated' => '1'));
         if(!empty($data)) {
             return array($data);
         } else {
@@ -72,7 +72,7 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data=$this->accountModel->fetchAll($params);
+        $data=$this->accountModel->fetch($params,array('activated' => '1'));
         if(!empty($data)) {
             return array($data);
         } else {

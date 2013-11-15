@@ -105,23 +105,19 @@ class AccountModel
             ->execute();
     }
 
-    public function fetch($id) {
-        if($this->uuidGenerator->isValid($id)) {
-            $acc = $this->documentManager->getRepository('Account\Entity\Account')->findOneBy(array('uuid' => $id));
+    public function fetch($findParams) {
+            $accs = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('Account\Entity\Account'), $findParams)->getQuery()->execute();
             if(empty($acc)) {
                 return null;
             } else {
-                return $acc->getData();
+                return $this->queryBuilderModel->getObjectData($accs);
             }
-        } else {
-            return null;
-        }
     }
 
-    public function fetchAll($params) {
-            $accs = $this->documentManager->createQueryBuilder('Account\Entity\Account')
-                ->getQuery()
-                ->execute();
+    public function fetchAll($params,$findParams) {
+       // $findParams=$findParams+$params;
+        //в каком виде идут параметры?
+            $accs = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('Account\Entity\Account'), $findParams)->getQuery()->execute();
             if(empty($accs)) {
                 return null;
             } else {
