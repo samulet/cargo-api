@@ -9,13 +9,17 @@
 
 namespace QueryBuilder\Model;
 
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
+use Doctrine\ODM\MongoDB\DocumentManager;
 
-class QueryBuilderModel implements ServiceLocatorAwareInterface
+class QueryBuilderModel
 {
-    protected $serviceLocator;
+    protected $documentManager;
+
+    public function __construct(DocumentManager $documentManager)
+    {
+        $this->documentManager=$documentManager;
+    }
 
     public function createQuery($qb, $searchArray)
     {
@@ -36,8 +40,7 @@ class QueryBuilderModel implements ServiceLocatorAwareInterface
 
     public function isTicket($itemId)
     {
-        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $itemId = $objectManager->getRepository('Ticket\Entity\Ticket')->findOneBy(
+        $itemId = $this->documentManager->getRepository('Ticket\Entity\Ticket')->findOneBy(
             array('id' => new \MongoId($itemId))
         );
         if (!empty($itemId)) {
@@ -49,8 +52,7 @@ class QueryBuilderModel implements ServiceLocatorAwareInterface
 
     public function isResource($itemId)
     {
-        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-        $itemId = $objectManager->getRepository('Resource\Entity\Resource')->findOneBy(
+        $itemId = $this->documentManager->getRepository('Resource\Entity\Resource')->findOneBy(
             array('id' => new \MongoId($itemId))
         );
         if (!empty($itemId)) {
@@ -74,16 +76,5 @@ class QueryBuilderModel implements ServiceLocatorAwareInterface
         }
         return $resultArray;
     }
-
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-    }
-
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
-    }
-
 
 }
