@@ -95,8 +95,8 @@ class Account
 
     public function getData() {
         $data = array();
-        foreach(array_keys(get_class_vars(__CLASS__)) as $key => $value){
-            $data[$key]=$value;
+        foreach(array_keys(get_class_vars(__CLASS__)) as $key){
+            $data[$key]=$this->$key;
         }
         return $data;
     }
