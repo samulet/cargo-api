@@ -7,7 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-namespace Account\Factory;
+namespace QueryBuilder\Factory;
 
 use Zend\Log\Logger;
 use Zend\ServiceManager\FactoryInterface;
