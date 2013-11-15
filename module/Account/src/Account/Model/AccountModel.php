@@ -21,33 +21,28 @@ use User\Entity\User;
 
 class AccountModel
 {
-    protected $companyModel;
-    protected $companyUserModel;
-    protected $objectManager;
+    protected $documentManager;
 
-
-    public function __construct(DocumentManager $objectManager,$companyModel,$companyUserModel)
+    public function __construct(DocumentManager $documentManager)
     {
-        $this->objectManager=$objectManager;
-        $this->companyModel=$companyModel;
-        $this->companyUserModel=$companyUserModel;
+        $this->documentManager=$documentManager;
     }
 
     public function getOrgIdByUUID($accUuid)
     {
-        $qb = $this->objectManager->getRepository('Account\Entity\Account')->findOneBy(array('uuid' => $accUuid));
+        $qb = $this->documentManager->getRepository('Account\Entity\Account')->findOneBy(array('uuid' => $accUuid));
         return $qb->getId();
     }
 
     public function getComIdByUUID($accUuid)
     {
-        $qb = $this->objectManager->getRepository('Account\Entity\Company')->findOneBy(array('uuid' => $accUuid));
+        $qb = $this->documentManager->getRepository('Account\Entity\Company')->findOneBy(array('uuid' => $accUuid));
         return $qb->getId();
     }
 
     public function returnAccounts($orgId, $number = '30', $page = '1')
     {
-        $org_obj = $this->objectManager->getRepository('Account\Entity\Account')->getMyAvailableAccount($orgId);
+        $org_obj = $this->documentManager->getRepository('Account\Entity\Account')->getMyAvailableAccount($orgId);
         if (empty($org_obj)) {
             return null;
         }
@@ -58,20 +53,20 @@ class AccountModel
         if (empty($acc)) {
             return null;
         }
-        $comModel = $this->getCompanyModel();
-        $com = $comModel->returnCompanies($orgId);
+    //    $comModel = $this->getCompanyModel();
+        //$com = $comModel->returnCompanies($orgId);
         $orgs = array();
-        array_push($orgs, array('org' => $acc, 'com' => $com));
+        array_push($orgs, array('org' => $acc));
         return $orgs;
     }
 
     public function createAccount($post, $user_id, $accId)
     {
-        $this->objectManager = $this->getServiceLocator()->get('');
+        $this->documentManager = $this->getServiceLocator()->get('');
         $propArray = get_object_vars($post);
 
         if (!empty($accId)) {
-            $acc = $this->objectManager->getRepository('Account\Entity\Account')->findOneBy(
+            $acc = $this->documentManager->getRepository('Account\Entity\Account')->findOneBy(
                 array('id' => new \MongoId($accId))
             );
         }
@@ -82,8 +77,8 @@ class AccountModel
         $acc->lastItemNumber = 0;
         $acc->setActivated(1);
         $accUuid = $acc->getUUID();
-        $this->objectManager->persist($acc);
-        $this->objectManager->flush();
+        $this->documentManager->persist($acc);
+        $this->documentManager->flush();
 
 
         $accId = $this->getOrgIdByUUID($accUuid);
@@ -97,7 +92,7 @@ class AccountModel
 
     public function increaseLastItemNumber($orgId, $lastItemNumber)
     {
-        $this->objectManager->getRepository('Account\Entity\Account')->createQueryBuilder()
+        $this->documentManager->getRepository('Account\Entity\Account')->createQueryBuilder()
 
             ->findAndUpdate()
             ->field('id')->equals(new \MongoId($orgId))
@@ -111,15 +106,15 @@ class AccountModel
         if (empty($id)) {
             return null;
         }
-        $acc = $this->objectManager->getRepository('Account\Entity\Account')->findOneBy(array('uuid' => $id));
+        $acc = $this->documentManager->getRepository('Account\Entity\Account')->findOneBy(array('uuid' => $id));
         if (empty($acc)) {
-            $acc = $this->objectManager->getRepository('Account\Entity\Account')->findOneBy(array('id' => new \MongoId($id)));
+            $acc = $this->documentManager->getRepository('Account\Entity\Account')->findOneBy(array('id' => new \MongoId($id)));
         }
         if (empty($acc)) {
             return null;
         }
 
-        $user = $this->objectManager->find('User\Entity\User', $acc->getOwnerId());
+        $user = $this->documentManager->find('User\Entity\User', $acc->getOwnerId());
 
         if (empty($user)) {
             return null;
@@ -129,7 +124,7 @@ class AccountModel
 
     public function addIntNumber()
     {
-        $orgs = $this->objectManager->getRepository('Account\Entity\Account')->createQueryBuilder()
+        $orgs = $this->documentManager->getRepository('Account\Entity\Account')->createQueryBuilder()
             ->field('lastItemNumber')->equals(null)
             ->getQuery()
             ->execute()->toArray();
@@ -144,20 +139,20 @@ class AccountModel
             }
             $lastItemNumber = 1;
             if (!empty($id)) {
-                $tickets = $this->objectManager->getRepository('Ticket\Entity\Ticket')->createQueryBuilder()
+                $tickets = $this->documentManager->getRepository('Ticket\Entity\Ticket')->createQueryBuilder()
                     ->field('ownerAccId')->equals($id)
                     ->field('numberInt')->equals(null)
                     ->getQuery()
                     ->execute();
             } else {
-                $tickets = $this->objectManager->getRepository('Ticket\Entity\Ticket')->createQueryBuilder()
+                $tickets = $this->documentManager->getRepository('Ticket\Entity\Ticket')->createQueryBuilder()
                     ->field('numberInt')->equals(null)
                     ->getQuery()
                     ->execute();
             }
             foreach ($tickets as $ticket) {
 
-                $this->objectManager->getRepository('Ticket\Entity\Ticket')->createQueryBuilder()
+                $this->documentManager->getRepository('Ticket\Entity\Ticket')->createQueryBuilder()
                     ->findAndUpdate()
                     ->field('id')->equals(new \MongoId($ticket->id))
                     ->field('numberInt')->set($lastItemNumber)
@@ -184,43 +179,43 @@ class AccountModel
 
     public function deleteAccount($accId)
     {
-        $qb = $this->objectManager->getRepository('Account\Entity\Account')->find(new \MongoId($accId));
+        $qb = $this->documentManager->getRepository('Account\Entity\Account')->find(new \MongoId($accId));
         if (!$qb) {
             throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $accId);
         }
-        $this->objectManager->remove($qb);
-        $this->objectManager->flush();
+        $this->documentManager->remove($qb);
+        $this->documentManager->flush();
 
-        $qb2 = $this->objectManager->createQueryBuilder('Account\Entity\CompanyUser');
+        $qb2 = $this->documentManager->createQueryBuilder('Account\Entity\CompanyUser');
         $qb2->remove()->field('orgId')->equals(new \MongoId($accId))->getQuery()
             ->execute();
 
-        $qb3 = $this->objectManager->getRepository('Account\Entity\Company')->findBy(
+        $qb3 = $this->documentManager->getRepository('Account\Entity\Company')->findBy(
             array('ownerAccId' => new \MongoId($accId))
         );
         if (!$qb3) {
             throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $accId);
         }
-        $this->objectManager->remove($qb3);
-        $this->objectManager->flush();
+        $this->documentManager->remove($qb3);
+        $this->documentManager->flush();
 
-        $qb4 = $this->objectManager->getRepository('Resource\Entity\Resource')->findBy(
+        $qb4 = $this->documentManager->getRepository('Resource\Entity\Resource')->findBy(
             array('ownerAccId' => new \MongoId($accId))
         );
         if (!$qb4) {
             throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $accId);
         }
-        $this->objectManager->remove($qb4);
-        $this->objectManager->flush();
+        $this->documentManager->remove($qb4);
+        $this->documentManager->flush();
 
-        $qb5 = $this->objectManager->getRepository('Ticket\Entity\Ticket')->findBy(
+        $qb5 = $this->documentManager->getRepository('Ticket\Entity\Ticket')->findBy(
             array('ownerAccId' => new \MongoId($accId))
         );
         if (!$qb5) {
             throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $accId);
         }
-        $this->objectManager->remove($qb5);
-        $this->objectManager->flush();
+        $this->documentManager->remove($qb5);
+        $this->documentManager->flush();
 
     }
 
