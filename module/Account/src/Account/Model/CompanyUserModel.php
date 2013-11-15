@@ -9,16 +9,9 @@
 
 namespace Account\Model;
 
-use Account\Entity\CompanyUser;
-
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Doctrine\MongoDB\Connection;
-use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-use User\Entity\User;
 use Zend\Crypt\Password\Bcrypt;
 
 class CompanyUserModel {

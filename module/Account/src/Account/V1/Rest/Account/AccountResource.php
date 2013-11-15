@@ -26,7 +26,8 @@ class AccountResource extends AbstractResourceListener
     public function create($data)
     {
         $data=$this->accountModel->createOrUpdate($data);
-        //тут еще функция, надо узнать как данные будут получаться
+
+        //тут еще функция, надо узнать как данные будут получаться  addUserToCompany($user_id, $accId, 'admin');
         if(!empty($data)) {
             return array($data);
         } else {
