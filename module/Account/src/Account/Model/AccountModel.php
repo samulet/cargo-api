@@ -32,7 +32,7 @@ class AccountModel
         $this->queryBuilderModel=$queryBuilderModel;
     }
 
-    public function getOrgIdByUUID($accUuid)
+    public function getAccIdByUUID($accUuid)
     {
         $qb = $this->documentManager->getRepository('Account\Entity\Account')->findOneBy(array('uuid' => $accUuid));
         return $qb->getId();
@@ -114,16 +114,6 @@ class AccountModel
             }
     }
 
-    public function fetchAll($params,$findParams) {
-       // $findParams=$findParams+$params;
-        //в каком виде идут параметры?
-            $accs = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('Account\Entity\Account'), $findParams)->getQuery()->execute();
-            if(empty($accs)) {
-                return null;
-            } else {
-                return $this->queryBuilderModel->getObjectData($accs);
-            }
-    }
 
     public function getAccount($id)
     {
@@ -201,45 +191,40 @@ class AccountModel
         return $this->companyUserModel;
     }
 
-    public function deleteAccount($accId)
+    public function delete($uuid)
     {
-        $qb = $this->documentManager->getRepository('Account\Entity\Account')->find(new \MongoId($accId));
-        if (!$qb) {
-            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $accId);
-        }
-        $this->documentManager->remove($qb);
-        $this->documentManager->flush();
+        $accId=$this->getAccIdByUUID($uuid);
+        if(!empty($accId)) {
+            $qb = $this->documentManager->getRepository('Account\Entity\Account')->find(new \MongoId($accId));
+            $this->documentManager->remove($qb);
+            $this->documentManager->flush();
 
-        $qb2 = $this->documentManager->createQueryBuilder('Account\Entity\CompanyUser');
-        $qb2->remove()->field('orgId')->equals(new \MongoId($accId))->getQuery()
-            ->execute();
+            $qb2 = $this->documentManager->createQueryBuilder('Account\Entity\CompanyUser');
+            $qb2->remove()->field('orgId')->equals(new \MongoId($accId))->getQuery()
+                ->execute();
 
-        $qb3 = $this->documentManager->getRepository('Account\Entity\Company')->findBy(
-            array('ownerAccId' => new \MongoId($accId))
-        );
-        if (!$qb3) {
-            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $accId);
-        }
-        $this->documentManager->remove($qb3);
-        $this->documentManager->flush();
+            $qb3 = $this->documentManager->getRepository('Account\Entity\Company')->findBy(
+                array('ownerAccId' => new \MongoId($accId))
+            );
+            $this->documentManager->remove($qb3);
+            $this->documentManager->flush();
 
-        $qb4 = $this->documentManager->getRepository('Resource\Entity\Resource')->findBy(
-            array('ownerAccId' => new \MongoId($accId))
-        );
-        if (!$qb4) {
-            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $accId);
-        }
-        $this->documentManager->remove($qb4);
-        $this->documentManager->flush();
+            $qb4 = $this->documentManager->getRepository('Resource\Entity\Resource')->findBy(
+                array('ownerAccId' => new \MongoId($accId))
+            );
+            $this->documentManager->remove($qb4);
+            $this->documentManager->flush();
 
-        $qb5 = $this->documentManager->getRepository('Ticket\Entity\Ticket')->findBy(
-            array('ownerAccId' => new \MongoId($accId))
-        );
-        if (!$qb5) {
-            throw DocumentNotFoundException::documentNotFound('Resource\Entity\Vehicle', $accId);
+            $qb5 = $this->documentManager->getRepository('Ticket\Entity\Ticket')->findBy(
+                array('ownerAccId' => new \MongoId($accId))
+            );
+
+            $this->documentManager->remove($qb5);
+            $this->documentManager->flush();
+            return array('success' => true);
+        } else {
+            return null;
         }
-        $this->documentManager->remove($qb5);
-        $this->documentManager->flush();
 
     }
 

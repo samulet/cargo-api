@@ -34,7 +34,12 @@ class AccountResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        $data=$this->accountModel->delete($id);
+        if(!empty($data)) {
+            return array($data);
+        } else {
+            return new ApiProblem(204, 'No content found to delete');
+        }
     }
 
     /**
@@ -56,7 +61,7 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $data=$this->accountModel->fetch(array('uuid'=>$id,'activated' => '1'));
+        $data=$this->accountModel->fetch(array('uuid'=>$id,'activated' => '1','deletedAt' => null));
         if(!empty($data)) {
             return array($data);
         } else {
@@ -72,7 +77,7 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data=$this->accountModel->fetch($params,array('activated' => '1'));
+        $data=$this->accountModel->fetch($params);
         if(!empty($data)) {
             return array($data);
         } else {
