@@ -4,7 +4,7 @@ namespace Account\V1\Rest\Account;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 use Zend\View\Model\JsonModel;
-use Account\ServiceManagerFactory;
+use Zend\Json;
 
 class AccountResource extends AbstractResourceListener
 {
@@ -56,10 +56,12 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-     //   return new JsonModel(array(
-    //        'data' =>''
-     //   ));
-        //return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        $data=$this->accountModel->fetch($id);
+        if(!empty($data)) {
+            return array($data);
+        } else {
+            return new ApiProblem(204, 'No content');
+        }
     }
 
     /**
@@ -70,10 +72,12 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        // Как-то так должно выглядеть
-
-        die(var_dump($this->accountModel));
-        return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
+        $data=$this->accountModel->fetchAll($params);
+        if(!empty($data)) {
+            return array($data);
+        } else {
+            return new ApiProblem(204, 'No content');
+        }
     }
 
     /**

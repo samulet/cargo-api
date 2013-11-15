@@ -1,4 +1,6 @@
 <?php
+namespace Account;
+
 return array(
     'router' => array(
         'routes' => array(

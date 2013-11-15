@@ -22,10 +22,14 @@ use User\Entity\User;
 class AccountModel
 {
     protected $documentManager;
+    protected $uuidGenerator;
+    protected $queryBuilderModel;
 
-    public function __construct(DocumentManager $documentManager)
+    public function __construct(DocumentManager $documentManager,$queryBuilderModel)
     {
+        $this->uuidGenerator = new UuidGenerator();
         $this->documentManager=$documentManager;
+        $this->queryBuilderModel=$queryBuilderModel;
     }
 
     public function getOrgIdByUUID($accUuid)
@@ -74,7 +78,7 @@ class AccountModel
             $acc = new Account($user_id);
         }
         $acc->setName($propArray['name']);
-        $acc->lastItemNumber = 0;
+
         $acc->setActivated(1);
         $accUuid = $acc->getUUID();
         $this->documentManager->persist($acc);
@@ -99,6 +103,30 @@ class AccountModel
             ->field('lastItemNumber')->set($lastItemNumber)
             ->getQuery()
             ->execute();
+    }
+
+    public function fetch($id) {
+        if($this->uuidGenerator->isValid($id)) {
+            $acc = $this->documentManager->getRepository('Account\Entity\Account')->findOneBy(array('uuid' => $id));
+            if(empty($acc)) {
+                return null;
+            } else {
+                return $acc->getData();
+            }
+        } else {
+            return null;
+        }
+    }
+
+    public function fetchAll($params) {
+            $accs = $this->documentManager->createQueryBuilder('Account\Entity\Account')
+                ->getQuery()
+                ->execute();
+            if(empty($accs)) {
+                return null;
+            } else {
+                return $this->queryBuilderModel->getObjectData($accs);
+            }
     }
 
     public function getAccount($id)
