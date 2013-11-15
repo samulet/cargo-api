@@ -20,7 +20,9 @@ return array(
         'ZF\Rpc',
         'ZF\Configuration',
         'ZF\Versioning',
-        'Account'
+        'Account',
+        'QueryBuilder',
+        'User'
         ),
     'module_listener_options' => array(
         'module_paths' => array(
