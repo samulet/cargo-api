@@ -7,6 +7,8 @@
 return array(
     'modules' => array(
         'Application',
+        'DoctrineModule',
+        'DoctrineMongoODMModule',
         'ZF\Apigility',
         'ZF\Apigility\Welcome',
         'AssetManager',
