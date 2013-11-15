@@ -37,8 +37,9 @@ class Module implements ApigilityModuleInterface
                 'CompanyUserModel' => 'Account\Factory\CompanyUserModelFactory',
                 'AccountModel' => 'Account\Factory\AccountModelFactory',
                 'Account\V1\Rest\Account\AccountResource' => function ($sm) {
-                    $model = $sm->get('AccountModel');
-                    $acc = new AccountResource($model);
+                    $accountModel = $sm->get('AccountModel');
+                    $companyUserModel = $sm->get('CompanyUserModel');
+                    $acc = new AccountResource($accountModel,$companyUserModel);
                     return $acc;
                 },
             ),

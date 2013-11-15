@@ -9,10 +9,12 @@ use Zend\Json;
 class AccountResource extends AbstractResourceListener
 {
     protected $accountModel;
+    protected $companyUserModel;
 
-    public function __construct($model = null)
+    public function __construct($accountModel = null,$companyUserModel = null)
     {
-        $this->accountModel = $model;
+        $this->accountModel = $accountModel;
+        $this->companyUserModel = $companyUserModel;
     }
 
     /**
