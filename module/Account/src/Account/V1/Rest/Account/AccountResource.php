@@ -23,7 +23,13 @@ class AccountResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        $data=$this->accountModel->createOrUpdate($data);
+        //тут еще функция, надо узнать как данные будут получаться
+        if(!empty($data)) {
+            return array($data);
+        } else {
+            return new ApiProblem(204, 'No content add');
+        }
     }
 
     /**
@@ -117,6 +123,12 @@ class AccountResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
+        $data=$this->accountModel->createOrUpdate($data,$id);
+        //тут еще функция, надо узнать как данные будут получаться
+        if(!empty($data)) {
+            return array($data);
+        } else {
+            return new ApiProblem(204, 'No content add');
+        }
     }
 }
