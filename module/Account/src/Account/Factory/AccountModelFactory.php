@@ -18,7 +18,8 @@ class AccountModelFactory implements FactoryInterface {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $documentManager = $serviceLocator->get('doctrine.documentmanager.odm_default');
-        $acc = new AccountModel($documentManager);
+        $queryBuilderModel=$serviceLocator->get('QueryBuilderModel');
+        $acc = new AccountModel($documentManager,$queryBuilderModel);
         return $acc;
     }
 }

@@ -29,9 +29,11 @@ class Module implements ApigilityModuleInterface
     {
         return array(
             'aliases' => array(
-                'Doctrine\ODM\MongoDB\DocumentManager' => 'doctrine.documentmanager.odm_default'
+                'Doctrine\ODM\MongoDB\DocumentManager' => 'doctrine.documentmanager.odm_default',
+
             ) ,
             'factories' => array(
+
                 'AccountModel' => 'Account\Factory\AccountModelFactory',
                 'Account\V1\Rest\Account\AccountResource' => function ($sm) {
                     $model = $sm->get('AccountModel');
