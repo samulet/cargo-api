@@ -14,7 +14,7 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use QueryBuilder\Model\QueryBuilderModel;
 
-class QueryModelFactory implements FactoryInterface {
+class QueryBuilderModelFactory implements FactoryInterface {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $documentManager = $serviceLocator->get('doctrine.documentmanager.odm_default');

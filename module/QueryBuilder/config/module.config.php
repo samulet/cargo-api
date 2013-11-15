@@ -3,17 +3,6 @@ namespace QueryBuilder;
 
 return array(
     'controllers' => array(
-        'invokables' => array(
-            'QueryBuilder\Controller\QueryBuilder' => 'QueryBuilder\Controller\QueryBuilderController',
-        ),
-    ),
-    'bjyauthorize' => array(
-        'guards' => array(
-            'BjyAuthorize\Guard\Controller' => array(
-                array('controller' => 'QueryBuilder\Controller\QueryBuilder', 'roles' => array('inner', 'admin')),
-            ),
-
-        ),
     ),
     'doctrine' => array(
         'driver' => array(
@@ -27,10 +16,5 @@ return array(
                 )
             )
         )
-    ),
-    'view_manager' => array(
-        'template_path_stack' => array(
-            'queryBuilder' => __DIR__ . '/../view',
-        ),
-    ),
+    )
 );

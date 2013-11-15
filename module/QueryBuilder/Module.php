@@ -31,10 +31,7 @@ class Module
 
         return array(
             'factories' => array(
-                'QueryBuilder\Model\QueryBuilderModel' => function ($sm) {
-                    $auc = new QueryBuilderModel();
-                    return $auc;
-                },
+                'QueryBuilderModel' => 'QueryBuilder\Factory\QueryBuilderModelFactory',
             ),
         );
     }
