@@ -77,4 +77,12 @@ class QueryBuilderModel
         return $resultArray;
     }
 
+    public function getObjectData($items) {
+        $resultArray=array();
+        foreach($items as $item) {
+            array_push($resultArray,$item->getData());
+        }
+        return $resultArray;
+    }
+
 }
