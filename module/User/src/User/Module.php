@@ -2,10 +2,23 @@
 namespace User;
 
 use ZF\Apigility\ApigilityModuleInterface;
+use Zend\Mvc\ModuleRouteListener;
+use Zend\Mvc\MvcEvent;
 
 class Module implements ApigilityModuleInterface
 {
-
+    public function onBootstrap(MvcEvent $e)
+    {
+        $zfcServiceEvents = $e->getApplication()->getServiceManager()->get('zfcuser_user_service')->getEventManager();
+        $zfcServiceEvents->attach(
+            'register',
+            function ($e) {
+                /* @var $user \User\Entity\User */
+                $user = $e->getParam('user');
+                $user->addRole('user');
+            }
+        );
+    }
     public function getConfig()
     {
         return include __DIR__ . '/../../config/module.config.php';
