@@ -63,7 +63,7 @@ class AccountResource extends AbstractResourceListener
     {
         $data=$this->accountModel->fetch(array('uuid'=>$id,'activated' => '1','deletedAt' => null));
         if(!empty($data)) {
-            return array($data);
+            return $data;
         } else {
             return new ApiProblem(204, 'No content');
         }
@@ -79,7 +79,7 @@ class AccountResource extends AbstractResourceListener
     {
         $data=$this->accountModel->fetch($params);
         if(!empty($data)) {
-            return array($data);
+            return $data;
         } else {
             return new ApiProblem(204, 'No content');
         }

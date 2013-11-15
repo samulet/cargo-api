@@ -17,7 +17,7 @@ use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-use User\Entity\User;
+
 
 class AccountModel
 {
@@ -94,6 +94,16 @@ class AccountModel
         return true;
     }
 
+    public function createOrUpdate($data, $owner, $uuid = null) {
+        if(empty($uuid)) {
+           // $acc = new Account();
+        } elseif($this->uuidGenerator->isValid($uuid)) {
+
+        } else {
+            return null;
+        }
+
+    }
     public function increaseLastItemNumber($orgId, $lastItemNumber)
     {
         $this->documentManager->getRepository('Account\Entity\Account')->createQueryBuilder()
@@ -106,8 +116,9 @@ class AccountModel
     }
 
     public function fetch($findParams) {
+
             $accs = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('Account\Entity\Account'), $findParams)->getQuery()->execute();
-            if(empty($acc)) {
+            if(empty($accs)) {
                 return null;
             } else {
                 return $this->queryBuilderModel->getObjectData($accs);
