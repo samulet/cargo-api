@@ -30,34 +30,34 @@ class Account
      * @ODM\Id
      * @var int
      */
-    public $id;
+    protected $id;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-    public $uuid;
+    protected $uuid;
 
     /**
      * @ODM\ObjectId
      * @var int
      */
-    public $ownerId;
+    protected $ownerId;
     /**
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
      */
-    public $created;
+    protected $created;
 
     /**
      * @Gedmo\Timestampable(on="update")
      * @ODM\Date
      */
-    public $updated;
+    protected $updated;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-    public $activated;
+    protected $activated;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -66,22 +66,40 @@ class Account
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Наименование аккаунта"})
      */
-    public $name;
+    protected $name;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-    public $lastItemNumber;
+    protected $lastItemNumber;
     /**
      * @ODM\Date
      */
-    public $deletedAt;
+    protected $deletedAt;
     /**
      * @Annotation\Type("Zend\Form\Element\Submit")
      * @Annotation\Attributes({"value":"Отправить"})
      */
-    public $submit;
+    protected $submit;
 
+    public function setData($data) {
+            if($data !== null && is_array($data)){
+                foreach(array_keys(get_class_vars(__CLASS__)) as $key){
+                    if(isset($entity[$key])){
+                        $this->$key = $entity[$key];
+                    }
+                }
+            }
+
+    }
+
+    public function getData() {
+        $data = array();
+        foreach(array_keys(get_class_vars(__CLASS__)) as $key => $value){
+            $data[$key]=$value;
+        }
+        return $data;
+    }
     /**
      * @return mixed
      */
