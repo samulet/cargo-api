@@ -26,9 +26,11 @@ class AccountModel
     protected $objectManager;
 
 
-    public function __construct($objectManager)
+    public function __construct(DocumentManager $objectManager,$companyModel,$companyUserModel)
     {
         $this->objectManager=$objectManager;
+        $this->companyModel=$companyModel;
+        $this->companyUserModel=$companyUserModel;
     }
 
     public function getOrgIdByUUID($accUuid)
@@ -172,20 +174,11 @@ class AccountModel
 
     public function getCompanyModel()
     {
-
-        if (!$this->companyModel) {
-            $sm = $this->getServiceLocator();
-            $this->companyModel = $sm->get('Account\Model\CompanyModel');
-        }
         return $this->companyModel;
     }
 
     public function getCompanyUserModel()
     {
-        if (!$this->companyUserModel) {
-            $sm = $this->getServiceLocator();
-            $this->companyUserModel = $sm->get('Account\Model\CompanyUserModel');
-        }
         return $this->companyUserModel;
     }
 
