@@ -7,6 +7,7 @@ use Account\V1\Rest\Account\AccountResource;
 use Doctrine\MongoDB\Connection;
 use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use DoctrineMongoODMModule\Service as ODMService;
 class Module implements ApigilityModuleInterface
 {
     public function getConfig()
@@ -27,14 +28,13 @@ class Module implements ApigilityModuleInterface
     public function getServiceConfig()
     {
         return array(
+            'aliases' => array(
+                'Doctrine\ODM\MongoDB\DocumentManager' => 'doctrine.documentmanager.odm_default'
+            ) ,
             'factories' => array(
-                'Account\Model\AccountModel' => function ($sm) {
-                    $objectManager = $sm->get('doctrine.documentmanager.odm_default');
-                    $acc = new AccountModel($objectManager);
-                    return $acc;
-                },
+                'AccountModel' => 'Account\Factory\AccountModelFactory',
                 'Account\V1\Rest\Account\AccountResource' => function ($sm) {
-                    $model = $sm->get('Account\Model\AccountModel');
+                    $model = $sm->get('AccountModel');
                     $acc = new AccountResource($model);
                     return $acc;
                 },
