@@ -21,11 +21,18 @@ use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use User\Entity\User;
 
-class CompanyModel implements ServiceLocatorAwareInterface
+class CompanyModel
 {
-    protected $serviceLocator;
+    protected $documentManager;
+    protected $uuidGenerator;
     protected $queryBuilderModel;
-    protected $accountModel;
+
+    public function __construct(DocumentManager $documentManager,$queryBuilderModel)
+    {
+        $this->uuidGenerator = new UuidGenerator();
+        $this->documentManager=$documentManager;
+        $this->queryBuilderModel=$queryBuilderModel;
+    }
 
     public function returnCompanies($accId,$params = array())
     {
@@ -75,16 +82,6 @@ class CompanyModel implements ServiceLocatorAwareInterface
         if (!$com) {
             throw DocumentNotFoundException::documentNotFound('Account\Entity\Company', $paramsFind,$paramsUpdate);
         }
-    }
-
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-    }
-
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
     }
 
     public function createCompany($propArray, $accId, $comId)

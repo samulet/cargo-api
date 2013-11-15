@@ -18,7 +18,8 @@ class CompanyUserModelFactory  implements FactoryInterface {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $documentManager = $serviceLocator->get('doctrine.documentmanager.odm_default');
-        $comUser = new CompanyUserModel($documentManager);
+        $queryBuilderModel=$serviceLocator->get('QueryBuilderModel');
+        $comUser = new CompanyUserModel($documentManager,$queryBuilderModel);
         return $comUser;
     }
 }

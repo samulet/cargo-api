@@ -18,7 +18,8 @@ class CompanyModelFactory implements FactoryInterface {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $documentManager = $serviceLocator->get('doctrine.documentmanager.odm_default');
-        $com = new CompanyModel($documentManager);
+        $queryBuilderModel=$serviceLocator->get('QueryBuilderModel');
+        $com = new CompanyModel($documentManager,$queryBuilderModel);
         return $com;
     }
 }

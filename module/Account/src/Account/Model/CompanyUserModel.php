@@ -21,16 +21,18 @@ use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use User\Entity\User;
 use Zend\Crypt\Password\Bcrypt;
 
-class CompanyUserModel implements ServiceLocatorAwareInterface
-{
-    public function __construct()
+class CompanyUserModel {
+
+    protected $documentManager;
+    protected $uuidGenerator;
+    protected $queryBuilderModel;
+
+    public function __construct(DocumentManager $documentManager,$queryBuilderModel)
     {
-
+        $this->uuidGenerator = new UuidGenerator();
+        $this->documentManager=$documentManager;
+        $this->queryBuilderModel=$queryBuilderModel;
     }
-
-    protected $serviceLocator;
-    protected $accountModel;
-    protected $companyModel;
 
     public function addUserToCompany($post, $accId, $param)
     {
@@ -249,16 +251,6 @@ class CompanyUserModel implements ServiceLocatorAwareInterface
         } else {
             return array();
         }
-    }
-
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-    }
-
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
     }
 
     public function getUsersByComId($orgId)
