@@ -19,11 +19,10 @@ use Zend\Form\Element\Collection;
  */
 class Account
 {
-    public function __construct($ownerId)
+    public function __construct()
     {
         $uuid_gen = new UuidGenerator();
         $this->setUUID($uuid_gen->generateV4());
-        $this->setOwnerId(new \MongoId($ownerId));
         $this->lastItemNumber=0;
     }
 

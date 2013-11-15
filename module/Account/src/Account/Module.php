@@ -33,7 +33,8 @@ class Module implements ApigilityModuleInterface
 
             ) ,
             'factories' => array(
-
+                'CompanyModel' => 'Account\Factory\CompanyModelFactory',
+                'CompanyUserModel' => 'Account\Factory\CompanyUserModelFactory',
                 'AccountModel' => 'Account\Factory\AccountModelFactory',
                 'Account\V1\Rest\Account\AccountResource' => function ($sm) {
                     $model = $sm->get('AccountModel');

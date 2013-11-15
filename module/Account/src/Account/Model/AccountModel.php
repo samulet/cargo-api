@@ -94,15 +94,19 @@ class AccountModel
         return true;
     }
 
-    public function createOrUpdate($data, $owner, $uuid = null) {
+    public function createOrUpdate($data, $uuid = null) {
         if(empty($uuid)) {
-           // $acc = new Account();
+            $acc = new Account();
         } elseif($this->uuidGenerator->isValid($uuid)) {
-
+            $acc = $this->documentManager->getRepository('Account\Entity\Account')->findOneBy(
+                array('uuid' => $uuid));
         } else {
             return null;
         }
-
+        $acc->setData($data);
+        $this->documentManager->persist($acc);
+        $this->documentManager->flush();
+        return $acc;
     }
     public function increaseLastItemNumber($orgId, $lastItemNumber)
     {
