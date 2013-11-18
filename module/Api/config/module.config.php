@@ -41,9 +41,6 @@ return array(
     ),
     'service_manager' => array(
         'invokables' => array(
-            'Api\\V1\\Rest\\Account\\AccountResource' => 'Api\\V1\\Rest\\Account\\AccountResource',
-            'Api\\V1\\Rest\\Profile\\ProfileResource' => 'Api\\V1\\Rest\\Profile\\ProfileResource',
-            'Api\\V1\\Rest\\Company\\CompanyResource' => 'Api\\V1\\Rest\\Company\\CompanyResource',
         ),
     ),
     'zf-rest' => array(
