@@ -18,23 +18,16 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.5",
+        "php": ">=5.3.3",
         "zendframework/zendframework": "dev-develop",
         "rwoverdijk/assetmanager": "dev-master",
         "zfcampus/zf-apigility": "dev-master",
-        "zfcampus/zf-configuration": "dev-master",
-        "evandotpro/edp-module-layouts": "1.*",
-        "phpoffice/phpexcel": "*",
-        "gedmo/doctrine-extensions": "dev-master",
-        "bladeofsteel/zfc-user-doctrine-mongo-odm": "@dev"
+        "zfcampus/zf-configuration": "dev-master"
     },
     "require-dev": {
         "zendframework/zftool": "dev-master",
         "zendframework/zend-developer-tools": "dev-master",
         "zfcampus/zf-apigility-admin": "dev-master",
-        "zfcampus/zf-apigility-welcome": "dev-master",
-        "codeception/codeception": "@stable",
-        "ccampbell/chromephp": "*"
-
+        "zfcampus/zf-apigility-welcome": "dev-master"
     }
 }
