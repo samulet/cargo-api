@@ -20,4 +20,23 @@ class Module implements ApigilityModuleInterface
             ),
         );
     }
+    public function getServiceConfig()
+    {
+        return array(
+            'aliases' => array(
+                'Doctrine\ODM\MongoDB\DocumentManager' => 'doctrine.documentmanager.odm_default',
+            ) ,
+            'factories' => array(
+                'CompanyModel' => 'Account\Factory\CompanyModelFactory',
+                'CompanyUserModel' => 'Account\Factory\CompanyUserModelFactory',
+                'AccountModel' => 'Account\Factory\AccountModelFactory',
+                'Api\V1\Rest\Account\AccountResource' => function ($sm) {
+                    $accountModel = $sm->get('AccountModel');
+                    $companyUserModel = $sm->get('CompanyUserModel');
+                    $acc = new AccountResource($accountModel,$companyUserModel);
+                    return $acc;
+                },
+            ),
+        );
+    }
 } 

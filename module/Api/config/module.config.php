@@ -1,4 +1,5 @@
 <?php
+namespace Api;
 return array(
     'router' => array(
         'routes' => array(

@@ -14,7 +14,15 @@ class AccountResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        die(var_dump($data));
+        $data=$this->accountModel->createOrUpdate($data);
+
+        //тут еще функция, надо узнать как данные будут получаться  addUserToCompany($user_id, $accId, 'admin');
+        if(!empty($data)) {
+            return array($data);
+        } else {
+            return new ApiProblem(204, 'No content add');
+        }
     }
 
     /**
@@ -25,7 +33,12 @@ class AccountResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        $data=$this->accountModel->delete($id);
+        if(!empty($data)) {
+            return array($data);
+        } else {
+            return new ApiProblem(204, 'No content found to delete');
+        }
     }
 
     /**
@@ -47,7 +60,12 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        $data=$this->accountModel->fetch(array('uuid'=>$id,'activated' => '1','deletedAt' => null));
+        if(!empty($data)) {
+            return $data;
+        } else {
+            return new ApiProblem(204, 'No content');
+        }
     }
 
     /**
@@ -58,7 +76,12 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        $data=$this->accountModel->fetch($params);
+        if(!empty($data)) {
+            return $data;
+        } else {
+            return new ApiProblem(204, 'No content');
+        }
     }
 
     /**
@@ -93,6 +116,12 @@ class AccountResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
+        $data=$this->accountModel->createOrUpdate($data,$id);
+        //тут еще функция, надо узнать как данные будут получаться
+        if(!empty($data)) {
+            return array($data);
+        } else {
+            return new ApiProblem(204, 'No content add');
+        }
     }
 }
