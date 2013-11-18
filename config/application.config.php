@@ -7,6 +7,11 @@
 return array(
     'modules' => array(
         'Application',
+        'DoctrineModule',
+        'DoctrineMongoODMModule',
+        'ZfcBase',
+        'ZfcUser',
+        'ZfcUserDoctrineMongoODM',
         'ZF\Apigility',
         'ZF\Apigility\Welcome',
         'AssetManager',
@@ -18,7 +23,9 @@ return array(
         'ZF\Rpc',
         'ZF\Configuration',
         'ZF\Versioning',
-        'Account'
+        'Account',
+        'QueryBuilder',
+        'User'
         ),
     'module_listener_options' => array(
         'module_paths' => array(
