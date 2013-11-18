@@ -24,8 +24,9 @@ return array(
         'ZF\Configuration',
         'ZF\Versioning',
         'Account',
+        'User',
         'QueryBuilder',
-        'User'
+        'Api'
         ),
     'module_listener_options' => array(
         'module_paths' => array(
