@@ -89,21 +89,6 @@ class AccountModel
         return true;
     }
 
-    public function createOrUpdate($data, $uuid = null) {
-        if(empty($uuid)) {
-            $acc = new Account();
-        } elseif($this->uuidGenerator->isValid($uuid)) {
-            $acc = $this->documentManager->getRepository('Account\Entity\Account')->findOneBy(
-                array('uuid' => $uuid));
-        } else {
-            return null;
-        }
-        $acc->setData($data);
-        $this->documentManager->persist($acc);
-        $this->documentManager->flush();
-        return $acc;
-    }
-
     public function increaseLastItemNumber($orgId, $lastItemNumber)
     {
         $this->documentManager->getRepository('Account\Entity\Account')->createQueryBuilder()
@@ -114,25 +99,6 @@ class AccountModel
             ->getQuery()
             ->execute();
     }
-
-    public function fetch($findParams) {
-            $acc = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('Account\Entity\Account'), $findParams)->getQuery()->getSingleResult();
-            if(empty($acc)) {
-                return null;
-            } else {
-                return $acc;
-            }
-    }
-
-    public function fetchAll($findParams) {
-        $accs = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('Account\Entity\Account'), $findParams)->getQuery()->execute()->toArray();
-        if(empty($accs)) {
-            return null;
-        } else {
-            return $accs;
-        }
-    }
-
 
     public function getAccount($id)
     {
@@ -200,14 +166,51 @@ class AccountModel
         }
     }
 
-    public function getCompanyModel()
+    public function addBootstrap3Class(&$form)
     {
-        return $this->companyModel;
+
+        foreach ($form as $el) {
+            $attr = $el->getAttributes();
+            if (!empty($attr['type'])) {
+                if (($attr['type'] != 'checkbox') && ($attr['type'] != 'multi_checkbox')) {
+                    $el->setAttributes(array('class' => 'form-control'));
+                }
+            }
+
+        }
     }
 
-    public function getCompanyUserModel()
-    {
-        return $this->companyUserModel;
+    public function createOrUpdate($data, $uuid = null) {
+        if(empty($uuid)) {
+            $acc = new Account();
+        } elseif($this->uuidGenerator->isValid($uuid)) {
+            $acc = $this->documentManager->getRepository('Account\Entity\Account')->findOneBy(
+                array('uuid' => $uuid));
+        } else {
+            return null;
+        }
+        $acc->setData($data);
+        $this->documentManager->persist($acc);
+        $this->documentManager->flush();
+        return $acc;
+    }
+
+    public function fetch($findParams) {
+        $acc = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('Account\Entity\Account'), $findParams)->getQuery()->getSingleResult();
+        if(empty($acc)) {
+            return null;
+        } else {
+            return $acc;
+        }
+    }
+
+    public function fetchAll($findParams) {
+        $accs = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('Account\Entity\Account'), $findParams)->getQuery()->execute()->toArray();
+        if(empty($accs)) {
+            return null;
+        } else {
+            return $accs;
+        }
     }
 
     public function delete($uuid)
@@ -243,26 +246,6 @@ class AccountModel
             return array('success' => true);
         } else {
             return null;
-        }
-
-    }
-
-    public function getOrgByUserId($userId)
-    {
-
-    }
-
-    public function addBootstrap3Class(&$form)
-    {
-
-        foreach ($form as $el) {
-            $attr = $el->getAttributes();
-            if (!empty($attr['type'])) {
-                if (($attr['type'] != 'checkbox') && ($attr['type'] != 'multi_checkbox')) {
-                    $el->setAttributes(array('class' => 'form-control'));
-                }
-            }
-
         }
     }
 
