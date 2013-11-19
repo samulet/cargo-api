@@ -23,7 +23,7 @@ class AccountResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        die(var_dump($data));
+
         $data=$this->accountModel->createOrUpdate($data);
 
         //тут еще функция, надо узнать как данные будут получаться  addUserToCompany($user_id, $accId, 'admin');
