@@ -3,9 +3,16 @@ namespace Api\V1\Rest\Company;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use Zend\Paginator\Adapter\ArrayAdapter;
 
 class CompanyResource extends AbstractResourceListener
 {
+    protected $companyModel;
+
+    public function __construct($companyModel = null)
+    {
+        $this->companyModel = $companyModel;
+    }
     /**
      * Create a resource
      *
