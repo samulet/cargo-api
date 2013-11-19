@@ -3,6 +3,7 @@ namespace Api\V1\Rest\Account;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use Zend\Paginator\Adapter\ArrayAdapter;
 
 class AccountResource extends AbstractResourceListener
 {
@@ -85,9 +86,11 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data=$this->accountModel->fetch($params);
-        if(!empty($data)) {
-            return $data;
+        $data=$this->accountModel->fetchAll($params);
+        $adapter = new ArrayAdapter($data);
+        $collection = new AccountCollection($adapter);
+        if(!empty($collection)) {
+            return $collection;
         } else {
             return new ApiProblem(204, 'No content');
         }

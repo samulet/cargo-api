@@ -129,11 +129,11 @@ class AccountModel
     }
 
     public function fetchAll($findParams) {
-        $accs = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('Account\Entity\Account'), $findParams)->getQuery()->execute();
+        $accs = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('Account\Entity\Account'), $findParams)->getQuery()->execute()->toArray();
         if(empty($accs)) {
             return null;
         } else {
-            return $this->queryBuilderModel->getObjectData($accs);
+            return $accs;
         }
     }
 
