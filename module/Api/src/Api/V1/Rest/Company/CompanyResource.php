@@ -23,7 +23,7 @@ class CompanyResource extends AbstractResourceListener
     {
         $data=$this->companyModel->createOrUpdate($data);
         if(!empty($data)) {
-            return array($data);
+            return new ApiProblem(204, 'Succesfully created');
         } else {
             return new ApiProblem(404, 'Error');
         }
@@ -39,7 +39,7 @@ class CompanyResource extends AbstractResourceListener
     {
         $data=$this->companyModel->delete($id);
         if(!empty($data)) {
-            return array($data);
+            return new ApiProblem(204, 'Succesfully deleted');
         } else {
             return new ApiProblem(404, 'Error');
         }
@@ -123,11 +123,10 @@ class CompanyResource extends AbstractResourceListener
     public function update($id, $data)
     {
         $data=$this->companyModel->createOrUpdate($data,$id);
-        //тут еще функция, надо узнать как данные будут получаться
         if(!empty($data)) {
-            return array($data);
+            return new ApiProblem(204, 'Succesfully added');
         } else {
-            return new ApiProblem(204, 'No content add');
+            return new ApiProblem(404, 'Error');
         }
     }
 }

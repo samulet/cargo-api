@@ -28,7 +28,7 @@ class AccountResource extends AbstractResourceListener
         //тут еще функция, надо узнать как данные будут получаться  addUserToCompany($user_id, $accId, 'admin');
 
         if(!empty($data)) {
-            return array($data);
+            return new ApiProblem(204, 'Succesfully created');
         } else {
             return new ApiProblem(404, 'Error');
         }
@@ -44,7 +44,7 @@ class AccountResource extends AbstractResourceListener
     {
         $data=$this->accountModel->delete($id);
         if(!empty($data)) {
-            return array($data);
+            return new ApiProblem(204, 'Succesfully deleted');
         } else {
             return new ApiProblem(404, 'Error');
         }
@@ -130,9 +130,9 @@ class AccountResource extends AbstractResourceListener
         $data=$this->accountModel->createOrUpdate($data,$id);
         //тут еще функция, надо узнать как данные будут получаться
         if(!empty($data)) {
-            return array($data);
+            return new ApiProblem(204, 'Succesfully added');
         } else {
-            return new ApiProblem(204, 'No content add');
+            return new ApiProblem(404, 'Error');
         }
     }
 }
