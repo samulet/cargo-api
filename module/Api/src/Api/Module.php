@@ -2,7 +2,7 @@
 namespace Api;
 
 use ZF\Apigility\ApigilityModuleInterface;
-
+use Api\V1\Rest\Account\AccountResource;
 class Module implements ApigilityModuleInterface
 {
     public function getConfig()
