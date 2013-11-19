@@ -1,5 +1,4 @@
 <?php
-namespace Api;
 return array(
     'router' => array(
         'routes' => array(
@@ -30,6 +29,33 @@ return array(
                     ),
                 ),
             ),
+            'api.rest.account-company' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/account-company[/:account_company_id]',
+                    'defaults' => array(
+                        'controller' => 'Api\\V1\\Rest\\AccountCompany\\Controller',
+                    ),
+                ),
+            ),
+            'api.rest.company-employee' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/companies[/:company_employee_uuid]/employees',
+                    'defaults' => array(
+                        'controller' => 'Api\\V1\\Rest\\CompanyEmployee\\Controller',
+                    ),
+                ),
+            ),
+            'api.rest.company-partner' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/companies[/:company_partner_uuid]/partners',
+                    'defaults' => array(
+                        'controller' => 'Api\\V1\\Rest\\CompanyPartner\\Controller',
+                    ),
+                ),
+            ),
         ),
     ),
     'zf-versioning' => array(
@@ -37,10 +63,20 @@ return array(
             0 => 'api.rest.account',
             1 => 'api.rest.profile',
             2 => 'api.rest.company',
+            3 => 'api.rest.account-company',
+            4 => 'api.rest.account-company',
+            5 => 'api.rest.account-company',
+            6 => 'api.rest.company-employees',
+            7 => 'api.rest.company-employee',
+            8 => 'api.rest.company-partner',
         ),
     ),
     'service_manager' => array(
         'invokables' => array(
+            'Api\\V1\\Rest\\AccountCompany\\AccountCompanyResource' => 'Api\\V1\\Rest\\AccountCompany\\AccountCompanyResource',
+            'Api\\V1\\Rest\\CompanyEmployees\\CompanyEmployeesResource' => 'Api\\V1\\Rest\\CompanyEmployees\\CompanyEmployeesResource',
+            'Api\\V1\\Rest\\CompanyEmployee\\CompanyEmployeeResource' => 'Api\\V1\\Rest\\CompanyEmployee\\CompanyEmployeeResource',
+            'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerResource' => 'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerResource',
         ),
     ),
     'zf-rest' => array(
@@ -119,12 +155,87 @@ return array(
             'entity_class' => 'Api\\V1\\Rest\\Company\\CompanyEntity',
             'collection_class' => 'Api\\V1\\Rest\\Company\\CompanyCollection',
         ),
+        'Api\\V1\\Rest\\AccountCompany\\Controller' => array(
+            'listener' => 'Api\\V1\\Rest\\AccountCompany\\AccountCompanyResource',
+            'route_name' => 'api.rest.account-company',
+            'identifier_name' => 'account_company_id',
+            'collection_name' => 'account_company',
+            'resource_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => '25',
+            'page_size_param' => '',
+            'entity_class' => 'Api\\V1\\Rest\\AccountCompany\\AccountCompanyEntity',
+            'collection_class' => 'Api\\V1\\Rest\\AccountCompany\\AccountCompanyCollection',
+        ),
+        'Api\\V1\\Rest\\CompanyEmployee\\Controller' => array(
+            'listener' => 'Api\\V1\\Rest\\CompanyEmployee\\CompanyEmployeeResource',
+            'route_name' => 'api.rest.company-employee',
+            'identifier_name' => 'company_employee_uuid',
+            'collection_name' => 'company_employee',
+            'resource_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+                2 => 'PUT',
+                3 => 'DELETE',
+                4 => 'PATCH',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+                2 => 'PUT',
+                3 => 'DELETE',
+                4 => 'PATCH',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => '25',
+            'page_size_param' => '',
+            'entity_class' => 'Api\\V1\\Rest\\CompanyEmployee\\CompanyEmployeeEntity',
+            'collection_class' => 'Api\\V1\\Rest\\CompanyEmployee\\CompanyEmployeeCollection',
+        ),
+        'Api\\V1\\Rest\\CompanyPartner\\Controller' => array(
+            'listener' => 'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerResource',
+            'route_name' => 'api.rest.company-partner',
+            'identifier_name' => 'company_partner_uuid',
+            'collection_name' => 'company_partner',
+            'resource_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+                2 => 'PUT',
+                3 => 'DELETE',
+                4 => 'PATCH',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+                2 => 'PUT',
+                3 => 'DELETE',
+                4 => 'PATCH',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => '25',
+            'page_size_param' => '',
+            'entity_class' => 'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerEntity',
+            'collection_class' => 'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerCollection',
+        ),
     ),
     'zf-content-negotiation' => array(
         'controllers' => array(
             'Api\\V1\\Rest\\Account\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\Profile\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\Company\\Controller' => 'HalJson',
+            'Api\\V1\\Rest\\AccountCompany\\Controller' => 'HalJson',
+            'Api\\V1\\Rest\\CompanyEmployees\\Controller' => 'HalJson',
+            'Api\\V1\\Rest\\CompanyEmployee\\Controller' => 'HalJson',
+            'Api\\V1\\Rest\\CompanyPartner\\Controller' => 'HalJson',
         ),
         'accept-whitelist' => array(
             'Api\\V1\\Rest\\Account\\Controller' => array(
@@ -142,6 +253,26 @@ return array(
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ),
+            'Api\\V1\\Rest\\AccountCompany\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\CompanyEmployees\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\CompanyEmployee\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\CompanyPartner\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
         ),
         'content-type-whitelist' => array(
             'Api\\V1\\Rest\\Account\\Controller' => array(
@@ -153,6 +284,22 @@ return array(
                 1 => 'application/json',
             ),
             'Api\\V1\\Rest\\Company\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\AccountCompany\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\CompanyEmployees\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\CompanyEmployee\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\CompanyPartner\\Controller' => array(
                 0 => 'application/vnd.api.v1+json',
                 1 => 'application/json',
             ),
@@ -185,6 +332,42 @@ return array(
             'Api\\V1\\Rest\\Company\\CompanyCollection' => array(
                 'identifier_name' => 'company_uuid',
                 'route_name' => 'api.rest.company',
+                'is_collection' => '1',
+            ),
+            'Api\\V1\\Rest\\AccountCompany\\AccountCompanyEntity' => array(
+                'identifier_name' => 'account_company_id',
+                'route_name' => 'api.rest.account-company',
+            ),
+            'Api\\V1\\Rest\\AccountCompany\\AccountCompanyCollection' => array(
+                'identifier_name' => 'account_company_id',
+                'route_name' => 'api.rest.account-company',
+                'is_collection' => '1',
+            ),
+            'Api\\V1\\Rest\\CompanyEmployees\\CompanyEmployeesEntity' => array(
+                'identifier_name' => 'company_employees_id',
+                'route_name' => 'api.rest.company-employees',
+            ),
+            'Api\\V1\\Rest\\CompanyEmployees\\CompanyEmployeesCollection' => array(
+                'identifier_name' => 'company_employees_id',
+                'route_name' => 'api.rest.company-employees',
+                'is_collection' => '1',
+            ),
+            'Api\\V1\\Rest\\CompanyEmployee\\CompanyEmployeeEntity' => array(
+                'identifier_name' => 'company_employee_uuid',
+                'route_name' => 'api.rest.company-employee',
+            ),
+            'Api\\V1\\Rest\\CompanyEmployee\\CompanyEmployeeCollection' => array(
+                'identifier_name' => 'company_employee_uuid',
+                'route_name' => 'api.rest.company-employee',
+                'is_collection' => '1',
+            ),
+            'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerEntity' => array(
+                'identifier_name' => 'company_partner_uuid',
+                'route_name' => 'api.rest.company-partner',
+            ),
+            'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerCollection' => array(
+                'identifier_name' => 'company_partner_uuid',
+                'route_name' => 'api.rest.company-partner',
                 'is_collection' => '1',
             ),
         ),
