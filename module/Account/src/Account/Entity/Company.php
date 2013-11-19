@@ -18,12 +18,12 @@ use Zend\Form\Element\Collection;
  */
 class Company
 {
-    public function __construct($ownerAccId, $param = null)
+    public function __construct($ownerAccId = null, $param = null)
     {
-        $uuid_gen = new UuidGenerator();
-        $this->setUUID($uuid_gen->generateV4());
+        $uuidGen = new UuidGenerator();
+        $this->uuid=$uuidGen->generateV4();
         if ($param != 'contractAgent') {
-            $this->setOwnerOrgId(new \MongoId($ownerAccId));
+            $this->ownerAccId=new \MongoId($ownerAccId);
         }
     }
 
@@ -585,12 +585,12 @@ class Company
         return $this;
     }
 
-    public function getOwnerOrgId()
+    public function getOwnerAccId()
     {
         return $this->ownerAccId;
     }
 
-    public function setOwnerOrgId($ownerAccId)
+    public function setOwnerAccId($ownerAccId)
     {
         $this->ownerAccId = $ownerAccId;
         return $this;
