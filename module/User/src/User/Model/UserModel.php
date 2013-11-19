@@ -15,6 +15,9 @@ use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
 class UserModel
 {
+    protected $documentManager;
+    protected $queryBuilderModel;
+
     public function __construct(DocumentManager $documentManager,$queryBuilderModel)
     {
         $this->uuidGenerator = new UuidGenerator();
@@ -22,4 +25,21 @@ class UserModel
         $this->queryBuilderModel=$queryBuilderModel;
     }
 
+    public function fetch($findParams) {
+        $user = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('User\Entity\User'), $findParams)->getQuery()->getSingleResult();
+        if(empty($user)) {
+            return null;
+        } else {
+            return $user;
+        }
+    }
+
+    public function fetchAll($findParams) {
+        $users = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('User\Entity\User'), $findParams)->getQuery()->execute()->toArray();
+        if(empty($users)) {
+            return null;
+        } else {
+            return $users;
+        }
+    }
 }

@@ -3,6 +3,7 @@ namespace Api\V1\Rest\Profile;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use Zend\Paginator\Adapter\ArrayAdapter;
 
 class ProfileResource extends AbstractResourceListener
 {
@@ -53,7 +54,12 @@ class ProfileResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        $data=$this->userModel->fetch(array('uuid'=>$id));
+        if(!empty($data)) {
+            return $data;
+        } else {
+            return new ApiProblem(204, 'No content');
+        }
     }
 
     /**
@@ -64,7 +70,14 @@ class ProfileResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        $data=$this->userModel->fetchAll($params);
+        $adapter = new ArrayAdapter($data);
+        $collection = new ProfileCollection($adapter);
+        if(!empty($collection)) {
+            return $collection;
+        } else {
+            return new ApiProblem(204, 'No content');
+        }
     }
 
     /**
