@@ -21,7 +21,12 @@ class ProfileResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        $data=$this->userModel->createOrUpdate($data);
+        if(!empty($data)) {
+            return new ApiProblem(204, 'Completed');
+        } else {
+            return new ApiProblem(404, 'Error');
+        }
     }
 
     /**
@@ -58,7 +63,7 @@ class ProfileResource extends AbstractResourceListener
         if(!empty($data)) {
             return $data;
         } else {
-            return new ApiProblem(204, 'No content');
+            return new ApiProblem(404, 'Error');
         }
     }
 
@@ -76,7 +81,7 @@ class ProfileResource extends AbstractResourceListener
         if(!empty($collection)) {
             return $collection;
         } else {
-            return new ApiProblem(204, 'No content');
+            return new ApiProblem(404, 'Error');
         }
     }
 
@@ -112,6 +117,11 @@ class ProfileResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
+        $data=$this->userModel->createOrUpdate($data,$id);
+        if(!empty($data)) {
+            return new ApiProblem(204, 'Completed');
+        } else {
+            return new ApiProblem(404, 'Error');
+        }
     }
 }
