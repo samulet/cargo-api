@@ -2,12 +2,12 @@
 
 namespace User\Entity;
 
-
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Zend\Form\Annotation;
 use ZfcUser\Entity\UserInterface;
 use Zend\ServiceManager\ServiceManager;
+use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
 /**
  * @ODM\Document(collection="user")
@@ -16,49 +16,44 @@ use Zend\ServiceManager\ServiceManager;
  */
 class User implements UserInterface
 {
+    public function __construct()
+    {
+        $uuidGen = new UuidGenerator();
+        $this->uuid=$uuidGen->generateV4();
+        $this->roles = array();
+    }
     /**
      * @ODM\Id
      * @var int
      */
     protected $id;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $uuid;
 
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Имя пользователя"})
      */
     protected $username;
 
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Email"})
      */
     protected $email;
 
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Отображаемое имя"})
      */
     protected $displayName;
 
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Пароль"})
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
      */
     protected $password;
 
@@ -83,49 +78,37 @@ class User implements UserInterface
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\MultiCheckbox")
-     * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Выберите роль пользователя",
-     *                      "value_options" : {"forwarder":"Логист","carrier":"Перевозчик","customer":"Заказчик"}})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
-     * @Annotation\Attributes({"value":"0"})
      */
     protected $roles;
     /**
-     * @Annotation\Type("Zend\Form\Element\Submit")
-     * @Annotation\Attributes({"value":"Отправить"})
+     * @ODM\ObjectId
+     * @var int
      */
-    public $submit;
+    protected $currentAcc;
     /**
      * @ODM\ObjectId
      * @var int
-     * @Annotation\Type("Zend\Form\Element\Select")
-     * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Выберите организацию от которой вы работаете"})
-     * @Annotation\Required({"required":"true" })
-     * @Annotation\Attributes({"value":"0"})
      */
-    public $currentAcc;
+    protected $currentCom;
     /**
-     * @ODM\ObjectId
-     * @var int
-     * @Annotation\Type("Zend\Form\Element\Select")
-     * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Выберите компанию от которой вы работаете"})
-     * @Annotation\Attributes({"value":"0"})
+     * @ODM\Date
      */
-    public $currentCom;
-
+    protected $deletedAt;
     /**
-     * Initialies the roles variable.
+     * @return mixed
      */
-    public function __construct()
+    public function getDeletedAt()
     {
-        $this->roles = array();
+        return $this->deletedAt;
     }
 
+    /**
+     * @param mixed $deletedAt
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+    }
     /**
      * Get id.
      *
@@ -320,4 +303,35 @@ class User implements UserInterface
     {
         $this->roles[] = $role;
     }
+    public function getUUID()
+    {
+        return $this->uuid;
+    }
+
+    public function setUUID($uuid)
+    {
+        $this->uuid = $uuid;
+        return $this;
+    }
+
+    public function setData($data) {
+        if($data !== null && is_array($data)){
+            foreach(array_keys(get_class_vars(__CLASS__)) as $key){
+                if(isset($entity[$key]) && ($key!='id') && ($key!='uuid') ){
+                    $this->$key = $entity[$key];
+                }
+            }
+        }
+        return $this;
+
+    }
+
+    public function getData() {
+        $data = array();
+        foreach(array_keys(get_class_vars(__CLASS__)) as $key){
+            $data[$key]=$this->$key;
+        }
+        return $data;
+    }
+
 }

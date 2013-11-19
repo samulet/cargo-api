@@ -21,8 +21,8 @@ class Account
 {
     public function __construct()
     {
-        $uuid_gen = new UuidGenerator();
-        $this->setUUID($uuid_gen->generateV4());
+        $uuidGen = new UuidGenerator();
+        $this->uuid=$uuidGen->generateV4();
         $this->lastItemNumber=0;
     }
 
@@ -61,10 +61,6 @@ class Account
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Наименование аккаунта"})
      */
     protected $name;
     /**
