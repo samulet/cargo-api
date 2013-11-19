@@ -1,5 +1,5 @@
 <?php
-namespace Account\V1\Rest\Company;
+namespace Api\V1\Rest\Company;
 
 use Zend\Paginator\Paginator;
 

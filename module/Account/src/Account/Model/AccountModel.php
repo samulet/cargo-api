@@ -10,14 +10,9 @@ namespace Account\Model;
 
 use Account\Entity\Account;
 
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Doctrine\MongoDB\Connection;
-use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-
 
 class AccountModel
 {
@@ -108,6 +103,7 @@ class AccountModel
         $this->documentManager->flush();
         return $acc;
     }
+
     public function increaseLastItemNumber($orgId, $lastItemNumber)
     {
         $this->documentManager->getRepository('Account\Entity\Account')->createQueryBuilder()
@@ -120,13 +116,21 @@ class AccountModel
     }
 
     public function fetch($findParams) {
-
-            $accs = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('Account\Entity\Account'), $findParams)->getQuery()->execute();
-            if(empty($accs)) {
+            $acc = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('Account\Entity\Account'), $findParams)->getQuery()->getSingleResult();
+            if(empty($acc)) {
                 return null;
             } else {
-                return $this->queryBuilderModel->getObjectData($accs);
+                return $acc;
             }
+    }
+
+    public function fetchAll($findParams) {
+        $accs = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('Account\Entity\Account'), $findParams)->getQuery()->execute()->toArray();
+        if(empty($accs)) {
+            return null;
+        } else {
+            return $accs;
+        }
     }
 
 

@@ -8,33 +8,55 @@
  */
 namespace User\Model;
 
+use Doctrine\ODM\MongoDB\DocumentNotFoundException;
+use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use User\Entity\User;
 
-use Doctrine\ODM\MongoDB\DocumentNotFoundException;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Doctrine\MongoDB\Connection;
-use Doctrine\ODM\MongoDB\Configuration;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
-use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-use Doctrine\ODM\MongoDB\Mapping\Types\Type;
-
-
-class UserModel implements ServiceLocatorAwareInterface
+class UserModel
 {
-    protected $serviceLocator;
+    protected $documentManager;
+    protected $queryBuilderModel;
+    protected $uuidGenerator;
 
-
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
+    public function __construct(DocumentManager $documentManager,$queryBuilderModel)
     {
-        $this->serviceLocator = $serviceLocator;
+        $this->uuidGenerator = new UuidGenerator();
+        $this->documentManager=$documentManager;
+        $this->queryBuilderModel=$queryBuilderModel;
     }
 
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
+    public function fetch($findParams) {
+        $user = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('User\Entity\User'), $findParams)->getQuery()->getSingleResult();
+        if(empty($user)) {
+            return null;
+        } else {
+            return $user;
+        }
     }
 
+    public function fetchAll($findParams) {
+        $users = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('User\Entity\User'), $findParams)->getQuery()->execute()->toArray();
+        if(empty($users)) {
+            return null;
+        } else {
+            return $users;
+        }
+    }
 
+    public function createOrUpdate($data, $uuid = null) {
+        if(empty($uuid)) {
+            $user = new User();
+        } elseif($this->uuidGenerator->isValid($uuid)) {
+            $user = $this->documentManager->getRepository('User\Entity\User')->findOneBy(
+                array('uuid' => $uuid));
+        } else {
+            return null;
+        }
+        $user->setData($data);
+        $this->documentManager->persist($user);
+        $this->documentManager->flush();
+        return $user;
+    }
 }

@@ -1,10 +1,9 @@
 <?php
-namespace Account\V1\Rest\Account;
+namespace Api\V1\Rest\Account;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
-use Zend\View\Model\JsonModel;
-use Zend\Json;
+use Zend\Paginator\Adapter\ArrayAdapter;
 
 class AccountResource extends AbstractResourceListener
 {
@@ -26,12 +25,12 @@ class AccountResource extends AbstractResourceListener
     public function create($data)
     {
         $data=$this->accountModel->createOrUpdate($data);
-
         //тут еще функция, надо узнать как данные будут получаться  addUserToCompany($user_id, $accId, 'admin');
+
         if(!empty($data)) {
             return array($data);
         } else {
-            return new ApiProblem(204, 'No content add');
+            return new ApiProblem(404, 'Error');
         }
     }
 
@@ -47,7 +46,7 @@ class AccountResource extends AbstractResourceListener
         if(!empty($data)) {
             return array($data);
         } else {
-            return new ApiProblem(204, 'No content found to delete');
+            return new ApiProblem(404, 'Error');
         }
     }
 
@@ -74,7 +73,7 @@ class AccountResource extends AbstractResourceListener
         if(!empty($data)) {
             return $data;
         } else {
-            return new ApiProblem(204, 'No content');
+            return new ApiProblem(404, 'Error');
         }
     }
 
@@ -86,11 +85,13 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data=$this->accountModel->fetch($params);
-        if(!empty($data)) {
-            return $data;
+        $data=$this->accountModel->fetchAll($params);
+        $adapter = new ArrayAdapter($data);
+        $collection = new AccountCollection($adapter);
+        if(!empty($collection)) {
+            return $collection;
         } else {
-            return new ApiProblem(204, 'No content');
+            return new ApiProblem(404, 'Error');
         }
     }
 

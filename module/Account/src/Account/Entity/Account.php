@@ -21,8 +21,8 @@ class Account
 {
     public function __construct()
     {
-        $uuid_gen = new UuidGenerator();
-        $this->setUUID($uuid_gen->generateV4());
+        $uuidGen = new UuidGenerator();
+        $this->uuid=$uuidGen->generateV4();
         $this->lastItemNumber=0;
     }
 
@@ -61,10 +61,6 @@ class Account
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Наименование аккаунта"})
      */
     protected $name;
     /**
@@ -76,16 +72,11 @@ class Account
      * @ODM\Date
      */
     protected $deletedAt;
-    /**
-     * @Annotation\Type("Zend\Form\Element\Submit")
-     * @Annotation\Attributes({"value":"Отправить"})
-     */
-    protected $submit;
 
     public function setData($data) {
             if($data !== null && is_array($data)){
                 foreach(array_keys(get_class_vars(__CLASS__)) as $key){
-                    if(isset($entity[$key])){
+                    if(isset($entity[$key]) && ($key!='id') && ($key!='uuid') ){
                         $this->$key = $entity[$key];
                     }
                 }
@@ -131,33 +122,10 @@ class Account
      * Set id.
      *
      * @param int $id
-     * @return UserInterface
      */
     public function setId($id)
     {
         $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * Get description.
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Set Description.
-     *
-     * @param string $description
-     * @return UserInterface
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
         return $this;
     }
 
@@ -269,5 +237,18 @@ class Account
         $this->uuid = $uuid;
         return $this;
     }
+
+    public function getLastItemNumber()
+    {
+        return $this->lastItemNumber;
+    }
+
+    public function setLastItemNumber($lastItemNumber)
+    {
+        $this->lastItemNumber = $lastItemNumber;
+        return $this;
+    }
+
+
 }
 

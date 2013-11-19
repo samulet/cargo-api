@@ -1,13 +1,10 @@
 <?php
-namespace Account;
+namespace Api;
 
 use ZF\Apigility\ApigilityModuleInterface;
-use Account\Model\AccountModel;
-use Account\V1\Rest\Account\AccountResource;
-use Doctrine\MongoDB\Connection;
-use Doctrine\ODM\MongoDB\Configuration;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use DoctrineMongoODMModule\Service as ODMService;
+use Api\V1\Rest\Account\AccountResource;
+use Api\V1\Rest\Profile\ProfileResource;
+
 class Module implements ApigilityModuleInterface
 {
     public function getConfig()
@@ -30,19 +27,24 @@ class Module implements ApigilityModuleInterface
         return array(
             'aliases' => array(
                 'Doctrine\ODM\MongoDB\DocumentManager' => 'doctrine.documentmanager.odm_default',
-
             ) ,
             'factories' => array(
                 'CompanyModel' => 'Account\Factory\CompanyModelFactory',
                 'CompanyUserModel' => 'Account\Factory\CompanyUserModelFactory',
                 'AccountModel' => 'Account\Factory\AccountModelFactory',
-                'Account\V1\Rest\Account\AccountResource' => function ($sm) {
+                'UserModel' => 'User\Factory\UserModelFactory',
+                'Api\V1\Rest\Account\AccountResource' => function ($sm) {
                     $accountModel = $sm->get('AccountModel');
                     $companyUserModel = $sm->get('CompanyUserModel');
                     $acc = new AccountResource($accountModel,$companyUserModel);
                     return $acc;
                 },
+                'Api\V1\Rest\Profile\ProfileResource' => function ($sm) {
+                    $userModel = $sm->get('UserModel');
+                    $acc = new ProfileResource($userModel);
+                    return $acc;
+                },
             ),
         );
     }
-}
+} 

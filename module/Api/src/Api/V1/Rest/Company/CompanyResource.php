@@ -1,10 +1,10 @@
 <?php
-namespace User\V1\Rest\User;
+namespace Api\V1\Rest\Company;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 
-class UserResource extends AbstractResourceListener
+class CompanyResource extends AbstractResourceListener
 {
     /**
      * Create a resource

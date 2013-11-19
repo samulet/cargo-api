@@ -1,11 +1,18 @@
 <?php
-namespace Account\V1\Rest\Company;
+namespace Api\V1\Rest\Profile;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use Zend\Paginator\Adapter\ArrayAdapter;
 
-class CompanyResource extends AbstractResourceListener
+class ProfileResource extends AbstractResourceListener
 {
+    protected $userModel;
+
+    public function __construct($userModel = null)
+    {
+        $this->userModel = $userModel;
+    }
     /**
      * Create a resource
      *
@@ -14,7 +21,12 @@ class CompanyResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        $data=$this->userModel->createOrUpdate($data);
+        if(!empty($data)) {
+            return new ApiProblem(204, 'Completed');
+        } else {
+            return new ApiProblem(404, 'Error');
+        }
     }
 
     /**
@@ -47,7 +59,12 @@ class CompanyResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        $data=$this->userModel->fetch(array('uuid'=>$id));
+        if(!empty($data)) {
+            return $data;
+        } else {
+            return new ApiProblem(404, 'Error');
+        }
     }
 
     /**
@@ -58,7 +75,14 @@ class CompanyResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        $data=$this->userModel->fetchAll($params);
+        $adapter = new ArrayAdapter($data);
+        $collection = new ProfileCollection($adapter);
+        if(!empty($collection)) {
+            return $collection;
+        } else {
+            return new ApiProblem(404, 'Error');
+        }
     }
 
     /**
@@ -93,6 +117,11 @@ class CompanyResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
+        $data=$this->userModel->createOrUpdate($data,$id);
+        if(!empty($data)) {
+            return new ApiProblem(204, 'Completed');
+        } else {
+            return new ApiProblem(404, 'Error');
+        }
     }
 }
