@@ -64,17 +64,13 @@ return array(
             1 => 'api.rest.profile',
             2 => 'api.rest.company',
             3 => 'api.rest.account-company',
-            4 => 'api.rest.account-company',
-            5 => 'api.rest.account-company',
-            6 => 'api.rest.company-employees',
-            7 => 'api.rest.company-employee',
-            8 => 'api.rest.company-partner',
+            4 => 'api.rest.company-employee',
+            5 => 'api.rest.company-partner',
         ),
     ),
     'service_manager' => array(
         'invokables' => array(
             'Api\\V1\\Rest\\AccountCompany\\AccountCompanyResource' => 'Api\\V1\\Rest\\AccountCompany\\AccountCompanyResource',
-            'Api\\V1\\Rest\\CompanyEmployees\\CompanyEmployeesResource' => 'Api\\V1\\Rest\\CompanyEmployees\\CompanyEmployeesResource',
             'Api\\V1\\Rest\\CompanyEmployee\\CompanyEmployeeResource' => 'Api\\V1\\Rest\\CompanyEmployee\\CompanyEmployeeResource',
             'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerResource' => 'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerResource',
         ),
@@ -233,7 +229,7 @@ return array(
             'Api\\V1\\Rest\\Profile\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\Company\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\AccountCompany\\Controller' => 'HalJson',
-            'Api\\V1\\Rest\\CompanyEmployees\\Controller' => 'HalJson',
+            'Api\\V1\\Rest\\\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\CompanyEmployee\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\CompanyPartner\\Controller' => 'HalJson',
         ),
@@ -254,11 +250,6 @@ return array(
                 2 => 'application/json',
             ),
             'Api\\V1\\Rest\\AccountCompany\\Controller' => array(
-                0 => 'application/vnd.api.v1+json',
-                1 => 'application/hal+json',
-                2 => 'application/json',
-            ),
-            'Api\\V1\\Rest\\CompanyEmployees\\Controller' => array(
                 0 => 'application/vnd.api.v1+json',
                 1 => 'application/hal+json',
                 2 => 'application/json',
@@ -288,10 +279,6 @@ return array(
                 1 => 'application/json',
             ),
             'Api\\V1\\Rest\\AccountCompany\\Controller' => array(
-                0 => 'application/vnd.api.v1+json',
-                1 => 'application/json',
-            ),
-            'Api\\V1\\Rest\\CompanyEmployees\\Controller' => array(
                 0 => 'application/vnd.api.v1+json',
                 1 => 'application/json',
             ),
@@ -341,15 +328,6 @@ return array(
             'Api\\V1\\Rest\\AccountCompany\\AccountCompanyCollection' => array(
                 'identifier_name' => 'account_company_id',
                 'route_name' => 'api.rest.account-company',
-                'is_collection' => '1',
-            ),
-            'Api\\V1\\Rest\\CompanyEmployees\\CompanyEmployeesEntity' => array(
-                'identifier_name' => 'company_employees_id',
-                'route_name' => 'api.rest.company-employees',
-            ),
-            'Api\\V1\\Rest\\CompanyEmployees\\CompanyEmployeesCollection' => array(
-                'identifier_name' => 'company_employees_id',
-                'route_name' => 'api.rest.company-employees',
                 'is_collection' => '1',
             ),
             'Api\\V1\\Rest\\CompanyEmployee\\CompanyEmployeeEntity' => array(
