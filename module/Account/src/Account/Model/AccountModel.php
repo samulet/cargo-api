@@ -103,6 +103,7 @@ class AccountModel
         $this->documentManager->flush();
         return $acc;
     }
+
     public function increaseLastItemNumber($orgId, $lastItemNumber)
     {
         $this->documentManager->getRepository('Account\Entity\Account')->createQueryBuilder()
