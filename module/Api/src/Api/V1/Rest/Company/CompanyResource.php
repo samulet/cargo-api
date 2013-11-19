@@ -21,7 +21,12 @@ class CompanyResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        $data=$this->companyModel->createOrUpdate($data);
+        if(!empty($data)) {
+            return array($data);
+        } else {
+            return new ApiProblem(404, 'Error');
+        }
     }
 
     /**
@@ -32,7 +37,12 @@ class CompanyResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        $data=$this->companyModel->delete($id);
+        if(!empty($data)) {
+            return array($data);
+        } else {
+            return new ApiProblem(404, 'Error');
+        }
     }
 
     /**
@@ -54,7 +64,12 @@ class CompanyResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        $data=$this->companyModel->fetch(array('uuid'=>$id,'activated' => '1','deletedAt' => null));
+        if(!empty($data)) {
+            return $data;
+        } else {
+            return new ApiProblem(404, 'Error');
+        }
     }
 
     /**
@@ -65,7 +80,14 @@ class CompanyResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        $data=$this->companyModel->fetchAll($params);
+        $adapter = new ArrayAdapter($data);
+        $collection = new AccountCollection($adapter);
+        if(!empty($collection)) {
+            return $collection;
+        } else {
+            return new ApiProblem(404, 'Error');
+        }
     }
 
     /**
@@ -100,6 +122,12 @@ class CompanyResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
+        $data=$this->companyModel->createOrUpdate($data,$id);
+        //тут еще функция, надо узнать как данные будут получаться
+        if(!empty($data)) {
+            return array($data);
+        } else {
+            return new ApiProblem(204, 'No content add');
+        }
     }
 }
