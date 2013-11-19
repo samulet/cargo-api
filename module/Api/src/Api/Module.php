@@ -3,6 +3,8 @@ namespace Api;
 
 use ZF\Apigility\ApigilityModuleInterface;
 use Api\V1\Rest\Account\AccountResource;
+use Api\V1\Rest\Profile\ProfileResource;
+
 class Module implements ApigilityModuleInterface
 {
     public function getConfig()
@@ -30,10 +32,16 @@ class Module implements ApigilityModuleInterface
                 'CompanyModel' => 'Account\Factory\CompanyModelFactory',
                 'CompanyUserModel' => 'Account\Factory\CompanyUserModelFactory',
                 'AccountModel' => 'Account\Factory\AccountModelFactory',
+                'UserModel' => 'User\Factory\UserModelFactory',
                 'Api\V1\Rest\Account\AccountResource' => function ($sm) {
                     $accountModel = $sm->get('AccountModel');
                     $companyUserModel = $sm->get('CompanyUserModel');
                     $acc = new AccountResource($accountModel,$companyUserModel);
+                    return $acc;
+                },
+                'Api\V1\Rest\Account\ProfileResource' => function ($sm) {
+                    $userModel = $sm->get('UserModel');
+                    $acc = new ProfileResource($userModel);
                     return $acc;
                 },
             ),

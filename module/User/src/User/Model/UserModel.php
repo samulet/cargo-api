@@ -10,9 +10,16 @@ namespace User\Model;
 
 use Doctrine\ODM\MongoDB\DocumentNotFoundException;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
-
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
 class UserModel
 {
+    public function __construct(DocumentManager $documentManager,$queryBuilderModel)
+    {
+        $this->uuidGenerator = new UuidGenerator();
+        $this->documentManager=$documentManager;
+        $this->queryBuilderModel=$queryBuilderModel;
+    }
 
 }

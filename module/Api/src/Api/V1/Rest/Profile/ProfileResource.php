@@ -6,6 +6,12 @@ use ZF\Rest\AbstractResourceListener;
 
 class ProfileResource extends AbstractResourceListener
 {
+    protected $userModel;
+
+    public function __construct($userModel = null)
+    {
+        $this->userModel = $userModel;
+    }
     /**
      * Create a resource
      *
