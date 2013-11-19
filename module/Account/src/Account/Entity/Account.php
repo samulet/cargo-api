@@ -76,11 +76,6 @@ class Account
      * @ODM\Date
      */
     protected $deletedAt;
-    /**
-     * @Annotation\Type("Zend\Form\Element\Submit")
-     * @Annotation\Attributes({"value":"Отправить"})
-     */
-    protected $submit;
 
     public function setData($data) {
             if($data !== null && is_array($data)){
@@ -131,33 +126,10 @@ class Account
      * Set id.
      *
      * @param int $id
-     * @return UserInterface
      */
     public function setId($id)
     {
         $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * Get description.
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Set Description.
-     *
-     * @param string $description
-     * @return UserInterface
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
         return $this;
     }
 
@@ -269,5 +241,18 @@ class Account
         $this->uuid = $uuid;
         return $this;
     }
+
+    public function getLastItemNumber()
+    {
+        return $this->lastItemNumber;
+    }
+
+    public function setLastItemNumber($lastItemNumber)
+    {
+        $this->lastItemNumber = $lastItemNumber;
+        return $this;
+    }
+
+
 }
 
