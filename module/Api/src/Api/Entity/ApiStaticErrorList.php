@@ -9,6 +9,7 @@
 
 namespace Api\Entity;
 
+use ZF\ApiProblem\ApiProblem;
 
 class ApiStaticErrorList {
     public static $errorList = array(
@@ -24,6 +25,6 @@ class ApiStaticErrorList {
         500 => 'INTERNAL_SERVER_ERROR',
     );
     public static function getError($errorNumber, $errorText) {
-        return self::$errorList[$errorNumber].' '.$errorText;
+        return new ApiProblem($errorNumber, self::$errorList[$errorNumber].'_'.strtoupper(str_replace(' ', '_', $errorText)));
     }
 }
