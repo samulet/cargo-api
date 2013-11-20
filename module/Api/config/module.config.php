@@ -70,10 +70,7 @@ return array(
     ),
     'service_manager' => array(
         'invokables' => array(
-            'Api\\V1\\Rest\\AccountCompany\\AccountCompanyResource' => 'Api\\V1\\Rest\\AccountCompany\\AccountCompanyResource',
-            'Api\\V1\\Rest\\CompanyEmployee\\CompanyEmployeeResource' => 'Api\\V1\\Rest\\CompanyEmployee\\CompanyEmployeeResource',
-            'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerResource' => 'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerResource',
-        ),
+      ),
     ),
     'zf-rest' => array(
         'Api\\V1\\Rest\\Account\\Controller' => array(
