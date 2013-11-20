@@ -25,6 +25,7 @@
         "zfcampus/zf-configuration": "dev-master",
         "gedmo/doctrine-extensions": "*",
         "bladeofsteel/zfc-user-doctrine-mongo-odm": "@dev",
+        "masha-i-medvedi/auth-token": "@dev",
         "doctrine/doctrine-mongo-odm-module": "dev-master"
     },
     "require-dev": {
@@ -32,5 +33,11 @@
         "zendframework/zend-developer-tools": "dev-master",
         "zfcampus/zf-apigility-admin": "dev-master",
         "zfcampus/zf-apigility-welcome": "dev-master"
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/MashaiMedvedi/auth-token.git"
+        }
+    ]
 }
