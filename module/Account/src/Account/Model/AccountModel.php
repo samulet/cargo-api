@@ -181,36 +181,15 @@ class AccountModel
     }
 
     public function createOrUpdate($data, $uuid = null) {
-        if(empty($uuid)) {
-            $acc = new Account();
-        } elseif($this->uuidGenerator->isValid($uuid)) {
-            $acc = $this->documentManager->getRepository('Account\Entity\Account')->findOneBy(
-                array('uuid' => $uuid));
-        } else {
-            return null;
-        }
-        $acc->setData($data);
-        $this->documentManager->persist($acc);
-        $this->documentManager->flush();
-        return $acc;
+        return $this->queryBuilderModel->fetch('Account\Entity\Account',$data,$uuid);
     }
 
     public function fetch($findParams) {
-        $acc = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('Account\Entity\Account'), $findParams)->getQuery()->getSingleResult();
-        if(empty($acc)) {
-            return null;
-        } else {
-            return $acc;
-        }
+        return $this->queryBuilderModel->fetch('Account\Entity\Account',$findParams);
     }
 
     public function fetchAll($findParams) {
-        $accs = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('Account\Entity\Account'), $findParams)->getQuery()->execute()->toArray();
-        if(empty($accs)) {
-            return null;
-        } else {
-            return $accs;
-        }
+        return $this->queryBuilderModel->fetchAll('Account\Entity\Account',$findParams);
     }
 
     public function delete($uuid)
