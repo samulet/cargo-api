@@ -15,7 +15,6 @@ use Zend\Form\Annotation;
 use Zend\Form\Element;
 use Zend\Form\Form;
 
-
 /**
  * @ODM\Document(collection="contractAgents")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
@@ -39,20 +38,20 @@ class ContractAgents
      * @var int
      * @Annotation\Exclude()
      */
-    public $id;
+    protected $id;
 
     /**
      * @ODM\ObjectId
      * @var int
      * @Annotation\Exclude()
      */
-    public $comId;
+    protected $comId;
     /**
      * @ODM\ObjectId
      * @var int
      * @Annotation\Exclude()
      */
-    public $accId;
+    protected $accId;
     /**
      * @ODM\ObjectId
      * @var int
@@ -62,43 +61,62 @@ class ContractAgents
      * @Annotation\Required({"required":"true" })
      * @Annotation\Attributes({"value":"0"})
      */
-    public $contactAgentId;
+    protected $contactAgentId;
     /**
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
      * @Annotation\Exclude()
      */
-    public $created;
+    protected $created;
 
     /**
      * @Gedmo\Timestampable(on="update")
      * @ODM\Date
      * @Annotation\Exclude()
      */
-    public $updated;
+    protected $updated;
     /**
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Exclude()
      */
-    public $activated;
+    protected $activated;
 
     /**
      * @Annotation\Type("Zend\Form\Element\Submit")
      * @Annotation\Attributes({"value":"Отправить"})
      */
 
-    public $submit;
+    protected $submit;
 
     /**
      * @ODM\Date
      */
-    public $deletedAt;
+    protected $deletedAt;
 
     /**
      * @return mixed
      */
 
+    public function setData($data) {
+        if($data !== null && is_array($data)){
+            foreach(array_keys(get_class_vars(__CLASS__)) as $key){
+                if(isset($entity[$key]) && ($key!='id') && ($key!='uuid') ){
+                    $this->$key = $entity[$key];
+                }
+            }
+        }
+        return $this;
+
+    }
+
+    public function getData() {
+        $data = array();
+        foreach(array_keys(get_class_vars(__CLASS__)) as $key){
+            $data[$key]=$this->$key;
+        }
+        return $data;
+    }
 
     public function getDeletedAt()
     {
