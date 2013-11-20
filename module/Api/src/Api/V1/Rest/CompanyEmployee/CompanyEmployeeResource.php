@@ -3,6 +3,7 @@ namespace Api\V1\Rest\CompanyEmployee;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use Api\Entity\ApiStaticErrorList;
 
 class CompanyEmployeeResource extends AbstractResourceListener
 {
@@ -22,7 +23,12 @@ class CompanyEmployeeResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        $data=$this->companyUserModel->createOrUpdate($data);
+        if(!empty($data)) {
+            return ApiStaticErrorList::getError(202);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
     }
 
     /**
@@ -55,7 +61,12 @@ class CompanyEmployeeResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        $data=$this->companyUserModel->fetch(array('uuid'=>$id));
+        if(!empty($data)) {
+            return $data;
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
     }
 
     /**
@@ -66,7 +77,14 @@ class CompanyEmployeeResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        $data=$this->companyUserModel->fetchAll($params);
+        $adapter = new ArrayAdapter($data);
+        $collection = new ProfileCollection($adapter);
+        if(!empty($collection)) {
+            return $collection;
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
     }
 
     /**
@@ -101,6 +119,11 @@ class CompanyEmployeeResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
+        $data=$this->companyUserModel->createOrUpdate($data,$id);
+        if(!empty($data)) {
+            return ApiStaticErrorList::getError(202);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
     }
 }
