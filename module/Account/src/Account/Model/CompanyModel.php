@@ -111,7 +111,7 @@ class CompanyModel
             }
             $objectManager->persist($com);
             $objectManager->flush();
-            return $com->id;
+            return $com;
         } else {
             return false;
         }
