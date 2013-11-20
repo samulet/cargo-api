@@ -11,14 +11,17 @@ namespace QueryBuilder\Model;
 
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
 class QueryBuilderModel
 {
     protected $documentManager;
+    protected $uuidGenerator;
 
     public function __construct(DocumentManager $documentManager)
     {
         $this->documentManager=$documentManager;
+        $this->uuidGenerator = new UuidGenerator();
     }
 
     public function createQuery($qb, $searchArray)
@@ -83,6 +86,39 @@ class QueryBuilderModel
             array_push($resultArray,$item->getData());
         }
         return $resultArray;
+    }
+
+    public function createOrUpdate($entityLink, $entityName, $data, $uuid = null) {
+        if(empty($uuid)) {
+            $item = new $entityName();
+        } elseif($this->uuidGenerator->isValid($uuid)) {
+            $item = $this->documentManager->getRepository($entityLink)->findOneBy(
+                array('uuid' => $uuid));
+        } else {
+            return null;
+        }
+        $item->setData($data);
+        $this->documentManager->persist($item);
+        $this->documentManager->flush();
+        return $item;
+    }
+
+    public function fetch($entityLink, $findParams) {
+        $item = $this->createQuery($this->documentManager->createQueryBuilder($entityLink), $findParams)->getQuery()->getSingleResult();
+        if(empty($item)) {
+            return null;
+        } else {
+            return $item;
+        }
+    }
+
+    public function fetchAll($entityLink, $findParams) {
+        $items = $this->createQuery($this->documentManager->createQueryBuilder($entityLink), $findParams)->getQuery()->execute()->toArray();
+        if(empty($items)) {
+            return array();
+        } else {
+            return $items;
+        }
     }
 
 }
