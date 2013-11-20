@@ -4,6 +4,7 @@ namespace Api\V1\Rest\Company;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 use Zend\Paginator\Adapter\ArrayAdapter;
+use Api\Entity\ApiStaticErrorList;
 
 class CompanyResource extends AbstractResourceListener
 {
@@ -39,9 +40,9 @@ class CompanyResource extends AbstractResourceListener
     {
         $data=$this->companyModel->delete($id);
         if(!empty($data)) {
-            return new ApiProblem(204, 'Succesfully deleted');
+            return ApiStaticErrorList::getError(202);
         } else {
-            return new ApiProblem(404, 'Error');
+            return ApiStaticErrorList::getError(404);
         }
     }
 
@@ -68,7 +69,7 @@ class CompanyResource extends AbstractResourceListener
         if(!empty($data)) {
             return $data;
         } else {
-            return new ApiProblem(404, 'Error');
+            return ApiStaticErrorList::getError(404);
         }
     }
 
@@ -86,7 +87,7 @@ class CompanyResource extends AbstractResourceListener
         if(!empty($collection)) {
             return $collection;
         } else {
-            return new ApiProblem(404, 'Error');
+            return ApiStaticErrorList::getError(404);
         }
     }
 
@@ -124,9 +125,9 @@ class CompanyResource extends AbstractResourceListener
     {
         $data=$this->companyModel->createOrUpdate($data,$id);
         if(!empty($data)) {
-            return new ApiProblem(204, 'Succesfully added');
+            return ApiStaticErrorList::getError(202);
         } else {
-            return new ApiProblem(404, 'Error');
+            return ApiStaticErrorList::getError(404);
         }
     }
 }
