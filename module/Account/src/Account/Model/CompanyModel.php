@@ -252,38 +252,16 @@ class CompanyModel
     }
 
     public function createOrUpdate($data, $uuid = null) {
-        if(empty($uuid)) {
-            $acc = new Account();
-        } elseif($this->uuidGenerator->isValid($uuid)) {
-            $acc = $this->documentManager->getRepository('Account\Entity\Account')->findOneBy(
-                array('uuid' => $uuid));
-        } else {
-            return null;
-        }
-        $acc->setData($data);
-        $this->documentManager->persist($acc);
-        $this->documentManager->flush();
-        return $acc;
+        return $this->queryBuilderModel->fetch('Account\Entity\Company',$data,$uuid);
     }
 
     public function fetch($findParams) {
-        $com = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('Account\Entity\Company'), $findParams)->getQuery()->getSingleResult();
-        if(empty($com)) {
-            return null;
-        } else {
-            return $com;
-        }
+        return $this->queryBuilderModel->fetch('Account\Entity\Company',$findParams);
     }
 
     public function fetchAll($findParams) {
-        $coms = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('Account\Entity\Company'), $findParams)->getQuery()->execute()->toArray();
-        if(empty($coms)) {
-            return null;
-        } else {
-            return $coms;
-        }
+        return $this->queryBuilderModel->fetchAll('Account\Entity\Company',$findParams);
     }
-
     public function delete($uuid)
     {
         if(!empty($accId)) {
