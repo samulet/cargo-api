@@ -88,8 +88,9 @@ class QueryBuilderModel
         return $resultArray;
     }
 
-    public function createOrUpdate($entityLink, $entityName, $data, $uuid = null) {
+    public function createOrUpdate($entityLink, $data, $uuid = null) {
         if(empty($uuid)) {
+            $entityName="\\".$entityLink;
             $item = new $entityName();
         } elseif($this->uuidGenerator->isValid($uuid)) {
             $item = $this->documentManager->getRepository($entityLink)->findOneBy(
