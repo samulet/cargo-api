@@ -27,36 +27,15 @@ class UserModel
         $this->queryBuilderModel=$queryBuilderModel;
     }
 
+    public function createOrUpdate($data, $uuid = null) {
+        return $this->queryBuilderModel->fetch('User\Entity\User',$data,$uuid);
+    }
+
     public function fetch($findParams) {
-        $user = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('User\Entity\User'), $findParams)->getQuery()->getSingleResult();
-        if(empty($user)) {
-            return null;
-        } else {
-            return $user;
-        }
+        return $this->queryBuilderModel->fetch('User\Entity\User',$findParams);
     }
 
     public function fetchAll($findParams) {
-        $users = $this->queryBuilderModel->createQuery($this->documentManager->createQueryBuilder('User\Entity\User'), $findParams)->getQuery()->execute()->toArray();
-        if(empty($users)) {
-            return null;
-        } else {
-            return $users;
-        }
-    }
-
-    public function createOrUpdate($data, $uuid = null) {
-        if(empty($uuid)) {
-            $user = new User();
-        } elseif($this->uuidGenerator->isValid($uuid)) {
-            $user = $this->documentManager->getRepository('User\Entity\User')->findOneBy(
-                array('uuid' => $uuid));
-        } else {
-            return null;
-        }
-        $user->setData($data);
-        $this->documentManager->persist($user);
-        $this->documentManager->flush();
-        return $user;
+        return $this->queryBuilderModel->fetchAll('User\Entity\User',$findParams);
     }
 }
