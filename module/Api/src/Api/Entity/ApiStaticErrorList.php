@@ -11,16 +11,19 @@ namespace Api\Entity;
 
 
 class ApiStaticErrorList {
-    public static $errorLost = array(
-        'OK' => 200,
-        'CREATED' => 201,
-        'ACCEPTED' => 202,
-        'NOT_MODIFIED' => 304,
-        'BAD_REQUEST' => 400,
-        'UNAUTHORIZED' => 401,
-        'FORBIDDEN' => 403,
-        'NOT_FOUND' => 404,
-        'METHOD_NOT_ALLOWED' => 405,
-        'INTERNAL_SERVER_ERROR' => 500
+    public static $errorList = array(
+        200 => 'OK',
+        201 => 'CREATED',
+        202 =>'ACCEPTED',
+        304 => 'NOT_MODIFIED',
+        400 => 'BAD_REQUEST',
+        401 => 'UNAUTHORIZED',
+        403 => 'FORBIDDEN',
+        404 => 'NOT_FOUND',
+        405 => 'METHOD_NOT_ALLOWED',
+        500 => 'INTERNAL_SERVER_ERROR',
     );
+    public static function getError($errorNumber, $errorText) {
+        return self::$errorList[$errorNumber].' '.$errorText;
+    }
 }
