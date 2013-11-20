@@ -1,9 +1,10 @@
 <?php
 namespace Api\V1\Rest\Account;
 
-use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 use Zend\Paginator\Adapter\ArrayAdapter;
+use Api\Entity\ApiStaticErrorList;
+use ZF\ApiProblem\ApiProblem;
 
 class AccountResource extends AbstractResourceListener
 {
@@ -26,11 +27,10 @@ class AccountResource extends AbstractResourceListener
     {
         $data=$this->accountModel->createOrUpdate($data);
         //тут еще функция, надо узнать как данные будут получаться  addUserToCompany($user_id, $accId, 'admin');
-
         if(!empty($data)) {
-            return new ApiProblem(204, 'Succesfully created');
+            return ApiStaticErrorList::getError(202);
         } else {
-            return new ApiProblem(404, 'Error');
+            return ApiStaticErrorList::getError(404);
         }
     }
 
@@ -44,9 +44,9 @@ class AccountResource extends AbstractResourceListener
     {
         $data=$this->accountModel->delete($id);
         if(!empty($data)) {
-            return new ApiProblem(204, 'Succesfully deleted');
+            return ApiStaticErrorList::getError(202);
         } else {
-            return new ApiProblem(404, 'Error');
+            return ApiStaticErrorList::getError(404);
         }
     }
 
@@ -73,7 +73,7 @@ class AccountResource extends AbstractResourceListener
         if(!empty($data)) {
             return $data;
         } else {
-            return new ApiProblem(404, 'Error');
+            return ApiStaticErrorList::getError(404);
         }
     }
 
@@ -91,7 +91,7 @@ class AccountResource extends AbstractResourceListener
         if(!empty($collection)) {
             return $collection;
         } else {
-            return new ApiProblem(404, 'Error');
+            return ApiStaticErrorList::getError(404);
         }
     }
 
@@ -130,9 +130,9 @@ class AccountResource extends AbstractResourceListener
         $data=$this->accountModel->createOrUpdate($data,$id);
         //тут еще функция, надо узнать как данные будут получаться
         if(!empty($data)) {
-            return new ApiProblem(204, 'Succesfully added');
+            return ApiStaticErrorList::getError(202);
         } else {
-            return new ApiProblem(404, 'Error');
+            return ApiStaticErrorList::getError(404);
         }
     }
 }
