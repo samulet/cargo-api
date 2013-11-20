@@ -24,7 +24,11 @@ class ApiStaticErrorList {
         405 => 'METHOD_NOT_ALLOWED',
         500 => 'INTERNAL_SERVER_ERROR',
     );
-    public static function getError($errorNumber, $errorText) {
-        return new ApiProblem($errorNumber, self::$errorList[$errorNumber].'_'.strtoupper(str_replace(' ', '_', $errorText)));
+    public static function getError($errorNumber, $errorText = null) {
+        if(empty($errorText)) {
+            return new ApiProblem($errorNumber, self::$errorList[$errorNumber].'_'.strtoupper(str_replace(' ', '_', $errorText)));
+        } else {
+            return new ApiProblem($errorNumber, self::$errorList[$errorNumber]);
+        }
     }
 }
