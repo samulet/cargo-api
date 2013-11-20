@@ -24,9 +24,9 @@ class CompanyResource extends AbstractResourceListener
     {
         $data=$this->companyModel->createOrUpdate($data);
         if(!empty($data)) {
-            return new ApiProblem(204, 'Succesfully created');
+            return ApiStaticErrorList::getError(202);
         } else {
-            return new ApiProblem(404, 'Error');
+            return ApiStaticErrorList::getError(404);
         }
     }
 

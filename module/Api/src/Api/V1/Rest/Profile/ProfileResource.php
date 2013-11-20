@@ -4,6 +4,7 @@ namespace Api\V1\Rest\Profile;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 use Zend\Paginator\Adapter\ArrayAdapter;
+use Api\Entity\ApiStaticErrorList;
 
 class ProfileResource extends AbstractResourceListener
 {
@@ -23,9 +24,9 @@ class ProfileResource extends AbstractResourceListener
     {
         $data=$this->userModel->createOrUpdate($data);
         if(!empty($data)) {
-            return new ApiProblem(204, 'Completed');
+            return ApiStaticErrorList::getError(202);
         } else {
-            return new ApiProblem(404, 'Error');
+            return ApiStaticErrorList::getError(404);
         }
     }
 
@@ -63,7 +64,7 @@ class ProfileResource extends AbstractResourceListener
         if(!empty($data)) {
             return $data;
         } else {
-            return new ApiProblem(404, 'Error');
+            return ApiStaticErrorList::getError(404);
         }
     }
 
@@ -81,7 +82,7 @@ class ProfileResource extends AbstractResourceListener
         if(!empty($collection)) {
             return $collection;
         } else {
-            return new ApiProblem(404, 'Error');
+            return ApiStaticErrorList::getError(404);
         }
     }
 
@@ -119,9 +120,9 @@ class ProfileResource extends AbstractResourceListener
     {
         $data=$this->userModel->createOrUpdate($data,$id);
         if(!empty($data)) {
-            return new ApiProblem(204, 'Completed');
+            return ApiStaticErrorList::getError(202);
         } else {
-            return new ApiProblem(404, 'Error');
+            return ApiStaticErrorList::getError(404);
         }
     }
 }
