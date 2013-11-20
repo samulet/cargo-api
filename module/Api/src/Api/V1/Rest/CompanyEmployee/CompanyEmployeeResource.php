@@ -6,6 +6,14 @@ use ZF\Rest\AbstractResourceListener;
 
 class CompanyEmployeeResource extends AbstractResourceListener
 {
+
+    protected $companyUserModel;
+
+    public function __construct($companyUserModel = null)
+    {
+        $this->companyUserModel = $companyUserModel;
+    }
+
     /**
      * Create a resource
      *

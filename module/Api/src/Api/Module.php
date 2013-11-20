@@ -50,6 +50,11 @@ class Module implements ApigilityModuleInterface
                     $com = new CompanyResource($companyModel);
                     return $com;
                 },
+                'Api\V1\Rest\CompanyEmployee\CompanyEmployeeResource' => function ($sm) {
+                    $companyModel = $sm->get('CompanyUserModel');
+                    $com = new CompanyResource($companyModel);
+                    return $com;
+                },
             ),
         );
     }
