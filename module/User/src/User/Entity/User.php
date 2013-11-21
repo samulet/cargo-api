@@ -146,13 +146,103 @@ class User implements UserInterface
     {
         return $this->deletedAt;
     }
-
     /**
      * @param mixed $deletedAt
      */
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setDocs($docs)
+    {
+        $this->docs = $docs;
+        return $this;
+    }
+    public function getDocs()
+    {
+        return $this->docs;
+    }
+
+    public function setSnils($snils)
+    {
+        $this->snils = $snils;
+        return $this;
+    }
+    public function getSnils()
+    {
+        return $this->snils;
+    }
+
+    public function setInn($inn)
+    {
+        $this->inn = $inn;
+        return $this;
+    }
+    public function getInn()
+    {
+        return $this->inn;
+    }
+
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+        return $this;
+    }
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    public function setSite($site)
+    {
+        $this->site = $site;
+        return $this;
+    }
+    public function getSite()
+    {
+        return $this->site;
+    }
+
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+        return $this;
+    }
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    public function getSign()
+    {
+        return $this->sign;
+    }
+    public function setSign($sign)
+    {
+        $this->sign = $sign;
+        return $this;
+    }
+
+    public function getSocial()
+    {
+        return $this->social;
+    }
+    public function setSocial($social)
+    {
+        $this->social = $social;
+        return $this;
     }
     /**
      * Get id.
