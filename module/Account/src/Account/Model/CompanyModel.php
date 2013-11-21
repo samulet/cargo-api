@@ -111,7 +111,7 @@ class CompanyModel
             }
             $objectManager->persist($com);
             $objectManager->flush();
-            return $com->id;
+            return $com;
         } else {
             return false;
         }
@@ -150,7 +150,6 @@ class CompanyModel
 
     }
 
-
     public function getCompanyIdByUUID($com_uuid)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
@@ -185,20 +184,6 @@ class CompanyModel
         }
         $objectManager->remove($qb);
         $objectManager->flush();
-    }
-
-    public function addBootstrap3Class(&$form)
-    {
-
-        foreach ($form as $el) {
-            $attr = $el->getAttributes();
-            if (!empty($attr['type'])) {
-                if (($attr['type'] != 'checkbox') && ($attr['type'] != 'multi_checkbox')) {
-                    $el->setAttributes(array('class' => 'form-control'));
-                }
-            }
-
-        }
     }
 
     public function isContractAgentExist($contactAgentId, $comId)
@@ -266,20 +251,29 @@ class CompanyModel
         return $resultArray;
     }
 
-    public function getQueryBuilderModel()
-    {
-        if (!$this->queryBuilderModel) {
-            $sm = $this->getServiceLocator();
-            $this->queryBuilderModel = $sm->get('QueryBuilder\Model\QueryBuilderModel');
-        }
-        return $this->queryBuilderModel;
+    public function createOrUpdate($data, $uuid = null) {
+        return $this->queryBuilderModel->fetch('Account\Entity\Company',$data,$uuid);
     }
-    public function getAccountModel()
-    {
-        if (!$this->accountModel) {
-            $sm = $this->getServiceLocator();
-            $this->accountModel = $sm->get('Account\Model\AccountModel');
-        }
-        return $this->accountModel;
+
+    public function fetch($findParams) {
+        return $this->queryBuilderModel->fetch('Account\Entity\Company',$findParams);
     }
+
+    public function fetchAll($findParams) {
+        return $this->queryBuilderModel->fetchAll('Account\Entity\Company',$findParams);
+    }
+    public function delete($uuid)
+    {
+        if(!empty($accId)) {
+            $qb3 = $this->documentManager->getRepository('Account\Entity\Company')->findOneBy(
+                array('uuid' => new \MongoId($uuid))
+            );
+            $this->documentManager->remove($qb3);
+            $this->documentManager->flush();
+            return array('success' => true);
+        } else {
+            return null;
+        }
+    }
+
 }

@@ -18,12 +18,12 @@ use Zend\Form\Element\Collection;
  */
 class Company
 {
-    public function __construct($ownerAccId, $param = null)
+    public function __construct($ownerAccId = null, $param = null)
     {
-        $uuid_gen = new UuidGenerator();
-        $this->setUUID($uuid_gen->generateV4());
+        $uuidGen = new UuidGenerator();
+        $this->uuid=$uuidGen->generateV4();
         if ($param != 'contractAgent') {
-            $this->setOwnerOrgId(new \MongoId($ownerAccId));
+            $this->ownerAccId=new \MongoId($ownerAccId);
         }
     }
 
@@ -32,46 +32,46 @@ class Company
      * @var int
      * @Annotation\Exclude()
      */
-    public $id;
+    protected $id;
     /**
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Exclude()
      */
-    public $uuid;
+    protected $uuid;
 
     /**
      * @ODM\ObjectId
      * @var int
      * @Annotation\Exclude()
      */
-    public $ownerAccId;
+    protected $ownerAccId;
 
     /**
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
      * @Annotation\Exclude()
      */
-    public $created;
+    protected $created;
 
     /**
      * @Gedmo\Timestampable(on="update")
      * @ODM\Date
      * @Annotation\Exclude()
      */
-    public $updated;
+    protected $updated;
     /**
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Exclude()
      */
-    public $activated;
+    protected $activated;
     /**
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Exclude()
      */
-    public $dirty;
+    protected $dirty;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -80,7 +80,7 @@ class Company
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Полное наименование юр. лица"})
      */
-    public $name;
+    protected $name;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -89,7 +89,7 @@ class Company
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Краткое наименование юр. лица"})
      */
-    public $shortName;
+    protected $shortName;
 
     /**
      * @var string
@@ -99,7 +99,7 @@ class Company
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"ИНН"})
      */
-    public $inn;
+    protected $inn;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -108,7 +108,7 @@ class Company
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"ОГРН"})
      */
-    public $ogrn;
+    protected $ogrn;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -117,7 +117,7 @@ class Company
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"КПП"})
      */
-    public $kpp;
+    protected $kpp;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -126,14 +126,14 @@ class Company
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Номер налоговой"})
      */
-    public $taxNumber;
+    protected $taxNumber;
     /**
      * @ODM\Date
      * @Annotation\Type("Zend\Form\Element\Date")
      * @Annotation\Required(false)
      * @Annotation\Options({"label":"Дата постановки на учет"})
      */
-    public $dateStart;
+    protected $dateStart;
 
 
     /**
@@ -146,7 +146,7 @@ class Company
      */
 
 
-    public $address = array();
+    protected $address = array();
 
     /**
      * @var array
@@ -156,7 +156,7 @@ class Company
      *                      "target_element" : {"type":"\Account\Form\CompanyContactsFieldset"}})
 
      */
-    public $contact = array();
+    protected $contact = array();
 
     /**
      * @var string
@@ -166,14 +166,14 @@ class Company
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Способ образования"})
      */
-    public $createWay;
+    protected $createWay;
     /**
      * @ODM\Date
      * @Annotation\Type("Zend\Form\Element\Date")
      * @Annotation\Required(false)
      * @Annotation\Options({"label":"Дата регистрации"})
      */
-    public $dateRegistration;
+    protected $dateRegistration;
 
     /**
      * @var string
@@ -183,7 +183,7 @@ class Company
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Номер налоговой, где проходила регистрация"})
      */
-    public $nalogNumber;
+    protected $nalogNumber;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -192,7 +192,7 @@ class Company
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Размер уставного капитала"})
      */
-    public $capitalValue;
+    protected $capitalValue;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -201,7 +201,7 @@ class Company
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Количество учредителей"})
      */
-    public $founderCount;
+    protected $founderCount;
 
     /**
      * @var array
@@ -211,7 +211,7 @@ class Company
      *                      "target_element" : {"type":"\Account\Form\CompanyFounderFieldset"}})
 
      */
-    public $founder = array();
+    protected $founder = array();
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
@@ -220,7 +220,7 @@ class Company
      *                      "target_element" : {"type":"\Account\Form\CompanyAuthorizedPersonsFieldset"}})
 
      */
-    public $authorizedPerson = array();
+    protected $authorizedPerson = array();
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
@@ -229,7 +229,7 @@ class Company
      *                      "target_element" : {"type":"\Account\Form\CompanyOkvedFieldset"}})
 
      */
-    public $okved = array();
+    protected $okved = array();
 
     /**
      * @var string
@@ -239,7 +239,7 @@ class Company
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Номер страхования в ПФР"})
      */
-    public $insuranceNumberInPfr;
+    protected $insuranceNumberInPfr;
 
     /**
      * @var string
@@ -249,14 +249,14 @@ class Company
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"19. Номер ПФР"})
      */
-    public $numberInPfr;
+    protected $numberInPfr;
     /**
      * @ODM\Date
      * @Annotation\Type("Zend\Form\Element\Date")
      * @Annotation\Required(false)
      * @Annotation\Options({"label":"Дата постановки в ПФР"})
      */
-    public $dateRegistrationPfr;
+    protected $dateRegistrationPfr;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -265,7 +265,7 @@ class Company
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Номер страхования ФМС"})
      */
-    public $insuranceNumberFms;
+    protected $insuranceNumberFms;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -274,14 +274,14 @@ class Company
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Номер ФМС"})
      */
-    public $numberInFms;
+    protected $numberInFms;
     /**
      * @ODM\Date
      * @Annotation\Type("Zend\Form\Element\Date")
      * @Annotation\Required(false)
      * @Annotation\Options({"label":"Дата постановки ФМС"})
      */
-    public $dateRegistrationFms;
+    protected $dateRegistrationFms;
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
@@ -290,7 +290,7 @@ class Company
      *                      "target_element" : {"type":"\Account\Form\CompanyLicenseFieldset"}})
 
      */
-    public $license = array();
+    protected $license = array();
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
@@ -299,7 +299,7 @@ class Company
      *                      "target_element" : {"type":"\Account\Form\CompanyApplicantsFieldset"}})
 
      */
-    public $applicants = array();
+    protected $applicants = array();
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -308,7 +308,7 @@ class Company
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Вид системы налогового учета"})
      */
-    public $taxSystem;
+    protected $taxSystem;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -317,7 +317,7 @@ class Company
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Процентная ставка налога"})
      */
-    public $taxPercent;
+    protected $taxPercent;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -326,7 +326,7 @@ class Company
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Ссылка на файлы выписки из ЕГРЮЛ/ЕГРЮИП"})
      */
-    public $egrulLink;
+    protected $egrulLink;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -335,7 +335,7 @@ class Company
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Ссылка на файлы устава"})
      */
-    public $law;
+    protected $law;
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
@@ -344,7 +344,7 @@ class Company
      *                      "target_element" : {"type":"\Account\Form\CompanyDocumentsFieldset"}})
 
      */
-    public $documents = array();
+    protected $documents = array();
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
@@ -353,7 +353,7 @@ class Company
      *                      "target_element" : {"type":"\Account\Form\CompanyBankAccountFieldset"}})
 
      */
-    public $bankAccount = array();
+    protected $bankAccount = array();
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -362,7 +362,7 @@ class Company
      * @Annotation\Attributes({"type":"text"})
      * @Annotation\Options({"label":"Ссылка на главного бухгалтера"})
      */
-    public $accountantLink;
+    protected $accountantLink;
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
@@ -371,7 +371,7 @@ class Company
      *                      "target_element" : {"type":"\Account\Form\CompanyAnotherPersonsFieldset"}})
 
      */
-    public $anotherPersons = array();
+    protected $anotherPersons = array();
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
@@ -380,7 +380,7 @@ class Company
      *                      "target_element" : {"type":"\Account\Form\CompanyWebsitesFieldset"}})
 
      */
-    public $websites = array();
+    protected $websites = array();
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -393,18 +393,36 @@ class Company
      * @Annotation\Attributes({"value":"0"})
      */
 
-    public $property = '';
+    protected $property = '';
 
     /**
      * @ODM\Date
      */
-    public $deletedAt;
+    protected $deletedAt;
     /**
      * @Annotation\Type("Zend\Form\Element\Submit")
      * @Annotation\Attributes({"value":"Отправить"})
      */
     public $submit;
+    public function setData($data) {
+        if($data !== null && is_array($data)){
+            foreach(array_keys(get_class_vars(__CLASS__)) as $key){
+                if(isset($entity[$key]) && ($key!='id') && ($key!='uuid') ){
+                    $this->$key = $entity[$key];
+                }
+            }
+        }
+        return $this;
 
+    }
+
+    public function getData() {
+        $data = array();
+        foreach(array_keys(get_class_vars(__CLASS__)) as $key){
+            $data[$key]=$this->$key;
+        }
+        return $data;
+    }
     /**
      * @return mixed
      */
@@ -585,12 +603,12 @@ class Company
         return $this;
     }
 
-    public function getOwnerOrgId()
+    public function getOwnerAccId()
     {
         return $this->ownerAccId;
     }
 
-    public function setOwnerOrgId($ownerAccId)
+    public function setOwnerAccId($ownerAccId)
     {
         $this->ownerAccId = $ownerAccId;
         return $this;

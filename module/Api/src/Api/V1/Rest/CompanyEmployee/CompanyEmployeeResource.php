@@ -1,19 +1,17 @@
 <?php
-namespace Api\V1\Rest\Account;
+namespace Api\V1\Rest\CompanyEmployee;
 
-use ZF\Rest\AbstractResourceListener;
-use Zend\Paginator\Adapter\ArrayAdapter;
-use Api\Entity\ApiStaticErrorList;
 use ZF\ApiProblem\ApiProblem;
+use ZF\Rest\AbstractResourceListener;
+use Api\Entity\ApiStaticErrorList;
 
-class AccountResource extends AbstractResourceListener
+class CompanyEmployeeResource extends AbstractResourceListener
 {
-    protected $accountModel;
+
     protected $companyUserModel;
 
-    public function __construct($accountModel = null,$companyUserModel = null)
+    public function __construct($companyUserModel = null)
     {
-        $this->accountModel = $accountModel;
         $this->companyUserModel = $companyUserModel;
     }
 
@@ -25,8 +23,7 @@ class AccountResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $data=$this->accountModel->createOrUpdate($data);
-        //тут еще функция, надо узнать как данные будут получаться  addUserToCompany($user_id, $accId, 'admin');
+        $data=$this->companyUserModel->createOrUpdate($data);
         if(!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
@@ -42,12 +39,7 @@ class AccountResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        $data=$this->accountModel->delete($id);
-        if(!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
     }
 
     /**
@@ -69,7 +61,7 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $data=$this->accountModel->fetch(array('uuid'=>$id,'activated' => '1','deletedAt' => null));
+        $data=$this->companyUserModel->fetch(array('uuid'=>$id));
         if(!empty($data)) {
             return $data;
         } else {
@@ -85,9 +77,9 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data=$this->accountModel->fetchAll($params);
+        $data=$this->companyUserModel->fetchAll($params);
         $adapter = new ArrayAdapter($data);
-        $collection = new AccountCollection($adapter);
+        $collection = new ProfileCollection($adapter);
         if(!empty($collection)) {
             return $collection;
         } else {
@@ -127,8 +119,7 @@ class AccountResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data=$this->accountModel->createOrUpdate($data,$id);
-        //тут еще функция, надо узнать как данные будут получаться
+        $data=$this->companyUserModel->createOrUpdate($data,$id);
         if(!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {

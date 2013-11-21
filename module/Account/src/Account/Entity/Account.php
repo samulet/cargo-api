@@ -72,7 +72,11 @@ class Account
      * @ODM\Date
      */
     protected $deletedAt;
-
+    /**
+     * @Annotation\Type("Zend\Form\Element\Submit")
+     * @Annotation\Attributes({"value":"Отправить"})
+     */
+    public $submit;
     public function setData($data) {
             if($data !== null && is_array($data)){
                 foreach(array_keys(get_class_vars(__CLASS__)) as $key){

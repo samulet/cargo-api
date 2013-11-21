@@ -4,6 +4,7 @@ namespace Api;
 use ZF\Apigility\ApigilityModuleInterface;
 use Api\V1\Rest\Account\AccountResource;
 use Api\V1\Rest\Profile\ProfileResource;
+use Api\V1\Rest\Company\CompanyResource;
 
 class Module implements ApigilityModuleInterface
 {
@@ -41,8 +42,18 @@ class Module implements ApigilityModuleInterface
                 },
                 'Api\V1\Rest\Profile\ProfileResource' => function ($sm) {
                     $userModel = $sm->get('UserModel');
-                    $acc = new ProfileResource($userModel);
-                    return $acc;
+                    $user = new ProfileResource($userModel);
+                    return $user;
+                },
+                'Api\V1\Rest\Company\CompanyResource' => function ($sm) {
+                    $companyModel = $sm->get('CompanyModel');
+                    $com = new CompanyResource($companyModel);
+                    return $com;
+                },
+                'Api\V1\Rest\CompanyEmployee\CompanyEmployeeResource' => function ($sm) {
+                    $companyModel = $sm->get('CompanyUserModel');
+                    $com = new CompanyResource($companyModel);
+                    return $com;
                 },
             ),
         );

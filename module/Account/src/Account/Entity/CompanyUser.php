@@ -12,8 +12,6 @@ class CompanyUser
 {
     public function __construct($accId, $user_id, $param, $roles)
     {
-
-
         if ($param == 'admin') {
             $this->orgId = new \MongoId($accId);
         } else {
@@ -27,33 +25,53 @@ class CompanyUser
      * @ODM\Id
      * @var int
      */
-    public $id;
+    protected $id;
     /**
      * @ODM\ObjectId
      * @var int
      */
-    public $userId;
+    protected $userId;
     /**
      * @ODM\ObjectId
      * @var int
      */
-    public $companyId;
+    protected $companyId;
 
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-    public $userRights;
+    protected $userRights;
     /**
      * @ODM\ObjectId
      * @var int
      */
-    public $orgId;
+    protected $orgId;
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
      */
-    public $roles;
+    protected $roles;
+
+    public function setData($data) {
+        if($data !== null && is_array($data)){
+            foreach(array_keys(get_class_vars(__CLASS__)) as $key){
+                if(isset($entity[$key]) && ($key!='id') && ($key!='uuid') ){
+                    $this->$key = $entity[$key];
+                }
+            }
+        }
+        return $this;
+
+    }
+
+    public function getData() {
+        $data = array();
+        foreach(array_keys(get_class_vars(__CLASS__)) as $key){
+            $data[$key]=$this->$key;
+        }
+        return $data;
+    }
 
     public function getId()
     {
