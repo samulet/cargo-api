@@ -95,6 +95,51 @@ class User implements UserInterface
      */
     protected $deletedAt;
     /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     */
+    protected $name = array();
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     */
+    protected $docs = array();
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $snils;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $inn;
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     */
+    protected $phone = array();
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     */
+    protected $site = array();
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $avatar;
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     */
+    protected $sign = array();
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     */
+    protected $social = array();
+    /**
      * @return mixed
      */
     public function getDeletedAt()
