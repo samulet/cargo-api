@@ -37,7 +37,8 @@ class Module implements ApigilityModuleInterface
                 'Api\V1\Rest\Account\AccountResource' => function ($sm) {
                     $accountModel = $sm->get('AccountModel');
                     $companyUserModel = $sm->get('CompanyUserModel');
-                    $acc = new AccountResource($accountModel,$companyUserModel);
+                    $request = $sm->get('request');
+                    $acc = new AccountResource($accountModel,$companyUserModel,$request);
                     return $acc;
                 },
                 'Api\V1\Rest\Profile\ProfileResource' => function ($sm) {
