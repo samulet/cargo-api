@@ -56,6 +56,15 @@ return array(
                     ),
                 ),
             ),
+            'api.rest.access-denied' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/access-denied[/:access_denied_id]',
+                    'defaults' => array(
+                        'controller' => 'Api\\V1\\Rest\\AccessDenied\\Controller',
+                    ),
+                ),
+            ),
         ),
     ),
     'zf-versioning' => array(
@@ -66,11 +75,13 @@ return array(
             3 => 'api.rest.account-company',
             4 => 'api.rest.company-employee',
             5 => 'api.rest.company-partner',
+            6 => 'api.rest.access-denied',
         ),
     ),
     'service_manager' => array(
         'invokables' => array(
-      ),
+            'Api\\V1\\Rest\\AccessDenied\\AccessDeniedResource' => 'Api\\V1\\Rest\\AccessDenied\\AccessDeniedResource',
+        ),
     ),
     'zf-rest' => array(
         'Api\\V1\\Rest\\Account\\Controller' => array(
@@ -219,6 +230,31 @@ return array(
             'entity_class' => 'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerEntity',
             'collection_class' => 'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerCollection',
         ),
+        'Api\\V1\\Rest\\AccessDenied\\Controller' => array(
+            'listener' => 'Api\\V1\\Rest\\AccessDenied\\AccessDeniedResource',
+            'route_name' => 'api.rest.access-denied',
+            'identifier_name' => 'access_denied_id',
+            'collection_name' => 'access_denied',
+            'resource_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+                4 => 'POST',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+                2 => 'PUT',
+                3 => 'PATCH',
+                4 => 'DELETE',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => '25',
+            'page_size_param' => '',
+            'entity_class' => 'Api\\V1\\Rest\\AccessDenied\\AccessDeniedEntity',
+            'collection_class' => 'Api\\V1\\Rest\\AccessDenied\\AccessDeniedCollection',
+        ),
     ),
     'zf-content-negotiation' => array(
         'controllers' => array(
@@ -229,6 +265,7 @@ return array(
             'Api\\V1\\Rest\\\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\CompanyEmployee\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\CompanyPartner\\Controller' => 'HalJson',
+            'Api\\V1\\Rest\\AccessDenied\\Controller' => 'HalJson',
         ),
         'accept-whitelist' => array(
             'Api\\V1\\Rest\\Account\\Controller' => array(
@@ -288,6 +325,19 @@ return array(
                 1 => 'application/json',
             ),
         ),
+        'accept_whitelist' => array(
+            'Api\\V1\\Rest\\AccessDenied\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
+        ),
+        'content_type_whitelist' => array(
+            'Api\\V1\\Rest\\AccessDenied\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/json',
+            ),
+        ),
     ),
     'zf-hal' => array(
         'metadata_map' => array(
@@ -343,6 +393,15 @@ return array(
             'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerCollection' => array(
                 'identifier_name' => 'company_partner_uuid',
                 'route_name' => 'api.rest.company-partner',
+                'is_collection' => '1',
+            ),
+            'Api\\V1\\Rest\\AccessDenied\\AccessDeniedEntity' => array(
+                'identifier_name' => 'access_denied_id',
+                'route_name' => 'api.rest.access-denied',
+            ),
+            'Api\\V1\\Rest\\AccessDenied\\AccessDeniedCollection' => array(
+                'identifier_name' => 'access_denied_id',
+                'route_name' => 'api.rest.access-denied',
                 'is_collection' => '1',
             ),
         ),

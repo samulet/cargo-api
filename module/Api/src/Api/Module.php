@@ -5,8 +5,9 @@ use ZF\Apigility\ApigilityModuleInterface;
 use Api\V1\Rest\Account\AccountResource;
 use Api\V1\Rest\Profile\ProfileResource;
 use Api\V1\Rest\Company\CompanyResource;
+use Api\V1\Rest\CompanyEmployee\CompanyEmployeeResource;
+use Api\V1\Rest\ResourceMeta\ResourceMetaResource;
 use Api\V1\Rest\AccessDenied\AccessDeniedResource;
-use ZF\ApiProblem\ApiProblem;
 
 class Module implements ApigilityModuleInterface
 {
@@ -86,6 +87,11 @@ class Module implements ApigilityModuleInterface
                         return new AccessDeniedResource();
                     }
                 },
+                'Api\V1\Rest\ResourceMeta\ResourceMetaResource' => function ($sm) {
+                    $configRouter = $sm->get('Config')['router']['routes'];
+                    $recourseMeta= new ResourceMetaResource($configRouter);
+                    return $recourseMeta;
+                }
             ),
         );
     }

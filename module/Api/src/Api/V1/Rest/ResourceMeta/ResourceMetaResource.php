@@ -6,6 +6,13 @@ use ZF\Rest\AbstractResourceListener;
 
 class ResourceMetaResource extends AbstractResourceListener
 {
+    protected $configRouter;
+
+    public function __construct($configRouter = null)
+    {
+        $this->configRouter = $configRouter;
+    }
+
     /**
      * Create a resource
      *
