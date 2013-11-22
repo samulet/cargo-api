@@ -10,9 +10,10 @@ class CompanyResource extends AbstractResourceListener
 {
     protected $companyModel;
 
-    public function __construct($companyModel = null)
+    public function __construct($companyModel = null, $userEntity=null)
     {
         $this->companyModel = $companyModel;
+        $this->userEntity = $userEntity;
     }
     /**
      * Create a resource
