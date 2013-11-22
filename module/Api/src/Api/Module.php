@@ -40,7 +40,7 @@ class Module implements ApigilityModuleInterface
                 'Api\V1\Rest\Account\AccountResource' => function ($sm) {
                     $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
                     $queryBuilderModel=$sm->get('QueryBuilderModel');
-                    $userEntity=$queryBuilderModel->getUser($authToken);
+                    $userEntity=$queryBuilderModel->getUserByToken($authToken);
                     if(!empty($user)) {
                         $accountModel = $sm->get('AccountModel');
                         $companyUserModel = $sm->get('CompanyUserModel');
@@ -51,19 +51,40 @@ class Module implements ApigilityModuleInterface
                     }
                 },
                 'Api\V1\Rest\Profile\ProfileResource' => function ($sm) {
-                    $userModel = $sm->get('UserModel');
-                    $user = new ProfileResource($userModel);
-                    return $user;
+                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
+                    $queryBuilderModel=$sm->get('QueryBuilderModel');
+                    $userEntity=$queryBuilderModel->getUserByToken($authToken);
+                    if(!empty($user)) {
+                        $userModel = $sm->get('UserModel');
+                        $user = new ProfileResource($userModel,$userEntity);
+                        return $user;
+                    } else {
+                        return new AccessDeniedResource();
+                    }
                 },
                 'Api\V1\Rest\Company\CompanyResource' => function ($sm) {
-                    $companyModel = $sm->get('CompanyModel');
-                    $com = new CompanyResource($companyModel);
-                    return $com;
+                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
+                    $queryBuilderModel=$sm->get('QueryBuilderModel');
+                    $userEntity=$queryBuilderModel->getUserByToken($authToken);
+                    if(!empty($user)) {
+                        $companyModel = $sm->get('CompanyModel');
+                        $com = new CompanyResource($companyModel,$userEntity);
+                        return $com;
+                    } else {
+                        return new AccessDeniedResource();
+                    }
                 },
                 'Api\V1\Rest\CompanyEmployee\CompanyEmployeeResource' => function ($sm) {
-                    $companyModel = $sm->get('CompanyUserModel');
-                    $com = new CompanyResource($companyModel);
-                    return $com;
+                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
+                    $queryBuilderModel=$sm->get('QueryBuilderModel');
+                    $userEntity=$queryBuilderModel->getUserByToken($authToken);
+                    if(!empty($user)) {
+                        $companyUserModel = $sm->get('CompanyUserModel');
+                        $com = new CompanyEmployeeResource($companyUserModel,$userEntity);
+                        return $com;
+                    } else {
+                        return new AccessDeniedResource();
+                    }
                 },
             ),
         );
