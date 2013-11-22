@@ -66,9 +66,18 @@ class ResourceMetaResource extends AbstractResourceListener
     public function fetchAll($params = array())
     {
         $object = new stdClass();
-        $object->property = 'Here we go';
+        foreach($this->configRouter as $name => $config) {
+            $explodedName = explode('.', $name);
+            if( ('api'==$explodedName[0]) && ('rest'==$explodedName[1]) ) {
+                $object->property = 'Here we go';
+            }
+        }
+        if(!empty($object)) {
+            return $object;
+        } else {
 
-        return $object;
+        }
+
    //    return new ApiProblem(405, 'The GET method has not been defined for collections');
     }
 
