@@ -5,6 +5,8 @@ use ZF\Apigility\ApigilityModuleInterface;
 use Api\V1\Rest\Account\AccountResource;
 use Api\V1\Rest\Profile\ProfileResource;
 use Api\V1\Rest\Company\CompanyResource;
+use Api\V1\Rest\AccessDenied\AccessDeniedResource;
+use ZF\ApiProblem\ApiProblem;
 
 class Module implements ApigilityModuleInterface
 {
@@ -30,16 +32,23 @@ class Module implements ApigilityModuleInterface
                 'Doctrine\ODM\MongoDB\DocumentManager' => 'doctrine.documentmanager.odm_default',
             ) ,
             'factories' => array(
+                'QueryBuilderModel' => 'QueryBuilder\Factory\QueryBuilderModelFactory',
                 'CompanyModel' => 'Account\Factory\CompanyModelFactory',
                 'CompanyUserModel' => 'Account\Factory\CompanyUserModelFactory',
                 'AccountModel' => 'Account\Factory\AccountModelFactory',
                 'UserModel' => 'User\Factory\UserModelFactory',
                 'Api\V1\Rest\Account\AccountResource' => function ($sm) {
-                    $accountModel = $sm->get('AccountModel');
-                    $companyUserModel = $sm->get('CompanyUserModel');
-                    $request = $sm->get('request');
-                    $acc = new AccountResource($accountModel,$companyUserModel,$request);
-                    return $acc;
+                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
+                    $queryBuilderModel=$sm->get('QueryBuilderModel');
+                    $userEntity=$queryBuilderModel->getUser($authToken);
+                    if(!empty($user)) {
+                        $accountModel = $sm->get('AccountModel');
+                        $companyUserModel = $sm->get('CompanyUserModel');
+                        $acc = new AccountResource($accountModel,$companyUserModel,$userEntity);
+                        return $acc;
+                    } else {
+                        return new AccessDeniedResource();
+                    }
                 },
                 'Api\V1\Rest\Profile\ProfileResource' => function ($sm) {
                     $userModel = $sm->get('UserModel');
