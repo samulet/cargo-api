@@ -84,7 +84,7 @@ class CompanyResource extends AbstractResourceListener
     {
         $data=$this->companyModel->fetchAll($params);
         $adapter = new ArrayAdapter($data);
-        $collection = new AccountCollection($adapter);
+        $collection = new CompanyCollection($adapter);
         if(!empty($collection)) {
             return $collection;
         } else {
