@@ -23,12 +23,7 @@ class CompanyResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $data=$this->companyModel->createOrUpdate($data);
-        if(!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return new ApiProblem(405, 'The POST method has not been defined');
     }
 
     /**
@@ -124,11 +119,6 @@ class CompanyResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data=$this->companyModel->createOrUpdate($data,$id);
-        if(!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
     }
 }
