@@ -21,7 +21,7 @@ class Company
     public function __construct()
     {
         $uuidGen = new UuidGenerator();
-        $this->uuid=$uuidGen->generateV4();
+        $this->uuid = $uuidGen->generateV4();
     }
 
     /**
@@ -208,15 +208,17 @@ class Company
      * @ODM\Date
      */
     protected $deletedAt;
+
     /**
      * @Annotation\Type("Zend\Form\Element\Submit")
      * @Annotation\Attributes({"value":"Отправить"})
      */
 
-    public function setData($data) {
-        if($data !== null && is_array($data)){
-            foreach(array_keys(get_class_vars(__CLASS__)) as $key){
-                if(isset($entity[$key]) && ($key!='id') && ($key!='uuid') ){
+    public function setData($data)
+    {
+        if ($data !== null && is_array($data)) {
+            foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
+                if (isset($entity[$key]) && ($key != 'id') && ($key != 'uuid')) {
                     $this->$key = $entity[$key];
                 }
             }
@@ -225,28 +227,13 @@ class Company
 
     }
 
-    public function getData() {
+    public function getData()
+    {
         $data = array();
-        foreach(array_keys(get_class_vars(__CLASS__)) as $key){
-            $data[$key]=$this->$key;
+        foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
+            $data[$key] = $this->$key;
         }
         return $data;
-    }
-    /**
-     * @return mixed
-     */
-
-    public function getDeletedAt()
-    {
-        return $this->deletedAt;
-    }
-
-    /**
-     * @param mixed $deletedAt
-     */
-    public function setDeletedAt($deletedAt)
-    {
-        $this->deletedAt = $deletedAt;
     }
 
     /**
@@ -271,26 +258,41 @@ class Company
         return $this;
     }
 
-    /**
-     * Get description.
-     *
-     * @return string
-     */
-    public function getDescription()
+    public function getUUID()
     {
-        return $this->description;
+        return $this->uuid;
+    }
+
+    public function setUUID($uuid)
+    {
+        $this->uuid = $uuid;
+        return $this;
     }
 
     /**
-     * Set Description.
-     *
-     * @param string $description
-     * @return UserInterface
+     * @return mixed
      */
-    public function setDescription($description)
+    public function getDeletedAt()
     {
-        $this->description = $description;
-        return $this;
+        return $this->deletedAt;
+    }
+
+    /**
+     * @param mixed $deletedAt
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+    }
+
+    public function setDirty($dirty)
+    {
+        $this->dirty = $dirty;
+    }
+
+    public function getDirty()
+    {
+        return $this->dirty;
     }
 
     /**
@@ -335,83 +337,6 @@ class Company
         return $this->updated;
     }
 
-    public function getUUID()
-    {
-        return $this->uuid;
-    }
-
-    public function setUUID($uuid)
-    {
-        $this->uuid = $uuid;
-        return $this;
-    }
-
-    public function getRequisites()
-    {
-        return $this->requisites;
-    }
-
-    public function setRequisites($requisites)
-    {
-        $this->requisites = $requisites;
-        return $this;
-    }
-
-    public function getAddressFact()
-    {
-        return $this->addressFact;
-    }
-
-    public function setAddressFact($addressFact)
-    {
-        $this->addressFact = $addressFact;
-        return $this;
-    }
-
-    public function getAddressReg()
-    {
-        return $this->addressReg;
-    }
-
-    public function setAddressReg($addressReg)
-    {
-        $this->addressReg = $addressReg;
-        return $this;
-    }
-
-    public function getGeneralManager()
-    {
-        return $this->generalManager;
-    }
-
-    public function setGeneralManager($generalManager)
-    {
-        $this->generalManager = $generalManager;
-        return $this;
-    }
-
-    public function getTelephone()
-    {
-        return $this->telephone;
-    }
-
-    public function setTelephone($telephone)
-    {
-        $this->telephone = $telephone;
-        return $this;
-    }
-
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    public function setEmail($email)
-    {
-        $this->email = $email;
-        return $this;
-    }
-
     public function getOwnerAccId()
     {
         return $this->ownerAccId;
@@ -423,22 +348,6 @@ class Company
         return $this;
     }
 
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Set type.
-     *
-     * @param string $type
-     * @return AccountInterface
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-        return $this;
-    }
 
     public function getName()
     {
@@ -457,4 +366,237 @@ class Company
         $this->name = $name;
         return $this;
     }
+
+    public function getShort()
+    {
+        return $this->short;
+    }
+
+    public function setShort($short)
+    {
+        $this->short = $short;
+        return $this;
+    }
+
+    public function getProperty()
+    {
+        return $this->property;
+    }
+
+    public function setProperty($property)
+    {
+        $this->property = $property;
+        return $this;
+    }
+
+    public function getInn()
+    {
+        return $this->inn;
+    }
+
+    public function setInn($inn)
+    {
+        $this->inn = $inn;
+        return $this;
+    }
+
+    public function getOgrn()
+    {
+        return $this->ogrn;
+    }
+
+    public function setOgrn($ogrn)
+    {
+        $this->ogrn = $ogrn;
+        return $this;
+    }
+
+    public function getKpp()
+    {
+        return $this->kpp;
+    }
+
+    public function setKpp($kpp)
+    {
+        $this->kpp = $kpp;
+        return $this;
+    }
+
+    public function getTax()
+    {
+        return $this->tax;
+    }
+
+    public function setTax($tax)
+    {
+        $this->tax = $tax;
+        return $this;
+    }
+
+    public function getAddresses()
+    {
+        return $this->addresses;
+    }
+
+    public function setAddresses($addresses)
+    {
+        $this->addresses = $addresses;
+        return $this;
+    }
+
+    public function getContacts()
+    {
+        return $this->contacts;
+    }
+
+    public function setContacts($contacts)
+    {
+        $this->contacts = $contacts;
+        return $this;
+    }
+
+    public function getFormingMethod()
+    {
+        return $this->formingMethod;
+    }
+
+    public function setFormingMethod($formingMethod)
+    {
+        $this->formingMethod = $formingMethod;
+        return $this;
+    }
+
+    public function getCapital()
+    {
+        return $this->capital;
+    }
+
+    public function setCapital($capital)
+    {
+        $this->capital = $capital;
+        return $this;
+    }
+
+    public function getFounderCount()
+    {
+        return $this->founderCount;
+    }
+
+    public function setFounderCount($founderCount)
+    {
+        $this->founderCount = $founderCount;
+        return $this;
+    }
+
+    public function getFounders()
+    {
+        return $this->founders;
+    }
+
+    public function setFounders($founders)
+    {
+        $this->founders = $founders;
+        return $this;
+    }
+
+    public function getAuthorizedPersons()
+    {
+        return $this->authorizedPersons;
+    }
+
+    public function setAuthorizedPersons($authorizedPersons)
+    {
+        $this->authorizedPersons = $authorizedPersons;
+        return $this;
+    }
+
+    public function getOkved()
+    {
+        return $this->okved;
+    }
+
+    public function setOkved($okved)
+    {
+        $this->okved = $okved;
+        return $this;
+    }
+
+    public function getPfr()
+    {
+        return $this->pfr;
+    }
+
+    public function setPfr($pfr)
+    {
+        $this->pfr = $pfr;
+        return $this;
+    }
+
+    public function getFms()
+    {
+        return $this->fms;
+    }
+
+    public function setFms($fms)
+    {
+        $this->fms = $fms;
+        return $this;
+    }
+
+    public function getLicenses()
+    {
+        return $this->licenses;
+    }
+
+    public function setLicenses($licenses)
+    {
+        $this->licenses = $licenses;
+        return $this;
+    }
+
+    public function getApplicants()
+    {
+        return $this->applicants;
+    }
+
+    public function setApplicants($applicants)
+    {
+        $this->applicants = $applicants;
+        return $this;
+    }
+
+    public function getAccounts()
+    {
+        return $this->accounts;
+    }
+
+    public function setAccounts($accounts)
+    {
+        $this->accounts = $accounts;
+        return $this;
+    }
+
+    public function getPersons()
+    {
+        return $this->persons;
+    }
+
+    public function setPersons($persons)
+    {
+        $this->persons = $persons;
+        return $this;
+    }
+
+    public function getSites()
+    {
+        return $this->sites;
+    }
+
+    public function setSites($sites)
+    {
+        $this->sites = $sites;
+        return $this;
+    }
+
+
 }
