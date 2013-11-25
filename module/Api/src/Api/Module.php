@@ -8,6 +8,7 @@ use Api\V1\Rest\Company\CompanyResource;
 use Api\V1\Rest\CompanyEmployee\CompanyEmployeeResource;
 use Api\V1\Rest\ResourceMeta\ResourceMetaResource;
 use Api\V1\Rest\AccessDenied\AccessDeniedResource;
+use Api\V1\Rest\AccountCompany\AccountCompanyResource;
 
 class Module implements ApigilityModuleInterface
 {
@@ -70,6 +71,18 @@ class Module implements ApigilityModuleInterface
                     if(!empty($user)) {
                         $companyModel = $sm->get('CompanyModel');
                         $com = new CompanyResource($companyModel,$userEntity);
+                        return $com;
+                    } else {
+                        return new AccessDeniedResource();
+                    }
+                },
+                'Api\V1\Rest\AccountCompany\AccountCompanyResource' => function ($sm) {
+                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
+                    $queryBuilderModel=$sm->get('QueryBuilderModel');
+                    $userEntity=$queryBuilderModel->getUserByToken($authToken);
+                    if(!empty($user)) {
+                        $companyModel = $sm->get('CompanyModel');
+                        $com = new AccountCompanyResource($companyModel,$userEntity);
                         return $com;
                     } else {
                         return new AccessDeniedResource();
