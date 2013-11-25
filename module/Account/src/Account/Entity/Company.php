@@ -18,13 +18,10 @@ use Zend\Form\Element\Collection;
  */
 class Company
 {
-    public function __construct($ownerAccId = null, $param = null)
+    public function __construct()
     {
         $uuidGen = new UuidGenerator();
         $this->uuid=$uuidGen->generateV4();
-        if ($param != 'contractAgent') {
-            $this->ownerAccId=new \MongoId($ownerAccId);
-        }
     }
 
     /**
@@ -33,6 +30,7 @@ class Company
      * @Annotation\Exclude()
      */
     protected $id;
+
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -60,341 +58,152 @@ class Company
      * @Annotation\Exclude()
      */
     protected $updated;
+
     /**
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Exclude()
      */
     protected $activated;
+
     /**
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Exclude()
      */
     protected $dirty;
+
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Полное наименование юр. лица"})
      */
     protected $name;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Краткое наименование юр. лица"})
-     */
-    protected $shortName;
 
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"ИНН"})
+     */
+    protected $short;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $property;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
      */
     protected $inn;
+
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"ОГРН"})
      */
     protected $ogrn;
+
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"КПП"})
      */
     protected $kpp;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Номер налоговой"})
-     */
-    protected $taxNumber;
-    /**
-     * @ODM\Date
-     * @Annotation\Type("Zend\Form\Element\Date")
-     * @Annotation\Required(false)
-     * @Annotation\Options({"label":"Дата постановки на учет"})
-     */
-    protected $dateStart;
-
-
-    /**
-     * @var array
-     * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Адреса", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Account\Form\CompanyAddressFieldset"}})
-
-     */
-
-
-    protected $address = array();
-
-    /**
-     * @var array
-     * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Контакты", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Account\Form\CompanyContactsFieldset"}})
-
-     */
-    protected $contact = array();
 
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Способ образования"})
      */
-    protected $createWay;
-    /**
-     * @ODM\Date
-     * @Annotation\Type("Zend\Form\Element\Date")
-     * @Annotation\Required(false)
-     * @Annotation\Options({"label":"Дата регистрации"})
-     */
-    protected $dateRegistration;
-
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Номер налоговой, где проходила регистрация"})
-     */
-    protected $nalogNumber;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Размер уставного капитала"})
-     */
-    protected $capitalValue;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Количество учредителей"})
-     */
-    protected $founderCount;
+    protected $tax = array();
 
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Учредители", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Account\Form\CompanyFounderFieldset"}})
-
      */
-    protected $founder = array();
+    protected $addresses = array();
+
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Уполномоченные лица", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Account\Form\CompanyAuthorizedPersonsFieldset"}})
-
      */
-    protected $authorizedPerson = array();
+    protected $contacts = array();
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $forming_method;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $capital;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $founder_count;
+
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Коды ОКВЭД", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Account\Form\CompanyOkvedFieldset"}})
+     */
+    protected $founders = array();
 
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     */
+    protected $authorized_persons = array();
+
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")=
      */
     protected $okved = array();
 
     /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Номер страхования в ПФР"})
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
      */
-    protected $insuranceNumberInPfr;
+    protected $pfr = array();
 
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"19. Номер ПФР"})
-     */
-    protected $numberInPfr;
-    /**
-     * @ODM\Date
-     * @Annotation\Type("Zend\Form\Element\Date")
-     * @Annotation\Required(false)
-     * @Annotation\Options({"label":"Дата постановки в ПФР"})
-     */
-    protected $dateRegistrationPfr;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Номер страхования ФМС"})
-     */
-    protected $insuranceNumberFms;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Номер ФМС"})
-     */
-    protected $numberInFms;
-    /**
-     * @ODM\Date
-     * @Annotation\Type("Zend\Form\Element\Date")
-     * @Annotation\Required(false)
-     * @Annotation\Options({"label":"Дата постановки ФМС"})
-     */
-    protected $dateRegistrationFms;
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Лицензии", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Account\Form\CompanyLicenseFieldset"}})
-
      */
-    protected $license = array();
+    protected $fms = array();
+
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Заявители при регистрации", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Account\Form\CompanyApplicantsFieldset"}})
+     */
+    protected $licenses = array();
 
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
      */
     protected $applicants = array();
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Вид системы налогового учета"})
-     */
-    protected $taxSystem;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Процентная ставка налога"})
-     */
-    protected $taxPercent;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Ссылка на файлы выписки из ЕГРЮЛ/ЕГРЮИП"})
-     */
-    protected $egrulLink;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Ссылка на файлы устава"})
-     */
-    protected $law;
+
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Остальные учредительные документы", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Account\Form\CompanyDocumentsFieldset"}})
-
      */
-    protected $documents = array();
+    protected $accounts = array();
+
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Ссылки на номер счета", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Account\Form\CompanyBankAccountFieldset"}})
+     */
+    protected $persons = array();
 
-     */
-    protected $bankAccount = array();
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Ссылка на главного бухгалтера"})
-     */
-    protected $accountantLink;
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Ссылки на других ответственных лиц с указанием области ответственности", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Account\Form\CompanyAnotherPersonsFieldset"}})
-
      */
-    protected $anotherPersons = array();
-    /**
-     * @var array
-     * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Ссылки на сайты", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Account\Form\CompanyWebsitesFieldset"}})
-
-     */
-    protected $websites = array();
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Type("Zend\Form\Element\Select")
-     * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Вид собственности"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
-     * @Annotation\Attributes({"value":"0"})
-     */
-
-    protected $property = '';
-
+    protected $sites = array();
     /**
      * @ODM\Date
      */
@@ -403,7 +212,7 @@ class Company
      * @Annotation\Type("Zend\Form\Element\Submit")
      * @Annotation\Attributes({"value":"Отправить"})
      */
-    public $submit;
+
     public function setData($data) {
         if($data !== null && is_array($data)){
             foreach(array_keys(get_class_vars(__CLASS__)) as $key){
