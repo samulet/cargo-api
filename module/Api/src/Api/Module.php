@@ -82,7 +82,8 @@ class Module implements ApigilityModuleInterface
                     $userEntity=$queryBuilderModel->getUserByToken($authToken);
                     if(!empty($user)) {
                         $companyModel = $sm->get('CompanyModel');
-                        $com = new AccountCompanyResource($companyModel,$userEntity);
+                        $companyUserModel = $sm->get('CompanyUserModel');
+                        $com = new AccountCompanyResource($companyModel,$companyUserModel,$userEntity);
                         return $com;
                     } else {
                         return new AccessDeniedResource();

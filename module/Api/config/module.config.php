@@ -32,7 +32,7 @@ return array(
             'api.rest.account-company' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/account-company[/:account_company_id]',
+                    'route' => '/accounts/[/:account_uuid]/companies',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\AccountCompany\\Controller',
                     ),
@@ -167,10 +167,14 @@ return array(
                 1 => 'PATCH',
                 2 => 'PUT',
                 3 => 'DELETE',
+                4 => 'POST',
             ),
             'collection_http_methods' => array(
                 0 => 'GET',
                 1 => 'POST',
+                2 => 'PUT',
+                3 => 'PATCH',
+                4 => 'DELETE',
             ),
             'collection_query_whitelist' => array(),
             'page_size' => '25',
@@ -329,11 +333,18 @@ return array(
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ),
+            'Api\\V1\\Rest\\AccountCompany\\Controller' => array(
+                0 => 'application/json',
+                1 => 'application/*+json',
+            ),
         ),
         'content_type_whitelist' => array(
             'Api\\V1\\Rest\\ResourceMeta\\Controller' => array(
                 0 => 'application/vnd.api.v1+json',
                 1 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\AccountCompany\\Controller' => array(
+                0 => 'application/json',
             ),
         ),
     ),
