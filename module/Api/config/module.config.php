@@ -59,7 +59,7 @@ return array(
             'api.rest.resource-meta' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/resource-meta[/:resource_meta_id]',
+                    'route' => '/meta[/:resource_meta_id]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\ResourceMeta\\Controller',
                     ),
@@ -79,9 +79,7 @@ return array(
         ),
     ),
     'service_manager' => array(
-        'invokables' => array(
-
-        ),
+        'invokables' => array(),
     ),
     'zf-rest' => array(
         'Api\\V1\\Rest\\Account\\Controller' => array(
@@ -240,10 +238,14 @@ return array(
                 1 => 'PATCH',
                 2 => 'PUT',
                 3 => 'DELETE',
+                4 => 'POST',
             ),
             'collection_http_methods' => array(
                 0 => 'GET',
                 1 => 'POST',
+                2 => 'PUT',
+                3 => 'PATCH',
+                4 => 'DELETE',
             ),
             'collection_query_whitelist' => array(),
             'page_size' => '25',
