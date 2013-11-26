@@ -3,6 +3,7 @@ namespace Api\V1\Rest\ProfileStatus;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use Api\Entity\ApiStaticErrorList;
 
 class ProfileStatusResource extends AbstractResourceListener
 {
@@ -54,8 +55,12 @@ class ProfileStatusResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $userUuid=$this->getEvent()->getRouteMatch()->getParam('user_uuid');
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        $data=$this->userModel->getUserStatus($id);
+        if(!empty($data)) {
+            return $data;
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
     }
 
     /**
@@ -101,6 +106,11 @@ class ProfileStatusResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
+        $data=$this->accountModel->createOrUpdate(array('status' => get_object_vars($data)),$id);
+        if(!empty($data)) {
+            return ApiStaticErrorList::getError(202);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
     }
 }
