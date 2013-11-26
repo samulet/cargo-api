@@ -38,4 +38,9 @@ class UserModel
     public function fetchAll($findParams) {
         return $this->queryBuilderModel->fetchAll('User\Entity\User',$findParams);
     }
+
+    public function getUserStatus($uuid) {
+        $user=$this->queryBuilderModel->fetch('User\Entity\User',array('uuid' =>$uuid));
+        return $user->getStatus();
+    }
 }
