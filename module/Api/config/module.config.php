@@ -68,7 +68,7 @@ return array(
             'api.rest.profile-status' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/profile-status[/:profile_status_id]',
+                    'route' => '/profile[/:user_uuid]/status',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\ProfileStatus\\Controller',
                     ),
@@ -279,10 +279,14 @@ return array(
                 1 => 'PATCH',
                 2 => 'PUT',
                 3 => 'DELETE',
+                4 => 'POST',
             ),
             'collection_http_methods' => array(
                 0 => 'GET',
                 1 => 'POST',
+                2 => 'DELETE',
+                3 => 'PATCH',
+                4 => 'PUT',
             ),
             'collection_query_whitelist' => array(),
             'page_size' => '25',
