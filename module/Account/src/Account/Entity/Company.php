@@ -18,13 +18,10 @@ use Zend\Form\Element\Collection;
  */
 class Company
 {
-    public function __construct($ownerAccId = null, $param = null)
+    public function __construct()
     {
         $uuidGen = new UuidGenerator();
-        $this->uuid=$uuidGen->generateV4();
-        if ($param != 'contractAgent') {
-            $this->ownerAccId=new \MongoId($ownerAccId);
-        }
+        $this->uuid = $uuidGen->generateV4();
     }
 
     /**
@@ -33,6 +30,7 @@ class Company
      * @Annotation\Exclude()
      */
     protected $id;
+
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -60,354 +58,167 @@ class Company
      * @Annotation\Exclude()
      */
     protected $updated;
+
     /**
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Exclude()
      */
     protected $activated;
+
     /**
      * @var string
      * @ODM\Field(type="string")
      * @Annotation\Exclude()
      */
     protected $dirty;
+
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Полное наименование юр. лица"})
      */
     protected $name;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Краткое наименование юр. лица"})
-     */
-    protected $shortName;
 
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"ИНН"})
+     */
+    protected $short;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $property;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
      */
     protected $inn;
+
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"ОГРН"})
      */
     protected $ogrn;
+
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"КПП"})
      */
     protected $kpp;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Номер налоговой"})
-     */
-    protected $taxNumber;
-    /**
-     * @ODM\Date
-     * @Annotation\Type("Zend\Form\Element\Date")
-     * @Annotation\Required(false)
-     * @Annotation\Options({"label":"Дата постановки на учет"})
-     */
-    protected $dateStart;
-
-
-    /**
-     * @var array
-     * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Адреса", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Account\Form\CompanyAddressFieldset"}})
-
-     */
-
-
-    protected $address = array();
-
-    /**
-     * @var array
-     * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Контакты", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Account\Form\CompanyContactsFieldset"}})
-
-     */
-    protected $contact = array();
 
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Способ образования"})
      */
-    protected $createWay;
-    /**
-     * @ODM\Date
-     * @Annotation\Type("Zend\Form\Element\Date")
-     * @Annotation\Required(false)
-     * @Annotation\Options({"label":"Дата регистрации"})
-     */
-    protected $dateRegistration;
-
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Номер налоговой, где проходила регистрация"})
-     */
-    protected $nalogNumber;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Размер уставного капитала"})
-     */
-    protected $capitalValue;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Количество учредителей"})
-     */
-    protected $founderCount;
+    protected $tax = array();
 
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Учредители", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Account\Form\CompanyFounderFieldset"}})
-
      */
-    protected $founder = array();
+    protected $addresses = array();
+
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Уполномоченные лица", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Account\Form\CompanyAuthorizedPersonsFieldset"}})
-
      */
-    protected $authorizedPerson = array();
+    protected $contacts = array();
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $forming_method;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $capital;
+
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $founder_count;
+
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Коды ОКВЭД", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Account\Form\CompanyOkvedFieldset"}})
+     */
+    protected $founders = array();
 
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     */
+    protected $authorized_persons = array();
+
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")=
      */
     protected $okved = array();
 
     /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Номер страхования в ПФР"})
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
      */
-    protected $insuranceNumberInPfr;
+    protected $pfr = array();
 
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"19. Номер ПФР"})
-     */
-    protected $numberInPfr;
-    /**
-     * @ODM\Date
-     * @Annotation\Type("Zend\Form\Element\Date")
-     * @Annotation\Required(false)
-     * @Annotation\Options({"label":"Дата постановки в ПФР"})
-     */
-    protected $dateRegistrationPfr;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Номер страхования ФМС"})
-     */
-    protected $insuranceNumberFms;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Номер ФМС"})
-     */
-    protected $numberInFms;
-    /**
-     * @ODM\Date
-     * @Annotation\Type("Zend\Form\Element\Date")
-     * @Annotation\Required(false)
-     * @Annotation\Options({"label":"Дата постановки ФМС"})
-     */
-    protected $dateRegistrationFms;
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Лицензии", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Account\Form\CompanyLicenseFieldset"}})
-
      */
-    protected $license = array();
+    protected $fms = array();
+
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Заявители при регистрации", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Account\Form\CompanyApplicantsFieldset"}})
+     */
+    protected $licenses = array();
 
+    /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
      */
     protected $applicants = array();
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Вид системы налогового учета"})
-     */
-    protected $taxSystem;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Процентная ставка налога"})
-     */
-    protected $taxPercent;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Ссылка на файлы выписки из ЕГРЮЛ/ЕГРЮИП"})
-     */
-    protected $egrulLink;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Ссылка на файлы устава"})
-     */
-    protected $law;
+
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Остальные учредительные документы", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Account\Form\CompanyDocumentsFieldset"}})
-
      */
-    protected $documents = array();
+    protected $accounts = array();
+
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Ссылки на номер счета", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Account\Form\CompanyBankAccountFieldset"}})
+     */
+    protected $persons = array();
 
-     */
-    protected $bankAccount = array();
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":25}})
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Ссылка на главного бухгалтера"})
-     */
-    protected $accountantLink;
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Ссылки на других ответственных лиц с указанием области ответственности", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Account\Form\CompanyAnotherPersonsFieldset"}})
-
      */
-    protected $anotherPersons = array();
-    /**
-     * @var array
-     * @ODM\Collection(strategy="pushAll")
-     * @Annotation\Type("Zend\Form\Element\Collection")
-     * @Annotation\Options({"label":"Ссылки на сайты", "should_create_template" : "true", "count" : 1,"allow_add" : "true",
-     *                      "target_element" : {"type":"\Account\Form\CompanyWebsitesFieldset"}})
-
-     */
-    protected $websites = array();
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Type("Zend\Form\Element\Select")
-     * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Вид собственности"})
-     * @Annotation\Validator({"name":"InArray",
-     *                        "options":{"haystack":{"1","2","3"},
-     *                              "messages":{"notInArray":"Please Select a Class"}}})
-     * @Annotation\Attributes({"value":"0"})
-     */
-
-    protected $property = '';
-
+    protected $sites = array();
     /**
      * @ODM\Date
      */
     protected $deletedAt;
+
     /**
      * @Annotation\Type("Zend\Form\Element\Submit")
      * @Annotation\Attributes({"value":"Отправить"})
      */
-    public $submit;
-    public function setData($data) {
-        if($data !== null && is_array($data)){
-            foreach(array_keys(get_class_vars(__CLASS__)) as $key){
-                if(isset($entity[$key]) && ($key!='id') && ($key!='uuid') ){
+
+    public function setData($data)
+    {
+        if ($data !== null && is_array($data)) {
+            foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
+                if (isset($entity[$key]) && ($key != 'id') && ($key != 'uuid')) {
                     $this->$key = $entity[$key];
                 }
             }
@@ -416,28 +227,13 @@ class Company
 
     }
 
-    public function getData() {
+    public function getData()
+    {
         $data = array();
-        foreach(array_keys(get_class_vars(__CLASS__)) as $key){
-            $data[$key]=$this->$key;
+        foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
+            $data[$key] = $this->$key;
         }
         return $data;
-    }
-    /**
-     * @return mixed
-     */
-
-    public function getDeletedAt()
-    {
-        return $this->deletedAt;
-    }
-
-    /**
-     * @param mixed $deletedAt
-     */
-    public function setDeletedAt($deletedAt)
-    {
-        $this->deletedAt = $deletedAt;
     }
 
     /**
@@ -462,26 +258,41 @@ class Company
         return $this;
     }
 
-    /**
-     * Get description.
-     *
-     * @return string
-     */
-    public function getDescription()
+    public function getUUID()
     {
-        return $this->description;
+        return $this->uuid;
+    }
+
+    public function setUUID($uuid)
+    {
+        $this->uuid = $uuid;
+        return $this;
     }
 
     /**
-     * Set Description.
-     *
-     * @param string $description
-     * @return UserInterface
+     * @return mixed
      */
-    public function setDescription($description)
+    public function getDeletedAt()
     {
-        $this->description = $description;
-        return $this;
+        return $this->deletedAt;
+    }
+
+    /**
+     * @param mixed $deletedAt
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+    }
+
+    public function setDirty($dirty)
+    {
+        $this->dirty = $dirty;
+    }
+
+    public function getDirty()
+    {
+        return $this->dirty;
     }
 
     /**
@@ -526,83 +337,6 @@ class Company
         return $this->updated;
     }
 
-    public function getUUID()
-    {
-        return $this->uuid;
-    }
-
-    public function setUUID($uuid)
-    {
-        $this->uuid = $uuid;
-        return $this;
-    }
-
-    public function getRequisites()
-    {
-        return $this->requisites;
-    }
-
-    public function setRequisites($requisites)
-    {
-        $this->requisites = $requisites;
-        return $this;
-    }
-
-    public function getAddressFact()
-    {
-        return $this->addressFact;
-    }
-
-    public function setAddressFact($addressFact)
-    {
-        $this->addressFact = $addressFact;
-        return $this;
-    }
-
-    public function getAddressReg()
-    {
-        return $this->addressReg;
-    }
-
-    public function setAddressReg($addressReg)
-    {
-        $this->addressReg = $addressReg;
-        return $this;
-    }
-
-    public function getGeneralManager()
-    {
-        return $this->generalManager;
-    }
-
-    public function setGeneralManager($generalManager)
-    {
-        $this->generalManager = $generalManager;
-        return $this;
-    }
-
-    public function getTelephone()
-    {
-        return $this->telephone;
-    }
-
-    public function setTelephone($telephone)
-    {
-        $this->telephone = $telephone;
-        return $this;
-    }
-
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    public function setEmail($email)
-    {
-        $this->email = $email;
-        return $this;
-    }
-
     public function getOwnerAccId()
     {
         return $this->ownerAccId;
@@ -614,22 +348,6 @@ class Company
         return $this;
     }
 
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Set type.
-     *
-     * @param string $type
-     * @return AccountInterface
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-        return $this;
-    }
 
     public function getName()
     {
@@ -648,4 +366,237 @@ class Company
         $this->name = $name;
         return $this;
     }
+
+    public function getShort()
+    {
+        return $this->short;
+    }
+
+    public function setShort($short)
+    {
+        $this->short = $short;
+        return $this;
+    }
+
+    public function getProperty()
+    {
+        return $this->property;
+    }
+
+    public function setProperty($property)
+    {
+        $this->property = $property;
+        return $this;
+    }
+
+    public function getInn()
+    {
+        return $this->inn;
+    }
+
+    public function setInn($inn)
+    {
+        $this->inn = $inn;
+        return $this;
+    }
+
+    public function getOgrn()
+    {
+        return $this->ogrn;
+    }
+
+    public function setOgrn($ogrn)
+    {
+        $this->ogrn = $ogrn;
+        return $this;
+    }
+
+    public function getKpp()
+    {
+        return $this->kpp;
+    }
+
+    public function setKpp($kpp)
+    {
+        $this->kpp = $kpp;
+        return $this;
+    }
+
+    public function getTax()
+    {
+        return $this->tax;
+    }
+
+    public function setTax($tax)
+    {
+        $this->tax = $tax;
+        return $this;
+    }
+
+    public function getAddresses()
+    {
+        return $this->addresses;
+    }
+
+    public function setAddresses($addresses)
+    {
+        $this->addresses = $addresses;
+        return $this;
+    }
+
+    public function getContacts()
+    {
+        return $this->contacts;
+    }
+
+    public function setContacts($contacts)
+    {
+        $this->contacts = $contacts;
+        return $this;
+    }
+
+    public function getFormingMethod()
+    {
+        return $this->formingMethod;
+    }
+
+    public function setFormingMethod($formingMethod)
+    {
+        $this->formingMethod = $formingMethod;
+        return $this;
+    }
+
+    public function getCapital()
+    {
+        return $this->capital;
+    }
+
+    public function setCapital($capital)
+    {
+        $this->capital = $capital;
+        return $this;
+    }
+
+    public function getFounderCount()
+    {
+        return $this->founderCount;
+    }
+
+    public function setFounderCount($founderCount)
+    {
+        $this->founderCount = $founderCount;
+        return $this;
+    }
+
+    public function getFounders()
+    {
+        return $this->founders;
+    }
+
+    public function setFounders($founders)
+    {
+        $this->founders = $founders;
+        return $this;
+    }
+
+    public function getAuthorizedPersons()
+    {
+        return $this->authorizedPersons;
+    }
+
+    public function setAuthorizedPersons($authorizedPersons)
+    {
+        $this->authorizedPersons = $authorizedPersons;
+        return $this;
+    }
+
+    public function getOkved()
+    {
+        return $this->okved;
+    }
+
+    public function setOkved($okved)
+    {
+        $this->okved = $okved;
+        return $this;
+    }
+
+    public function getPfr()
+    {
+        return $this->pfr;
+    }
+
+    public function setPfr($pfr)
+    {
+        $this->pfr = $pfr;
+        return $this;
+    }
+
+    public function getFms()
+    {
+        return $this->fms;
+    }
+
+    public function setFms($fms)
+    {
+        $this->fms = $fms;
+        return $this;
+    }
+
+    public function getLicenses()
+    {
+        return $this->licenses;
+    }
+
+    public function setLicenses($licenses)
+    {
+        $this->licenses = $licenses;
+        return $this;
+    }
+
+    public function getApplicants()
+    {
+        return $this->applicants;
+    }
+
+    public function setApplicants($applicants)
+    {
+        $this->applicants = $applicants;
+        return $this;
+    }
+
+    public function getAccounts()
+    {
+        return $this->accounts;
+    }
+
+    public function setAccounts($accounts)
+    {
+        $this->accounts = $accounts;
+        return $this;
+    }
+
+    public function getPersons()
+    {
+        return $this->persons;
+    }
+
+    public function setPersons($persons)
+    {
+        $this->persons = $persons;
+        return $this;
+    }
+
+    public function getSites()
+    {
+        return $this->sites;
+    }
+
+    public function setSites($sites)
+    {
+        $this->sites = $sites;
+        return $this;
+    }
+
+
 }

@@ -10,9 +10,10 @@ class CompanyResource extends AbstractResourceListener
 {
     protected $companyModel;
 
-    public function __construct($companyModel = null)
+    public function __construct($companyModel = null, $userEntity=null)
     {
         $this->companyModel = $companyModel;
+        $this->userEntity = $userEntity;
     }
     /**
      * Create a resource
@@ -22,12 +23,7 @@ class CompanyResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $data=$this->companyModel->createOrUpdate($data);
-        if(!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return new ApiProblem(405, 'The POST method has not been defined');
     }
 
     /**
@@ -83,7 +79,7 @@ class CompanyResource extends AbstractResourceListener
     {
         $data=$this->companyModel->fetchAll($params);
         $adapter = new ArrayAdapter($data);
-        $collection = new AccountCollection($adapter);
+        $collection = new CompanyCollection($adapter);
         if(!empty($collection)) {
             return $collection;
         } else {
@@ -123,11 +119,6 @@ class CompanyResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data=$this->companyModel->createOrUpdate($data,$id);
-        if(!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
     }
 }

@@ -32,7 +32,7 @@ return array(
             'api.rest.account-company' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/account-company[/:account_company_id]',
+                    'route' => '/accounts/[/:account_uuid]/companies',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\AccountCompany\\Controller',
                     ),
@@ -56,6 +56,15 @@ return array(
                     ),
                 ),
             ),
+            'api.rest.resource-meta' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/meta[/:resource_meta_id]',
+                    'defaults' => array(
+                        'controller' => 'Api\\V1\\Rest\\ResourceMeta\\Controller',
+                    ),
+                ),
+            ),
         ),
     ),
     'zf-versioning' => array(
@@ -66,11 +75,11 @@ return array(
             3 => 'api.rest.account-company',
             4 => 'api.rest.company-employee',
             5 => 'api.rest.company-partner',
+            6 => 'api.rest.resource-meta',
         ),
     ),
     'service_manager' => array(
-        'invokables' => array(
-      ),
+        'invokables' => array(),
     ),
     'zf-rest' => array(
         'Api\\V1\\Rest\\Account\\Controller' => array(
@@ -158,10 +167,14 @@ return array(
                 1 => 'PATCH',
                 2 => 'PUT',
                 3 => 'DELETE',
+                4 => 'POST',
             ),
             'collection_http_methods' => array(
                 0 => 'GET',
                 1 => 'POST',
+                2 => 'PUT',
+                3 => 'PATCH',
+                4 => 'DELETE',
             ),
             'collection_query_whitelist' => array(),
             'page_size' => '25',
@@ -219,6 +232,31 @@ return array(
             'entity_class' => 'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerEntity',
             'collection_class' => 'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerCollection',
         ),
+        'Api\\V1\\Rest\\ResourceMeta\\Controller' => array(
+            'listener' => 'Api\\V1\\Rest\\ResourceMeta\\ResourceMetaResource',
+            'route_name' => 'api.rest.resource-meta',
+            'identifier_name' => 'resource_meta_id',
+            'collection_name' => 'resource_meta',
+            'resource_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+                4 => 'POST',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+                2 => 'PUT',
+                3 => 'PATCH',
+                4 => 'DELETE',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => '25',
+            'page_size_param' => '',
+            'entity_class' => 'Api\\V1\\Rest\\ResourceMeta\\ResourceMetaEntity',
+            'collection_class' => 'Api\\V1\\Rest\\ResourceMeta\\ResourceMetaCollection',
+        ),
     ),
     'zf-content-negotiation' => array(
         'controllers' => array(
@@ -229,6 +267,7 @@ return array(
             'Api\\V1\\Rest\\\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\CompanyEmployee\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\CompanyPartner\\Controller' => 'HalJson',
+            'Api\\V1\\Rest\\ResourceMeta\\Controller' => 'HalJson',
         ),
         'accept-whitelist' => array(
             'Api\\V1\\Rest\\Account\\Controller' => array(
@@ -288,6 +327,26 @@ return array(
                 1 => 'application/json',
             ),
         ),
+        'accept_whitelist' => array(
+            'Api\\V1\\Rest\\ResourceMeta\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\AccountCompany\\Controller' => array(
+                0 => 'application/json',
+                1 => 'application/*+json',
+            ),
+        ),
+        'content_type_whitelist' => array(
+            'Api\\V1\\Rest\\ResourceMeta\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\AccountCompany\\Controller' => array(
+                0 => 'application/json',
+            ),
+        ),
     ),
     'zf-hal' => array(
         'metadata_map' => array(
@@ -343,6 +402,15 @@ return array(
             'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerCollection' => array(
                 'identifier_name' => 'company_partner_uuid',
                 'route_name' => 'api.rest.company-partner',
+                'is_collection' => '1',
+            ),
+            'Api\\V1\\Rest\\ResourceMeta\\ResourceMetaEntity' => array(
+                'identifier_name' => 'resource_meta_id',
+                'route_name' => 'api.rest.resource-meta',
+            ),
+            'Api\\V1\\Rest\\ResourceMeta\\ResourceMetaCollection' => array(
+                'identifier_name' => 'resource_meta_id',
+                'route_name' => 'api.rest.resource-meta',
                 'is_collection' => '1',
             ),
         ),

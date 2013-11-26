@@ -10,9 +10,10 @@ class ProfileResource extends AbstractResourceListener
 {
     protected $userModel;
 
-    public function __construct($userModel = null)
+    public function __construct($userModel = null, $userEntity=null)
     {
         $this->userModel = $userModel;
+        $this->userEntity = $userEntity;
     }
     /**
      * Create a resource

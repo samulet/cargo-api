@@ -1,20 +1,12 @@
 <?php
-namespace Api\V1\Rest\AccountCompany;
+namespace Api\V1\Rest\AccessDenied;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use Api\Entity\ApiStaticErrorList;
 
-class AccountCompanyResource extends AbstractResourceListener
+class AccessDeniedResource extends AbstractResourceListener
 {
-    protected $companyModel;
-    protected $companyUserModel;
-
-    public function __construct($companyModel = null, $companyUserModel = null, $userEntity=null)
-    {
-        $this->companyModel = $companyModel;
-        $this->companyUserModel = $companyUserModel;
-        $this->userEntity = $userEntity;
-    }
     /**
      * Create a resource
      *
@@ -23,12 +15,7 @@ class AccountCompanyResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $data=$this->companyModel->createOrUpdate($data);
-        if(!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return ApiStaticErrorList::getError(401);
     }
 
     /**
@@ -39,7 +26,7 @@ class AccountCompanyResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        return ApiStaticErrorList::getError(401);
     }
 
     /**
@@ -50,7 +37,7 @@ class AccountCompanyResource extends AbstractResourceListener
      */
     public function deleteList($data)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for collections');
+        return ApiStaticErrorList::getError(401);
     }
 
     /**
@@ -61,7 +48,7 @@ class AccountCompanyResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        return ApiStaticErrorList::getError(401);
     }
 
     /**
@@ -72,7 +59,7 @@ class AccountCompanyResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        return ApiStaticErrorList::getError(401);
     }
 
     /**
@@ -84,7 +71,7 @@ class AccountCompanyResource extends AbstractResourceListener
      */
     public function patch($id, $data)
     {
-        return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
+        return ApiStaticErrorList::getError(401);
     }
 
     /**
@@ -95,7 +82,7 @@ class AccountCompanyResource extends AbstractResourceListener
      */
     public function replaceList($data)
     {
-        return new ApiProblem(405, 'The PUT method has not been defined for collections');
+        return ApiStaticErrorList::getError(401);
     }
 
     /**
@@ -107,11 +94,6 @@ class AccountCompanyResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data=$this->companyModel->createOrUpdate($data,$id);
-        if(!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return ApiStaticErrorList::getError(401);
     }
 }

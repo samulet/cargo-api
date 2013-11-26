@@ -1,22 +1,19 @@
 <?php
-namespace Api\V1\Rest\Account;
+namespace Api\V1\Rest\ResourceMeta;
 
-use ZF\Rest\AbstractResourceListener;
-use Zend\Paginator\Adapter\ArrayAdapter;
-use Api\Entity\ApiStaticErrorList;
 use ZF\ApiProblem\ApiProblem;
+use ZF\Rest\AbstractResourceListener;
+use stdClass;
+use Api\Entity\ApiStaticErrorList;
+use Zend\Paginator\Adapter\ArrayAdapter;
 
-class AccountResource extends AbstractResourceListener
+class ResourceMetaResource extends AbstractResourceListener
 {
-    protected $accountModel;
-    protected $companyUserModel;
-    protected $request;
+    protected $configRouter;
 
-    public function __construct($accountModel = null,$companyUserModel = null, $userEntity=null)
+    public function __construct($configRouter = null)
     {
-        $this->accountModel = $accountModel;
-        $this->companyUserModel = $companyUserModel;
-        $this->userEntity = $userEntity;
+        $this->configRouter = $configRouter;
     }
 
     /**
@@ -27,13 +24,7 @@ class AccountResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $data=$this->accountModel->createOrUpdate($data);
-        //тут еще функция, надо узнать как данные будут получаться  addUserToCompany($user_id, $accId, 'admin');
-        if(!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return new ApiProblem(405, 'The POST method has not been defined');
     }
 
     /**
@@ -44,12 +35,7 @@ class AccountResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        $data=$this->accountModel->delete($id);
-        if(!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
     }
 
     /**
@@ -71,12 +57,7 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $data=$this->accountModel->fetch(array('uuid'=>$id,'activated' => '1','deletedAt' => null));
-        if(!empty($data)) {
-            return $data;
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
     }
 
     /**
@@ -87,14 +68,24 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data=$this->accountModel->fetchAll($params);
-        $adapter = new ArrayAdapter($data);
-        $collection = new AccountCollection($adapter);
-        if(!empty($collection)) {
+        $object = new stdClass();
+        foreach($this->configRouter as $name => $config) {
+            $explodedName = explode('.', $name);
+            if( ('api'==$explodedName[0]) && ('rest'==$explodedName[1]) && (!empty($explodedName[2])) ) {
+                $object->$explodedName[2] = array(
+                    'href' => $config['options']['route']
+                );
+            }
+        }
+        if(!empty($object)) {
+            $adapter = new ArrayAdapter(array($object));
+            $collection = new ResourceMetaCollection($adapter);
             return $collection;
         } else {
             return ApiStaticErrorList::getError(404);
         }
+
+   //    return new ApiProblem(405, 'The GET method has not been defined for collections');
     }
 
     /**
@@ -129,12 +120,6 @@ class AccountResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data=$this->accountModel->createOrUpdate($data,$id);
-        //тут еще функция, надо узнать как данные будут получаться
-        if(!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
     }
 }
