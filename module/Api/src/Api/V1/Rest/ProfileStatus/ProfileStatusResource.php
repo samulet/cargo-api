@@ -6,6 +6,13 @@ use ZF\Rest\AbstractResourceListener;
 
 class ProfileStatusResource extends AbstractResourceListener
 {
+    protected $userModel;
+
+    public function __construct($userModel = null, $userEntity=null)
+    {
+        $this->userModel = $userModel;
+        $this->userEntity = $userEntity;
+    }
     /**
      * Create a resource
      *
@@ -47,6 +54,7 @@ class ProfileStatusResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
+        $userUuid=$this->getEvent()->getRouteMatch()->getParam('user_uuid');
         return new ApiProblem(405, 'The GET method has not been defined for individual resources');
     }
 

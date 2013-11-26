@@ -105,7 +105,19 @@ class Module implements ApigilityModuleInterface
                     $configRouter = $sm->get('Config')['router']['routes'];
                     $recourseMeta= new ResourceMetaResource($configRouter);
                     return $recourseMeta;
-                }
+                },
+                'Api\V1\Rest\ProfileStatus\ProfileStatusResource' => function ($sm) {
+                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
+                    $queryBuilderModel=$sm->get('QueryBuilderModel');
+                    $userEntity=$queryBuilderModel->getUserByToken($authToken);
+                    if(!empty($user)) {
+                        $userModel = $sm->get('CompanyUserModel');
+                        $profileStatusResource = new CompanyEmployeeResource($userModel,$userEntity);
+                        return $profileStatusResource;
+                    } else {
+                        return new AccessDeniedResource();
+                    }
+                },
             ),
         );
     }
