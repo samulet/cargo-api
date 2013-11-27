@@ -43,14 +43,14 @@ class Module implements ApigilityModuleInterface
                     $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
                     $queryBuilderModel=$sm->get('QueryBuilderModel');
                     $userEntity=$queryBuilderModel->getUserByToken($authToken);
-                    if(!empty($user)) {
+                 //   if(!empty($user)) {
                         $accountModel = $sm->get('AccountModel');
                         $companyUserModel = $sm->get('CompanyUserModel');
                         $acc = new AccountResource($accountModel,$companyUserModel,$userEntity);
                         return $acc;
-                    } else {
-                        return new AccessDeniedResource();
-                    }
+                  //  } else {
+                  //      return new AccessDeniedResource();
+                   // }
                 },
                 'Api\V1\Rest\Profile\ProfileResource' => function ($sm) {
                     $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
