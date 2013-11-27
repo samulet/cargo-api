@@ -89,6 +89,7 @@ class QueryBuilderModel
     }
 
     public function createOrUpdate($entityLink, $data, $uuid = null) {
+
         if(empty($uuid)) {
             $entityName="\\".$entityLink;
             $item = new $entityName();
