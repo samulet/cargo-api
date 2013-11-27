@@ -24,7 +24,7 @@ class CompanyEmployeeResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $data=$this->companyUserModel->createOrUpdate($data);
+        $data=$this->companyUserModel->createOrUpdate(get_object_vars($data));
         if(!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
@@ -120,7 +120,7 @@ class CompanyEmployeeResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data=$this->companyUserModel->createOrUpdate($data,$id);
+        $data=$this->companyUserModel->createOrUpdate(get_object_vars($data),$id);
         if(!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
