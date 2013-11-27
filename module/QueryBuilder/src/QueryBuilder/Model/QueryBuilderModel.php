@@ -95,11 +95,10 @@ class QueryBuilderModel
         } elseif($this->uuidGenerator->isValid($uuid)) {
             $item = $this->documentManager->getRepository($entityLink)->findOneBy(
                 array('uuid' => $uuid));
+        } else {
+            return null;
         }
-        //else {
-      //      return null;
-     //   }
-        die(var_dump($data,$entityLink,$uuid,$item));
+
         $item->setData($data);
         $this->documentManager->persist($item);
         $this->documentManager->flush();

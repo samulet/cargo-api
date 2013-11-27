@@ -27,7 +27,9 @@ class AccountResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $data=$this->accountModel->createOrUpdate($data);
+        var_dump($data);
+        $data=$this->accountModel->createOrUpdate(get_object_vars($data));
+        var_dump($data);
         //тут еще функция, надо узнать как данные будут получаться  addUserToCompany($user_id, $accId, 'admin');
         if(!empty($data)) {
             return ApiStaticErrorList::getError(202);
