@@ -52,7 +52,7 @@ class Module implements ApigilityModuleInterface
                         return new AccessDeniedResource();
                     }
                 },
-                'Api\V1\Rest\Profile\ProfileResource' => function ($sm) {
+                'Api\V1\Rest\Profile\Controller' => function ($sm) {
                     $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
                     $queryBuilderModel=$sm->get('QueryBuilderModel');
                     $userEntity=$queryBuilderModel->getUserByToken($authToken);
@@ -121,4 +121,4 @@ class Module implements ApigilityModuleInterface
             ),
         );
     }
-} 
+}

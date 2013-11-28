@@ -89,9 +89,6 @@ return array(
         ),
     ),
     'service_manager' => array(
-        'invokables' => array(
-            'Api\\V1\\Rest\\ProfileStatus\\ProfileStatusResource' => 'Api\\V1\\Rest\\ProfileStatus\\ProfileStatusResource',
-        ),
     ),
     'zf-rest' => array(
         'Api\\V1\\Rest\\Account\\Controller' => array(
