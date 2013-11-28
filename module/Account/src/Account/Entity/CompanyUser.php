@@ -56,8 +56,8 @@ class CompanyUser
     public function setData($data) {
         if($data !== null && is_array($data)){
             foreach(array_keys(get_class_vars(__CLASS__)) as $key){
-                if(isset($entity[$key]) && ($key!='id') && ($key!='uuid') ){
-                    $this->$key = $entity[$key];
+                if(isset($data[$key]) && ($key!='id') && ($key!='uuid') ){
+                    $this->$key = $data[$key];
                 }
             }
         }

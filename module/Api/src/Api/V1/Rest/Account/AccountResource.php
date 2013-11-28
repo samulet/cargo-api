@@ -27,7 +27,8 @@ class AccountResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $data=$this->accountModel->createOrUpdate($data);
+
+        $data=$this->accountModel->createOrUpdate(get_object_vars($data));
         //тут еще функция, надо узнать как данные будут получаться  addUserToCompany($user_id, $accId, 'admin');
         if(!empty($data)) {
             return ApiStaticErrorList::getError(202);
@@ -129,7 +130,7 @@ class AccountResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data=$this->accountModel->createOrUpdate($data,$id);
+        $data=$this->accountModel->createOrUpdate(get_object_vars($data),$id);
         //тут еще функция, надо узнать как данные будут получаться
         if(!empty($data)) {
             return ApiStaticErrorList::getError(202);

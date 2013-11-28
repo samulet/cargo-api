@@ -23,7 +23,7 @@ class AccountCompanyResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $data=$this->companyModel->createOrUpdate($data);
+        $data=$this->companyModel->createOrUpdate(get_object_vars($data));
         if(!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
@@ -107,7 +107,7 @@ class AccountCompanyResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data=$this->companyModel->createOrUpdate($data,$id);
+        $data=$this->companyModel->createOrUpdate(get_object_vars($data),$id);
         if(!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {

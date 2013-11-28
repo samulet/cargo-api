@@ -23,7 +23,7 @@ class ProfileResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $data=$this->userModel->createOrUpdate($data);
+        $data=$this->userModel->createOrUpdate(get_object_vars($data));
         if(!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
@@ -119,7 +119,7 @@ class ProfileResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data=$this->userModel->createOrUpdate($data,$id);
+        $data=$this->userModel->createOrUpdate(get_object_vars($data),$id);
         if(!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {

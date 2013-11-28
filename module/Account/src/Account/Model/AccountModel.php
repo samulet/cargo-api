@@ -181,7 +181,7 @@ class AccountModel
     }
 
     public function createOrUpdate($data, $uuid = null) {
-        return $this->queryBuilderModel->fetch('Account\Entity\Account',$data,$uuid);
+        return $this->queryBuilderModel->createOrUpdate('Account\Entity\Account',$data,$uuid);
     }
 
     public function fetch($findParams) {
