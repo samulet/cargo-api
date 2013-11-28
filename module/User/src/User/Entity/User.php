@@ -140,6 +140,11 @@ class User implements UserInterface
      */
     protected $social = array();
     /**
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
+     */
+    protected $status = array();
+    /**
      * @return mixed
      */
     public function getDeletedAt()
@@ -366,6 +371,29 @@ class User implements UserInterface
     public function setPassword($password)
     {
         $this->password = $password;
+        return $this;
+    }
+
+    /**
+     * Get state.
+     *
+     * @return int
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set state.
+     *
+     * @param int $state
+     *
+     * @return UserInterface
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
         return $this;
     }
 
