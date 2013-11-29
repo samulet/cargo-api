@@ -31,14 +31,34 @@ class UserModel
         return $this->queryBuilderModel->fetch('User\Entity\User',$data,$uuid);
     }
 
+    /**
+     * Возвращает сущность юзера по массиву поисковых параметров, однозначность результата дает указание uuid в массиве findParams
+     *
+     * @param array $findParams ассоциативный массив
+     *
+     * @return \User\Entity\User|null
+     */
     public function fetch($findParams) {
         return $this->queryBuilderModel->fetch('User\Entity\User',$findParams);
     }
 
+    /**
+     * Возвращает массив сущностей юзера по поисковым параметрам
+     *
+     * @param array $findParams ассоциативный массив
+     *
+     * @return array(\User\Entity\User)|null
+     */
     public function fetchAll($findParams) {
         return $this->queryBuilderModel->fetchAll('User\Entity\User',$findParams);
     }
-
+    /**
+     * Возвращает текущий статус юзера (активирован, деактивирован....)
+     *
+     * @param string $uuid uuid юезра
+     *
+     * @return array()|null
+     */
     public function getUserStatus($uuid) {
         $user=$this->queryBuilderModel->fetch('User\Entity\User',array('uuid' =>$uuid));
         return $user->getStatus();
