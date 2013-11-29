@@ -179,19 +179,44 @@ class AccountModel
 
         }
     }
-
+    /**
+     * Возвращает сущность созданного или модифицированого аккаунта
+     *
+     * @param string $data записываемый массив данных
+     * @param string $uuid uuid модифицируемого аккаунта
+     *
+     * @return \Account\Entity\Account|null
+     */
     public function createOrUpdate($data, $uuid = null) {
         return $this->queryBuilderModel->createOrUpdate('Account\Entity\Account',$data,$uuid);
     }
-
+    /**
+     * Возвращает сущность аккаунта по массиву поисковых параметров, однозначность результата дает указание uuid в массиве
+     *
+     * @param string $findParams ассоциативный массив
+     *
+     * @return \Account\Entity\Account|null
+     */
     public function fetch($findParams) {
         return $this->queryBuilderModel->fetch('Account\Entity\Account',$findParams);
     }
-
+    /**
+     * Возвращает массив сущностей аккаунтов по поисковым параметрам
+     *
+     * @param string $findParams ассоциативный массив
+     *
+     * @return array(\Account\Entity\Account)|null
+     */
     public function fetchAll($findParams) {
         return $this->queryBuilderModel->fetchAll('Account\Entity\Account',$findParams);
     }
-
+    /**
+     * При успехе возвращает uuid удаленого аккаунта
+     *
+     * @param string $uuid uuid аккаунта
+     *
+     * @return string|null
+     */
     public function delete($uuid)
     {
         $accId=$this->getAccIdByUUID($uuid);
@@ -222,7 +247,7 @@ class AccountModel
 
             $this->documentManager->remove($qb5);
             $this->documentManager->flush();
-            return array('success' => true);
+            return $uuid;
         } else {
             return null;
         }
