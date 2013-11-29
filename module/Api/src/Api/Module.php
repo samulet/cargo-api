@@ -47,11 +47,11 @@ class Module implements ApigilityModuleInterface
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
-                        $user=$authEntity->getUser();
                     } catch (Exception $e) {
-                        $user=null;
+                        $authEntity=null;
                     }
-                    if(!empty($user)) {
+                    if(!empty($authEntity)) {
+                        $user=$authEntity->getUser();
                         $accountModel = $sm->get('AccountModel');
                         $companyUserModel = $sm->get('CompanyUserModel');
                         $acc = new AccountResource($accountModel,$companyUserModel,$user);
@@ -65,11 +65,11 @@ class Module implements ApigilityModuleInterface
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
-                        $user=$authEntity->getUser();
                     } catch (Exception $e) {
-                        $user=null;
+                        $authEntity=null;
                     }
-                    if(!empty($user)) {
+                    if(!empty($authEntity)) {
+                        $user=$authEntity->getUser();
                         $userModel = $sm->get('UserModel');
                         $user = new ProfileResource($userModel,$user);
                         return $user;
@@ -82,11 +82,11 @@ class Module implements ApigilityModuleInterface
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
-                        $user=$authEntity->getUser();
                     } catch (Exception $e) {
-                        $user=null;
+                        $authEntity=null;
                     }
-                    if(!empty($user)) {
+                    if(!empty($authEntity)) {
+                        $user=$authEntity->getUser();
                         $companyModel = $sm->get('CompanyModel');
                         $com = new CompanyResource($companyModel,$user);
                         return $com;
@@ -99,11 +99,11 @@ class Module implements ApigilityModuleInterface
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
-                        $user=$authEntity->getUser();
                     } catch (Exception $e) {
-                        $user=null;
+                        $authEntity=null;
                     }
-                    if(!empty($user)) {
+                    if(!empty($authEntity)) {
+                        $user=$authEntity->getUser();
                         $companyModel = $sm->get('CompanyModel');
                         $companyUserModel = $sm->get('CompanyUserModel');
                         $com = new AccountCompanyResource($companyModel,$companyUserModel,$user);
@@ -117,11 +117,11 @@ class Module implements ApigilityModuleInterface
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
-                        $user=$authEntity->getUser();
                     } catch (Exception $e) {
-                        $user=null;
+                        $authEntity=null;
                     }
-                    if(!empty($user)) {
+                    if(!empty($authEntity)) {
+                        $user=$authEntity->getUser();
                         $companyUserModel = $sm->get('CompanyUserModel');
                         $com = new CompanyEmployeeResource($companyUserModel,$user);
                         return $com;
@@ -139,11 +139,11 @@ class Module implements ApigilityModuleInterface
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
-                        $user=$authEntity->getUser();
                     } catch (Exception $e) {
-                        $user=null;
+                        $authEntity=null;
                     }
-                    if(!empty($user)) {
+                    if(!empty($authEntity)) {
+                        $user=$authEntity->getUser();
                         $userModel = $sm->get('CompanyUserModel');
                         $profileStatusResource = new CompanyEmployeeResource($userModel,$user);
                         return $profileStatusResource;
