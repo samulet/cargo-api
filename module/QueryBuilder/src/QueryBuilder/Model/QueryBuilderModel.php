@@ -88,6 +88,15 @@ class QueryBuilderModel
         return $resultArray;
     }
 
+    /**
+     * Создать или обновить айтем. Возвращает сущность созданного или модифицированого айтема
+     *
+     * @param string $entityLink путь к айтему
+     * @param array $data записываемый массив данных
+     * @param string $uuid uuid модифицируемого аккаунта
+     *
+     * @return ?|null
+     */
     public function createOrUpdate($entityLink, $data, $uuid = null) {
 
         if(empty($uuid)) {
@@ -110,7 +119,7 @@ class QueryBuilderModel
      * Возвращает сущность, определяемую по $entityLink, однозначность результата дает указание uuid в массиве findParams
      *
      * @param string $entityLink линк на стандартизованную сущность
-     * @param string $findParams ассоциативный массив
+     * @param array $findParams ассоциативный массив
      *
      * @return ?|null
      */
@@ -126,7 +135,7 @@ class QueryBuilderModel
      * Возвращает сущность, определяемую по $entityLink
      *
      * @param string $entityLink линк на стандартизованную сущность
-     * @param string $findParams ассоциативный массив
+     * @param array $findParams ассоциативный массив
      *
      * @return array(?)|null
      */
