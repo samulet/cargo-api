@@ -21,8 +21,6 @@ class Account
 {
     public function __construct()
     {
-        $uuidGen = new UuidGenerator();
-        $this->uuid=$uuidGen->generateV4();
         $this->lastItemNumber=0;
     }
 
@@ -238,9 +236,14 @@ class Account
         return $this->uuid;
     }
 
-    public function setUUID($uuid)
+    public function setUUID($uuid = null)
     {
-        $this->uuid = $uuid;
+        if(empty($uuid)) {
+            $uuidGen = new UuidGenerator();
+            $this->uuid=$uuidGen->generateV4();
+        } else {
+            $this->uuid = $uuid;
+        }
         return $this;
     }
 

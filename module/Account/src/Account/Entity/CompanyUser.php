@@ -27,6 +27,11 @@ class CompanyUser
      */
     protected $id;
     /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $uuid;
+    /**
      * @ODM\ObjectId
      * @var int
      */
@@ -132,5 +137,19 @@ class CompanyUser
     {
         $this->userRights = $userRights;
         return $this;
+    }
+    public function setUUID($uuid = null)
+    {
+        if(empty($uuid)) {
+            $uuidGen = new UuidGenerator();
+            $this->uuid=$uuidGen->generateV4();
+        } else {
+            $this->uuid = $uuid;
+        }
+        return $this;
+    }
+    public function getUUID()
+    {
+        return $this->uuid;
     }
 }
