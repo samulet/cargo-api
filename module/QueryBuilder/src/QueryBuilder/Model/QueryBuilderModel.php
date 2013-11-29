@@ -106,7 +106,14 @@ class QueryBuilderModel
         $this->documentManager->flush();
         return $item;
     }
-
+    /**
+     * Возвращает сущность, определяемую по $entityLink, однозначность результата дает указание uuid в массиве findParams
+     *
+     * @param string $entityLink линк на стандартизованную сущность
+     * @param string $findParams ассоциативный массив
+     *
+     * @return ?|null
+     */
     public function fetch($entityLink, $findParams) {
         $item = $this->createQuery($this->documentManager->createQueryBuilder($entityLink), $findParams)->getQuery()->getSingleResult();
         if(empty($item)) {
@@ -115,7 +122,14 @@ class QueryBuilderModel
             return $item;
         }
     }
-
+    /**
+     * Возвращает сущность, определяемую по $entityLink
+     *
+     * @param string $entityLink линк на стандартизованную сущность
+     * @param string $findParams ассоциативный массив
+     *
+     * @return array(?)|null
+     */
     public function fetchAll($entityLink, $findParams) {
         $items = $this->createQuery($this->documentManager->createQueryBuilder($entityLink), $findParams)->getQuery()->execute()->toArray();
         if(empty($items)) {

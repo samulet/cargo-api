@@ -251,17 +251,47 @@ class CompanyModel
         return $resultArray;
     }
 
+    /**
+     * Возвращает сущность созданной или модифицированой комнпании
+     *
+     * @param string $data записываемый массив данных
+     * @param string $uuid uuid модифицируемого аккаунта
+     *
+     * @return \Account\Entity\Company|null
+     */
     public function createOrUpdate($data, $uuid = null) {
         return $this->queryBuilderModel->fetch('Account\Entity\Company',$data,$uuid);
     }
 
+    /**
+     * Возвращает сущность компании по массиву поисковых параметров, однозначность результата дает указание uuid в массиве findParams
+     *
+     * @param string $findParams ассоциативный массив
+     *
+     * @return \Account\Entity\Company|null
+     */
     public function fetch($findParams) {
         return $this->queryBuilderModel->fetch('Account\Entity\Company',$findParams);
     }
 
+    /**
+     * Возвращает массив сущностей компаний по поисковым параметрам
+     *
+     * @param string $findParams ассоциативный массив
+     *
+     * @return array(\Account\Entity\Company)|null
+     */
     public function fetchAll($findParams) {
         return $this->queryBuilderModel->fetchAll('Account\Entity\Company',$findParams);
     }
+
+    /**
+     * При успехе возвращает uuid удаленой компании
+     *
+     * @param string $uuid uuid компании
+     *
+     * @return string|null
+     */
     public function delete($uuid)
     {
         if(!empty($accId)) {
@@ -270,7 +300,7 @@ class CompanyModel
             );
             $this->documentManager->remove($qb3);
             $this->documentManager->flush();
-            return array('success' => true);
+            return $uuid;
         } else {
             return null;
         }

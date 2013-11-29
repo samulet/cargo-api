@@ -179,6 +179,7 @@ class AccountModel
 
         }
     }
+
     /**
      * Возвращает сущность созданного или модифицированого аккаунта
      *
@@ -190,8 +191,9 @@ class AccountModel
     public function createOrUpdate($data, $uuid = null) {
         return $this->queryBuilderModel->createOrUpdate('Account\Entity\Account',$data,$uuid);
     }
+
     /**
-     * Возвращает сущность аккаунта по массиву поисковых параметров, однозначность результата дает указание uuid в массиве
+     * Возвращает сущность аккаунта по массиву поисковых параметров, однозначность результата дает указание uuid в массиве findParams
      *
      * @param string $findParams ассоциативный массив
      *
@@ -200,6 +202,7 @@ class AccountModel
     public function fetch($findParams) {
         return $this->queryBuilderModel->fetch('Account\Entity\Account',$findParams);
     }
+
     /**
      * Возвращает массив сущностей аккаунтов по поисковым параметрам
      *
@@ -210,6 +213,7 @@ class AccountModel
     public function fetchAll($findParams) {
         return $this->queryBuilderModel->fetchAll('Account\Entity\Account',$findParams);
     }
+
     /**
      * При успехе возвращает uuid удаленого аккаунта
      *
