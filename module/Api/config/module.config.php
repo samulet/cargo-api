@@ -5,7 +5,7 @@ return array(
             'api.rest.account' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/accounts[/:account_uuid]',
+                    'route' => '/api/accounts[/:account_uuid]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\Account\\Controller',
                     ),
@@ -14,7 +14,7 @@ return array(
             'api.rest.profile' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/profiles[/:profile_uuid]',
+                    'route' => '/api/profiles[/:profile_uuid]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\Profile\\Controller',
                     ),
@@ -23,7 +23,7 @@ return array(
             'api.rest.company' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/companies[/:company_uuid]',
+                    'route' => '/api/companies[/:company_uuid]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\Company\\Controller',
                     ),
@@ -32,7 +32,7 @@ return array(
             'api.rest.account-company' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/accounts/[/:account_uuid]/companies',
+                    'route' => '/api/accounts/[/:account_uuid]/companies',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\AccountCompany\\Controller',
                     ),
@@ -41,7 +41,7 @@ return array(
             'api.rest.company-employee' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/companies[/:company_employee_uuid]/employees',
+                    'route' => '/api/companies[/:company_employee_uuid]/employees',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\CompanyEmployee\\Controller',
                     ),
@@ -50,7 +50,7 @@ return array(
             'api.rest.company-partner' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/companies[/:company_partner_uuid]/partners',
+                    'route' => '/api/companies[/:company_partner_uuid]/partners',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\CompanyPartner\\Controller',
                     ),
@@ -59,7 +59,7 @@ return array(
             'api.rest.resource-meta' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/meta[/:resource_meta_id]',
+                    'route' => '/api/meta[/:resource_meta_id]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\ResourceMeta\\Controller',
                     ),
@@ -68,7 +68,7 @@ return array(
             'api.rest.profile-status' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/profile[/:user_uuid]/status',
+                    'route' => '/api/profile[/:user_uuid]/status',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\ProfileStatus\\Controller',
                     ),
