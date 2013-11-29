@@ -252,9 +252,9 @@ class CompanyModel
     }
 
     /**
-     * Возвращает сущность созданной или модифицированой комнпании
+     * Создать ии обновить компанию. Возвращает сущность созданной или модифицированой комнпании.
      *
-     * @param string $data записываемый массив данных
+     * @param array $data записываемый массив данных
      * @param string $uuid uuid модифицируемого аккаунта
      *
      * @return \Account\Entity\Company|null
@@ -266,7 +266,7 @@ class CompanyModel
     /**
      * Возвращает сущность компании по массиву поисковых параметров, однозначность результата дает указание uuid в массиве findParams
      *
-     * @param string $findParams ассоциативный массив
+     * @param array $findParams ассоциативный массив
      *
      * @return \Account\Entity\Company|null
      */
@@ -277,7 +277,7 @@ class CompanyModel
     /**
      * Возвращает массив сущностей компаний по поисковым параметрам
      *
-     * @param string $findParams ассоциативный массив
+     * @param array $findParams ассоциативный массив
      *
      * @return array(\Account\Entity\Company)|null
      */
@@ -286,7 +286,7 @@ class CompanyModel
     }
 
     /**
-     * При успехе возвращает uuid удаленой компании
+     * Удалить юзера. При успехе возвращает uuid удаленой компании
      *
      * @param string $uuid uuid компании
      *

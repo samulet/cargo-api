@@ -181,9 +181,9 @@ class AccountModel
     }
 
     /**
-     * Возвращает сущность созданного или модифицированого аккаунта
+     * Создать или обновить аккаунт. Возвращает сущность созданного или модифицированого аккаунта
      *
-     * @param string $data записываемый массив данных
+     * @param array $data записываемый массив данных
      * @param string $uuid uuid модифицируемого аккаунта
      *
      * @return \Account\Entity\Account|null
@@ -195,7 +195,7 @@ class AccountModel
     /**
      * Возвращает сущность аккаунта по массиву поисковых параметров, однозначность результата дает указание uuid в массиве findParams
      *
-     * @param string $findParams ассоциативный массив
+     * @param array $findParams ассоциативный массив
      *
      * @return \Account\Entity\Account|null
      */
@@ -206,7 +206,7 @@ class AccountModel
     /**
      * Возвращает массив сущностей аккаунтов по поисковым параметрам
      *
-     * @param string $findParams ассоциативный массив
+     * @param array $findParams ассоциативный массив
      *
      * @return array(\Account\Entity\Account)|null
      */
@@ -215,7 +215,7 @@ class AccountModel
     }
 
     /**
-     * При успехе возвращает uuid удаленого аккаунта
+     * Удалить аккаунт. При успехе возвращает uuid удаленого аккаунта
      *
      * @param string $uuid uuid аккаунта
      *
