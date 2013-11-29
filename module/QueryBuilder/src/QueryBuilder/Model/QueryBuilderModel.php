@@ -139,13 +139,4 @@ class QueryBuilderModel
         }
     }
 
-    public function getUserByToken($authToken) {
-        $auth = $this->documentManager->getRepository('AuthToken\Entity\AuthToken')->findOneBy(array('token' => $authToken));
-        if(!empty($auth)) {
-            return $auth->getUser();
-        } else {
-            return null;
-        }
-    }
-
 }
