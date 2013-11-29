@@ -16,12 +16,6 @@ use Doctrine\ODM\MongoDB\Id\UuidGenerator;
  */
 class User implements UserInterface
 {
-    public function __construct()
-    {
-        $uuidGen = new UuidGenerator();
-        $this->uuid=$uuidGen->generateV4();
-        $this->roles = array();
-    }
     /**
      * @ODM\Id
      * @var int
@@ -79,7 +73,7 @@ class User implements UserInterface
      * @var array
      * @ODM\Collection(strategy="pushAll")
      */
-    protected $roles;
+    protected $roles = array();
     /**
      * @ODM\ObjectId
      * @var int
@@ -471,11 +465,17 @@ class User implements UserInterface
         return $this->uuid;
     }
 
-    public function setUUID($uuid)
+    public function setUUID($uuid = null)
     {
-        $this->uuid = $uuid;
+        if(empty($uuid)) {
+            $uuidGen = new UuidGenerator();
+            $this->uuid=$uuidGen->generateV4();
+        } else {
+            $this->uuid = $uuid;
+        }
         return $this;
     }
+
 
     public function setData($data) {
         if($data !== null && is_array($data)){
