@@ -9,6 +9,7 @@ use Api\V1\Rest\CompanyEmployee\CompanyEmployeeResource;
 use Api\V1\Rest\ResourceMeta\ResourceMetaResource;
 use Api\V1\Rest\AccessDenied\AccessDeniedResource;
 use Api\V1\Rest\AccountCompany\AccountCompanyResource;
+use Exception;
 
 class Module implements ApigilityModuleInterface
 {
@@ -34,15 +35,22 @@ class Module implements ApigilityModuleInterface
                 'Doctrine\ODM\MongoDB\DocumentManager' => 'doctrine.documentmanager.odm_default',
             ) ,
             'factories' => array(
+                'AuthTokenModel' => 'AuthToken\ModelFactory',
                 'QueryBuilderModel' => 'QueryBuilder\Factory\QueryBuilderModelFactory',
                 'CompanyModel' => 'Account\Factory\CompanyModelFactory',
                 'CompanyUserModel' => 'Account\Factory\CompanyUserModelFactory',
                 'AccountModel' => 'Account\Factory\AccountModelFactory',
                 'UserModel' => 'User\Factory\UserModelFactory',
                 'Api\V1\Rest\Account\AccountResource' => function ($sm) {
+
                     $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
-                    $queryBuilderModel=$sm->get('QueryBuilderModel');
-                    $userEntity=$queryBuilderModel->getUserByToken($authToken);
+                    $authTokenModel=$sm->get('AuthTokenModel');
+                    try {
+                        $authEntity=$authTokenModel->fetch($authToken);
+                        $user=$authEntity->getUser();
+                    } catch (Exception $e) {
+                        $user=null;
+                    }
                     if(!empty($user)) {
                         $accountModel = $sm->get('AccountModel');
                         $companyUserModel = $sm->get('CompanyUserModel');
