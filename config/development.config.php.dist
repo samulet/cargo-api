@@ -9,6 +9,8 @@ return array(
     'modules' => array(
         'ZFTool',
         'ZF\Apigility\Admin',
+        'ZF\Apigility',
+        'ZF\Apigility\Welcome',
     ),
     // development time configuration globbing
     'module_listener_options' => array(

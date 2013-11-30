@@ -12,8 +12,6 @@ return array(
         'ZfcBase',
         'ZfcUser',
         'ZfcUserDoctrineMongoODM',
-        'ZF\Apigility',
-        'ZF\Apigility\Welcome',
         'AssetManager',
         'ZF\ApiProblem',
         'ZF\MvcAuth',
