@@ -1,0 +1,491 @@
+FORMAT: 1A
+HOST: http://cargo.zfprojects.info/api
+
+# Cargo API
+API предназначено для взаимодействием с учетно-информационной системой транспортной логистики "Карго"
+
+# Cargo API Root [/]
+Корень API.
+
+Этот ресурс определяет список доступных в данном API ресурсов.
+
+## Список ресурсов [GET]
+
++ Response 200 (application/hal+json)
+    + Body
+
+            {
+                "_links": {
+                    "self": { "href": "/api" },
+                    "accounts": { "href": "/api/accounts", "templated": true }
+                    "profiles": { "href": "/api/profiles", "templated": true }
+                }
+            }
+
+# Account [/accounts{/uuid}]
+Детальная информация об аккаунте
+
++ Parameters
+    + uuid (required, string, `4e178674-4f93-11e3-90b7-080027ab4d7b`) ... Уникальный идентификатор, указывающий на конкретный аккаунт
+
+
++ Model (application/hal+json)
+
+    HAL+JSON предсавление сущности *Аккаунт*.
+
+    + Body
+
+            {
+                "_links": {
+                    "self": { "href": "/api/accounts/cb37dcb8-4f92-11e3-827c-080027ab4d7b" }
+                },
+                "id": "cb37dcb8-4f92-11e3-827c-080027ab4d7b",
+                "created_at": "2013-04-14T02:15:15Z",
+                "title": "Веста",
+                "_embedded": {
+                    "companies": [
+                        { 
+                            "_links": {
+                                "self": { 
+                                    "href": "/api/accounts/cb37dcb8-4f92-11e3-827c-080027ab4d7b/companies/0f7e27b4-4f94-11e3-aa00-080027ab4d7b" 
+                                }
+                            },
+                            "uuid": "0f7e27b4-4f94-11e3-aa00-080027ab4d7b", 
+                            "title": "ООО Озерки" 
+                        },
+                        {
+                            "_links": {
+                                "self": { 
+                                    "href": "/api/accounts/cb37dcb8-4f92-11e3-827c-080027ab4d7b/companies/10af631e-4f94-11e3-8698-080027ab4d7b" 
+                                }
+                            },
+                            "uuid": "10af631e-4f94-11e3-8698-080027ab4d7b", 
+                            "title": "ЗАО Ручеек" 
+                        }
+                    ]
+                }
+            }
+
+## Получить данные аккаунта [GET]
++ Response 200 (application/json)
+
+    [Account][]
+
+## Удаление аккаунта [DELETE]
++ Response 204
+
+## Изменение аккаунта [PATCH]
+Изменение данных аккаунта. Будут изменены только те свойства, которые указаны в запросе
+
++ Request (application/json)
+
+        {
+            "title": "Ручеек"
+        }
+
++ Response 204
+
+# Accounts Collection [/accounts]
+Список доступных аккаунтов.
+
+Этот ресурс имеет следующий атрибут:
+
+- total
+
+Дополнительно в него **внедряются** *Accounts Resource*
+
++ Model (application/hal+json)
+
+    HAL+JSON предсавление списка аккаунтов.
+
+    + Body
+
+            {
+                "_links": {
+                    "self": { "href": "/api/accounts" }
+                },
+                "_embedded": {
+                    "accounts": [
+                        {
+                            "_links" : {
+                                "self": { "href": "/api/accounts/cb37dcb8-4f92-11e3-827c-080027ab4d7b" }
+                            },
+                            "uuid": "cb37dcb8-4f92-11e3-827c-080027ab4d7b",
+                            "created_at": "2013-04-14T02:15:15Z",
+                            "title": "Веста"
+                        },
+                        {
+                            "_links" : {
+                                "self": { "href": "/api/accounts/d59f8dae-4f92-11e3-a070-080027ab4d7b" }
+                            },
+                            "uuid": "d59f8dae-4f92-11e3-a070-080027ab4d7b",
+                            "created_at": "2013-05-11T22:04:25Z",
+                            "title": "Талосто"
+                        }
+                    ]
+                },
+                "total": 2
+            }
+
+## Список всех доступных аккаунтов [GET]
+
++ Response 200
+
+    [Accounts Collection][]
+
+## Создание нового аккаунта [POST]
+Чтобы создать новый аккаунт просто передайте JSON-объект с названием аккаунта в атрибуте *title*.
+
++ Request (application/json)
+
+        {
+            "title": "Тест"
+        }
+
++ Response 201 (application/hal+json)
+
+    [Account][]
+    
+# Account Company [/accounts/{uuid}/companies/{company_uuid}]
+Юридическое лицо, управляемое в рамках аккаунта
+
++ Parameters
+
+    + uuid (required, string, `4e178674-4f93-11e3-90b7-080027ab4d7b`) ... Уникальный идентификатор аккаунта
+    + company_uuid (required, string, `10af631e-4f94-11e3-8698-080027ab4d7b`) ... Уникальный идентификатор компании
+
++ Model (application/hal+json)
+
+    HAL+JSON representation of Account Company.
+
+    + Body
+
+            {
+                "_links": {
+                    "self": { "href": "/api/accounts/4e178674-4f93-11e3-90b7-080027ab4d7b/companies/10af631e-4f94-11e3-8698-080027ab4d7b" },
+                    "company": { "href": "/api/companies/10af631e-4f94-11e3-8698-080027ab4d7b" },
+                },
+                "shortName": "ЗАО Ручеек"
+            }
+
+## Исключить компанию из аккаунта [DELETE]
+
++ Response 204
+
+# Account Companies [/accounts/{uuid}/companies]
+Юридические лица, принадлежащие аккаунту
+
++ Parameters
+
+    + uuid (required, string, `4e178674-4f93-11e3-90b7-080027ab4d7b`) ... Уникальный идентификатор аккаунта
+
++ Model (application/hal+json)
+
+    HAL+JSON representation of Account Company.
+
+    + Body
+
+            {
+                "_links": {
+                    "self": { "href": "/api/accounts/4e178674-4f93-11e3-90b7-080027ab4d7b/companies/10af631e-4f94-11e3-8698-080027ab4d7b" },
+                    "companies": [
+                        { "href": "/api/companies/10af631e-4f94-11e3-8698-080027ab4d7b" },
+                        { "href": "/api/companies/5e292178-523e-11e3-a4e4-080027ab4d7b" }
+                    ]
+                },
+                "_embedded": {
+                    "companies": [
+                        { 
+                            "id": "10af631e-4f94-11e3-8698-080027ab4d7b",
+                            "short": "ЗАО Ручеек"
+                        },
+                        { 
+                            "id": "5e292178-523e-11e3-a4e4-080027ab4d7b",
+                            "short": "ОАО Озерко"
+                        }
+                    ]
+                }
+            }
+
+## Добавить юридическое лицо в аккаунт [POST]
+Добавляет новое юридическое лицо в аккаунт **uuid**
+
++ Request (application/json)
+
+            {
+                "name": "", // Полное наименование юридического лица
+                "short": "", // Краткое наименование юридического лица
+                "property": "", // Вид собственности
+                "inn": "", // ИНН
+                "ogrn": "", // ОГРН
+                "kpp": "", // КПП
+                "tax": {
+                    "agency_number": "", // Номер налоговой
+                    "date_accounting": "", // Дата постановки на учет
+                    "date_registration": "", // Дата регистрации
+                    "registration_agency_number": "", // Номер налоговой, где проходила регистрация
+                    "system": "", // Вид системы налогового учета
+                    "rate": 35, // Процентная ставка налога
+                },
+                "addresses": [ // Адреса
+                    {
+                        "title": "Центральный офис",
+                        "city": "Москва",
+                        "street": "",
+                        "build": "",
+                        "house": "",
+                        "office": ""
+                    }
+                ], 
+                "contacts": [ // Контакты
+                    {
+                        "phone": "",
+                        "name": "",
+                        "position": ""
+                    }
+                ],
+                "forming_method": "", // Способ образования
+                "capital": "", // Размер уставного капитала
+                "founder_count": 10, // Количество учредителей
+                "founders": [], // Учредители
+                "authorized_persons": [], // Уполномоченные лица
+                "okved": [], // Коды ОКВЭД
+                "pfr": {
+                    "number": "", // Номер ПФР
+                    "date_registration": "", // Дата постановки в ПФР
+                    "insurance": "" // Номер страхования в ПФР
+                },
+                "fms": {
+                    "number": "", // Номер ФМС
+                    "date_registration": "", // Дата постановки в ФМС
+                    "insurance": "" // Номер страхования ФМС
+                },
+                "licenses": [], // Лицензии
+                "applicants": [], // Заявители при регистрации
+                "accounts": [ // Банковские реквизиты
+                    {
+                        "bank": "", // Название банка
+                        "account": "", // расчетный счет
+                        "corresp": "", // Корреспондентский счет
+                        "bik": "", // БИК
+                    }
+                ],
+                "persons": { // Ссылки на других ответственных лиц с указанием области ответственности
+                    {
+                        "position": "accountant",
+                        "name": "Иванов И.И."
+                    },
+                    {
+                        "position": "ceo",
+                        "name": "Петров П.П."
+                    }
+                },
+                "sites": [], // Ссылки на сайты
+            }
+
++ Response 204
+
+
+
+# Profile [/profiles/{uuid}]
+Детальная информация о профиле пользователя
+
++ Parameters
+    + uuid (required, string, `5e292178-523e-11e3-a4e4-080027ab4d7b`) ... Уникальный идентификатор, указывающий на конкретного пользователя
+
+
++ Model (application/hal+json)
+
+    HAL+JSON предсавление сущности *Пользователь*.
+
+    + Body
+
+            {
+                "_links": {
+                    "self": { "href": "/api/profile/5e292178-523e-11e3-a4e4-080027ab4d7b" }
+                },
+                "id": "5e292178-523e-11e3-a4e4-080027ab4d7b",
+                "created_at": "2013-04-14T02:15:15Z",
+                "name": {
+                    "first": "Иван",
+                    "second": "Иванович",
+                    "last": "Иванов",
+                    "short": "Иванов И.И."
+                },
+                "email": "",
+                "docs": {
+                    "type": "pasport",
+                    "serial": "",
+                    "number": "",
+                    "issued": {
+                        "agency": "",
+                        "date": "",
+                        "code": ""
+                    },
+                    "birth": {
+                        "date": "",
+                        "place": ""
+                    },
+                    "registration": {
+                        "type": "",
+                        "address": "",
+                        "date": ""
+                    }
+                },
+                "snils": "",
+                "inn": "",
+                "phone": [
+                    "+7 926 543-5400"
+                ],
+                "site": [],
+                "avatar": "",
+                "sign": {
+                    "valid_to": "",
+                    "qualification": "",
+                    "credentials": ""
+                },
+                "social": {
+                    "mailru": "",
+                    "yandex": "",
+                    "vk": "",
+                    "ok": "",
+                    "google": "",
+                    "fb": "",
+                    "linkedin": ""
+                }
+            }
+
+## Получить данные профиля [GET]
++ Response 200 (application/json)
+
+    [Profile][]
+
+## Удаление профиля [DELETE]
++ Response 204
+
+## Изменение данных профиля [PATCH]
+Изменение данных аккаунта. Будут изменены только те свойства, которые указаны в запросе
+
++ Request (application/json)
+
+        {
+            "name": {
+                "short": "Иванов И."
+            }
+        }
+
++ Response 204
+
+# Company [/companies/{uuid}]
+Подробная информация о юридическом лице
+
++ Parameters
+    + uuid (required, string, `5e292178-523e-11e3-a4e4-080027ab4d7b`) ... Уникальный идентификатор юридического лица
+
+
++ Model (application/hal+json)
+
+    HAL+JSON предсавление сущности *Юридическое лицо*.
+
+    + Body
+
+            {
+                "_links": {
+                    "self": { "href": "/api/companies/5e292178-523e-11e3-a4e4-080027ab4d7b" },
+                    "documents": {
+                        "charter": { "href": "/files/5e292178-523e-11e3-a4e4-080027ab4d7b/carter.pdf" }, // Ссылка на файлы устава
+                        "egrul": { "href": "/files/5e292178-523e-11e3-a4e4-080027ab4d7b/egrul.pdf" }, // Ссылка на файлы выписки из ЕГРЮЛ/ЕГРЮИП
+                        // ... прочие документы
+                    }
+                },
+                "id": "5e292178-523e-11e3-a4e4-080027ab4d7b",
+                "created_at": "2013-04-14T02:15:15Z", // Дата создания записи о юридическом лице в системе
+                "name": "", // Полное наименование юридического лица
+                "short": "", // Краткое наименование юридического лица
+                "property": "", // Вид собственности
+                "inn": "", // ИНН
+                "ogrn": "", // ОГРН
+                "kpp": "", // КПП
+                "tax": {
+                    "agency_number": "", // Номер налоговой
+                    "date_accounting": "", // Дата постановки на учет
+                    "date_registration": "", // Дата регистрации
+                    "registration_agency_number": "", // Номер налоговой, где проходила регистрация
+                    "system": "", // Вид системы налогового учета
+                    "rate": 35, // Процентная ставка налога
+                },
+                "addresses": [ // Адреса
+                    {
+                        "title": "Центральный офис",
+                        "city": "Москва",
+                        "street": ""
+                        "house": "",
+                        "office": ""
+                    }
+                ], 
+                "contacts": [
+                    {
+                        "phone": "",
+                        "name": "",
+                        "position": ""
+                    }
+                ], // Контакты
+                "forming_method": "", // Способ образования
+                "capital": "", // Размер уставного капитала
+                "founder_count": 10, // Количество учредителей
+                "founders": [], // Учредители
+                "authorized_persons": [], // Уполномоченные лица
+                "okved": [], // Коды ОКВЭД
+                "pfr": {
+                    "number": "", // Номер ПФР
+                    "date_registration": "", // Дата постановки в ПФР
+                    "insurance": "" // Номер страхования в ПФР
+                },
+                "fms": {
+                    "number": "", // Номер ФМС
+                    "date_registration": "", // Дата постановки в ФМС
+                    "insurance": "" // Номер страхования ФМС
+                },
+                "licenses": [], // Лицензии
+                "applicants": [], // Заявители при регистрации
+                "accounts": [ // Банковские реквизиты
+                    {
+                        "bank": "", // Название банка
+                        "account": "", // расчетный счет
+                        "corresp": "", // Корреспондентский счет
+                        "bik": "", // БИК
+                    }
+                ],
+                "persons": { // Ссылки на других ответственных лиц с указанием области ответственности
+                    {
+                        "position": "accountant",
+                        "name": "Иванов И.И."
+                    },
+                    {
+                        "position": "ceo",
+                        "name": "Петров П.П."
+                    }
+                },
+                "sites": [], // Ссылки на сайты
+            }
+
+## Получить данные о юридическом лице [GET]
++ Response 200 (application/json)
+
+    [Company][]
+
+## Удаление юридического лица [DELETE]
++ Response 204
+
+## Изменение данных юридического лица [PATCH]
+Изменение данных о юридическом лице. Будут изменены только те свойства, которые указаны в запросе
+
++ Request (application/json)
+
+        {
+            "name": {
+                "short": "Иванов И."
+            }
+        }
+
++ Response 204
