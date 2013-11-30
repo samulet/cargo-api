@@ -40,14 +40,18 @@ class Module implements ApigilityModuleInterface
                 'AccountModel' => 'Account\Factory\AccountModelFactory',
                 'UserModel' => 'User\Factory\UserModelFactory',
                 'Api\V1\Rest\Account\AccountResource' => function ($sm) {
-                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
-                    $queryBuilderModel=$sm->get('QueryBuilderModel');
-                    $userEntity=$queryBuilderModel->getUserByToken($authToken);
-                    if(!empty($user)) {
-                        $accountModel = $sm->get('AccountModel');
-                        $companyUserModel = $sm->get('CompanyUserModel');
-                        $acc = new AccountResource($accountModel,$companyUserModel,$userEntity);
-                        return $acc;
+                    /** @var \Zend\Http\Header\GenericHeader $authToken */
+                    $authToken = $sm->get('request')->getHeaders()->get('X-Auth-UserToken');
+                    /** @var \AuthToken\Model\AuthToken $AuthTokenModel */
+                    $AuthTokenModel = $sm->get('AuthToken\\Model\\AuthToken');
+                    $tokenEntity = $AuthTokenModel->fetch($authToken->getFieldValue());
+
+                    if (!empty($tokenEntity)) {
+                        return new AccountResource(
+                            $sm->get('AccountModel'),
+                            $sm->get('CompanyUserModel'),
+                            $tokenEntity->getUser()
+                        );
                     } else {
                         return new AccessDeniedResource();
                     }
