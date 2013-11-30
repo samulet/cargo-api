@@ -57,7 +57,7 @@ class Module implements ApigilityModuleInterface
                     }
                 },
                 'Api\V1\Rest\Profile\Controller' => function ($sm) {
-                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
+                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-UserToken');
                     $queryBuilderModel=$sm->get('QueryBuilderModel');
                     $userEntity=$queryBuilderModel->getUserByToken($authToken);
                     if(!empty($user)) {
@@ -69,7 +69,7 @@ class Module implements ApigilityModuleInterface
                     }
                 },
                 'Api\V1\Rest\Company\CompanyResource' => function ($sm) {
-                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
+                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-UserToken');
                     $queryBuilderModel=$sm->get('QueryBuilderModel');
                     $userEntity=$queryBuilderModel->getUserByToken($authToken);
                     if(!empty($user)) {
@@ -81,7 +81,7 @@ class Module implements ApigilityModuleInterface
                     }
                 },
                 'Api\V1\Rest\AccountCompany\AccountCompanyResource' => function ($sm) {
-                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
+                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-UserToken');
                     $queryBuilderModel=$sm->get('QueryBuilderModel');
                     $userEntity=$queryBuilderModel->getUserByToken($authToken);
                     if(!empty($user)) {
@@ -94,7 +94,7 @@ class Module implements ApigilityModuleInterface
                     }
                 },
                 'Api\V1\Rest\CompanyEmployee\CompanyEmployeeResource' => function ($sm) {
-                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
+                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-UserToken');
                     $queryBuilderModel=$sm->get('QueryBuilderModel');
                     $userEntity=$queryBuilderModel->getUserByToken($authToken);
                     if(!empty($user)) {
@@ -111,7 +111,7 @@ class Module implements ApigilityModuleInterface
                     return $recourseMeta;
                 },
                 'Api\V1\Rest\ProfileStatus\ProfileStatusResource' => function ($sm) {
-                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
+                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-UserToken');
                     $queryBuilderModel=$sm->get('QueryBuilderModel');
                     $userEntity=$queryBuilderModel->getUserByToken($authToken);
                     if(!empty($user)) {
