@@ -7,9 +7,11 @@ nbproject
 .project
 .settings
 .vagrant
+composer.phar
 Vagrantfile
 vendor/
 config/development.config.php
+config/*.old
 config/autoload/local.php
 config/autoload/*.local.php
 data/cache/*
