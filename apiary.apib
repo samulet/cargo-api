@@ -489,3 +489,115 @@ API предназначено для взаимодействием с учет
         }
 
 + Response 204
+
+# Product Group Reference [/api/ref/product-group/{/code}]
+Справочник продуктовых групп
+
+Атрибуты ресурса:
+
+- **code** - код продуктовой группы
+- **title** - название продуктовой группы
+
++ Parameters
+    + code (required, string, `milk`) ... Код продуктовой группы
+
+
++ Model (application/hal+json)
+
+    HAL+JSON предсавление сущности *Справочник продуктовых групп*.
+
+    + Body
+
+            {
+                "_links": {
+                    "self": { "href": "/api/ref/product-group/milk" },
+                    "list": { "href": "/api/ref/product-group" }
+                },
+                "code": "milk",
+                "title": "Молочные продукты",
+            }
+
+## Получить продуктовую группу [GET]
++ Response 200 (application/hal+json)
+
+    [Product Group Reference][]
+
+## Удаление продуктовой группы [DELETE]
++ Response 204
+
+## Изменение продуктовой группы [PATCH]
+Изменение данных продуктовой группы. Будут изменены только те свойства, которые указаны в запросе
+
++ Request (application/json)
+
+        {
+            "title": "Ручеек"
+        }
+
++ Response 200
+
+# Product Group Reference Collection [/api/ref/product-group]
+Список продуктовых групп
+
+Атрибуты ресурса:
+
+- **total** - количество продуктовых групп
+
++ Model (application/hal+json)
+
+    HAL+JSON предсавление списка аккаунтов.
+
+    + Body
+
+            {
+                "_links": {
+                    "self": { "href": "/api/ref/product-group" }
+                },
+                "_embedded": {
+                    "groups": [
+                        {
+                            "_links": {
+                                "self": { "href": "/api/ref/product-group/fish" },
+                                "list": { "href": "/api/ref/product-group" }
+                            },
+                            "code": "fish",
+                            "title": "Рыба",
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/api/ref/product-group/milk" },
+                                "list": { "href": "/api/ref/product-group" }
+                            },
+                            "code": "milk",
+                            "title": "Молочные продукты",
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/api/ref/product-group/food" },
+                                "list": { "href": "/api/ref/product-group" }
+                            },
+                            "code": "food",
+                            "title": "Продукты питания",
+                        }
+                    ]
+                },
+                "total": 3
+            }
+
+## Список всех продуктовых групп [GET]
+
++ Response 200
+
+    [Product Group Reference Collection][]
+
+## Создание новой продуктовой группы [POST]
+Для создания новой продуктовой группы нужно передать json-объект с кодом продуктовой группы и её названием.
+
++ Request (application/json)
+
+            {
+                "code": "milk",
+                "title": "Молочные продукты",
+            }
+
++ Response 201
