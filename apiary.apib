@@ -132,6 +132,26 @@ API предназначено для взаимодействием с учет
 + Response 200
 
     [Accounts Collection][]
+    
++ Response 404
+
+    + Headers
+
+            Content-Type: application/hal+json
+
+    + Body
+    
+            {
+                "_links": {
+                    "self": { "href": "/api/accounts" }
+                },
+                "_embedded": {
+                    "accounts": [
+                    ]
+                },
+                "total": 0
+            }
+
 
 ## Создание нового аккаунта [POST]
 Чтобы создать новый аккаунт просто передайте JSON-объект с названием аккаунта в атрибуте *title*.
