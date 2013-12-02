@@ -12,11 +12,11 @@ use Zend\Form\Element\Collection;
 
 /**
  *
- * @ODM\Document(collection="account", repositoryClass="Reference\Repository\ReferenceRepository")
+ * @ODM\Document(collection="abstractReference", repositoryClass="Reference\Repository\ReferenceRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
-class Reference
+abstract class AbstractReference
 {
     public function __construct()
     {
