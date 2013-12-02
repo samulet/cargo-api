@@ -20,11 +20,11 @@ abstract class AbstractReferenceModel
     protected $uuidGenerator;
     protected $queryBuilderModel;
 
-    public function __construct(DocumentManager $documentManager,$queryBuilderModel)
+    public function __construct(DocumentManager $documentManager, $queryBuilderModel)
     {
         $this->uuidGenerator = new UuidGenerator();
-        $this->documentManager=$documentManager;
-        $this->queryBuilderModel=$queryBuilderModel;
+        $this->documentManager = $documentManager;
+        $this->queryBuilderModel = $queryBuilderModel;
     }
 
 
@@ -36,8 +36,9 @@ abstract class AbstractReferenceModel
      *
      * @return \Reference\Entity\Reference|null
      */
-    public function createOrUpdate($data, $uuid = null) {
-        return $this->queryBuilderModel->createOrUpdate('Reference\Entity\Reference',$data,$uuid);
+    protected function createOrUpdate($data, $uuid = null, $entityLink)
+    {
+        return $this->queryBuilderModel->createOrUpdate($entityLink, $data, $uuid);
     }
 
     /**
@@ -47,8 +48,9 @@ abstract class AbstractReferenceModel
      *
      * @return \Reference\Entity\Reference|null
      */
-    public function fetch($findParams) {
-        return $this->queryBuilderModel->fetch('Reference\Entity\Reference',$findParams);
+    protected function fetch($findParams, $entityLink)
+    {
+        return $this->queryBuilderModel->fetch($entityLink, $findParams);
     }
 
     /**
@@ -58,8 +60,9 @@ abstract class AbstractReferenceModel
      *
      * @return array(\Reference\Entity\Reference)|null
      */
-    public function fetchAll($findParams) {
-        return $this->queryBuilderModel->fetchAll('Reference\Entity\Reference',$findParams);
+    protected function fetchAll($findParams, $entityLink)
+    {
+        return $this->queryBuilderModel->fetchAll($entityLink, $findParams);
     }
 
     /**
@@ -69,40 +72,14 @@ abstract class AbstractReferenceModel
      *
      * @return string|null
      */
-    public function delete($uuid)
+    protected function delete($uuid,$entityLink)
     {
-        $accId=$this->getAccIdByUUID($uuid);
-        if(!empty($accId)) {
-            $qb = $this->documentManager->getRepository('Reference\Entity\Reference')->find(new \MongoId($accId));
-            $this->documentManager->remove($qb);
-            $this->documentManager->flush();
-
-            $qb2 = $this->documentManager->createQueryBuilder('Reference\Entity\CompanyUser');
-            $qb2->remove()->field('orgId')->equals(new \MongoId($accId))->getQuery()
-                ->execute();
-
-            $qb3 = $this->documentManager->getRepository('Reference\Entity\Company')->findBy(
-                array('ownerAccId' => new \MongoId($accId))
-            );
-            $this->documentManager->remove($qb3);
-            $this->documentManager->flush();
-
-            $qb4 = $this->documentManager->getRepository('Resource\Entity\Resource')->findBy(
-                array('ownerAccId' => new \MongoId($accId))
-            );
-            $this->documentManager->remove($qb4);
-            $this->documentManager->flush();
-
-            $qb5 = $this->documentManager->getRepository('Ticket\Entity\Ticket')->findBy(
-                array('ownerAccId' => new \MongoId($accId))
-            );
-
-            $this->documentManager->remove($qb5);
-            $this->documentManager->flush();
-            return $uuid;
-        } else {
-            return null;
-        }
+        $qb3 = $this->documentManager->getRepository($entityLink)->findBy(
+            array('uuid' => new \MongoId($uuid))
+        );
+        $this->documentManager->remove($qb3);
+        $this->documentManager->flush();
+        return $uuid;
     }
 
 }
