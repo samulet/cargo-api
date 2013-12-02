@@ -12,9 +12,8 @@ use Zend\Form\Element\Collection;
 
 /**
  *
- * @ODM\Document(collection="account", repositoryClass="AddList\Repository\AddListRepository")
+ * @ODM\Document(collection="addList", repositoryClass="AddList\Repository\AddListRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
- * @Annotation\Name("addList")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
 class AddList
