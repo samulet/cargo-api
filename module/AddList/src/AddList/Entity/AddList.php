@@ -14,14 +14,14 @@ use Zend\Form\Element\Collection;
  *
  * @ODM\Document(collection="account", repositoryClass="AddList\Repository\AddListRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
- * @Annotation\Name("account")
+ * @Annotation\Name("addList")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
 class AddList
 {
     public function __construct()
     {
-        $this->lastItemNumber=0;
+
     }
 
     /**
@@ -36,10 +36,6 @@ class AddList
     protected $uuid;
 
     /**
-     * @ODM\ObjectId
-     * @var int
-     */
-    protected $ownerId;
     /**
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
@@ -56,25 +52,12 @@ class AddList
      * @ODM\Field(type="string")
      */
     protected $activated;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     */
-    protected $name;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     */
-    protected $lastItemNumber;
+
     /**
      * @ODM\Date
      */
     protected $deletedAt;
-    /**
-     * @Annotation\Type("Zend\Form\Element\Submit")
-     * @Annotation\Attributes({"value":"Отправить"})
-     */
-    public $submit;
+
     public function setData($data) {
 
             if($data !== null && is_array($data)){
