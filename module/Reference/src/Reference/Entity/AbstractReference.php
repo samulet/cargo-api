@@ -14,7 +14,6 @@ use Zend\Form\Element\Collection;
  *
  * @ODM\Document(collection="account", repositoryClass="Reference\Repository\ReferenceRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
- * @Annotation\Name("addList")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
 class Reference
