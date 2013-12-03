@@ -2,14 +2,14 @@
 namespace Api\V1\Rest\Account;
 
 class AccountEntity {
-
-    public function __construct(array $entity = null){
-        $this->setData($entity);
-    }
-    protected $account_uuid="21312312";
+    private $account_uuid;
     protected $uuid;
     protected $title;
- //   protected $_embedded;
+    //   protected $_embedded;
+    public function __construct(array $entity = null){
+        $this->setData($entity);
+        $this->account_uuid=123;
+    }
 
     public function setData($data) {
 
