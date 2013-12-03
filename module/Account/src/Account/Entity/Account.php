@@ -171,25 +171,25 @@ class Account
     }
 
     /**
-     * Get name.
+     * Get title.
      *
      * @return string
      */
-    public function getName()
+    public function getTitle()
     {
-        return $this->name;
+        return $this->title;
     }
 
     /**
-     * Set name.
+     * Set title.
      *
-     * @param string $name
+     * @param string $title
      * @return AccountInterface
      */
 
-    public function setName($name)
+    public function setTitle($title)
     {
-        $this->name = $name;
+        $this->title = $title;
         return $this;
     }
 
