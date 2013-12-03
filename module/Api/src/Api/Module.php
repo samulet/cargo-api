@@ -42,8 +42,11 @@ class Module implements ApigilityModuleInterface
                 'AccountModel' => 'Account\Factory\AccountModelFactory',
                 'UserModel' => 'User\Factory\UserModelFactory',
                 'Api\V1\Rest\Account\AccountResource' => function ($sm) {
-
-                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
+                    $request=$sm->get('request');
+                    if(empty($request)) {
+                        return new AccessDeniedResource();
+                    }
+                    $authToken=$request->getHeaders()->get('X-Auth-Usertoken');
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
@@ -61,7 +64,11 @@ class Module implements ApigilityModuleInterface
                     }
                 },
                 'Api\V1\Rest\Profile\Controller' => function ($sm) {
-                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
+                    $request=$sm->get('request');
+                    if(empty($request)) {
+                        return new AccessDeniedResource();
+                    }
+                    $authToken=$request->getHeaders()->get('X-Auth-Usertoken');
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
@@ -78,7 +85,11 @@ class Module implements ApigilityModuleInterface
                     }
                 },
                 'Api\V1\Rest\Company\CompanyResource' => function ($sm) {
-                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
+                    $request=$sm->get('request');
+                    if(empty($request)) {
+                        return new AccessDeniedResource();
+                    }
+                    $authToken=$request->getHeaders()->get('X-Auth-Usertoken');
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
@@ -95,7 +106,11 @@ class Module implements ApigilityModuleInterface
                     }
                 },
                 'Api\V1\Rest\AccountCompany\AccountCompanyResource' => function ($sm) {
-                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
+                    $request=$sm->get('request');
+                    if(empty($request)) {
+                        return new AccessDeniedResource();
+                    }
+                    $authToken=$request->getHeaders()->get('X-Auth-Usertoken');
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
@@ -113,7 +128,11 @@ class Module implements ApigilityModuleInterface
                     }
                 },
                 'Api\V1\Rest\CompanyEmployee\CompanyEmployeeResource' => function ($sm) {
-                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
+                    $request=$sm->get('request');
+                    if(empty($request)) {
+                        return new AccessDeniedResource();
+                    }
+                    $authToken=$request->getHeaders()->get('X-Auth-Usertoken');
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
@@ -135,7 +154,11 @@ class Module implements ApigilityModuleInterface
                     return $recourseMeta;
                 },
                 'Api\V1\Rest\ProfileStatus\ProfileStatusResource' => function ($sm) {
-                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
+                    $request=$sm->get('request');
+                    if(empty($request)) {
+                        return new AccessDeniedResource();
+                    }
+                    $authToken=$request->getHeaders()->get('X-Auth-Usertoken');
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
