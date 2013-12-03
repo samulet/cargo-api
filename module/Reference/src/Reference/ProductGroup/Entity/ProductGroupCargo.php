@@ -1,6 +1,6 @@
 <?php
 
-namespace ProductGroup\Entity;
+namespace Reference\ProductGroup\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
@@ -16,7 +16,7 @@ use Reference\Entity\AbstractReference;
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
-class ProductGroup extends AbstractReference
+class ProductGroupCargo extends AbstractReference
 {
     public function __construct()
     {

@@ -12,7 +12,7 @@ namespace Reference\ProductGroup\Factory;
 use Zend\Log\Logger;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use ProductGroup\Model\ProductGroupCargoModel;
+use Reference\ProductGroup\Model\ProductGroupCargoModel;
 
 class ProductGroupCargoModelFactory implements FactoryInterface {
     public function createService(ServiceLocatorInterface $serviceLocator)

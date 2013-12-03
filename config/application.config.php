@@ -28,7 +28,6 @@ return array(
         'User',
         'QueryBuilder',
         'AuthToken',
-        'AddList',
         'Reference'
         ),
     'module_listener_options' => array(
