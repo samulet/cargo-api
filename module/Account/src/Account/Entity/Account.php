@@ -44,13 +44,13 @@ class Account
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
      */
-    protected $created;
+    protected $created_at;
 
     /**
      * @Gedmo\Timestampable(on="update")
      * @ODM\Date
      */
-    protected $updated;
+    protected $updated_at;
     /**
      * @var string
      * @ODM\Field(type="string")
