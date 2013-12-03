@@ -42,6 +42,10 @@ class Module implements ApigilityModuleInterface
                 'AccountModel' => 'Account\Factory\AccountModelFactory',
                 'UserModel' => 'User\Factory\UserModelFactory',
                 'Api\V1\Rest\Account\AccountResource' => function ($sm) {
+                    $authToken=$sm->get('request')->getHeaders()->get('X-Auth-Usertoken');
+                    $queryBuilderModel=$sm->get('QueryBuilderModel');
+                    $userEntity=$queryBuilderModel->getUserByToken($authToken);
+                    if(!empty($user)) {
                     $request=$sm->get('request');
                     if(empty($request)) {
                         return new AccessDeniedResource();
@@ -55,10 +59,7 @@ class Module implements ApigilityModuleInterface
                     }
                     if(!empty($authEntity)) {
                         $user=$authEntity->getUser();
-                        $accountModel = $sm->get('AccountModel');
-                        $companyUserModel = $sm->get('CompanyUserModel');
                         $acc = new AccountResource($accountModel,$companyUserModel,$user);
-                        return $acc;
                     } else {
                         return new AccessDeniedResource();
                     }
