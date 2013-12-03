@@ -12,14 +12,14 @@ namespace AddList\Factory;
 use Zend\Log\Logger;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use AddList\Model\AddListModel;
+use AddList\Model\AddListCargoModel;
 
-class AddListModelFactory implements FactoryInterface {
+class AddListCargoModelFactory implements FactoryInterface {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $documentManager = $serviceLocator->get('doctrine.documentmanager.odm_default');
         $queryBuilderModel=$serviceLocator->get('QueryBuilderModel');
-        $acc = new AddListModel($documentManager,$queryBuilderModel);
+        $acc = new AddListCargoModel($documentManager,$queryBuilderModel);
         return $acc;
     }
 }

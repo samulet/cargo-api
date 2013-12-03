@@ -71,4 +71,8 @@ class AddListCargoModel extends AbstractReferenceModel
        return $this->deleteAbstract($uuid,$this->entityLink);
     }
 
+    public function testEntity() {
+        var_dump(new $this->entityLink());
+    }
+
 }
