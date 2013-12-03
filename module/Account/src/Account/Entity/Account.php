@@ -226,19 +226,14 @@ class Account
         return $this;
     }
 
-    public function getUUID()
+    public function getUuid()
     {
         return $this->uuid;
     }
 
-    public function setUUID($uuid = null)
+    public function setUuid($uuid = null)
     {
-        if(empty($uuid)) {
-            $uuidGen = new UuidGenerator();
-            $this->uuid=$uuidGen->generateV4();
-        } else {
-            $this->uuid = $uuid;
-        }
+        $this->uuid = $uuid;
         return $this;
     }
 

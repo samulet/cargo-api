@@ -5,7 +5,7 @@ use ZF\Rest\AbstractResourceListener;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use Api\Entity\ApiStaticErrorList;
 use ZF\ApiProblem\ApiProblem;
-
+use Api\V1\Rest\Account\AccountEntity;
 class AccountResource extends AbstractResourceListener
 {
     protected $accountModel;
@@ -74,7 +74,9 @@ class AccountResource extends AbstractResourceListener
     {
         $data=$this->accountModel->fetch(array('uuid'=>$id,'activated' => '1','deletedAt' => null));
         if(!empty($data)) {
-            return $data;
+            $nt=new AccountEntity($data->getData());
+            //die(var_dump($nt));
+            return $nt;
         } else {
             return ApiStaticErrorList::getError(404);
         }

@@ -25,7 +25,6 @@ class AccountCompanyResource extends AbstractResourceListener
     {
         $data=get_object_vars($data);
         $data['ownerAccUuid']=$this->getEvent()->getRouteParam('account_uuid');
-        die(var_dump($data));
         $data=$this->companyModel->createOrUpdate($data);
         if(!empty($data)) {
             return ApiStaticErrorList::getError(202);

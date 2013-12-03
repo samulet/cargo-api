@@ -1,18 +1,21 @@
 <?php
 namespace Api\V1\Rest\Account;
 
+class AccountEntity {
 
-class AccountEntity{
+    public function __construct(array $entity = null){
+        $this->setData($entity);
+    }
+    protected $account_uuid="21312312";
     protected $uuid;
     protected $title;
-    protected $companies;
+ //   protected $_embedded;
 
     public function setData($data) {
 
         if($data !== null && is_array($data)){
             foreach(array_keys(get_class_vars(__CLASS__)) as $key) {
-                if(isset($data[$key]) && ($key!='id') && ($key!='uuid') ){
-
+                if(isset($data[$key]) && ($key!='id')  ){
                     $this->$key = $data[$key];
                 }
             }
@@ -28,7 +31,14 @@ class AccountEntity{
         }
         return $data;
     }
-
+    public function getTitle()
+    {
+        return $this->title;
+    }
+    public function getUuid()
+    {
+        return $this->uuid;
+    }
     //public function generateLink(){
      //   $this->_links=array(
      //       array('self' => )
