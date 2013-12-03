@@ -6,23 +6,23 @@
  * Time: 1:35 PM
  * To change this template use File | Settings | File Templates.
  */
-namespace AddList\Model;
+namespace Reference\ProductGroup\Model;
 
-use AddList\Entity\AddList;
+use ProductGroup\Entity\ProductGroup;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Reference\Model\AbstractReferenceModel;
 
-class AddListCargoModel extends AbstractReferenceModel
+class ProductGroupCargoModel extends AbstractReferenceModel
 {
     protected $entityLink;
 
     public function __construct(DocumentManager $documentManager,$queryBuilderModel)
     {
         parent::__construct($documentManager,$queryBuilderModel);
-        $this->entityLink='AddList\Entity\AddListCargo';
+        $this->entityLink='ProductGroup\Entity\ProductGroupCargo';
     }
 
     /**
@@ -31,7 +31,7 @@ class AddListCargoModel extends AbstractReferenceModel
      * @param array $data записываемый массив данных
      * @param string $uuid uuid модифицируемого аккаунта
      *
-     * @return \AddList\Entity\AddList|null
+     * @return \ProductGroup\Entity\ProductGroup|null
      */
     public function createOrUpdate($data, $uuid = null) {
         return $this->createOrUpdateAbstract($data,$uuid,$this->entityLink);
@@ -42,7 +42,7 @@ class AddListCargoModel extends AbstractReferenceModel
      *
      * @param array $findParams ассоциативный массив
      *
-     * @return \AddList\Entity\AddList|null
+     * @return \ProductGroup\Entity\ProductGroup|null
      */
     public function fetch($findParams) {
         return $this->fetchAbstract($findParams,$this->entityLink);
@@ -53,7 +53,7 @@ class AddListCargoModel extends AbstractReferenceModel
      *
      * @param array $findParams ассоциативный массив
      *
-     * @return array(\AddList\Entity\AddList)|null
+     * @return array(\ProductGroup\Entity\ProductGroup)|null
      */
     public function fetchAll($findParams) {
         return $this->fetchAll($findParams,$this->entityLink);

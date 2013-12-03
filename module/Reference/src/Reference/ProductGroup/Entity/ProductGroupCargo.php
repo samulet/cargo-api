@@ -1,6 +1,6 @@
 <?php
 
-namespace AddList\Entity;
+namespace ProductGroup\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
@@ -12,11 +12,11 @@ use Zend\Form\Element\Collection;
 use Reference\Entity\AbstractReference;
 /**
  *
- * @ODM\Document(collection="addListCargo", repositoryClass="AddList\Repository\AddListRepository")
+ * @ODM\Document(collection="addListCargo", repositoryClass="ProductGroup\Repository\ProductGroupRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
-class AddList extends AbstractReference
+class ProductGroup extends AbstractReference
 {
     public function __construct()
     {

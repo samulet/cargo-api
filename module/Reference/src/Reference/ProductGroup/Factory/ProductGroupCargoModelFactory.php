@@ -7,19 +7,19 @@
  * To change this template use File | Settings | File Templates.
  */
 
-namespace AddList\Factory;
+namespace Reference\ProductGroup\Factory;
 
 use Zend\Log\Logger;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use AddList\Model\AddListCargoModel;
+use ProductGroup\Model\ProductGroupCargoModel;
 
-class AddListCargoModelFactory implements FactoryInterface {
+class ProductGroupCargoModelFactory implements FactoryInterface {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $documentManager = $serviceLocator->get('doctrine.documentmanager.odm_default');
         $queryBuilderModel=$serviceLocator->get('QueryBuilderModel');
-        $acc = new AddListCargoModel($documentManager,$queryBuilderModel);
+        $acc = new ProductGroupCargoModel($documentManager,$queryBuilderModel);
         return $acc;
     }
 }

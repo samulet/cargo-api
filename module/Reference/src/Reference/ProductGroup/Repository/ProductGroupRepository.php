@@ -1,11 +1,11 @@
 <?php
-namespace AddList\Repository;
+namespace Reference\ProductGroup\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 
-class AddListRepository extends DocumentRepository
+class ProductGroupRepository extends DocumentRepository
 {
-    public function getMyAvailableAddList($accId)
+    public function getMyAvailableProductGroup($accId)
     {
         return $this->createQueryBuilder()
             ->field('deletedAt')->equals(null)->field('id')->equals(
