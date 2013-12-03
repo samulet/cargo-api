@@ -23,7 +23,9 @@ class AccountCompanyResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $data=$this->companyModel->createOrUpdate(get_object_vars($data));
+        $data=get_object_vars($data);
+        $data['ownerAccUuid']=$this->getEvent()->getRouteParam('account_uuid');
+        $data=$this->companyModel->createOrUpdate($data);
         if(!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
@@ -107,11 +109,6 @@ class AccountCompanyResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data=$this->companyModel->createOrUpdate(get_object_vars($data),$id);
-        if(!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
     }
 }
