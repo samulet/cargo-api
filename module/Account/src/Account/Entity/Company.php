@@ -33,11 +33,11 @@ class Company
     protected $uuid;
 
     /**
-     * @ODM\ObjectId
-     * @var int
+     * @var string
+     * @ODM\Field(type="string")
      * @Annotation\Exclude()
      */
-    protected $ownerAccId;
+    protected $ownerAccUuid;
 
     /**
      * @Gedmo\Timestampable(on="create")

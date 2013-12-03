@@ -63,7 +63,7 @@ class Module implements ApigilityModuleInterface
                         return new AccessDeniedResource();
                     }
                 },
-                'Api\V1\Rest\Profile\Controller' => function ($sm) {
+                'Api\V1\Rest\Profile\ProfileResource' => function ($sm) {
                     $request=$sm->get('request');
                     if(empty($request)) {
                         return new AccessDeniedResource();

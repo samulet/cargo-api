@@ -60,7 +60,7 @@ class Account
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $name;
+    protected $title;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -70,11 +70,6 @@ class Account
      * @ODM\Date
      */
     protected $deletedAt;
-    /**
-     * @Annotation\Type("Zend\Form\Element\Submit")
-     * @Annotation\Attributes({"value":"Отправить"})
-     */
-    public $submit;
     public function setData($data) {
 
             if($data !== null && is_array($data)){
