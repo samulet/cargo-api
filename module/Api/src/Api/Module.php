@@ -46,29 +46,29 @@ class Module implements ApigilityModuleInterface
                     if(empty($request)) {
                         return new AccessDeniedResource();
                     }
-                    $authToken=$request->getHeaders()->get('X-Auth-Usertoken');
+                    $authToken=$request->getHeaders()->get('X-Auth-UserToken');
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
                     } catch (Exception $e) {
                         $authEntity=null;
                     }
-                    if(!empty($authEntity)) {
-                        $user=$authEntity->getUser();
+                  //  if(!empty($authEntity)) {
+                   //     $user=$authEntity->getUser();
                         $accountModel = $sm->get('AccountModel');
                         $companyUserModel = $sm->get('CompanyUserModel');
-                        $acc = new AccountResource($accountModel,$companyUserModel,$user);
+                        $acc = new AccountResource($accountModel,$companyUserModel,'');
                         return $acc;
-                    } else {
-                        return new AccessDeniedResource();
-                    }
+                    //} else {
+                   //     return new AccessDeniedResource();
+                    //}
                 },
                 'Api\V1\Rest\Profile\ProfileResource' => function ($sm) {
                     $request=$sm->get('request');
                     if(empty($request)) {
                         return new AccessDeniedResource();
                     }
-                    $authToken=$request->getHeaders()->get('X-Auth-Usertoken');
+                    $authToken=$request->getHeaders()->get('X-Auth-UserToken');
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
@@ -89,7 +89,7 @@ class Module implements ApigilityModuleInterface
                     if(empty($request)) {
                         return new AccessDeniedResource();
                     }
-                    $authToken=$request->getHeaders()->get('X-Auth-Usertoken');
+                    $authToken=$request->getHeaders()->get('X-Auth-UserToken');
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
@@ -110,7 +110,7 @@ class Module implements ApigilityModuleInterface
                     if(empty($request)) {
                         return new AccessDeniedResource();
                     }
-                    $authToken=$request->getHeaders()->get('X-Auth-Usertoken');
+                    $authToken=$request->getHeaders()->get('X-Auth-UserToken');
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
@@ -132,7 +132,7 @@ class Module implements ApigilityModuleInterface
                     if(empty($request)) {
                         return new AccessDeniedResource();
                     }
-                    $authToken=$request->getHeaders()->get('X-Auth-Usertoken');
+                    $authToken=$request->getHeaders()->get('X-Auth-UserToken');
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
@@ -158,7 +158,7 @@ class Module implements ApigilityModuleInterface
                     if(empty($request)) {
                         return new AccessDeniedResource();
                     }
-                    $authToken=$request->getHeaders()->get('X-Auth-Usertoken');
+                    $authToken=$request->getHeaders()->get('X-Auth-UserToken');
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
