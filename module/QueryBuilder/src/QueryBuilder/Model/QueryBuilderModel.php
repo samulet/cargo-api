@@ -102,7 +102,9 @@ class QueryBuilderModel
         if(empty($uuid)) {
             $entityName="\\".$entityLink;
             $item = new $entityName();
-            $item->setUUID();
+            if(empty($data['uuid'])) {
+                $item->setUuid($this->uuidGenerator->generateV4());
+            }
         } elseif($this->uuidGenerator->isValid($uuid)) {
             $item = $this->documentManager->getRepository($entityLink)->findOneBy(
                 array('uuid' => $uuid));

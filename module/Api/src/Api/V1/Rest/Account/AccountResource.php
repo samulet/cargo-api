@@ -5,17 +5,19 @@ use ZF\Rest\AbstractResourceListener;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use Api\Entity\ApiStaticErrorList;
 use ZF\ApiProblem\ApiProblem;
-
+use Api\V1\Rest\Account\AccountEntity;
 class AccountResource extends AbstractResourceListener
 {
     protected $accountModel;
     protected $companyUserModel;
-    protected $request;
+    protected $companyModel;
+    protected $userEntity;
 
-    public function __construct($accountModel = null,$companyUserModel = null, $userEntity=null)
+    public function __construct($accountModel = null,$companyUserModel = null, $companyModel = null, $userEntity=null)
     {
         $this->accountModel = $accountModel;
         $this->companyUserModel = $companyUserModel;
+        $this->companyModel=$companyModel;
         $this->userEntity = $userEntity;
     }
 
@@ -31,6 +33,7 @@ class AccountResource extends AbstractResourceListener
         $data=$this->accountModel->createOrUpdate(get_object_vars($data));
         //тут еще функция, надо узнать как данные будут получаться  addUserToCompany($user_id, $accId, 'admin');
         if(!empty($data)) {
+          //  $this->companyUserModel->createOrUpdate(array('userUuid' => $this->userEntity['uuid'], 'accUuid' =>  $data['uuid']));
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);
@@ -74,7 +77,9 @@ class AccountResource extends AbstractResourceListener
     {
         $data=$this->accountModel->fetch(array('uuid'=>$id,'activated' => '1','deletedAt' => null));
         if(!empty($data)) {
-            return $data;
+            $dataArray=$data->getData();
+            $dataCompanies=$this->companyModel->fetchAll(array('ownerAccUuid' => $dataArray['uuid']));
+            return new AccountEntity($dataArray,$dataCompanies);
         } else {
             return ApiStaticErrorList::getError(404);
         }
@@ -89,8 +94,16 @@ class AccountResource extends AbstractResourceListener
     public function fetchAll($params = array())
     {
         $data=$this->accountModel->fetchAll($params);
-        $adapter = new ArrayAdapter($data);
-        $collection = new AccountCollection($adapter);
+        if(!empty($data)) {
+            $resultArray=array();
+            foreach($data as $d) {
+                array_push($resultArray,new AccountEntity($d->getData()));
+            }
+            $adapter = new ArrayAdapter($resultArray);
+            $collection = new AccountCollection($adapter);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
         if(!empty($collection)) {
             return $collection;
         } else {

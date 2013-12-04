@@ -63,7 +63,7 @@ class CompanyResource extends AbstractResourceListener
     {
         $data=$this->companyModel->fetch(array('uuid'=>$id,'activated' => '1','deletedAt' => null));
         if(!empty($data)) {
-            return $data;
+            return new CompanyEntity($data->getData());
         } else {
             return ApiStaticErrorList::getError(404);
         }
@@ -78,8 +78,16 @@ class CompanyResource extends AbstractResourceListener
     public function fetchAll($params = array())
     {
         $data=$this->companyModel->fetchAll($params);
-        $adapter = new ArrayAdapter($data);
-        $collection = new CompanyCollection($adapter);
+        if(!empty($data)) {
+            $resultArray=array();
+            foreach($data as $d) {
+                array_push($resultArray,new CompanyEntity($d->getData()));
+            }
+            $adapter = new ArrayAdapter($resultArray);
+            $collection = new CompanyCollection($adapter);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
         if(!empty($collection)) {
             return $collection;
         } else {
@@ -119,6 +127,13 @@ class CompanyResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
+        $data=$this->companyModel->createOrUpdate(get_object_vars($data),$id);
+        $data['ownerAccUuid']=$this->getEvent()->getRouteParam('account_uuid');
+        $data['uuid']=$this->getEvent()->getRouteParam('account_uuid');
+        if(!empty($data)) {
+            return ApiStaticErrorList::getError(202);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
     }
 }

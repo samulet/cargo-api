@@ -46,7 +46,7 @@ class Module implements ApigilityModuleInterface
                     if(empty($request)) {
                         return new AccessDeniedResource();
                     }
-                    $authToken=$request->getHeaders()->get('X-Auth-Usertoken');
+                    $authToken=$request->getHeaders()->get('X-Auth-UserToken');
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
@@ -57,18 +57,19 @@ class Module implements ApigilityModuleInterface
                         $user=$authEntity->getUser();
                         $accountModel = $sm->get('AccountModel');
                         $companyUserModel = $sm->get('CompanyUserModel');
-                        $acc = new AccountResource($accountModel,$companyUserModel,$user);
+                        $companyModel = $sm->get('CompanyModel');
+                        $acc = new AccountResource($accountModel,$companyUserModel,$companyModel,$user);
                         return $acc;
                     } else {
                         return new AccessDeniedResource();
                     }
                 },
-                'Api\V1\Rest\Profile\Controller' => function ($sm) {
+                'Api\V1\Rest\Profile\ProfileResource' => function ($sm) {
                     $request=$sm->get('request');
                     if(empty($request)) {
                         return new AccessDeniedResource();
                     }
-                    $authToken=$request->getHeaders()->get('X-Auth-Usertoken');
+                    $authToken=$request->getHeaders()->get('X-Auth-UserToken');
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
@@ -89,7 +90,7 @@ class Module implements ApigilityModuleInterface
                     if(empty($request)) {
                         return new AccessDeniedResource();
                     }
-                    $authToken=$request->getHeaders()->get('X-Auth-Usertoken');
+                    $authToken=$request->getHeaders()->get('X-Auth-UserToken');
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
@@ -110,7 +111,7 @@ class Module implements ApigilityModuleInterface
                     if(empty($request)) {
                         return new AccessDeniedResource();
                     }
-                    $authToken=$request->getHeaders()->get('X-Auth-Usertoken');
+                    $authToken=$request->getHeaders()->get('X-Auth-UserToken');
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
@@ -132,7 +133,7 @@ class Module implements ApigilityModuleInterface
                     if(empty($request)) {
                         return new AccessDeniedResource();
                     }
-                    $authToken=$request->getHeaders()->get('X-Auth-Usertoken');
+                    $authToken=$request->getHeaders()->get('X-Auth-UserToken');
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
@@ -158,7 +159,7 @@ class Module implements ApigilityModuleInterface
                     if(empty($request)) {
                         return new AccessDeniedResource();
                     }
-                    $authToken=$request->getHeaders()->get('X-Auth-Usertoken');
+                    $authToken=$request->getHeaders()->get('X-Auth-UserToken');
                     $authTokenModel=$sm->get('AuthTokenModel');
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);

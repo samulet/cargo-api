@@ -3,6 +3,9 @@ namespace Api\V1\Rest\AccountCompany;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use Zend\Paginator\Adapter\ArrayAdapter;
+use Api\V1\Rest\Company;
+use Api\Entity\ApiStaticErrorList;
 
 class AccountCompanyResource extends AbstractResourceListener
 {
@@ -23,7 +26,9 @@ class AccountCompanyResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $data=$this->companyModel->createOrUpdate(get_object_vars($data));
+        $data=get_object_vars($data);
+        $data['ownerAccUuid']=$this->getEvent()->getRouteParam('account_uuid');
+        $data=$this->companyModel->createOrUpdate($data);
         if(!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
@@ -72,7 +77,24 @@ class AccountCompanyResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        $accountUuid=$this->getEvent()->getRouteParam('account_uuid');
+        $params=$params+array('ownerAccUuid' => $accountUuid);
+        $data=$this->companyModel->fetchAll($params);
+        if(!empty($data)) {
+            $resultArray=array();
+            foreach($data as $d) {
+                array_push($resultArray,new Company\CompanyEntity($d->getData(), null, true));
+            }
+            $adapter = new ArrayAdapter($resultArray);
+            $collection = new Company\CompanyCollection($adapter);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
+        if(!empty($collection)) {
+            return $collection;
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
     }
 
     /**
@@ -107,11 +129,6 @@ class AccountCompanyResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data=$this->companyModel->createOrUpdate(get_object_vars($data),$id);
-        if(!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
     }
 }

@@ -14,8 +14,6 @@ use Zend\Form\Element\Collection;
  *
  * @ODM\Document(collection="account", repositoryClass="Account\Repository\AccountRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
- * @Annotation\Name("account")
- * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
 class Account
 {
@@ -44,13 +42,13 @@ class Account
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
      */
-    protected $created;
+    protected $created_at;
 
     /**
      * @Gedmo\Timestampable(on="update")
      * @ODM\Date
      */
-    protected $updated;
+    protected $updated_at;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -60,7 +58,7 @@ class Account
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $name;
+    protected $title;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -70,11 +68,6 @@ class Account
      * @ODM\Date
      */
     protected $deletedAt;
-    /**
-     * @Annotation\Type("Zend\Form\Element\Submit")
-     * @Annotation\Attributes({"value":"Отправить"})
-     */
-    public $submit;
     public function setData($data) {
 
             if($data !== null && is_array($data)){
@@ -176,25 +169,25 @@ class Account
     }
 
     /**
-     * Get name.
+     * Get title.
      *
      * @return string
      */
-    public function getName()
+    public function getTitle()
     {
-        return $this->name;
+        return $this->title;
     }
 
     /**
-     * Set name.
+     * Set title.
      *
-     * @param string $name
+     * @param string $title
      * @return AccountInterface
      */
 
-    public function setName($name)
+    public function setTitle($title)
     {
-        $this->name = $name;
+        $this->title = $title;
         return $this;
     }
 
@@ -231,19 +224,14 @@ class Account
         return $this;
     }
 
-    public function getUUID()
+    public function getUuid()
     {
         return $this->uuid;
     }
 
-    public function setUUID($uuid = null)
+    public function setUuid($uuid = null)
     {
-        if(empty($uuid)) {
-            $uuidGen = new UuidGenerator();
-            $this->uuid=$uuidGen->generateV4();
-        } else {
-            $this->uuid = $uuid;
-        }
+        $this->uuid = $uuid;
         return $this;
     }
 

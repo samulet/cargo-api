@@ -61,6 +61,8 @@ class UserModel
      */
     public function getUserStatus($uuid) {
         $user=$this->queryBuilderModel->fetch('User\Entity\User',array('uuid' =>$uuid));
-        return $user->getStatus();
+        $status= $user->getStatus();
+        $status['uuid']=$user->getUuid();
+        return $status;
     }
 }

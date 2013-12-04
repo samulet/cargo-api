@@ -63,7 +63,7 @@ class ProfileResource extends AbstractResourceListener
     {
         $data=$this->userModel->fetch(array('uuid'=>$id));
         if(!empty($data)) {
-            return $data;
+            return new ProfileEntity($data->getData());
         } else {
             return ApiStaticErrorList::getError(404);
         }
@@ -78,8 +78,16 @@ class ProfileResource extends AbstractResourceListener
     public function fetchAll($params = array())
     {
         $data=$this->userModel->fetchAll($params);
-        $adapter = new ArrayAdapter($data);
-        $collection = new ProfileCollection($adapter);
+        if(!empty($data)) {
+            $resultArray=array();
+            foreach($data as $d) {
+                array_push($resultArray,new ProfileEntity($d->getData()));
+            }
+            $adapter = new ArrayAdapter($resultArray);
+            $collection = new ProfileCollection($adapter);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
         if(!empty($collection)) {
             return $collection;
         } else {

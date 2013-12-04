@@ -7,18 +7,13 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
  * @ODM\Document(collection="companyUser")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class CompanyUser
 {
-    public function __construct($accId, $user_id, $param, $roles)
+    public function __construct()
     {
-        if ($param == 'admin') {
-            $this->orgId = new \MongoId($accId);
-        } else {
-            $this->setCompanyId(new \MongoId($accId));
-        }
-        $this->setUserId(new \MongoId($user_id));
-        $this->roles = $roles;
+
     }
 
     /**
@@ -32,15 +27,20 @@ class CompanyUser
      */
     protected $uuid;
     /**
-     * @ODM\ObjectId
+     * @var string
      * @var int
      */
-    protected $userId;
+    protected $accUuid;
     /**
-     * @ODM\ObjectId
+     * @var string
      * @var int
      */
-    protected $companyId;
+    protected $userUuid;
+    /**
+     * @var string
+     * @var int
+     */
+    protected $companyUuid;
 
     /**
      * @var string
@@ -48,21 +48,38 @@ class CompanyUser
      */
     protected $userRights;
     /**
-     * @ODM\ObjectId
-     * @var int
-     */
-    protected $orgId;
-    /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
      */
     protected $roles;
+    /**
+     * @Gedmo\Timestampable(on="create")
+     * @ODM\Date
+     * @Annotation\Exclude()
+     */
+    protected $created_at;
+
+    /**
+     * @Gedmo\Timestampable(on="update")
+     * @ODM\Date
+     * @Annotation\Exclude()
+     */
+    protected $updated_at;
+    /**
+     * @ODM\Date
+     */
+    protected $deletedAt;
 
     public function setData($data) {
         if($data !== null && is_array($data)){
             foreach(array_keys(get_class_vars(__CLASS__)) as $key){
                 if(isset($data[$key]) && ($key!='id') && ($key!='uuid') ){
-                    $this->$key = $data[$key];
+                    if(!is_array($this->$key)) {
+                        $this->$key = $data[$key];
+                    } else {
+                        $this->$key=$this->$key+$data[$key];
+                    }
+
                 }
             }
         }
@@ -77,6 +94,53 @@ class CompanyUser
         }
         return $data;
     }
+    /**
+     * @return mixed
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * @param mixed $deletedAt
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+    }
+
+    /**
+     * Set activated.
+     *
+     * @param string $activated
+     * @return UserInterface
+     */
+    public function setActivated($activated)
+    {
+        $this->activated = $activated;
+        return $this;
+    }
+
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    }
+
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+    }
+
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
 
     public function getId()
     {
@@ -89,43 +153,35 @@ class CompanyUser
         return $this;
     }
 
-    /**
-     * Set id.
-     *
-     * @param int $id
-     * @return UserInterface
-     */
-    public function getOrgId()
+    public function getAccUuid()
     {
-        return $this->orgId;
+        return $this->accUuid;
     }
 
-    /**
-     * Set id.
-     *
-     * @param int $id
-     * @return UserInterface
-     */
-    public function setCompanyId($companyId)
+    function setAccId($accUuid)
     {
-        $this->companyId = $companyId;
+        $this->accUuid = $accUuid;
         return $this;
     }
 
-    public function getUserId()
+    public function getUserUuid()
     {
-        return $this->userId;
+        return $this->userUuid;
     }
 
-    function setUserId($userId)
+    function setUserId($userUuid)
     {
-        $this->userId = $userId;
+        $this->userUuid = $userUuid;
         return $this;
     }
-
-    public function getCompanyId()
+    public function setCompanyUuid($companyUuid)
     {
-        return $this->companyId;
+        $this->companyUuid = $companyUuid;
+        return $this;
+    }
+    public function getCompanyUuid()
+    {
+        return $this->companyUuid;
     }
 
     public function getUserRights()
@@ -138,17 +194,12 @@ class CompanyUser
         $this->userRights = $userRights;
         return $this;
     }
-    public function setUUID($uuid = null)
+    public function setUuid($uuid)
     {
-        if(empty($uuid)) {
-            $uuidGen = new UuidGenerator();
-            $this->uuid=$uuidGen->generateV4();
-        } else {
-            $this->uuid = $uuid;
-        }
+        $this->uuid = $uuid;
         return $this;
     }
-    public function getUUID()
+    public function getUuid()
     {
         return $this->uuid;
     }
