@@ -32,7 +32,7 @@ return array(
             'api.rest.account-company' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/accounts[/:account_uuid]/companies',
+                    'route' => '/api/accounts[/:account_uuid]/companies[/:company_uuid]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\AccountCompany\\Controller',
                     ),
@@ -168,7 +168,7 @@ return array(
         'Api\\V1\\Rest\\AccountCompany\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\AccountCompany\\AccountCompanyResource',
             'route_name' => 'api.rest.account-company',
-            'identifier_name' => 'account_uuid',
+            'identifier_name' => 'company_uuid',
             'collection_name' => 'account_company',
             'resource_http_methods' => array(
                 0 => 'GET',
@@ -424,12 +424,12 @@ return array(
                 'is_collection' => '1',
             ),
             'Api\\V1\\Rest\\AccountCompany\\AccountCompanyEntity' => array(
-                'identifier_name' => 'account_uuid',
+                'identifier_name' => 'company_uuid',
                 'route_name' => 'api.rest.account-company',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\AccountCompany\\AccountCompanyCollection' => array(
-                'identifier_name' => 'account_uuid',
+                'identifier_name' => 'company_uuid',
                 'route_name' => 'api.rest.account-company',
                 'is_collection' => '1',
             ),
