@@ -63,7 +63,7 @@ class CompanyResource extends AbstractResourceListener
     {
         $data=$this->companyModel->fetch(array('uuid'=>$id,'activated' => '1','deletedAt' => null));
         if(!empty($data)) {
-            return $data;
+            return new CompanyEntity($data->getData());
         } else {
             return ApiStaticErrorList::getError(404);
         }
