@@ -7,7 +7,7 @@ class AccountEntity {
     protected $created_at;
     protected $_embedded;
 
-    public function __construct(array $entity = null,$companies = null, $_links = false){
+    public function __construct(array $entity = null,$companies = null){
         if(!empty($entity)) {
             $this->setData($entity);
             $this->account_uuid=$entity['uuid'];
