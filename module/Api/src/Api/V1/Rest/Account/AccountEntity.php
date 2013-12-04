@@ -5,7 +5,7 @@ class AccountEntity {
     protected $account_uuid;
     protected $title;
     protected $created_at;
-    protected $_embedded;
+    protected $_embedded = array('companies'=>array());
     public function __construct(array $entity = null,$companies){
         $this->setData($entity);
         $this->account_uuid=$entity['uuid'];
@@ -49,15 +49,17 @@ class AccountEntity {
     }
     public function setEmbedded($companies){
         foreach($companies as $com) {
-            array_push($this->_embedded, array(
-                    '_links' => array(
-                        'self' => array(
-                            'href' => '/api/accounts/'+$this->account_uuid+'/companies/'.$com->getUuid()
-                        )
-                    ),
-                    'title' => $com->getProperty()+' '+$com->getShort()
-                )
+            $arr= array(
+                '_links' => array(
+                    'self' => array(
+                        'href' => '/api/accounts/'.$this->account_uuid.'/companies/'.$com->getUuid()
+                    )
+                ),
+                'title' => $com->getProperty().' '.$com->getShort(),
+                'company_uuid' => $com->getUuid()
+
             );
+            array_push($this->_embedded['companies'], $arr);
         }
         return $this;
     }
