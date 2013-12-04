@@ -68,7 +68,7 @@ return array(
             'api.rest.profile-status' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/profile[/:user_uuid]/status',
+                    'route' => '/api/profile[/:profile_uuid]/status',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\ProfileStatus\\Controller',
                     ),
@@ -94,7 +94,7 @@ return array(
             'listener' => 'Api\\V1\\Rest\\Account\\AccountResource',
             'route_name' => 'api.rest.account',
             'identifier_name' => 'account_uuid',
-            'collection_name' => 'account',
+            'collection_name' => 'accounts',
             'resource_http_methods' => array(
                 0 => 'GET',
                 1 => 'POST',
@@ -119,7 +119,7 @@ return array(
             'listener' => 'Api\\V1\\Rest\\Profile\\ProfileResource',
             'route_name' => 'api.rest.profile',
             'identifier_name' => 'profile_uuid',
-            'collection_name' => 'profile',
+            'collection_name' => 'profiles',
             'resource_http_methods' => array(
                 0 => 'GET',
                 1 => 'POST',
@@ -144,7 +144,7 @@ return array(
             'listener' => 'Api\\V1\\Rest\\Company\\CompanyResource',
             'route_name' => 'api.rest.company',
             'identifier_name' => 'company_uuid',
-            'collection_name' => 'company',
+            'collection_name' => 'companies',
             'resource_http_methods' => array(
                 0 => 'GET',
                 1 => 'POST',
@@ -169,7 +169,7 @@ return array(
             'listener' => 'Api\\V1\\Rest\\AccountCompany\\AccountCompanyResource',
             'route_name' => 'api.rest.account-company',
             'identifier_name' => 'company_uuid',
-            'collection_name' => 'account_company',
+            'collection_name' => 'companies',
             'resource_http_methods' => array(
                 0 => 'GET',
                 1 => 'POST',
@@ -268,7 +268,7 @@ return array(
         'Api\\V1\\Rest\\ProfileStatus\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\ProfileStatus\\ProfileStatusResource',
             'route_name' => 'api.rest.profile-status',
-            'identifier_name' => 'profile_status_id',
+            'identifier_name' => 'profile_uuid',
             'collection_name' => 'profile_status',
             'resource_http_methods' => array(
                 0 => 'GET',
@@ -376,6 +376,18 @@ return array(
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ),
+            'Api\\V1\\Rest\\Profile\\Controller' => array(
+                0 => 'application/json',
+                1 => 'application/*+json',
+            ),
+            'Api\\V1\\Rest\\Company\\Controller' => array(
+                0 => 'application/json',
+                1 => 'application/*+json',
+            ),
+            'Api\\V1\\Rest\\Account\\Controller' => array(
+                0 => 'application/json',
+                1 => 'application/*+json',
+            ),
         ),
         'content_type_whitelist' => array(
             'Api\\V1\\Rest\\ResourceMeta\\Controller' => array(
@@ -388,6 +400,15 @@ return array(
             'Api\\V1\\Rest\\ProfileStatus\\Controller' => array(
                 0 => 'application/vnd.api.v1+json',
                 1 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\Profile\\Controller' => array(
+                0 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\Company\\Controller' => array(
+                0 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\Account\\Controller' => array(
+                0 => 'application/json',
             ),
         ),
     ),
@@ -464,12 +485,12 @@ return array(
                 'is_collection' => '1',
             ),
             'Api\\V1\\Rest\\ProfileStatus\\ProfileStatusEntity' => array(
-                'identifier_name' => 'profile_status_id',
+                'identifier_name' => 'profile_uuid',
                 'route_name' => 'api.rest.profile-status',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\ProfileStatus\\ProfileStatusCollection' => array(
-                'identifier_name' => 'profile_status_id',
+                'identifier_name' => 'profile_uuid',
                 'route_name' => 'api.rest.profile-status',
                 'is_collection' => '1',
             ),
