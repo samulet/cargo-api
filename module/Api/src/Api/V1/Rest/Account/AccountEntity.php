@@ -2,13 +2,16 @@
 namespace Api\V1\Rest\Account;
 
 class AccountEntity {
-    private $account_uuid;
-    protected $uuid;
+    protected $account_uuid;
     protected $title;
-    //   protected $_embedded;
-    public function __construct(array $entity = null){
+    protected $created_at;
+    protected $_embedded;
+    public function __construct(array $entity = null,$companies){
         $this->setData($entity);
-        $this->account_uuid=123;
+        $this->account_uuid=$entity['uuid'];
+        if(!empty($companies)) {
+            $this->setEmbedded($companies);
+        }
     }
 
     public function setData($data) {
@@ -35,13 +38,30 @@ class AccountEntity {
     {
         return $this->title;
     }
-    public function getUuid()
+    public function getAccountUuid()
     {
-        return $this->uuid;
+        return $this->account_uuid;
     }
-    //public function generateLink(){
-     //   $this->_links=array(
-     //       array('self' => )
-     //   );
-  //  }
+    public function setAccountUuid($account_uuid)
+    {
+        $this->account_uuid = $account_uuid;
+        return $this;
+    }
+    public function setEmbedded($companies){
+        foreach($companies as $com) {
+            array_push($this->_embedded, array(
+                    '_links' => array(
+                        'self' => array(
+                            'href' => '/api/accounts/'+$this->account_uuid+'/companies/'.$com->getUuid()
+                        )
+                    ),
+                    'title' => $com->getProperty()+' '+$com->getShort()
+                )
+            );
+        }
+        return $this;
+    }
+    public function getEmbedded(){
+        return $this->_embedded;
+    }
 }
