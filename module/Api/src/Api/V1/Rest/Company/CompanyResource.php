@@ -78,8 +78,16 @@ class CompanyResource extends AbstractResourceListener
     public function fetchAll($params = array())
     {
         $data=$this->companyModel->fetchAll($params);
-        $adapter = new ArrayAdapter($data);
-        $collection = new CompanyCollection($adapter);
+        if(!empty($data)) {
+            $resultArray=array();
+            foreach($data as $d) {
+                array_push($resultArray,new CompanyEntity($d->getData()));
+            }
+            $adapter = new ArrayAdapter($resultArray);
+            $collection = new CompanyCollection($adapter);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
         if(!empty($collection)) {
             return $collection;
         } else {

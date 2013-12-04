@@ -78,7 +78,7 @@ class AccountResource extends AbstractResourceListener
         if(!empty($data)) {
             $dataArray=$data->getData();
             $dataCompanies=$this->companyModel->fetchAll(array('ownerAccUuid' => $dataArray['uuid']));
-            return new AccountEntity($dataArray,$dataCompanies);;
+            return new AccountEntity($dataArray,$dataCompanies);
         } else {
             return ApiStaticErrorList::getError(404);
         }

@@ -118,15 +118,15 @@ class Module implements ApigilityModuleInterface
                     } catch (Exception $e) {
                         $authEntity=null;
                     }
-                    if(!empty($authEntity)) {
-                        $user=$authEntity->getUser();
+                   // if(!empty($authEntity)) {
+                     //   $user=$authEntity->getUser();
                         $companyModel = $sm->get('CompanyModel');
                         $companyUserModel = $sm->get('CompanyUserModel');
-                        $com = new AccountCompanyResource($companyModel,$companyUserModel,$user);
+                        $com = new AccountCompanyResource($companyModel,$companyUserModel,'');
                         return $com;
-                    } else {
-                        return new AccessDeniedResource();
-                    }
+                    //} else {
+                    //    return new AccessDeniedResource();
+                    //}
                 },
                 'Api\V1\Rest\CompanyEmployee\CompanyEmployeeResource' => function ($sm) {
                     $request=$sm->get('request');
