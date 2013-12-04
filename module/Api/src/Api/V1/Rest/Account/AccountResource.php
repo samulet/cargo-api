@@ -96,7 +96,7 @@ class AccountResource extends AbstractResourceListener
         if(!empty($data)) {
             $resultArray=array();
             foreach($data as $d) {
-                array_push($resultArray,new AccountEntity($d->getData(), null, true));
+                array_push($resultArray,new AccountEntity($d->getData()));
             }
             $adapter = new ArrayAdapter($resultArray);
             $collection = new AccountCollection($adapter);

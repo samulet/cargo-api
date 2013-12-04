@@ -57,7 +57,7 @@ class ProfileStatusResource extends AbstractResourceListener
     {
         $data=$this->userModel->getUserStatus($id);
         if(!empty($data)) {
-            return $data;
+            return new ProfileStatusEntity($data);
         } else {
             return ApiStaticErrorList::getError(404);
         }
