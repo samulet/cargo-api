@@ -10,12 +10,14 @@ class AccountResource extends AbstractResourceListener
 {
     protected $accountModel;
     protected $companyUserModel;
+    protected $companyModel;
     protected $request;
 
-    public function __construct($accountModel = null,$companyUserModel = null, $userEntity=null)
+    public function __construct($accountModel = null,$companyUserModel = null, $companyModel = null, $userEntity=null)
     {
         $this->accountModel = $accountModel;
         $this->companyUserModel = $companyUserModel;
+        $this->companyModel=$companyModel;
         $this->userEntity = $userEntity;
     }
 

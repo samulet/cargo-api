@@ -57,7 +57,8 @@ class Module implements ApigilityModuleInterface
                    //     $user=$authEntity->getUser();
                         $accountModel = $sm->get('AccountModel');
                         $companyUserModel = $sm->get('CompanyUserModel');
-                        $acc = new AccountResource($accountModel,$companyUserModel,'');
+                        $companyModel = $sm->get('CompanyModel');
+                        $acc = new AccountResource($accountModel,$companyUserModel,$companyModel,'');
                         return $acc;
                     //} else {
                    //     return new AccessDeniedResource();
@@ -96,14 +97,14 @@ class Module implements ApigilityModuleInterface
                     } catch (Exception $e) {
                         $authEntity=null;
                     }
-                    if(!empty($authEntity)) {
-                        $user=$authEntity->getUser();
+                   // if(!empty($authEntity)) {
+                       // $user=$authEntity->getUser();
                         $companyModel = $sm->get('CompanyModel');
-                        $com = new CompanyResource($companyModel,$user);
+                        $com = new CompanyResource($companyModel,'');
                         return $com;
-                    } else {
+                   // } else {
                         return new AccessDeniedResource();
-                    }
+                    //}
                 },
                 'Api\V1\Rest\AccountCompany\AccountCompanyResource' => function ($sm) {
                     $request=$sm->get('request');
