@@ -11,7 +11,7 @@ class AccountResource extends AbstractResourceListener
     protected $accountModel;
     protected $companyUserModel;
     protected $companyModel;
-    protected $request;
+    protected $userEntity;
 
     public function __construct($accountModel = null,$companyUserModel = null, $companyModel = null, $userEntity=null)
     {
@@ -33,6 +33,7 @@ class AccountResource extends AbstractResourceListener
         $data=$this->accountModel->createOrUpdate(get_object_vars($data));
         //тут еще функция, надо узнать как данные будут получаться  addUserToCompany($user_id, $accId, 'admin');
         if(!empty($data)) {
+          //  $this->companyUserModel->createOrUpdate(array('userUuid' => $this->userEntity['uuid'], 'accUuid' =>  $data['uuid']));
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);

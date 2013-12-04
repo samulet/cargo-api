@@ -171,21 +171,6 @@ class CompanyModel
         return $com;
     }
 
-
-
-    public function deleteCompany($comId)
-    {
-
-        $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
-
-        $qb = $objectManager->getRepository('Account\Entity\Company')->find(new \MongoId($comId));
-        if (!$qb) {
-            throw DocumentNotFoundException::documentNotFound('Account\Entity\Company', $comId);
-        }
-        $objectManager->remove($qb);
-        $objectManager->flush();
-    }
-
     public function isContractAgentExist($contactAgentId, $comId)
     {
         $objectManager = $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');

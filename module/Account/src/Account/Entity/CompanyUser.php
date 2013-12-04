@@ -48,11 +48,6 @@ class CompanyUser
      */
     protected $userRights;
     /**
-     * @ODM\ObjectId
-     * @var int
-     */
-    protected $orgId;
-    /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
      */
@@ -79,7 +74,12 @@ class CompanyUser
         if($data !== null && is_array($data)){
             foreach(array_keys(get_class_vars(__CLASS__)) as $key){
                 if(isset($data[$key]) && ($key!='id') && ($key!='uuid') ){
-                    $this->$key = $data[$key];
+                    if(!is_array($this->$key)) {
+                        $this->$key = $data[$key];
+                    } else {
+                        $this->$key=$this->$key+$data[$key];
+                    }
+
                 }
             }
         }

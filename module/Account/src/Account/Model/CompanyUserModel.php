@@ -507,22 +507,16 @@ class CompanyUserModel {
         return $rolesObject->roles;
     }
 
-    public function getAccountModel()
-    {
-        if (!$this->accountModel) {
-            $sm = $this->getServiceLocator();
-            $this->accountModel = $sm->get('Account\Model\AccountModel');
-        }
-        return $this->accountModel;
-    }
-
-    public function getCompanyModel()
-    {
-        if (!$this->companyModel) {
-            $sm = $this->getServiceLocator();
-            $this->companyModel = $sm->get('Account\Model\CompanyModel');
-        }
-        return $this->companyModel;
+    /**
+     * Добавил или обновить юзера в компании. Возвращает сущность модифицированого юзера в компании.
+     *
+     * @param array $data записываемый массив данных
+     * @param string $uuid uuid модифицируемого юзера
+     *
+     * @return \Account\Entity\Company|null
+     */
+    public function createOrUpdate($data, $uuid = null) {
+        return $this->queryBuilderModel->fetch('Account\Entity\CompanyUser',$data,$uuid);
     }
 
 }
