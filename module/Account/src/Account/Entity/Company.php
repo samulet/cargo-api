@@ -13,8 +13,6 @@ use Zend\Form\Element\Collection;
 /**
  * @ODM\Document(collection="company", repositoryClass="Account\Repository\CompanyRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
- * @Annotation\Name("company")
- * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
 class Company
 {
