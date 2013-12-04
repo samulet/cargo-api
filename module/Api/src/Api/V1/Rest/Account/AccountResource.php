@@ -93,8 +93,16 @@ class AccountResource extends AbstractResourceListener
     public function fetchAll($params = array())
     {
         $data=$this->accountModel->fetchAll($params);
-        $adapter = new ArrayAdapter($data);
-        $collection = new AccountCollection($adapter);
+        if(!empty($data)) {
+            $resultArray=array();
+            foreach($data as $d) {
+                array_push($resultArray,new AccountEntity($d->getData(), null, true));
+            }
+            $adapter = new ArrayAdapter($resultArray);
+            $collection = new AccountCollection($adapter);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
         if(!empty($collection)) {
             return $collection;
         } else {
