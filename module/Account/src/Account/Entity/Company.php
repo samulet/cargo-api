@@ -44,14 +44,14 @@ class Company
      * @ODM\Date
      * @Annotation\Exclude()
      */
-    protected $created;
+    protected $created_at;
 
     /**
      * @Gedmo\Timestampable(on="update")
      * @ODM\Date
      * @Annotation\Exclude()
      */
-    protected $updated;
+    protected $updated_at;
 
     /**
      * @var string
