@@ -396,6 +396,7 @@ return array(
             'Api\\V1\\Rest\\Account\\AccountEntity' => array(
                 'identifier_name' => 'account_uuid',
                 'route_name' => 'api.rest.account',
+                'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\Account\\AccountCollection' => array(
                 'identifier_name' => 'account_uuid',
@@ -405,6 +406,7 @@ return array(
             'Api\\V1\\Rest\\Profile\\ProfileEntity' => array(
                 'identifier_name' => 'profile_uuid',
                 'route_name' => 'api.rest.profile',
+                'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\Profile\\ProfileCollection' => array(
                 'identifier_name' => 'profile_uuid',
@@ -414,6 +416,7 @@ return array(
             'Api\\V1\\Rest\\Company\\CompanyEntity' => array(
                 'identifier_name' => 'company_uuid',
                 'route_name' => 'api.rest.company',
+                'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\Company\\CompanyCollection' => array(
                 'identifier_name' => 'company_uuid',
@@ -423,6 +426,7 @@ return array(
             'Api\\V1\\Rest\\AccountCompany\\AccountCompanyEntity' => array(
                 'identifier_name' => 'account_uuid',
                 'route_name' => 'api.rest.account-company',
+                'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\AccountCompany\\AccountCompanyCollection' => array(
                 'identifier_name' => 'account_uuid',
@@ -432,6 +436,7 @@ return array(
             'Api\\V1\\Rest\\CompanyEmployee\\CompanyEmployeeEntity' => array(
                 'identifier_name' => 'company_employee_uuid',
                 'route_name' => 'api.rest.company-employee',
+                'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\CompanyEmployee\\CompanyEmployeeCollection' => array(
                 'identifier_name' => 'company_employee_uuid',
@@ -441,6 +446,7 @@ return array(
             'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerEntity' => array(
                 'identifier_name' => 'company_partner_uuid',
                 'route_name' => 'api.rest.company-partner',
+                'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerCollection' => array(
                 'identifier_name' => 'company_partner_uuid',
@@ -450,6 +456,7 @@ return array(
             'Api\\V1\\Rest\\ResourceMeta\\ResourceMetaEntity' => array(
                 'identifier_name' => 'resource_meta_id',
                 'route_name' => 'api.rest.resource-meta',
+                'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\ResourceMeta\\ResourceMetaCollection' => array(
                 'identifier_name' => 'resource_meta_id',
@@ -459,6 +466,7 @@ return array(
             'Api\\V1\\Rest\\ProfileStatus\\ProfileStatusEntity' => array(
                 'identifier_name' => 'profile_status_id',
                 'route_name' => 'api.rest.profile-status',
+                'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\ProfileStatus\\ProfileStatusCollection' => array(
                 'identifier_name' => 'profile_status_id',
