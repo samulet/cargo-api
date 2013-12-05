@@ -19,49 +19,48 @@ class Company
     /**
      * @ODM\Id
      * @var int
-     * @Annotation\Exclude()
      */
     protected $id;
 
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Exclude()
+
      */
     protected $uuid;
 
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Exclude()
+
      */
     protected $ownerAccUuid;
 
     /**
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
-     * @Annotation\Exclude()
+
      */
     protected $created_at;
 
     /**
      * @Gedmo\Timestampable(on="update")
      * @ODM\Date
-     * @Annotation\Exclude()
+
      */
     protected $updated_at;
 
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Exclude()
+
      */
     protected $activated;
 
     /**
      * @var string
      * @ODM\Field(type="string")
-     * @Annotation\Exclude()
+
      */
     protected $dirty;
 
@@ -102,8 +101,8 @@ class Company
     protected $kpp;
 
     /**
-     * @var string
-     * @ODM\Field(type="string")
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
      */
     protected $tax = array();
 

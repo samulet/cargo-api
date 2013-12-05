@@ -245,7 +245,7 @@ class CompanyModel
      * @return \Account\Entity\Company|null
      */
     public function createOrUpdate($data, $uuid = null) {
-        return $this->queryBuilderModel->fetch('Account\Entity\Company',$data,$uuid);
+        return $this->queryBuilderModel->createOrUpdate('Account\Entity\Company',$data,$uuid);
     }
 
     /**

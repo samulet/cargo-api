@@ -98,7 +98,6 @@ class QueryBuilderModel
      * @return ?|null
      */
     public function createOrUpdate($entityLink, $data, $uuid = null) {
-
         if(empty($uuid)) {
             $entityName="\\".$entityLink;
             $item = new $entityName();
@@ -111,7 +110,6 @@ class QueryBuilderModel
         } else {
             return null;
         }
-
         $item->setData($data);
         $this->documentManager->persist($item);
         $this->documentManager->flush();
@@ -148,6 +146,15 @@ class QueryBuilderModel
         } else {
             return $items;
         }
+    }
+
+    public function fetchToken($value)
+    {
+       // $item = $this->createQuery($this->documentManager->createQueryBuilder('Account\Entity\Account'), array())->getQuery()->getSingleResult();
+        $item = $this->createQuery($this->documentManager->createQueryBuilder('AuthToken\Entity\AuthToken'), array())->getQuery()->getSingleResult();
+        return $item;
+        //$builder = $this->documentManager->getRepository();
+        //return $builder->field('token')->equals($value)->field('deletedAt')->equals(null)->getQuery()->getSingleResult();
     }
 
 }
