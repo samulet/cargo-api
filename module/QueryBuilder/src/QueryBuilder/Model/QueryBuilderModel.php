@@ -115,6 +115,7 @@ class QueryBuilderModel
         $item->setData($data);
         $this->documentManager->persist($item);
         $this->documentManager->flush();
+        var_dump($entityName,$item,$data);
         return $item;
     }
     /**
