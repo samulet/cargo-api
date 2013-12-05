@@ -101,8 +101,8 @@ class Company
     protected $kpp;
 
     /**
-     * @var string
-     * @ODM\Field(type="string")
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
      */
     protected $tax = array();
 
