@@ -51,12 +51,12 @@ class Module implements ApigilityModuleInterface
 
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
-                        var_dump($authEntity);
+
                     } catch (Exception $e) {
                         $authEntity=null;
-                        var_dump($e);
-                    }
 
+                    }
+                    var_dump($authEntity);
                     if(!empty($authEntity)) {
                         $user=$authEntity->getUser();
                         $accountModel = $sm->get('AccountModel');
