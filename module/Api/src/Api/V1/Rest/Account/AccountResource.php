@@ -93,7 +93,6 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        die(var_dump($this->userEntity));
         $data=$this->accountModel->fetchAll($params);
         if(!empty($data)) {
             $resultArray=array();

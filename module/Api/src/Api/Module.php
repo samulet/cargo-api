@@ -51,6 +51,7 @@ class Module implements ApigilityModuleInterface
 
                     try {
                         $authEntity=$authTokenModel->fetch($authToken->getFieldValue());
+                    //    die(var_dump($authEntity));
                     } catch (Exception $e) {
                         $authEntity=null;
                     }

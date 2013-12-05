@@ -150,4 +150,13 @@ class QueryBuilderModel
         }
     }
 
+    public function fetchToken($value)
+    {
+       // $item = $this->createQuery($this->documentManager->createQueryBuilder('Account\Entity\Account'), array())->getQuery()->getSingleResult();
+        $item = $this->createQuery($this->documentManager->createQueryBuilder('AuthToken\Entity\AuthToken'), array())->getQuery()->getSingleResult();
+        return $item;
+        //$builder = $this->documentManager->getRepository();
+        //return $builder->field('token')->equals($value)->field('deletedAt')->equals(null)->getQuery()->getSingleResult();
+    }
+
 }
