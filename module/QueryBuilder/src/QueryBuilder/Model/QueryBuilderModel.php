@@ -98,7 +98,6 @@ class QueryBuilderModel
      * @return ?|null
      */
     public function createOrUpdate($entityLink, $data, $uuid = null) {
-
         if(empty($uuid)) {
             $entityName="\\".$entityLink;
             $item = new $entityName();
@@ -111,11 +110,9 @@ class QueryBuilderModel
         } else {
             return null;
         }
-
         $item->setData($data);
         $this->documentManager->persist($item);
         $this->documentManager->flush();
-        var_dump($entityName,$item,$data);
         return $item;
     }
     /**
