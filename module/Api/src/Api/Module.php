@@ -9,6 +9,7 @@ use Api\V1\Rest\CompanyEmployee\CompanyEmployeeResource;
 use Api\V1\Rest\ResourceMeta\ResourceMetaResource;
 use Api\V1\Rest\AccessDenied\AccessDeniedResource;
 use Api\V1\Rest\AccountCompany\AccountCompanyResource;
+use Api\V1\Rest\ProfileStatus\ProfileStatusResource;
 use Exception;
 
 class Module implements ApigilityModuleInterface
@@ -42,112 +43,124 @@ class Module implements ApigilityModuleInterface
                 'AccountModel' => 'Account\Factory\AccountModelFactory',
                 'UserModel' => 'User\Factory\UserModelFactory',
                 'Api\V1\Rest\Account\AccountResource' => function ($sm) {
-                    $request=$sm->get('request');
-                    if(empty($request)) {
+                    /** @var \Zend\Http\Header\GenericHeader $authToken */
+                    try {
+                        $authToken = $sm->get('request')->getHeaders()->get('X-Auth-UserToken');
+                    } catch (Exception $e) {
                         return new AccessDeniedResource();
                     }
-                    $authToken=$request->getHeaders()->get('X-Auth-UserToken');
-                    $authTokenModel=$sm->get('AuthTokenModel');
-
-                    try {
-                        $authEntity=$authTokenModel->fetch($authToken->getFieldValue());
-                    //    die(var_dump($authEntity));
-                    } catch (Exception $e) {
-                        $authEntity=null;
+                    /** @var \AuthToken\Model\AuthToken $AuthTokenModel */
+                    $AuthTokenModel = $sm->get('AuthToken\\Model\\AuthToken');
+                    if(!empty($authToken)) {
+                        $tokenEntity = $AuthTokenModel->fetch($authToken->getFieldValue());
+                    } else {
+                        return new AccessDeniedResource();
+                    }
+                    if (!empty($tokenEntity)) {
+                        return new AccountResource(
+                            $sm->get('AccountModel'),
+                            $sm->get('CompanyUserModel'),
+                            $sm->get('CompanyModel'),
+                            $tokenEntity->getUser()
+                        );
+                    } else {
+                        return new AccessDeniedResource();
                     }
 
-                    if(!empty($authEntity)) {
-                        $user=$authEntity->getUser();
-                        $accountModel = $sm->get('AccountModel');
-                        $companyUserModel = $sm->get('CompanyUserModel');
-                        $companyModel = $sm->get('CompanyModel');
-                        $acc = new AccountResource($accountModel,$companyUserModel,$companyModel,$user);
-                        return $acc;
-                    } else {
+                    $request=$sm->get('request');
+                    if(empty($request)) {
                         return new AccessDeniedResource();
                     }
                 },
                 'Api\V1\Rest\Profile\ProfileResource' => function ($sm) {
-                    $request=$sm->get('request');
-                    if(empty($request)) {
+                    /** @var \Zend\Http\Header\GenericHeader $authToken */
+                    try {
+                        $authToken = $sm->get('request')->getHeaders()->get('X-Auth-UserToken');
+                    } catch (Exception $e) {
                         return new AccessDeniedResource();
                     }
-                    $authToken=$request->getHeaders()->get('X-Auth-UserToken');
-                    $authTokenModel=$sm->get('AuthTokenModel');
-                    try {
-                        $authEntity=$authTokenModel->fetch($authToken->getFieldValue());
-                    } catch (Exception $e) {
-                        $authEntity=null;
+                    /** @var \AuthToken\Model\AuthToken $AuthTokenModel */
+                    $AuthTokenModel = $sm->get('AuthToken\\Model\\AuthToken');
+                    if(!empty($authToken)) {
+                        $tokenEntity = $AuthTokenModel->fetch($authToken->getFieldValue());
+                    } else {
+                        return new AccessDeniedResource();
                     }
-                    if(!empty($authEntity)) {
-                        $user=$authEntity->getUser();
-                        $userModel = $sm->get('UserModel');
-                        $user = new ProfileResource($userModel,$user);
-                        return $user;
+                    if (!empty($tokenEntity)) {
+                        return new ProfileResource(
+                            $sm->get('UserModel'),
+                            $tokenEntity->getUser()
+                        );
                     } else {
                         return new AccessDeniedResource();
                     }
                 },
                 'Api\V1\Rest\Company\CompanyResource' => function ($sm) {
-                    $request=$sm->get('request');
-                    if(empty($request)) {
+                    /** @var \Zend\Http\Header\GenericHeader $authToken */
+                    try {
+                        $authToken = $sm->get('request')->getHeaders()->get('X-Auth-UserToken');
+                    } catch (Exception $e) {
                         return new AccessDeniedResource();
                     }
-                    $authToken=$request->getHeaders()->get('X-Auth-UserToken');
-                    $authTokenModel=$sm->get('AuthTokenModel');
-                    try {
-                        $authEntity=$authTokenModel->fetch($authToken->getFieldValue());
-                    } catch (Exception $e) {
-                        $authEntity=null;
+                    /** @var \AuthToken\Model\AuthToken $AuthTokenModel */
+                    $AuthTokenModel = $sm->get('AuthToken\\Model\\AuthToken');
+                    if(!empty($authToken)) {
+                        $tokenEntity = $AuthTokenModel->fetch($authToken->getFieldValue());
+                    } else {
+                        return new AccessDeniedResource();
                     }
-                    if(!empty($authEntity)) {
-                        $user=$authEntity->getUser();
-                        $companyModel = $sm->get('CompanyModel');
-                        $com = new CompanyResource($companyModel,$user);
-                        return $com;
+                    if (!empty($tokenEntity)) {
+                        return new CompanyResource(
+                            $sm->get('CompanyModel'),
+                            $tokenEntity->getUser()
+                        );
                     } else {
                         return new AccessDeniedResource();
                     }
                 },
                 'Api\V1\Rest\AccountCompany\AccountCompanyResource' => function ($sm) {
-                    $request=$sm->get('request');
-                    if(empty($request)) {
+                    /** @var \Zend\Http\Header\GenericHeader $authToken */
+                    try {
+                        $authToken = $sm->get('request')->getHeaders()->get('X-Auth-UserToken');
+                    } catch (Exception $e) {
                         return new AccessDeniedResource();
                     }
-                    $authToken=$request->getHeaders()->get('X-Auth-UserToken');
-                    $authTokenModel=$sm->get('AuthTokenModel');
-                    try {
-                        $authEntity=$authTokenModel->fetch($authToken->getFieldValue());
-                    } catch (Exception $e) {
-                        $authEntity=null;
+                    /** @var \AuthToken\Model\AuthToken $AuthTokenModel */
+                    $AuthTokenModel = $sm->get('AuthToken\\Model\\AuthToken');
+                    if(!empty($authToken)) {
+                        $tokenEntity = $AuthTokenModel->fetch($authToken->getFieldValue());
+                    } else {
+                        return new AccessDeniedResource();
                     }
-                    if(!empty($authEntity)) {
-                        $user=$authEntity->getUser();
-                        $companyModel = $sm->get('CompanyModel');
-                        $companyUserModel = $sm->get('CompanyUserModel');
-                        $com = new AccountCompanyResource($companyModel,$companyUserModel,$user);
-                        return $com;
+                    if (!empty($tokenEntity)) {
+                        return new AccountCompanyResource(
+                            $sm->get('CompanyModel'),
+                            $sm->get('CompanyUserModel'),
+                            $tokenEntity->getUser()
+                        );
                     } else {
                         return new AccessDeniedResource();
                     }
                 },
                 'Api\V1\Rest\CompanyEmployee\CompanyEmployeeResource' => function ($sm) {
-                    $request=$sm->get('request');
-                    if(empty($request)) {
+                    /** @var \Zend\Http\Header\GenericHeader $authToken */
+                    try {
+                        $authToken = $sm->get('request')->getHeaders()->get('X-Auth-UserToken');
+                    } catch (Exception $e) {
                         return new AccessDeniedResource();
                     }
-                    $authToken=$request->getHeaders()->get('X-Auth-UserToken');
-                    $authTokenModel=$sm->get('AuthTokenModel');
-                    try {
-                        $authEntity=$authTokenModel->fetch($authToken->getFieldValue());
-                    } catch (Exception $e) {
-                        $authEntity=null;
+                    /** @var \AuthToken\Model\AuthToken $AuthTokenModel */
+                    $AuthTokenModel = $sm->get('AuthToken\\Model\\AuthToken');
+                    if(!empty($authToken)) {
+                        $tokenEntity = $AuthTokenModel->fetch($authToken->getFieldValue());
+                    } else {
+                        return new AccessDeniedResource();
                     }
-                    if(!empty($authEntity)) {
-                        $user=$authEntity->getUser();
-                        $companyUserModel = $sm->get('CompanyUserModel');
-                        $com = new CompanyEmployeeResource($companyUserModel,$user);
-                        return $com;
+                    if (!empty($tokenEntity)) {
+                        return new CompanyEmployeeResource(
+                            $sm->get('CompanyUserModel'),
+                            $tokenEntity->getUser()
+                        );
                     } else {
                         return new AccessDeniedResource();
                     }
@@ -158,22 +171,24 @@ class Module implements ApigilityModuleInterface
                     return $recourseMeta;
                 },
                 'Api\V1\Rest\ProfileStatus\ProfileStatusResource' => function ($sm) {
-                    $request=$sm->get('request');
-                    if(empty($request)) {
+                    /** @var \Zend\Http\Header\GenericHeader $authToken */
+                    try {
+                        $authToken = $sm->get('request')->getHeaders()->get('X-Auth-UserToken');
+                    } catch (Exception $e) {
                         return new AccessDeniedResource();
                     }
-                    $authToken=$request->getHeaders()->get('X-Auth-UserToken');
-                    $authTokenModel=$sm->get('AuthTokenModel');
-                    try {
-                        $authEntity=$authTokenModel->fetch($authToken->getFieldValue());
-                    } catch (Exception $e) {
-                        $authEntity=null;
+                    /** @var \AuthToken\Model\AuthToken $AuthTokenModel */
+                    $AuthTokenModel = $sm->get('AuthToken\\Model\\AuthToken');
+                    if(!empty($authToken)) {
+                        $tokenEntity = $AuthTokenModel->fetch($authToken->getFieldValue());
+                    } else {
+                        return new AccessDeniedResource();
                     }
-                    if(!empty($authEntity)) {
-                        $user=$authEntity->getUser();
-                        $userModel = $sm->get('CompanyUserModel');
-                        $profileStatusResource = new CompanyEmployeeResource($userModel,$user);
-                        return $profileStatusResource;
+                    if (!empty($tokenEntity)) {
+                        return new ProfileStatusResource(
+                            $sm->get('UserModel'),
+                            $tokenEntity->getUser()
+                        );
                     } else {
                         return new AccessDeniedResource();
                     }
