@@ -48,11 +48,13 @@ class Module implements ApigilityModuleInterface
                     }
                     $authToken=$request->getHeaders()->get('X-Auth-UserToken');
                     $authTokenModel=$sm->get('AuthTokenModel');
+
                     try {
                         $authEntity=$authTokenModel->fetch($authToken);
                     } catch (Exception $e) {
                         $authEntity=null;
                     }
+                    var_dump($authToken, $authEntity);
                     if(!empty($authEntity)) {
                         $user=$authEntity->getUser();
                         $accountModel = $sm->get('AccountModel');
