@@ -3,9 +3,21 @@ namespace Api\V1\Rest\ReferenceProductGroup;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use Api\Entity\ApiStaticErrorList;
+use Zend\Paginator\Adapter\ArrayAdapter;
 
 class ReferenceProductGroupResource extends AbstractResourceListener
 {
+
+    protected $productGroupModel;
+    protected $userEntity;
+
+    public function __construct($productGroupModel = null, $userEntity=null)
+    {
+        $this->productGroupModel = $productGroupModel;
+        $this->userEntity = $userEntity;
+    }
+
     /**
      * Create a resource
      *
@@ -14,7 +26,13 @@ class ReferenceProductGroupResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        $data=get_object_vars($data);
+        $data=$this->productGroupModel->createOrUpdate($data);
+        if(!empty($data)) {
+            return ApiStaticErrorList::getError(202);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
     }
 
     /**
@@ -25,7 +43,12 @@ class ReferenceProductGroupResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        $data=$this->productGroupModel->delete($id);
+        if(!empty($data)) {
+            return ApiStaticErrorList::getError(202);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
     }
 
     /**
@@ -47,7 +70,12 @@ class ReferenceProductGroupResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        $data=$this->productGroupModel->fetch(array('code'=>$id,'deletedAt' => null));
+        if(!empty($data)) {
+            return new ReferenceProductGroupEntity($data->getData());
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
     }
 
     /**
@@ -58,7 +86,22 @@ class ReferenceProductGroupResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        $data=$this->productGroupModel->fetchAll($params);
+        if(!empty($data)) {
+            $resultArray=array();
+            foreach($data as $d) {
+                array_push($resultArray,new ReferenceProductGroupEntity($d->getData()));
+            }
+            $adapter = new ArrayAdapter($resultArray);
+            $collection = new ReferenceProductGroupCollection($adapter);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
+        if(!empty($collection)) {
+            return $collection;
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
     }
 
     /**
@@ -93,6 +136,11 @@ class ReferenceProductGroupResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
+        $data=$this->productGroupModel->createOrUpdate(get_object_vars($data),$id);
+        if(!empty($data)) {
+            return ApiStaticErrorList::getError(202);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
     }
 }
