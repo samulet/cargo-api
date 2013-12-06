@@ -42,6 +42,7 @@ class Module implements ApigilityModuleInterface
                 'CompanyUserModel' => 'Account\Factory\CompanyUserModelFactory',
                 'AccountModel' => 'Account\Factory\AccountModelFactory',
                 'UserModel' => 'User\Factory\UserModelFactory',
+                'AddListProductGroupModel' => 'Reference\Factory\AddListProductGroupModelFactory',
                 'Api\V1\Rest\Account\AccountResource' => function ($sm) {
                     /** @var \Zend\Http\Header\GenericHeader $authToken */
                     try {

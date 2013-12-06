@@ -2,7 +2,6 @@
 namespace Reference;
 
 use Zend\Db\ResultSet\ResultSet;
-use Reference\Model\ReferenceModel;
 use Reference\Entity\ReferenceList;
 
 class Module
@@ -32,7 +31,6 @@ class Module
 
         return array(
             'factories' => array(
-                'ReferenceModel' => 'Reference\Factory\ReferenceModelFactory',
                 'Reference\Entity\ReferenceList' => function ($sm) {
                     return new ReferenceList();
                 },
