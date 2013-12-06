@@ -129,8 +129,6 @@ class CompanyResource extends AbstractResourceListener
     public function update($id, $data)
     {
         $data=$this->companyModel->createOrUpdate(get_object_vars($data),$id);
-        $data['ownerAccUuid']=$this->getEvent()->getRouteParam('account_uuid');
-        $data['uuid']=$this->getEvent()->getRouteParam('account_uuid');
         if(!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
