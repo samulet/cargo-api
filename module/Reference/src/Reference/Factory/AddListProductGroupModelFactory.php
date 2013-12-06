@@ -12,13 +12,13 @@ namespace Reference\Factory;
 use Zend\Log\Logger;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Reference\Model\ReferenceModel;
+use Reference\AddList\ProductGroup\Model\ProductGroupModel;
 
-class ReferenceModelFactory implements FactoryInterface {
+class AddListProductGroupModelFactory implements FactoryInterface {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $documentManager = $serviceLocator->get('doctrine.documentmanager.odm_default');
-        $query = new ReferenceModel($documentManager);
-        return $query;
+        $queryBuilderModel=$serviceLocator->get('QueryBuilderModel');
+        return new ProductGroupModel($documentManager,$queryBuilderModel);
     }
 }
