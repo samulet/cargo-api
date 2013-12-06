@@ -26,6 +26,7 @@ return array(
         'User',
         'QueryBuilder',
         'AuthToken',
+        'Reference'
         ),
     'module_listener_options' => array(
         'module_paths' => array(
