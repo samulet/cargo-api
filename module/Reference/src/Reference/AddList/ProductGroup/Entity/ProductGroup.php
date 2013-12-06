@@ -12,6 +12,16 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 class ProductGroup
 {
     /**
+     * @ODM\Id
+     * @var int
+     */
+    protected $id;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $uuid;
+    /**
      * @var string
      * @ODM\Field(type="string")
      */
@@ -62,6 +72,26 @@ class ProductGroup
             $data[$key]=$this->$key;
         }
         return $data;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+    public function setUuid($uuid)
+    {
+        $this->uuid = $uuid;
+        return $this;
+    }
+    public function getUuid()
+    {
+        return $this->uuid;
     }
     /**
      * @return mixed
