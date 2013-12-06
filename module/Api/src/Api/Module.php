@@ -10,6 +10,8 @@ use Api\V1\Rest\ResourceMeta\ResourceMetaResource;
 use Api\V1\Rest\AccessDenied\AccessDeniedResource;
 use Api\V1\Rest\AccountCompany\AccountCompanyResource;
 use Api\V1\Rest\ProfileStatus\ProfileStatusResource;
+use Api\V1\Rest\ReferenceProductGroup\ReferenceProductGroupResource;
+
 use Exception;
 
 class Module implements ApigilityModuleInterface
@@ -188,6 +190,29 @@ class Module implements ApigilityModuleInterface
                     if (!empty($tokenEntity)) {
                         return new ProfileStatusResource(
                             $sm->get('UserModel'),
+                            $tokenEntity->getUser()
+                        );
+                    } else {
+                        return new AccessDeniedResource();
+                    }
+                },
+                'Api\V1\Rest\ReferenceProductGroup\ReferenceProductGroupResource' => function ($sm) {
+                    /** @var \Zend\Http\Header\GenericHeader $authToken */
+                    try {
+                        $authToken = $sm->get('request')->getHeaders()->get('X-Auth-UserToken');
+                    } catch (Exception $e) {
+                        return new AccessDeniedResource();
+                    }
+                    /** @var \AuthToken\Model\AuthToken $AuthTokenModel */
+                    $AuthTokenModel = $sm->get('AuthToken\\Model\\AuthToken');
+                    if(!empty($authToken)) {
+                        $tokenEntity = $AuthTokenModel->fetch($authToken->getFieldValue());
+                    } else {
+                        return new AccessDeniedResource();
+                    }
+                    if (!empty($tokenEntity)) {
+                        return new ReferenceProductGroupResource(
+                            $sm->get('AddListProductGroupModel'),
                             $tokenEntity->getUser()
                         );
                     } else {
