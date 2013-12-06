@@ -74,6 +74,15 @@ return array(
                     ),
                 ),
             ),
+            'api.rest.reference' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/api/ref[/:reference_group]',
+                    'defaults' => array(
+                        'controller' => 'Api\\V1\\Rest\\Reference\\Controller',
+                    ),
+                ),
+            ),
         ),
     ),
     'zf-versioning' => array(
@@ -86,9 +95,15 @@ return array(
             5 => 'api.rest.company-partner',
             6 => 'api.rest.resource-meta',
             7 => 'api.rest.profile-status',
+            8 => 'api.rest.reference',
+            9 => 'api.rest.reference',
         ),
     ),
-    'service_manager' => array(),
+    'service_manager' => array(
+        'invokables' => array(
+            'Api\\V1\\Rest\\Reference\\ReferenceResource' => 'Api\\V1\\Rest\\Reference\\ReferenceResource',
+        ),
+    ),
     'zf-rest' => array(
         'Api\\V1\\Rest\\Account\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\Account\\AccountResource',
@@ -290,6 +305,31 @@ return array(
             'entity_class' => 'Api\\V1\\Rest\\ProfileStatus\\ProfileStatusEntity',
             'collection_class' => 'Api\\V1\\Rest\\ProfileStatus\\ProfileStatusCollection',
         ),
+        'Api\\V1\\Rest\\Reference\\Controller' => array(
+            'listener' => 'Api\\V1\\Rest\\Reference\\ReferenceResource',
+            'route_name' => 'api.rest.reference',
+            'identifier_name' => 'reference_group',
+            'collection_name' => 'reference',
+            'resource_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+                4 => 'POST',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+                2 => 'PUT',
+                3 => 'PATCH',
+                4 => 'DELETE',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => '25',
+            'page_size_param' => '',
+            'entity_class' => 'Api\\V1\\Rest\\Reference\\ReferenceEntity',
+            'collection_class' => 'Api\\V1\\Rest\\Reference\\ReferenceCollection',
+        ),
     ),
     'zf-content-negotiation' => array(
         'controllers' => array(
@@ -302,6 +342,7 @@ return array(
             'Api\\V1\\Rest\\CompanyPartner\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\ResourceMeta\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\ProfileStatus\\Controller' => 'HalJson',
+            'Api\\V1\\Rest\\Reference\\Controller' => 'HalJson',
         ),
         'accept-whitelist' => array(
             'Api\\V1\\Rest\\Account\\Controller' => array(
@@ -388,6 +429,14 @@ return array(
                 0 => 'application/json',
                 1 => 'application/*+json',
             ),
+            'Api\\V1\\Rest\\Reference\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+                3 => 'application/vnd.api.v1+json',
+                4 => 'application/hal+json',
+                5 => 'application/json',
+            ),
         ),
         'content_type_whitelist' => array(
             'Api\\V1\\Rest\\ResourceMeta\\Controller' => array(
@@ -409,6 +458,12 @@ return array(
             ),
             'Api\\V1\\Rest\\Account\\Controller' => array(
                 0 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\Reference\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/json',
+                2 => 'application/vnd.api.v1+json',
+                3 => 'application/json',
             ),
         ),
     ),
@@ -492,6 +547,15 @@ return array(
             'Api\\V1\\Rest\\ProfileStatus\\ProfileStatusCollection' => array(
                 'identifier_name' => 'profile_uuid',
                 'route_name' => 'api.rest.profile-status',
+                'is_collection' => '1',
+            ),
+            'Api\\V1\\Rest\\Reference\\ReferenceEntity' => array(
+                'identifier_name' => 'reference_group',
+                'route_name' => 'api.rest.reference',
+            ),
+            'Api\\V1\\Rest\\Reference\\ReferenceCollection' => array(
+                'identifier_name' => 'reference_group',
+                'route_name' => 'api.rest.reference',
                 'is_collection' => '1',
             ),
         ),
