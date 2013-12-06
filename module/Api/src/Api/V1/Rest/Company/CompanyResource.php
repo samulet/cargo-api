@@ -9,6 +9,7 @@ use Api\Entity\ApiStaticErrorList;
 class CompanyResource extends AbstractResourceListener
 {
     protected $companyModel;
+    protected $userEntity;
 
     public function __construct($companyModel = null, $userEntity=null)
     {
