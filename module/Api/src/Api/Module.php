@@ -48,32 +48,17 @@ class Module implements ApigilityModuleInterface
                 'AddListProductGroupModel' => 'Reference\Factory\AddListProductGroupModelFactory',
                 'ReferenceModel' => 'Reference\Factory\ReferenceModelFactory',
                 'Api\V1\Rest\Account\AccountResource' => function ($sm) {
-                    /** @var \Zend\Http\Header\GenericHeader $authToken */
-                    try {
-                        $authToken = $sm->get('request')->getHeaders()->get('X-Auth-UserToken');
-                    } catch (Exception $e) {
-                        return new AccessDeniedResource();
-                    }
-                    /** @var \AuthToken\Model\AuthToken $AuthTokenModel */
-                    $AuthTokenModel = $sm->get('AuthToken\\Model\\AuthToken');
-                    if(!empty($authToken)) {
-                        $tokenEntity = $AuthTokenModel->fetch($authToken->getFieldValue());
-                    } else {
-                        return new AccessDeniedResource();
-                    }
-                    if (!empty($tokenEntity)) {
+                    /** @var \User\Identity\IdentityProvider $identity */
+                    $identity = $sm->get('User\Identity\IdentityProvider')->getIdentity();
+
+                    if (!empty($identity)) {
                         return new AccountResource(
                             $sm->get('AccountModel'),
                             $sm->get('CompanyUserModel'),
                             $sm->get('CompanyModel'),
-                            $tokenEntity->getUser()
+                            $identity
                         );
                     } else {
-                        return new AccessDeniedResource();
-                    }
-
-                    $request=$sm->get('request');
-                    if(empty($request)) {
                         return new AccessDeniedResource();
                     }
                 },

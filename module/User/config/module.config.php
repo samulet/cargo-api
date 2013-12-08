@@ -14,6 +14,7 @@ return array(
         ),
         'factories' => array(
             'UserModel' => 'User\Factory\UserModelFactory',
+            'User\Identity\IdentityProvider' => 'User\Factory\IdentityProviderFactory',
         )
     ),
 );

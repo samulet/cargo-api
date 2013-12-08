@@ -21,6 +21,7 @@ return array(
         'ZF\Rpc',
         'ZF\Configuration',
         'ZF\Versioning',
+        'ZfcRbac',
         'Api',
         'Account',
         'User',

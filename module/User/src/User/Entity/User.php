@@ -5,6 +5,7 @@ namespace User\Entity;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Zend\Form\Annotation;
+use ZfcRbac\Identity\IdentityInterface;
 use ZfcUser\Entity\UserInterface;
 use Zend\ServiceManager\ServiceManager;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
@@ -14,7 +15,7 @@ use Doctrine\ODM\MongoDB\Id\UuidGenerator;
  * @Annotation\Name("user")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
-class User implements UserInterface
+class User implements UserInterface, IdentityInterface
 {
     /**
      * @ODM\Id

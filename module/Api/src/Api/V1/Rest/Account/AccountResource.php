@@ -11,6 +11,9 @@ class AccountResource extends AbstractResourceListener
     protected $accountModel;
     protected $companyUserModel;
     protected $companyModel;
+    /**
+     * @var \User\Entity\User
+     */
     protected $userEntity;
 
     public function __construct($accountModel = null,$companyUserModel = null, $companyModel = null, $userEntity=null)
