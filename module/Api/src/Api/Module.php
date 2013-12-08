@@ -45,7 +45,6 @@ class Module implements ApigilityModuleInterface
                 'CompanyUserModel' => 'Account\Factory\CompanyUserModelFactory',
                 'AccountModel' => 'Account\Factory\AccountModelFactory',
                 'CargoModel' => 'Cargo\Factory\CargoModelFactory',
-                'UserModel' => 'User\Factory\UserModelFactory',
                 'AddListProductGroupModel' => 'Reference\Factory\AddListProductGroupModelFactory',
                 'ReferenceModel' => 'Reference\Factory\ReferenceModelFactory',
                 'Api\V1\Rest\Account\AccountResource' => function ($sm) {
