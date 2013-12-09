@@ -24,4 +24,8 @@ class ReferenceList {
             return array();
         }
     }
+
+    public function getListAll() {
+        return $this->getListAll();
+    }
 }
