@@ -111,8 +111,6 @@ return array(
     ),
     'service_manager' => array(
         'invokables' => array(
-            'Api\\V1\\Rest\\Reference\\ReferenceResource' => 'Api\\V1\\Rest\\Reference\\ReferenceResource',
-            'Api\\V1\\Rest\\ReferenceProductGroup\\ReferenceProductGroupResource' => 'Api\\V1\\Rest\\ReferenceProductGroup\\ReferenceProductGroupResource',
         ),
     ),
     'zf-rest' => array(
@@ -598,6 +596,7 @@ return array(
             'Api\\V1\\Rest\\Reference\\ReferenceEntity' => array(
                 'identifier_name' => 'reference_group',
                 'route_name' => 'api.rest.reference',
+                'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\Reference\\ReferenceCollection' => array(
                 'identifier_name' => 'reference_group',
@@ -607,6 +606,7 @@ return array(
             'Api\\V1\\Rest\\ReferenceProductGroup\\ReferenceProductGroupEntity' => array(
                 'identifier_name' => 'reference_code',
                 'route_name' => 'api.rest.reference-product-group',
+                'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\ReferenceProductGroup\\ReferenceProductGroupCollection' => array(
                 'identifier_name' => 'reference_code',
