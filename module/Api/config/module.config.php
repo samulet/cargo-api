@@ -121,7 +121,6 @@ return array(
     ),
     'service_manager' => array(
         'invokables' => array(
-            'Api\\V1\\Rest\\Cargo\\CargoResource' => 'Api\\V1\\Rest\\Cargo\\CargoResource',
         ),
     ),
     'zf-rest' => array(
