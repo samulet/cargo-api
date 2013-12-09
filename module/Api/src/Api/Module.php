@@ -45,6 +45,7 @@ class Module implements ApigilityModuleInterface
                 'AccountModel' => 'Account\Factory\AccountModelFactory',
                 'UserModel' => 'User\Factory\UserModelFactory',
                 'AddListProductGroupModel' => 'Reference\Factory\AddListProductGroupModelFactory',
+                'ReferenceModel' => 'Reference\Factory\ReferenceModelFactory',
                 'Api\V1\Rest\Account\AccountResource' => function ($sm) {
                     /** @var \Zend\Http\Header\GenericHeader $authToken */
                     try {
@@ -190,6 +191,29 @@ class Module implements ApigilityModuleInterface
                     if (!empty($tokenEntity)) {
                         return new ProfileStatusResource(
                             $sm->get('UserModel'),
+                            $tokenEntity->getUser()
+                        );
+                    } else {
+                        return new AccessDeniedResource();
+                    }
+                },
+                'Api\V1\Rest\Reference\ReferenceResource' => function ($sm) {
+                    /** @var \Zend\Http\Header\GenericHeader $authToken */
+                    try {
+                        $authToken = $sm->get('request')->getHeaders()->get('X-Auth-UserToken');
+                    } catch (Exception $e) {
+                        return new AccessDeniedResource();
+                    }
+                    /** @var \AuthToken\Model\AuthToken $AuthTokenModel */
+                    $AuthTokenModel = $sm->get('AuthToken\\Model\\AuthToken');
+                    if(!empty($authToken)) {
+                        $tokenEntity = $AuthTokenModel->fetch($authToken->getFieldValue());
+                    } else {
+                        return new AccessDeniedResource();
+                    }
+                    if (!empty($tokenEntity)) {
+                        return new ReferenceProductGroupResource(
+                            $sm->get('ReferenceModel'),
                             $tokenEntity->getUser()
                         );
                     } else {
