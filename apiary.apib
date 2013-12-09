@@ -639,3 +639,34 @@ API предназначено для взаимодействием с учет
 + Response 202
 
 + Response 201
+
+# Company import service [/api/service/import/company]
+Сервис для импорта юридических лиц из систем "Онлайн". Необходим для синхронизации списка юридических лиц между Cargo и системами "Онлайн".
+
+
+## Запрос списка юридических лиц [GET]
+
++ Response 200 (application/hal+json)
+
+        {
+            "_links": {
+                "self": { "href": "/api/service/import/company" }
+            },
+            "status": "success",
+            "stat": {
+                "processed": 10,
+                "new": 3,
+                "changed": 2,
+                "exists": 5
+            }
+        }
+    
++ Response 202 (application/hal+json)
+
+        {
+            "_links": {
+                "self": { "href": "/api/service/import/company" }
+            },
+            "status": "fail",
+            "reason": "Сообщение об ошибке"
+        }
