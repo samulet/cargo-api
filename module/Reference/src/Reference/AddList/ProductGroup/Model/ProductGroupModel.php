@@ -15,7 +15,7 @@ use Reference\Model\AbstractReferenceModel;
 class ProductGroupModel extends AbstractReferenceModel {
     public function __construct(DocumentManager $documentManager, $queryBuilderModel) {
         parent::__construct($documentManager,$queryBuilderModel);
-        $this->entityLink='Reference\AddList\ProductGroup\Entity\ProductGroup';
+        $this->entityLink='Reference\Entity\ProductGroup';
     }
 
 }

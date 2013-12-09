@@ -36,7 +36,7 @@ abstract class AbstractReferenceModel
      *
      * @return \Reference\Entity\Reference|null
      */
-    protected function createOrUpdate($data, $uuid = null)
+    public function createOrUpdate($data, $uuid = null)
     {
         return $this->queryBuilderModel->createOrUpdate($this->entityLink, $data, $uuid);
     }
@@ -48,7 +48,7 @@ abstract class AbstractReferenceModel
      *
      * @return \Reference\Entity\Reference|null
      */
-    protected function fetch($findParams)
+    public function fetch($findParams)
     {
         return $this->queryBuilderModel->fetch($this->entityLink, $findParams);
     }
@@ -60,7 +60,7 @@ abstract class AbstractReferenceModel
      *
      * @return array(\Reference\Entity\Reference)|null
      */
-    protected function fetchAll($findParams)
+    public function fetchAll($findParams)
     {
         return $this->queryBuilderModel->fetchAll($this->entityLink, $findParams);
     }
@@ -72,7 +72,7 @@ abstract class AbstractReferenceModel
      *
      * @return string|null
      */
-    protected function delete($uuid)
+    public function delete($uuid)
     {
         $qb3 = $this->documentManager->getRepository($this->entityLink)->findBy(
             array('uuid' => new \MongoId($uuid))

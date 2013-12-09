@@ -1,6 +1,6 @@
 <?php
 
-namespace Account\AddList\ProductGroup\Entity;
+namespace Reference\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
@@ -34,14 +34,12 @@ class ProductGroup
     /**
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
-     * @Annotation\Exclude()
      */
     protected $created_at;
 
     /**
      * @Gedmo\Timestampable(on="update")
      * @ODM\Date
-     * @Annotation\Exclude()
      */
     protected $updated_at;
     /**
