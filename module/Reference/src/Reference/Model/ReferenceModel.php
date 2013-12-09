@@ -27,15 +27,19 @@ class ReferenceModel {
     }
 
     /**
-     * Возвращает массив сущностей справочников по поисковым параметрам
-     *
-     * @param array $findParams ассоциативный массив
+     * Возвращает массив всех справочников
      *
      * @return array(\Reference\Entity\ReferenceList)|null
      */
-    public function fetchAll($findParams) {
+    public function fetchAll() {
         $list= new ReferenceList();
-        return $list->getListAll();
+        $listAll=$list->getListAll();
+        $resultArray=array();
+        foreach($listAll as $key => $l) {
+            $l['code']=$key;
+            array_push($resultArray,$l);
+        }
+        return $resultArray;
     }
 
 }
