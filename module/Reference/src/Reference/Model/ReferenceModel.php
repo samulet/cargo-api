@@ -37,7 +37,7 @@ class ReferenceModel {
         $resultArray=array();
         foreach($listAll as $key => $l) {
             $l['code']=$key;
-            array_push($resultArray,$l);
+            array_push($resultArray,(object)$l);
         }
         return $resultArray;
     }
