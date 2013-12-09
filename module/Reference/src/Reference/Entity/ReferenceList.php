@@ -26,6 +26,6 @@ class ReferenceList {
     }
 
     public function getListAll() {
-        return $this->getListAll();
+        return $this->referenceList;
     }
 }

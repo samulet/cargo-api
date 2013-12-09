@@ -11,7 +11,7 @@ use Api\V1\Rest\AccessDenied\AccessDeniedResource;
 use Api\V1\Rest\AccountCompany\AccountCompanyResource;
 use Api\V1\Rest\ProfileStatus\ProfileStatusResource;
 use Api\V1\Rest\ReferenceProductGroup\ReferenceProductGroupResource;
-
+use Api\V1\Rest\Reference\ReferenceResource;
 use Exception;
 
 class Module implements ApigilityModuleInterface
@@ -212,7 +212,7 @@ class Module implements ApigilityModuleInterface
                         return new AccessDeniedResource();
                     }
                     if (!empty($tokenEntity)) {
-                        return new ReferenceProductGroupResource(
+                        return new ReferenceResource(
                             $sm->get('ReferenceModel'),
                             $tokenEntity->getUser()
                         );

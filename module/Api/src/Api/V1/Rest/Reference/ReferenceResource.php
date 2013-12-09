@@ -1,11 +1,23 @@
 <?php
 namespace Api\V1\Rest\Reference;
 
-use ZF\ApiProblem\ApiProblem;
+
 use ZF\Rest\AbstractResourceListener;
+use Zend\Paginator\Adapter\ArrayAdapter;
+use Api\Entity\ApiStaticErrorList;
+use ZF\ApiProblem\ApiProblem;
 
 class ReferenceResource extends AbstractResourceListener
 {
+
+    protected $referenceModel;
+    protected $userEntity;
+
+    public function __construct($referenceModel = null, $userEntity=null)
+    {
+        $this->referenceModel = $referenceModel;
+        $this->userEntity = $userEntity;
+    }
     /**
      * Create a resource
      *
@@ -58,7 +70,22 @@ class ReferenceResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        $data=$this->referenceModel->fetchAll($params);
+        if(!empty($data)) {
+            $resultArray=array();
+            foreach($data as $d) {
+                array_push($resultArray,new ReferenceEntity($d));
+            }
+            $adapter = new ArrayAdapter($resultArray);
+            $collection = new ReferenceCollection($adapter);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
+        if(!empty($collection)) {
+            return $collection;
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
     }
 
     /**

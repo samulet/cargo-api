@@ -6,6 +6,7 @@ use Zend\Paginator\Adapter\ArrayAdapter;
 use Api\Entity\ApiStaticErrorList;
 use ZF\ApiProblem\ApiProblem;
 use Api\V1\Rest\Account\AccountEntity;
+
 class AccountResource extends AbstractResourceListener
 {
     protected $accountModel;
