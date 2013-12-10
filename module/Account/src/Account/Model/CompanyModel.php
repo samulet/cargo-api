@@ -89,4 +89,8 @@ class CompanyModel
         }
     }
 
+
+    public function fillEntity($entityLink, $objectNew ,$objectOld) {
+        return $this->queryBuilderModel->fillEntity($entityLink,$objectNew,$objectOld);
+    }
 }
