@@ -670,3 +670,58 @@ API предназначено для взаимодействием с учет
             "status": "fail",
             "reason": "Сообщение об ошибке"
         }
+
+# Link companies with external records [/service/import/company-intersect]
+Сервис для связи юридических лиц, импортированных из систем "Онлайн", с юридическими лицами Cargo.
+
+## Запрос списка импортированных юридических лиц [GET]
+
++ Response 200 (application/hal+json)
+
+        {
+            "_links": {
+                "self": { "href": "/api/service/import/company-intersect" }
+            },
+            "companies": [
+                {
+                    "id": 123,
+                    "source": "vesta",
+                    "name": "ООО Талосто",
+                    "link": "5e292178-523e-11e3-a4e4-080027ab4d7b" // uuid связанной компании
+                }
+            ]
+        }
+    
++ Response 404 (application/hal+json)
+
+        {
+            "_links": {
+                "self": { "href": "/api/service/import/company-intersect" }
+            },
+            "companies": [
+            ]
+        }
+        
+## Добавление связи между юридическими лицами [POST]
+
++ Request (application/json)
+
+        {
+            "source": "vesta",
+            "id": 123,
+            "company": "5e292178-523e-11e3-a4e4-080027ab4d7b"
+        }
+
++ Response 202
+
+## Удаление связи между юридическими лицами [DELETE]
+
++ Request (application/json)
+
+        {
+            "source": "vesta",
+            "id": 123,
+            "company": "5e292178-523e-11e3-a4e4-080027ab4d7b"
+        }
+
++ Response 204
