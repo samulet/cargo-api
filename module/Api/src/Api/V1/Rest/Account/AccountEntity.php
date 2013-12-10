@@ -27,6 +27,9 @@ class AccountEntity {
                 }
             }
         }
+        if(!empty($this->created_at)) {
+            $this->created_at=$this->created_at->getTimestamp();
+        }
         return $this;
 
     }
