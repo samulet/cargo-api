@@ -1,24 +1,20 @@
 <?php
-namespace Api\V1\Rest\Account;
+namespace Api\V1\Rest\ReferenceProductGroup;
 
-use ZF\Rest\AbstractResourceListener;
-use Zend\Paginator\Adapter\ArrayAdapter;
-use Api\Entity\ApiStaticErrorList;
 use ZF\ApiProblem\ApiProblem;
-use Api\V1\Rest\Account\AccountEntity;
+use ZF\Rest\AbstractResourceListener;
+use Api\Entity\ApiStaticErrorList;
+use Zend\Paginator\Adapter\ArrayAdapter;
 
-class AccountResource extends AbstractResourceListener
+class ReferenceProductGroupResource extends AbstractResourceListener
 {
-    protected $accountModel;
-    protected $companyUserModel;
-    protected $companyModel;
+
+    protected $productGroupModel;
     protected $userEntity;
 
-    public function __construct($accountModel = null,$companyUserModel = null, $companyModel = null, $userEntity=null)
+    public function __construct($productGroupModel = null, $userEntity=null)
     {
-        $this->accountModel = $accountModel;
-        $this->companyUserModel = $companyUserModel;
-        $this->companyModel=$companyModel;
+        $this->productGroupModel = $productGroupModel;
         $this->userEntity = $userEntity;
     }
 
@@ -30,11 +26,9 @@ class AccountResource extends AbstractResourceListener
      */
     public function create($data)
     {
-
-        $data=$this->accountModel->createOrUpdate(get_object_vars($data));
-        //тут еще функция, надо узнать как данные будут получаться  addUserToCompany($user_id, $accId, 'admin');
+        $data=get_object_vars($data);
+        $data=$this->productGroupModel->createOrUpdate($data);
         if(!empty($data)) {
-          //  $this->companyUserModel->createOrUpdate(array('userUuid' => $this->userEntity['uuid'], 'accUuid' =>  $data['uuid']));
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);
@@ -49,7 +43,7 @@ class AccountResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        $data=$this->accountModel->delete($id);
+        $data=$this->productGroupModel->delete($id);
         if(!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
@@ -76,11 +70,9 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $data=$this->accountModel->fetch(array('uuid'=>$id,'activated' => '1','deletedAt' => null));
+        $data=$this->productGroupModel->fetch(array('code'=>$id,'deletedAt' => null));
         if(!empty($data)) {
-            $dataArray=$data->getData();
-            $dataCompanies=$this->companyModel->fetchAll(array('ownerAccUuid' => $dataArray['uuid']));
-            return new AccountEntity($dataArray,$dataCompanies);
+            return new ReferenceProductGroupEntity($data->getData());
         } else {
             return ApiStaticErrorList::getError(404);
         }
@@ -94,14 +86,14 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data=$this->accountModel->fetchAll($params);
+        $data=$this->productGroupModel->fetchAll($params);
         if(!empty($data)) {
             $resultArray=array();
             foreach($data as $d) {
-                array_push($resultArray,new AccountEntity($d->getData()));
+                array_push($resultArray,new ReferenceProductGroupEntity($d->getData()));
             }
             $adapter = new ArrayAdapter($resultArray);
-            $collection = new AccountCollection($adapter);
+            $collection = new ReferenceProductGroupCollection($adapter);
         } else {
             return ApiStaticErrorList::getError(404);
         }
@@ -144,8 +136,7 @@ class AccountResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data=$this->accountModel->createOrUpdate(get_object_vars($data),$id);
-        //тут еще функция, надо узнать как данные будут получаться
+        $data=$this->productGroupModel->createOrUpdate(get_object_vars($data),$id);
         if(!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {

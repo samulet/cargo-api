@@ -1,24 +1,19 @@
 <?php
-namespace Api\V1\Rest\Account;
+namespace Api\V1\Rest\Cargo;
 
 use ZF\Rest\AbstractResourceListener;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use Api\Entity\ApiStaticErrorList;
 use ZF\ApiProblem\ApiProblem;
-use Api\V1\Rest\Account\AccountEntity;
 
-class AccountResource extends AbstractResourceListener
+class CargoResource extends AbstractResourceListener
 {
-    protected $accountModel;
-    protected $companyUserModel;
-    protected $companyModel;
+    protected $cargoModel;
     protected $userEntity;
 
-    public function __construct($accountModel = null,$companyUserModel = null, $companyModel = null, $userEntity=null)
+    public function __construct($cargoModel = null, $userEntity=null)
     {
-        $this->accountModel = $accountModel;
-        $this->companyUserModel = $companyUserModel;
-        $this->companyModel=$companyModel;
+        $this->cargoModel = $cargoModel;
         $this->userEntity = $userEntity;
     }
 
@@ -31,10 +26,8 @@ class AccountResource extends AbstractResourceListener
     public function create($data)
     {
 
-        $data=$this->accountModel->createOrUpdate(get_object_vars($data));
-        //тут еще функция, надо узнать как данные будут получаться  addUserToCompany($user_id, $accId, 'admin');
+        $data=$this->cargoModel->createOrUpdate(get_object_vars($data));
         if(!empty($data)) {
-          //  $this->companyUserModel->createOrUpdate(array('userUuid' => $this->userEntity['uuid'], 'accUuid' =>  $data['uuid']));
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);
@@ -49,7 +42,7 @@ class AccountResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        $data=$this->accountModel->delete($id);
+        $data=$this->cargoModel->delete($id);
         if(!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
@@ -76,11 +69,9 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $data=$this->accountModel->fetch(array('uuid'=>$id,'activated' => '1','deletedAt' => null));
+        $data=$this->cargoModel->fetch(array('uuid'=>$id,'deletedAt' => null));
         if(!empty($data)) {
-            $dataArray=$data->getData();
-            $dataCompanies=$this->companyModel->fetchAll(array('ownerAccUuid' => $dataArray['uuid']));
-            return new AccountEntity($dataArray,$dataCompanies);
+            return new CargoEntity($data->getData());
         } else {
             return ApiStaticErrorList::getError(404);
         }
@@ -94,14 +85,14 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data=$this->accountModel->fetchAll($params);
+        $data=$this->cargoModel->fetchAll($params);
         if(!empty($data)) {
             $resultArray=array();
             foreach($data as $d) {
-                array_push($resultArray,new AccountEntity($d->getData()));
+                array_push($resultArray,new CargoEntity($d->getData()));
             }
             $adapter = new ArrayAdapter($resultArray);
-            $collection = new AccountCollection($adapter);
+            $collection = new CargoCollection($adapter);
         } else {
             return ApiStaticErrorList::getError(404);
         }
@@ -144,8 +135,7 @@ class AccountResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data=$this->accountModel->createOrUpdate(get_object_vars($data),$id);
-        //тут еще функция, надо узнать как данные будут получаться
+        $data=$this->cargoModel->createOrUpdate(get_object_vars($data),$id);
         if(!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {

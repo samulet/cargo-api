@@ -1,27 +1,23 @@
 <?php
-namespace Api\V1\Rest\Account;
+namespace Api\V1\Rest\Reference;
+
 
 use ZF\Rest\AbstractResourceListener;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use Api\Entity\ApiStaticErrorList;
 use ZF\ApiProblem\ApiProblem;
-use Api\V1\Rest\Account\AccountEntity;
 
-class AccountResource extends AbstractResourceListener
+class ReferenceResource extends AbstractResourceListener
 {
-    protected $accountModel;
-    protected $companyUserModel;
-    protected $companyModel;
+
+    protected $referenceModel;
     protected $userEntity;
 
-    public function __construct($accountModel = null,$companyUserModel = null, $companyModel = null, $userEntity=null)
+    public function __construct($referenceModel = null, $userEntity=null)
     {
-        $this->accountModel = $accountModel;
-        $this->companyUserModel = $companyUserModel;
-        $this->companyModel=$companyModel;
+        $this->referenceModel = $referenceModel;
         $this->userEntity = $userEntity;
     }
-
     /**
      * Create a resource
      *
@@ -30,15 +26,7 @@ class AccountResource extends AbstractResourceListener
      */
     public function create($data)
     {
-
-        $data=$this->accountModel->createOrUpdate(get_object_vars($data));
-        //тут еще функция, надо узнать как данные будут получаться  addUserToCompany($user_id, $accId, 'admin');
-        if(!empty($data)) {
-          //  $this->companyUserModel->createOrUpdate(array('userUuid' => $this->userEntity['uuid'], 'accUuid' =>  $data['uuid']));
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return new ApiProblem(405, 'The POST method has not been defined');
     }
 
     /**
@@ -49,12 +37,7 @@ class AccountResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        $data=$this->accountModel->delete($id);
-        if(!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
     }
 
     /**
@@ -76,14 +59,7 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $data=$this->accountModel->fetch(array('uuid'=>$id,'activated' => '1','deletedAt' => null));
-        if(!empty($data)) {
-            $dataArray=$data->getData();
-            $dataCompanies=$this->companyModel->fetchAll(array('ownerAccUuid' => $dataArray['uuid']));
-            return new AccountEntity($dataArray,$dataCompanies);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
     }
 
     /**
@@ -94,14 +70,14 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data=$this->accountModel->fetchAll($params);
+        $data=$this->referenceModel->fetchAll($params);
         if(!empty($data)) {
             $resultArray=array();
             foreach($data as $d) {
-                array_push($resultArray,new AccountEntity($d->getData()));
+                array_push($resultArray,new ReferenceEntity($d));
             }
             $adapter = new ArrayAdapter($resultArray);
-            $collection = new AccountCollection($adapter);
+            $collection = new ReferenceCollection($adapter);
         } else {
             return ApiStaticErrorList::getError(404);
         }
@@ -144,12 +120,6 @@ class AccountResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data=$this->accountModel->createOrUpdate(get_object_vars($data),$id);
-        //тут еще функция, надо узнать как данные будут получаться
-        if(!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
     }
 }
