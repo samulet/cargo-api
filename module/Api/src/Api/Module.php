@@ -12,6 +12,7 @@ use Api\V1\Rest\AccountCompany\AccountCompanyResource;
 use Api\V1\Rest\ProfileStatus\ProfileStatusResource;
 use Api\V1\Rest\ReferenceProductGroup\ReferenceProductGroupResource;
 use Api\V1\Rest\Reference\ReferenceResource;
+use Api\V1\Rest\Cargo\CargoResource;
 use Exception;
 
 class Module implements ApigilityModuleInterface
@@ -43,6 +44,7 @@ class Module implements ApigilityModuleInterface
                 'CompanyModel' => 'Account\Factory\CompanyModelFactory',
                 'CompanyUserModel' => 'Account\Factory\CompanyUserModelFactory',
                 'AccountModel' => 'Account\Factory\AccountModelFactory',
+                'CargoModel' => 'Cargo\Factory\CargoModelFactory',
                 'UserModel' => 'User\Factory\UserModelFactory',
                 'AddListProductGroupModel' => 'Reference\Factory\AddListProductGroupModelFactory',
                 'ReferenceModel' => 'Reference\Factory\ReferenceModelFactory',
@@ -240,6 +242,34 @@ class Module implements ApigilityModuleInterface
                             $tokenEntity->getUser()
                         );
                     } else {
+                        return new AccessDeniedResource();
+                    }
+                },
+                'Api\V1\Rest\Cargo\CargoResource' => function ($sm) {
+                    /** @var \Zend\Http\Header\GenericHeader $authToken */
+                    try {
+                        $authToken = $sm->get('request')->getHeaders()->get('X-Auth-UserToken');
+                    } catch (Exception $e) {
+                        return new AccessDeniedResource();
+                    }
+                    /** @var \AuthToken\Model\AuthToken $AuthTokenModel */
+                    $AuthTokenModel = $sm->get('AuthToken\\Model\\AuthToken');
+                    if(!empty($authToken)) {
+                        $tokenEntity = $AuthTokenModel->fetch($authToken->getFieldValue());
+                    } else {
+                        return new AccessDeniedResource();
+                    }
+                    if (!empty($tokenEntity)) {
+                        return new CargoResource(
+                            $sm->get('CargoModel'),
+                            $tokenEntity->getUser()
+                        );
+                    } else {
+                        return new AccessDeniedResource();
+                    }
+
+                    $request=$sm->get('request');
+                    if(empty($request)) {
                         return new AccessDeniedResource();
                     }
                 },
