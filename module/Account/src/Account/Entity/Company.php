@@ -102,21 +102,21 @@ class Company
 
     /**
      * @var array
-     * @ODM\Collection(strategy="pushAll")
+     * @ODM\Field(type="hash")
      */
-    protected $tax = array();
+    protected $tax;
 
     /**
      * @var array
-     * @ODM\Collection(strategy="pushAll")
+     * @ODM\Field(type="hash")
      */
-    protected $addresses = array();
+    protected $addresses;
 
     /**
      * @var array
-     * @ODM\Collection(strategy="pushAll")
+     * @ODM\Field(type="hash")
      */
-    protected $contacts = array();
+    protected $contacts;
 
     /**
      * @var string
@@ -138,63 +138,63 @@ class Company
 
     /**
      * @var array
-     * @ODM\Collection(strategy="pushAll")
+     * @ODM\Field(type="hash")
      */
-    protected $founders = array();
+    protected $founders;
 
     /**
      * @var array
-     * @ODM\Collection(strategy="pushAll")
+     * @ODM\Field(type="hash")
      */
-    protected $authorized_persons = array();
+    protected $authorized_persons;
 
     /**
      * @var array
-     * @ODM\Collection(strategy="pushAll")=
+     * @ODM\Field(type="hash")
      */
-    protected $okved = array();
+    protected $okved;
 
     /**
      * @var array
-     * @ODM\Collection(strategy="pushAll")
+     * @ODM\Field(type="hash")
      */
-    protected $pfr = array();
+    protected $pfr;
 
     /**
      * @var array
-     * @ODM\Collection(strategy="pushAll")
+     * @ODM\Field(type="hash")
      */
-    protected $fms = array();
+    protected $fms;
 
     /**
      * @var array
-     * @ODM\Collection(strategy="pushAll")
+     * @ODM\Field(type="hash")
      */
-    protected $licenses = array();
+    protected $licenses;
 
     /**
      * @var array
-     * @ODM\Collection(strategy="pushAll")
+     * @ODM\Field(type="hash")
      */
-    protected $applicants = array();
+    protected $applicants;
 
     /**
      * @var array
-     * @ODM\Collection(strategy="pushAll")
+     * @ODM\Field(type="hash")
      */
-    protected $accounts = array();
+    protected $accounts;
 
     /**
      * @var array
-     * @ODM\Collection(strategy="pushAll")
+     * @ODM\Field(type="hash")
      */
-    protected $persons = array();
+    protected $persons;
 
     /**
      * @var array
-     * @ODM\Collection(strategy="pushAll")
+     * @ODM\Field(type="hash")
      */
-    protected $sites = array();
+    protected $sites;
     /**
      * @ODM\Date
      */
