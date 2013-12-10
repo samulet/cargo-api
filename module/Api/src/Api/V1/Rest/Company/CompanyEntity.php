@@ -61,14 +61,14 @@ class CompanyEntity{
         return $data;
     }
 
-    public function getUuid()
+    public function getCompanyUuid()
     {
-        return $this->uuid;
+        return $this->company_uuid;
     }
 
-    public function setUuid($uuid = null)
+    public function setCompanyUuid($company_uuid = null)
     {
-        $this->uuid = $uuid;
+        $this->company_uuid = $company_uuid;
         return $this;
     }
 
