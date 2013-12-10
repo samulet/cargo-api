@@ -112,7 +112,7 @@ class QueryBuilderModel
         } else {
             return null;
         }
-        $hydrator = new DoctrineHydrator($this->documentManager, $entityName);
+        $hydrator = new DoctrineHydrator($this->documentManager, $entityLink);
         $item = $hydrator->hydrate($data, $item);
         $this->documentManager->persist($item);
         $this->documentManager->flush();
@@ -149,6 +149,11 @@ class QueryBuilderModel
         } else {
             return $items;
         }
+    }
+
+    public function fillEntity($entityLink, $objectNew ,$objectOld) {
+        $hydrator = new DoctrineHydrator($this->documentManager, $entityLink);
+        return $hydrator->hydrate($hydrator->extract($objectOld), $objectNew);
     }
 
 }
