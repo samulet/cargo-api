@@ -162,10 +162,18 @@ API предназначено для взаимодействием с учет
             "title": "Тест"
         }
 
-+ Response 201 (application/hal+json)
++ Response 201 (application/json)
 
-    [Account][]
-    
+        {
+            "_links" : {
+                "self": { "href": "/api/accounts/cb37dcb8-4f92-11e3-827c-080027ab4d7b" }
+            },
+            "account_uuid": "cb37dcb8-4f92-11e3-827c-080027ab4d7b",
+            "created_at": "2013-04-14T02:15:15Z",
+            "title": "Веста"
+        }
+
+
 # Account Company [/accounts/{account_uuid}/companies/{company_uuid}]
 Юридическое лицо, управляемое в рамках аккаунта
 
