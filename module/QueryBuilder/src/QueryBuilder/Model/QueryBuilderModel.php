@@ -11,7 +11,9 @@ namespace QueryBuilder\Model;
 
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\EventManager;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 
 class QueryBuilderModel
 {
@@ -98,11 +100,11 @@ class QueryBuilderModel
      * @return ?|null
      */
     public function createOrUpdate($entityLink, $data, $uuid = null) {
+        $entityName="\\".$entityLink;
         if(empty($uuid)) {
-            $entityName="\\".$entityLink;
             $item = new $entityName();
             if(empty($data['uuid'])) {
-                $item->setUuid($this->uuidGenerator->generateV4());
+                $data['uuid'] = $this->uuidGenerator->generateV4();
             }
         } elseif($this->uuidGenerator->isValid($uuid)) {
             $item = $this->documentManager->getRepository($entityLink)->findOneBy(
@@ -110,7 +112,8 @@ class QueryBuilderModel
         } else {
             return null;
         }
-        $item->setData($data);
+        $hydrator = new DoctrineHydrator($this->documentManager, $entityLink);
+        $item = $hydrator->hydrate($data, $item);
         $this->documentManager->persist($item);
         $this->documentManager->flush();
         return $item;
@@ -148,13 +151,9 @@ class QueryBuilderModel
         }
     }
 
-    public function fetchToken($value)
-    {
-       // $item = $this->createQuery($this->documentManager->createQueryBuilder('Account\Entity\Account'), array())->getQuery()->getSingleResult();
-        $item = $this->createQuery($this->documentManager->createQueryBuilder('AuthToken\Entity\AuthToken'), array())->getQuery()->getSingleResult();
-        return $item;
-        //$builder = $this->documentManager->getRepository();
-        //return $builder->field('token')->equals($value)->field('deletedAt')->equals(null)->getQuery()->getSingleResult();
+    public function fillEntity($entityLink, $objectNew ,$objectOld) {
+        $hydrator = new DoctrineHydrator($this->documentManager, $entityLink);
+        return $hydrator->hydrate($hydrator->extract($objectOld), $objectNew);
     }
 
 }

@@ -13,6 +13,8 @@ use Zend\Log\Logger;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use QueryBuilder\Model\QueryBuilderModel;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ODM\MongoDB\Hydrator\HydratorFactory;
 
 class QueryBuilderModelFactory implements FactoryInterface {
     public function createService(ServiceLocatorInterface $serviceLocator)
