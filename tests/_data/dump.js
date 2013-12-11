@@ -35,7 +35,7 @@ db.getCollection("account").insert({
   "created": ISODate("2013-10-28T17:44:59.0Z"),
   "updated": ISODate("2013-10-28T17:44:59.0Z"),
   "activated": "1",
-  "name": "Аккаунт нумбер ван",
+  "title": "Аккаунт нумбер ван",
   "lastItemNumber": "0"
 });
 db.getCollection("account").insert({
@@ -45,7 +45,7 @@ db.getCollection("account").insert({
   "created": ISODate("2013-11-05T17:31:12.0Z"),
   "updated": ISODate("2013-11-05T17:31:12.0Z"),
   "activated": "1",
-  "name": "ТЭК Продрезерв",
+  "title": "ТЭК Продрезерв",
   "lastItemNumber": "0"
 });
 
