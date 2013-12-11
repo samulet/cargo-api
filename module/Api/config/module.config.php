@@ -59,7 +59,7 @@ return array(
             'api.rest.resource-meta' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/meta[/:resource_meta_id]',
+                    'route' => '/api[/:resource_meta_id]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\ResourceMeta\\Controller',
                     ),
@@ -120,8 +120,7 @@ return array(
         ),
     ),
     'service_manager' => array(
-        'invokables' => array(
-        ),
+        'invokables' => array(),
     ),
     'zf-rest' => array(
         'Api\\V1\\Rest\\Account\\Controller' => array(
