@@ -1,32 +1,31 @@
 {
-    "name": "zfcampus/zf-apigility-skeleton",
-    "description": "Skeleton Application for Apigility",
-    "type": "library",
-    "license": "BSD-3-Clause",
-    "keywords": [
-        "api",
-        "apigility",
-        "framework",
-        "zf2"
+    "name": "MashaiMedvedi/cargo-api",
+    "description": "API for Cargo project",
+    "license": "proprietary",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Oleg Lobach",
+            "email": "oleg@lobach.info",
+            "role": "Architect",
+            "homepage": "http://lobach.info"
+        },
+        {
+            "name": "Alexander Solovyov",
+            "email": "salerat@gmail.com",
+            "role": "Developer"
+        }
     ],
-    "homepage": "http://apigility.org/",
-    "support": {
-        "email": "apigility-users@zend.com",
-        "irc": "irc://irc.freenode.net/apigility",
-        "source": "https://github.com/zfcampus/zf-apigility-skeleton",
-        "issues": "https://github.com/zfcampus/zf-apigility-skeleton/issues"
-    },
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.3.3",
-        "zendframework/zendframework": "dev-develop",
-        "rwoverdijk/assetmanager": "dev-master",
+        "php": ">=5.4.8",
         "zfcampus/zf-apigility": "dev-master",
         "zfcampus/zf-configuration": "dev-master",
         "gedmo/doctrine-extensions": "*",
         "bladeofsteel/zfc-user-doctrine-mongo-odm": "@dev",
         "masha-i-medvedi/auth-token": "@dev",
-        "doctrine/doctrine-mongo-odm-module": "dev-master"
+        "doctrine/doctrine-mongo-odm-module": "dev-master",
+        "zf-commons/zfc-rbac": "~1.0"
     },
     "require-dev": {
         "zendframework/zftool": "dev-master",

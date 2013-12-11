@@ -9,7 +9,6 @@ class Module
 
     public function onBootstrap(MvcEvent $e)
     {
-        $eventManager = $e->getApplication()->getEventManager();
         $zfcServiceEvents = $e->getApplication()->getServiceManager()->get('zfcuser_user_service')->getEventManager();
         $zfcServiceEvents->attach(
             'register',
@@ -34,15 +33,6 @@ class Module
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ),
             ),
-        );
-    }
-
-    public function getServiceConfig()
-    {
-        return array(
-            'aliases' => array(
-                'Doctrine\ODM\MongoDB\DocumentManager' => 'doctrine.documentmanager.odm_default',
-            )
         );
     }
 }
