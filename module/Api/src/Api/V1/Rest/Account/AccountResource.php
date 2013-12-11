@@ -5,7 +5,6 @@ use ZF\Rest\AbstractResourceListener;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use Api\Entity\ApiStaticErrorList;
 use ZF\ApiProblem\ApiProblem;
-use Api\V1\Rest\Account\AccountEntity;
 
 class AccountResource extends AbstractResourceListener
 {
@@ -26,16 +25,13 @@ class AccountResource extends AbstractResourceListener
      * Create a resource
      *
      * @param  mixed $data
-     * @return ApiProblem|mixed
+     * @return ApiProblem|AccountEntity
      */
     public function create($data)
     {
-
-        $data=$this->accountModel->createOrUpdate(get_object_vars($data));
-        //тут еще функция, надо узнать как данные будут получаться  addUserToCompany($user_id, $accId, 'admin');
-        if(!empty($data)) {
-          //  $this->companyUserModel->createOrUpdate(array('userUuid' => $this->userEntity['uuid'], 'accUuid' =>  $data['uuid']));
-            return ApiStaticErrorList::getError(202);
+        $data = $this->accountModel->createOrUpdate(get_object_vars($data));
+        if (!empty($data)) {
+            return new AccountEntity(array('uuid' => $data->getUuid(), 'title' => $data->getTitle()));
         } else {
             return ApiStaticErrorList::getError(404);
         }

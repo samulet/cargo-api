@@ -1,0 +1,17 @@
+class_name: ApiGuy
+modules:
+    enabled:
+        - ApiHelper
+        - PhpBrowser
+        - MongoDb
+        - REST
+    config:
+        MongoDb:
+            dsn: mongodb://localhost/cargo
+            user:
+            password:
+            dump: tests/_data/dump.js
+        PhpBrowser:
+            url: http://cargo.dev/
+        REST:
+            url: http://cargo.dev/api/
