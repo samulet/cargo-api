@@ -151,9 +151,21 @@ class QueryBuilderModel
         }
     }
 
+    public function delete($entityLink, $uuid)
+    {
+        $qb3 = $this->documentManager->getRepository($entityLink)->findBy(
+            array('uuid' => new \MongoId($uuid))
+        );
+        $this->documentManager->remove($qb3);
+        $this->documentManager->flush();
+        return $uuid;
+    }
+
     public function fillEntity($entityLink, $objectNew ,$objectOld) {
         $hydrator = new DoctrineHydrator($this->documentManager, $entityLink);
         return $hydrator->hydrate($hydrator->extract($objectOld), $objectNew);
     }
+
+
 
 }
