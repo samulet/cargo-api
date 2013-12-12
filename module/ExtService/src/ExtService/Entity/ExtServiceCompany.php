@@ -16,7 +16,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ODM\Document(collection="extServiceCompanyEntity")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
-class ExtServiceCompanyEntity
+class ExtServiceCompany
 {
     /**
      * @ODM\Id
