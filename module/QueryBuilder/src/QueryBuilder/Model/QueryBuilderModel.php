@@ -151,14 +151,18 @@ class QueryBuilderModel
         }
     }
 
-    public function delete($entityLink, $uuid)
+    public function delete($entityLink, $findParams)
     {
         $qb3 = $this->documentManager->getRepository($entityLink)->findBy(
-            array('uuid' => new \MongoId($uuid))
+            array($findParams)
         );
-        $this->documentManager->remove($qb3);
-        $this->documentManager->flush();
-        return $uuid;
+        try {
+            $this->documentManager->remove($qb3);
+            $this->documentManager->flush();
+            return $findParams;
+        } catch (Exception $e) {
+            return null;
+        }
     }
 
     public function fillEntity($entityLink, $objectNew ,$objectOld) {
