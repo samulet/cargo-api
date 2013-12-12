@@ -104,7 +104,7 @@ return array(
             'api.rest.ext-service' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/extservices[/:ext_service_uuid]',
+                    'route' => '/api/extservices[/:ext_service_type]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\ExtService\\Controller',
                     ),
@@ -113,7 +113,7 @@ return array(
             'api.rest.ext-service-company' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/extservices/companies[/:ext_service_uuid]',
+                    'route' => '/api/extservices/companies[/:ext_service_company_code]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\ExtServiceCompany\\Controller',
                     ),
@@ -424,7 +424,7 @@ return array(
         'Api\\V1\\Rest\\ExtService\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\ExtService\\ExtServiceResource',
             'route_name' => 'api.rest.ext-service',
-            'identifier_name' => 'ext_service_uuid',
+            'identifier_name' => 'ext_service_type',
             'collection_name' => 'ext_service',
             'resource_http_methods' => array(
                 0 => 'GET',
@@ -449,7 +449,7 @@ return array(
         'Api\\V1\\Rest\\ExtServiceCompany\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyResource',
             'route_name' => 'api.rest.ext-service-company',
-            'identifier_name' => 'ext_service_company_id',
+            'identifier_name' => 'ext_service_company_code',
             'collection_name' => 'ext_service_company',
             'resource_http_methods' => array(
                 0 => 'GET',
@@ -761,22 +761,22 @@ return array(
                 'is_collection' => '1',
             ),
             'Api\\V1\\Rest\\ExtService\\ExtServiceEntity' => array(
-                'identifier_name' => 'ext_service_uuid',
+                'identifier_name' => 'ext_service_type',
                 'route_name' => 'api.rest.ext-service',
                 'hydrator' => 'ArraySerializable',
             ),
             'Api\\V1\\Rest\\ExtService\\ExtServiceCollection' => array(
-                'identifier_name' => 'ext_service_uuid',
+                'identifier_name' => 'ext_service_type',
                 'route_name' => 'api.rest.ext-service',
                 'is_collection' => true,
             ),
             'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyEntity' => array(
-                'identifier_name' => 'ext_service_uuid',
+                'identifier_name' => 'ext_service_company_code',
                 'route_name' => 'api.rest.ext-service-company',
                 'hydrator' => 'ArraySerializable',
             ),
             'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyCollection' => array(
-                'identifier_name' => 'ext_service_uuid',
+                'identifier_name' => 'ext_service_company_code',
                 'route_name' => 'api.rest.ext-service-company',
                 'is_collection' => true,
             ),
