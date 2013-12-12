@@ -11,13 +11,9 @@ namespace ExtService\Entity;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Zend\Form\Annotation;
-use Zend\Form\Element;
-use Zend\Form\Form;
-use Zend\Form\Element\Collection;
 
 /**
- * @ODM\Document(collection="xtServiceCompanyEntity")
+ * @ODM\Document(collection="extServiceCompanyEntity")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class ExtServiceCompanyEntity
