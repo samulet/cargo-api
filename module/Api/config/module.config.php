@@ -101,6 +101,15 @@ return array(
                     ),
                 ),
             ),
+            'api.rest.ext-service' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/api/extservices[/:ext_service_uuid]',
+                    'defaults' => array(
+                        'controller' => 'Api\\V1\\Rest\\ExtService\\Controller',
+                    ),
+                ),
+            ),
         ),
     ),
     'zf-versioning' => array(
@@ -117,10 +126,12 @@ return array(
             9 => 'api.rest.reference',
             10 => 'api.rest.reference-product-group',
             11 => 'api.rest.cargo',
+            12 => 'api.rest.ext-service',
         ),
     ),
     'service_manager' => array(
         'invokables' => array(
+            'Api\\V1\\Rest\\ExtService\\ExtServiceResource' => 'Api\\V1\\Rest\\ExtService\\ExtServiceResource',
         ),
     ),
     'zf-rest' => array(
@@ -399,6 +410,31 @@ return array(
             'entity_class' => 'Api\\V1\\Rest\\Cargo\\CargoEntity',
             'collection_class' => 'Api\\V1\\Rest\\Cargo\\CargoCollection',
         ),
+        'Api\\V1\\Rest\\ExtService\\Controller' => array(
+            'listener' => 'Api\\V1\\Rest\\ExtService\\ExtServiceResource',
+            'route_name' => 'api.rest.ext-service',
+            'identifier_name' => 'ext_service_uuid',
+            'collection_name' => 'ext_service',
+            'resource_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+                4 => 'POST',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+                2 => 'PUT',
+                3 => 'PATCH',
+                4 => 'DELETE',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'Api\\V1\\Rest\\ExtService\\ExtServiceEntity',
+            'collection_class' => 'Api\\V1\\Rest\\ExtService\\ExtServiceCollection',
+        ),
     ),
     'zf-content-negotiation' => array(
         'controllers' => array(
@@ -414,6 +450,7 @@ return array(
             'Api\\V1\\Rest\\Reference\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\ReferenceProductGroup\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\Cargo\\Controller' => 'HalJson',
+            'Api\\V1\\Rest\\ExtService\\Controller' => 'HalJson',
         ),
         'accept-whitelist' => array(
             'Api\\V1\\Rest\\Account\\Controller' => array(
@@ -518,6 +555,11 @@ return array(
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ),
+            'Api\\V1\\Rest\\ExtService\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
         ),
         'content_type_whitelist' => array(
             'Api\\V1\\Rest\\ResourceMeta\\Controller' => array(
@@ -551,6 +593,10 @@ return array(
                 1 => 'application/json',
             ),
             'Api\\V1\\Rest\\Cargo\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\ExtService\\Controller' => array(
                 0 => 'application/vnd.api.v1+json',
                 1 => 'application/json',
             ),
@@ -667,6 +713,16 @@ return array(
                 'identifier_name' => 'cargo_uuid',
                 'route_name' => 'api.rest.cargo',
                 'is_collection' => '1',
+            ),
+            'Api\\V1\\Rest\\ExtService\\ExtServiceEntity' => array(
+                'identifier_name' => 'ext_service_uuid',
+                'route_name' => 'api.rest.ext-service',
+                'hydrator' => 'ArraySerializable',
+            ),
+            'Api\\V1\\Rest\\ExtService\\ExtServiceCollection' => array(
+                'identifier_name' => 'ext_service_uuid',
+                'route_name' => 'api.rest.ext-service',
+                'is_collection' => true,
             ),
         ),
     ),
