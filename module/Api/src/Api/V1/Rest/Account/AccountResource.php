@@ -16,6 +16,11 @@ class AccountResource extends AbstractResourceListener
      */
     protected $userEntity;
 
+    /**
+     * @var \ZfcRbac\Service\AuthorizationService
+     */
+    protected $authorizationService;
+
     public function __construct($accountModel = null,$companyUserModel = null, $companyModel = null, $userEntity=null)
     {
         $this->accountModel = $accountModel;
@@ -32,6 +37,10 @@ class AccountResource extends AbstractResourceListener
      */
     public function create($data)
     {
+        if (!$this->authorizationService->isGranted('account.create')) {
+            return ApiStaticErrorList::getError(403);
+        }
+
         $data = $this->accountModel->createOrUpdate(get_object_vars($data));
         if (!empty($data)) {
             return new AccountEntity(array('uuid' => $data->getUuid(), 'title' => $data->getTitle()));
@@ -150,5 +159,21 @@ class AccountResource extends AbstractResourceListener
         } else {
             return ApiStaticErrorList::getError(404);
         }
+    }
+
+    /**
+     * @param \ZfcRbac\Service\AuthorizationService $authorizationService
+     */
+    public function setAuthorizationService($authorizationService)
+    {
+        $this->authorizationService = $authorizationService;
+    }
+
+    /**
+     * @return \ZfcRbac\Service\AuthorizationService
+     */
+    public function getAuthorizationService()
+    {
+        return $this->authorizationService;
     }
 }

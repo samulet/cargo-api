@@ -56,6 +56,11 @@ db.getCollection("auth_token").insert({
   "user": ObjectId("52a4b7519e534607468b456f"),
   "createdAt": ISODate("2013-12-08T18:09:36.0Z")
 });
+db.getCollection("auth_token").insert({
+    "token": "db057553f1a4989210ae84a2825982e1d04d65e1fcecb619fb77e26879a26903",
+    "user": ObjectId("52a4b7519e534607468b4560"),
+    "createdAt": ISODate("2013-12-09T18:09:36.0Z")
+});
 
 /** user records **/
 db.getCollection("user").insert({
@@ -67,36 +72,43 @@ db.getCollection("user").insert({
   "state": NumberInt(1),
   "created": ISODate("2013-12-08T18:15:45.0Z"),
   "updated": ISODate("2013-12-08T18:15:45.0Z"),
-  "roles": [
-    "user"
-  ],
-  "name": [
-
-  ],
-  "docs": [
-
-  ],
-  "phone": [
-
-  ],
-  "site": [
-
-  ],
-  "sign": [
-
-  ],
-  "social": [
-
-  ],
-  "status": [
-
-  ]
+  "roles": [ "user" ],
+  "name": [ ],
+  "docs": [ ],
+  "phone": [ ],
+  "site": [ ],
+  "sign": [ ],
+  "social": [ ],
+  "status": [ ]
 });
-
+db.getCollection("user").insert({
+    "_id": ObjectId("52a4b7519e534607468b4560"),
+    "uuid": "9e65893456a97789c4538ba8d0e8d741",
+    "email": "another@mail.ru",
+    "displayName": "Another User",
+    "password": "mailruToLocalUser",
+    "state": NumberInt(1),
+    "created": ISODate("2013-12-08T18:15:45.0Z"),
+    "updated": ISODate("2013-12-08T18:15:45.0Z"),
+    "roles": [ "guest" ],
+    "name": [ ],
+    "docs": [ ],
+    "phone": [ ],
+    "site": [ ],
+    "sign": [ ],
+    "social": [ ],
+    "status": [ ]
+});
 /** user_provider records **/
 db.getCollection("user_provider").insert({
   "_id": ObjectId("52a4b7519e534607468b4570"),
   "userId": "52a4b7519e534607468b456f",
   "providerId": "13604129222078040511",
   "provider": "mailru"
+});
+db.getCollection("user_provider").insert({
+    "_id": ObjectId("52a4b7519e534607468b4560"),
+    "userId": "52a4b7519e534607468b4560",
+    "providerId": "13604129222078040433",
+    "provider": "mailru"
 });
