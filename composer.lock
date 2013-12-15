@@ -60,12 +60,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bshaffer/oauth2-server-php.git",
-                "reference": "2682d6e016f20b27df3dfb57b1d5579ebd128d86"
+                "reference": "4fc70088cd8a0af1f3142420d2e4b4ca9e62c54b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bshaffer/oauth2-server-php/zipball/2682d6e016f20b27df3dfb57b1d5579ebd128d86",
-                "reference": "2682d6e016f20b27df3dfb57b1d5579ebd128d86",
+                "url": "https://api.github.com/repos/bshaffer/oauth2-server-php/zipball/4fc70088cd8a0af1f3142420d2e4b4ca9e62c54b",
+                "reference": "4fc70088cd8a0af1f3142420d2e4b4ca9e62c54b",
                 "shasum": ""
             },
             "require": {
@@ -95,20 +95,20 @@
                 "oauth",
                 "oauth2"
             ],
-            "time": "2013-12-02 12:45:00"
+            "time": "2013-12-15 17:09:24"
         },
         {
             "name": "doctrine/annotations",
-            "version": "v1.1.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "40db0c96985aab2822edbc4848b3bd2429e02670"
+                "reference": "97b4a00c5a40c42d8c0b789dabc04b3332c788ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/40db0c96985aab2822edbc4848b3bd2429e02670",
-                "reference": "40db0c96985aab2822edbc4848b3bd2429e02670",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/97b4a00c5a40c42d8c0b789dabc04b3332c788ab",
+                "reference": "97b4a00c5a40c42d8c0b789dabc04b3332c788ab",
                 "shasum": ""
             },
             "require": {
@@ -121,7 +121,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.2.x-dev"
                 }
             },
             "autoload": {
@@ -167,7 +167,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2013-06-16 21:33:03"
+            "time": "2013-12-13 21:02:36"
         },
         {
             "name": "doctrine/cache",
@@ -828,12 +828,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/l3pp4rd/DoctrineExtensions.git",
-                "reference": "f78aec9a584fb7bd5ff234ba632ab76e7d221a60"
+                "reference": "0df9223ec1cee7fb56a803b2db1fd8b2c81fd001"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/l3pp4rd/DoctrineExtensions/zipball/f78aec9a584fb7bd5ff234ba632ab76e7d221a60",
-                "reference": "f78aec9a584fb7bd5ff234ba632ab76e7d221a60",
+                "url": "https://api.github.com/repos/l3pp4rd/DoctrineExtensions/zipball/0df9223ec1cee7fb56a803b2db1fd8b2c81fd001",
+                "reference": "0df9223ec1cee7fb56a803b2db1fd8b2c81fd001",
                 "shasum": ""
             },
             "require": {
@@ -900,7 +900,7 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2013-12-06 19:17:11"
+            "time": "2013-12-15 20:09:02"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -1184,12 +1184,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "350ba4edea7b8a4b266900d594e1fe529b9bea8a"
+                "reference": "4e5f0758ee8ee2e0bfbb765271553cfd2f0c0089"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf2/zipball/350ba4edea7b8a4b266900d594e1fe529b9bea8a",
-                "reference": "350ba4edea7b8a4b266900d594e1fe529b9bea8a",
+                "url": "https://api.github.com/repos/zendframework/zf2/zipball/4e5f0758ee8ee2e0bfbb765271553cfd2f0c0089",
+                "reference": "4e5f0758ee8ee2e0bfbb765271553cfd2f0c0089",
                 "shasum": ""
             },
             "require": {
@@ -1294,7 +1294,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2013-12-10 21:53:57"
+            "time": "2013-12-15 09:29:44"
         },
         {
             "name": "zf-commons/zfc-base",
@@ -1355,12 +1355,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ZF-Commons/ZfcRbac.git",
-                "reference": "4cdea963793389b3ca160709c9ee90b9d4b8e628"
+                "reference": "7a2fa10e5e000bd622e8d4721aea23192150336f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ZF-Commons/ZfcRbac/zipball/4cdea963793389b3ca160709c9ee90b9d4b8e628",
-                "reference": "4cdea963793389b3ca160709c9ee90b9d4b8e628",
+                "url": "https://api.github.com/repos/ZF-Commons/ZfcRbac/zipball/7a2fa10e5e000bd622e8d4721aea23192150336f",
+                "reference": "7a2fa10e5e000bd622e8d4721aea23192150336f",
                 "shasum": ""
             },
             "require": {
@@ -1411,7 +1411,7 @@
                 "rbac",
                 "zf2"
             ],
-            "time": "2013-12-10 17:31:20"
+            "time": "2013-12-14 22:21:19"
         },
         {
             "name": "zf-commons/zfc-user",
@@ -2097,12 +2097,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Mink.git",
-                "reference": "7e31f096958b74ac3a50096804f2760800f634ae"
+                "reference": "75aa32c75c72ebabc0d29c78374aae92f3f8d020"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Mink/zipball/7e31f096958b74ac3a50096804f2760800f634ae",
-                "reference": "7e31f096958b74ac3a50096804f2760800f634ae",
+                "url": "https://api.github.com/repos/Behat/Mink/zipball/75aa32c75c72ebabc0d29c78374aae92f3f8d020",
+                "reference": "75aa32c75c72ebabc0d29c78374aae92f3f8d020",
                 "shasum": ""
             },
             "require": {
@@ -2144,7 +2144,7 @@
                 "testing",
                 "web"
             ],
-            "time": "2013-12-07 20:02:42"
+            "time": "2013-12-14 01:28:10"
         },
         {
             "name": "behat/mink-browserkit-driver",
@@ -2207,12 +2207,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/MinkGoutteDriver.git",
-                "reference": "4ed78077e413840ced60f31a6302c71ce632d2e3"
+                "reference": "c92aaff808ba18801c08ad4be573eff01eedd233"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/MinkGoutteDriver/zipball/4ed78077e413840ced60f31a6302c71ce632d2e3",
-                "reference": "4ed78077e413840ced60f31a6302c71ce632d2e3",
+                "url": "https://api.github.com/repos/Behat/MinkGoutteDriver/zipball/c92aaff808ba18801c08ad4be573eff01eedd233",
+                "reference": "c92aaff808ba18801c08ad4be573eff01eedd233",
                 "shasum": ""
             },
             "require": {
@@ -2251,7 +2251,7 @@
                 "headless",
                 "testing"
             ],
-            "time": "2013-12-01 12:58:25"
+            "time": "2013-12-13 18:06:27"
         },
         {
             "name": "behat/mink-selenium2-driver",
@@ -2259,12 +2259,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/MinkSelenium2Driver.git",
-                "reference": "1a00db27d403920afa65718313cb2571b74df98b"
+                "reference": "ad193537d1efc78fb5c60580607eb4f2fc117872"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/MinkSelenium2Driver/zipball/1a00db27d403920afa65718313cb2571b74df98b",
-                "reference": "1a00db27d403920afa65718313cb2571b74df98b",
+                "url": "https://api.github.com/repos/Behat/MinkSelenium2Driver/zipball/ad193537d1efc78fb5c60580607eb4f2fc117872",
+                "reference": "ad193537d1efc78fb5c60580607eb4f2fc117872",
                 "shasum": ""
             },
             "require": {
@@ -2309,7 +2309,7 @@
                 "testing",
                 "webdriver"
             ],
-            "time": "2013-12-10 15:14:01"
+            "time": "2013-12-13 18:10:21"
         },
         {
             "name": "codeception/codeception",
@@ -2734,12 +2734,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "5ad421d6a1d5d7066a45b617e5164d309c4e2852"
+                "reference": "c9db00f8821b2cc7238732529f8d4007296a630c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/5ad421d6a1d5d7066a45b617e5164d309c4e2852",
-                "reference": "5ad421d6a1d5d7066a45b617e5164d309c4e2852",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/c9db00f8821b2cc7238732529f8d4007296a630c",
+                "reference": "c9db00f8821b2cc7238732529f8d4007296a630c",
                 "shasum": ""
             },
             "require": {
@@ -2793,7 +2793,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2013-12-02 09:38:32"
+            "time": "2013-12-14 13:52:08"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -3045,12 +3045,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "6b77c60ed70c4af6cd17a87b054c86d69a67d740"
+                "reference": "aa4789d63dc5fd8f2036e5867b94e481b201c807"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6b77c60ed70c4af6cd17a87b054c86d69a67d740",
-                "reference": "6b77c60ed70c4af6cd17a87b054c86d69a67d740",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/aa4789d63dc5fd8f2036e5867b94e481b201c807",
+                "reference": "aa4789d63dc5fd8f2036e5867b94e481b201c807",
                 "shasum": ""
             },
             "require": {
@@ -3111,7 +3111,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2013-12-08 12:01:47"
+            "time": "2013-12-13 21:26:49"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3640,12 +3640,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zfcampus/zf-apigility-admin.git",
-                "reference": "4e644d257953ed147b087bdbec067c803b593eb6"
+                "reference": "98666e7899aff0afe451c1dc87c06393830931b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zfcampus/zf-apigility-admin/zipball/4e644d257953ed147b087bdbec067c803b593eb6",
-                "reference": "4e644d257953ed147b087bdbec067c803b593eb6",
+                "url": "https://api.github.com/repos/zfcampus/zf-apigility-admin/zipball/98666e7899aff0afe451c1dc87c06393830931b5",
+                "reference": "98666e7899aff0afe451c1dc87c06393830931b5",
                 "shasum": ""
             },
             "require": {
@@ -3696,7 +3696,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2013-12-10 10:06:54"
+            "time": "2013-12-10 18:58:31"
         },
         {
             "name": "zfcampus/zf-apigility-welcome",
