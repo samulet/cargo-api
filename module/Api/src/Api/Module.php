@@ -52,14 +52,12 @@ class Module implements ApigilityModuleInterface
                     $identity = $sm->get('User\Identity\IdentityProvider')->getIdentity();
 
                     if (!empty($identity)) {
-                        $accountResource = new AccountResource(
+                        return new AccountResource(
                             $sm->get('AccountModel'),
                             $sm->get('CompanyUserModel'),
                             $sm->get('CompanyModel'),
                             $identity
                         );
-                        $accountResource->setAuthorizationService($sm->get('ZfcRbac\Service\AuthorizationService'));
-                        return $accountResource;
                     } else {
                         return new AccessDeniedResource();
                     }
