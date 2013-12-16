@@ -13,16 +13,18 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ODM\Document(collection="extServiceCompanyEntity")
+ * @ODM\Document(collection="ext_service_company_entity")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class ExtServiceCompany
 {
+
     /**
-     * @ODM\Id
-     * @var int
+     * @var array
+     * @ODM\Collection(strategy="pushAll")
      */
-    protected $mongo_id;
+    protected $relative_companies = array();
+
     /**
      * @var string
      * @ODM\Field(type="string")
