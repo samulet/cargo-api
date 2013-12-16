@@ -72,11 +72,27 @@ class ExtServiceModel {
         $hydrator = new DoctrineHydrator($this->documentManager, 'ExtService\Entity\ExtServiceCompany');
 
         foreach($companies as $res) {
+            $resVars = get_object_vars($res);
+            $findParams=$resVars + array('online_code' => $code);
+            $object = $this->fetch($findParams);
+            if(!empty($object)) {
+                $resultArray['exists']++;
+            } else {
+                $object = $this->fetch(array('id' => $res->id, 'online_code' => $code));
+                if(empty($object)) {
+                    $resultArray['new']++;
+                    $item = new ExtServiceCompany();
+                    $item = $hydrator->hydrate($resVars, $item);
+                    $this->documentManager->persist($item);
+                    $this->documentManager->flush();
+                } else {
+                    $resultArray['changed']++;
+                    $object = $hydrator->hydrate($resVars, $object);
+                    $this->documentManager->persist($object);
+                    $this->documentManager->flush();
+                }
+            }
 
-            $item = new ExtServiceCompany();
-            $item = $hydrator->hydrate(get_object_vars($res), $item);
-            $this->documentManager->persist($item);
-            $this->documentManager->flush();
         }
         return $resultArray;
     }
