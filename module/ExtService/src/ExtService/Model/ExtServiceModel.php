@@ -17,6 +17,8 @@ use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Zend\Http\Client;
 use Zend\Http\ClientStatic;
+use ExtService\Entity\ExtServiceCompany;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 
 class ExtServiceModel {
 
@@ -34,6 +36,7 @@ class ExtServiceModel {
     }
 
     public function getInformationFromOnline($url, $code) {
+
         /*$client  = new \Zend\Http\Client();
 
         $client->setUri('http://prodrezerv.altlog.ru/api/reference/companies/');
@@ -52,32 +55,27 @@ class ExtServiceModel {
         curl_setopt($ch, CURLOPT_URL, 'http://prodrezerv.altlog.ru/api/reference/companies/');
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_HEADER, 0);
-        $body = '{}';
-
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-        curl_setopt($ch, CURLOPT_POSTFIELDS,$body);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        // Timeout in seconds
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 
-        $authToken = curl_exec($ch);
-        $authToken = json_decode($authToken);
+        $authTokenJson = curl_exec($ch);
 
+        $authToken = json_decode($authTokenJson);
         curl_setopt($ch, CURLOPT_URL, 'http://prodrezerv.altlog.ru/api/reference/companies/?key='.sha1($authToken->token.$code));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        $body = '{}';
-
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-        curl_setopt($ch, CURLOPT_POSTFIELDS,$body);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        // Timeout in seconds
-        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         $res = curl_exec($ch);
-        die(var_dump(json_decode($res)));
+        $result = json_decode($res);
+        $hydrator = new DoctrineHydrator($this->documentManager, 'ExtService\Entity\ExtServiceCompany');
+        foreach($result->companies as $res) {
+
+            $item = new ExtServiceCompany();
+            $item = $hydrator->hydrate(get_object_vars($res), $item);
+            $this->documentManager->persist($item);
+            $this->documentManager->flush();
+        }
     }
+
+
 
     /**
      * @param $data
