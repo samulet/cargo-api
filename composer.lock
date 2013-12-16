@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "bd263b8a9ddfe824c1c7fe6a29491f17",
+    "hash": "64140a772d5cf88330f7e8446148b57a",
     "packages": [
         {
             "name": "bladeofsteel/zfc-user-doctrine-mongo-odm",
@@ -2729,6 +2729,60 @@
             "time": "2013-11-27 16:39:54"
         },
         {
+            "name": "mockery/mockery",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/padraic/mockery.git",
+                "reference": "fd9f745e335f8a0e68ef34f44f0560a54e44ef84"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/fd9f745e335f8a0e68ef34f44f0560a54e44ef84",
+                "reference": "fd9f745e335f8a0e68ef34f44f0560a54e44ef84",
+                "shasum": ""
+            },
+            "require": {
+                "lib-pcre": ">=7.0",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "hamcrest/hamcrest": "1.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Mockery": "library/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Pádraic Brady",
+                    "email": "padraic.brady@gmail.com",
+                    "homepage": "http://blog.astrumfutura.com"
+                }
+            ],
+            "description": "Mockery is a simple yet flexible PHP mock object framework for use in unit testing with PHPUnit, PHPSpec or any other testing framework. Its core goal is to offer a test double framework with a succint API capable of clearly defining all possible object operations and interactions using a human readable Domain Specific Language (DSL). Designed as a drop in alternative to PHPUnit's phpunit-mock-objects library, Mockery is easy to integrate with PHPUnit and can operate alongside phpunit-mock-objects without the World ending.",
+            "homepage": "http://github.com/padraic/mockery",
+            "keywords": [
+                "BDD",
+                "TDD",
+                "library",
+                "mock",
+                "mock objects",
+                "mockery",
+                "stub",
+                "test",
+                "test double",
+                "testing"
+            ],
+            "time": "2013-11-26 20:36:44"
+        },
+        {
             "name": "monolog/monolog",
             "version": "dev-master",
             "source": {
@@ -3758,7 +3812,8 @@
         "zendframework/zend-developer-tools": 20,
         "zfcampus/zf-apigility-admin": 20,
         "zfcampus/zf-apigility-welcome": 20,
-        "codeception/codeception": 0
+        "codeception/codeception": 0,
+        "mockery/mockery": 20
     },
     "platform": {
         "php": ">=5.4.8"
