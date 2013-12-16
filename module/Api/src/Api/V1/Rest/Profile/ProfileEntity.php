@@ -32,6 +32,17 @@ class ProfileEntity {
         }
     }
 
+    public function setProfileUuid($profile_uuid)
+    {
+        $this->profile_uuid = $profile_uuid;
+        return $this;
+    }
+
+    public function getProfileUuid()
+    {
+        return $this->profile_uuid;
+    }
+
     public function setName($name)
     {
         $this->name = $name;
