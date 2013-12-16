@@ -32,12 +32,18 @@
         "zendframework/zend-developer-tools": "dev-master",
         "zfcampus/zf-apigility-admin": "dev-master",
         "zfcampus/zf-apigility-welcome": "dev-master",
-        "codeception/codeception": "@stable"
+        "codeception/codeception": "@stable",
+        "mockery/mockery": "dev-master"
     },
     "repositories": [
         {
             "type": "vcs",
             "url": "https://github.com/MashaiMedvedi/auth-token.git"
         }
-    ]
+    ],
+    "autoload": {
+        "classmap": [
+            "./module"
+        ]
+    }
 }
