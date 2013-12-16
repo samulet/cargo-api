@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "64140a772d5cf88330f7e8446148b57a",
+    "hash": "f6650e12c8bfee6edb115d28a0f25e28",
     "packages": [
         {
             "name": "bladeofsteel/zfc-user-doctrine-mongo-odm",
@@ -750,12 +750,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/mongodb-odm.git",
-                "reference": "06971f2ac3db9521bd750bbfcadb7263aaa97402"
+                "reference": "c0965b5315e797d7a31952b23825b6a39f6c5fce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/06971f2ac3db9521bd750bbfcadb7263aaa97402",
-                "reference": "06971f2ac3db9521bd750bbfcadb7263aaa97402",
+                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/c0965b5315e797d7a31952b23825b6a39f6c5fce",
+                "reference": "c0965b5315e797d7a31952b23825b6a39f6c5fce",
                 "shasum": ""
             },
             "require": {
@@ -820,7 +820,7 @@
                 "odm",
                 "persistence"
             ],
-            "time": "2013-12-06 19:02:57"
+            "time": "2013-12-16 18:00:37"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -1184,12 +1184,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "4e5f0758ee8ee2e0bfbb765271553cfd2f0c0089"
+                "reference": "dcaa8ff8f77f42dc8070f30f9d891ebb300fa5ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf2/zipball/4e5f0758ee8ee2e0bfbb765271553cfd2f0c0089",
-                "reference": "4e5f0758ee8ee2e0bfbb765271553cfd2f0c0089",
+                "url": "https://api.github.com/repos/zendframework/zf2/zipball/dcaa8ff8f77f42dc8070f30f9d891ebb300fa5ad",
+                "reference": "dcaa8ff8f77f42dc8070f30f9d891ebb300fa5ad",
                 "shasum": ""
             },
             "require": {
@@ -1294,7 +1294,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2013-12-15 09:29:44"
+            "time": "2013-12-16 12:03:10"
         },
         {
             "name": "zf-commons/zfc-base",
@@ -2097,12 +2097,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Mink.git",
-                "reference": "75aa32c75c72ebabc0d29c78374aae92f3f8d020"
+                "reference": "fa5a157f713d341f09f0e4e524233c58438efe6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Mink/zipball/75aa32c75c72ebabc0d29c78374aae92f3f8d020",
-                "reference": "75aa32c75c72ebabc0d29c78374aae92f3f8d020",
+                "url": "https://api.github.com/repos/Behat/Mink/zipball/fa5a157f713d341f09f0e4e524233c58438efe6b",
+                "reference": "fa5a157f713d341f09f0e4e524233c58438efe6b",
                 "shasum": ""
             },
             "require": {
@@ -2144,7 +2144,7 @@
                 "testing",
                 "web"
             ],
-            "time": "2013-12-14 01:28:10"
+            "time": "2013-12-16 15:13:55"
         },
         {
             "name": "behat/mink-browserkit-driver",
@@ -2152,12 +2152,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/MinkBrowserKitDriver.git",
-                "reference": "8fa555312d754e64bdb14c62e0e52d44c63e484b"
+                "reference": "bf5733377cab4ee8a2d4d71bb0565670317fb9a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/MinkBrowserKitDriver/zipball/8fa555312d754e64bdb14c62e0e52d44c63e484b",
-                "reference": "8fa555312d754e64bdb14c62e0e52d44c63e484b",
+                "url": "https://api.github.com/repos/Behat/MinkBrowserKitDriver/zipball/bf5733377cab4ee8a2d4d71bb0565670317fb9a6",
+                "reference": "bf5733377cab4ee8a2d4d71bb0565670317fb9a6",
                 "shasum": ""
             },
             "require": {
@@ -2199,7 +2199,7 @@
                 "browser",
                 "testing"
             ],
-            "time": "2013-12-07 19:30:08"
+            "time": "2013-12-16 14:28:42"
         },
         {
             "name": "behat/mink-goutte-driver",
@@ -2259,12 +2259,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/MinkSelenium2Driver.git",
-                "reference": "ad193537d1efc78fb5c60580607eb4f2fc117872"
+                "reference": "713090e85efe57797b717acff2ec651ed54c8ed3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/MinkSelenium2Driver/zipball/ad193537d1efc78fb5c60580607eb4f2fc117872",
-                "reference": "ad193537d1efc78fb5c60580607eb4f2fc117872",
+                "url": "https://api.github.com/repos/Behat/MinkSelenium2Driver/zipball/713090e85efe57797b717acff2ec651ed54c8ed3",
+                "reference": "713090e85efe57797b717acff2ec651ed54c8ed3",
                 "shasum": ""
             },
             "require": {
@@ -2309,7 +2309,7 @@
                 "testing",
                 "webdriver"
             ],
-            "time": "2013-12-13 18:10:21"
+            "time": "2013-12-16 14:30:23"
         },
         {
             "name": "codeception/codeception",
