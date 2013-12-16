@@ -34,44 +34,80 @@ class ExtServiceModel {
         $this->queryBuilderModel=$queryBuilderModel;
         $this->configOnline=$configOnline;
     }
+    protected function onlineGetToken($ch, $url) {
+        curl_setopt($ch, CURLOPT_URL, $url);
+        $authTokenJson = curl_exec($ch);
+        $authToken = json_decode($authTokenJson);
+        if(!empty($authToken)) {
+            if(!empty($authToken->token)) {
+                return $authToken->token;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
 
-    public function getInformationFromOnline($url, $code) {
-
-        /*$client  = new \Zend\Http\Client();
-
-        $client->setUri('http://prodrezerv.altlog.ru/api/reference/companies/');
-        $client->setMethod('GET');
-        $client->setEncType('application/json');
-        $response = $client->send();
-     //   die(var_dump($response));
-        die(var_dump(urldecode($response->getContent()))); */
-
+    protected function setCurl() {
         $ch = curl_init();
         $headers = array(
             'Accept: application/json',
             'Content-Type: application/json',
-
         );
-        curl_setopt($ch, CURLOPT_URL, 'http://prodrezerv.altlog.ru/api/reference/companies/');
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        return $ch;
+    }
 
-        $authTokenJson = curl_exec($ch);
-
-        $authToken = json_decode($authTokenJson);
-        curl_setopt($ch, CURLOPT_URL, 'http://prodrezerv.altlog.ru/api/reference/companies/?key='.sha1($authToken->token.$code));
-        $res = curl_exec($ch);
-        $result = json_decode($res);
+    public function onlineChangeFindUpdate($companies, $code) {
+        $resultArray=array(
+            'new'  => 0,
+            'changed'  => 0,
+            'exists'  => 0,
+        );
         $hydrator = new DoctrineHydrator($this->documentManager, 'ExtService\Entity\ExtServiceCompany');
-        foreach($result->companies as $res) {
+
+        foreach($companies as $res) {
 
             $item = new ExtServiceCompany();
             $item = $hydrator->hydrate(get_object_vars($res), $item);
             $this->documentManager->persist($item);
             $this->documentManager->flush();
+        }
+        return $resultArray;
+    }
+    public function getInformationFromOnline($url, $code) {
+        $ch=$this->setCurl();
+        $fullUrl=$url.'/api/reference/companies/';
+        $token = $this->onlineGetToken($ch, $fullUrl);
+        if(!empty($token)) {
+            curl_setopt($ch, CURLOPT_URL, $fullUrl.'/?key='.sha1($token.$code));
+            $res = curl_exec($ch);
+            $result = json_decode($res);
+            if(!empty($result)) {
+                if(!empty($result->authentication)) {
+                    return null;
+                } else {
+                    if(!empty($result->companies)) {
+                        $resultArray=array(
+                            'processed' => sizeof($result->companies),
+
+                        );
+                        $resultArray=$resultArray+$this->onlineChangeFindUpdate($result->companies(), $code);
+                        return $resultArray;
+                    } else {
+                        return null;
+                    }
+                }
+            } else {
+                return null;
+            }
+        } else {
+            return null;
         }
     }
 

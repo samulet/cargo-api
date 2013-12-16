@@ -70,7 +70,7 @@ class ExtServiceCompanyResource extends AbstractResourceListener {
      */
     public function fetchAll($params = array())
     {
-       $this->extServiceModel->getInformationFromOnline(123, 'N6kERS4GrQQh7D42');
+       $this->extServiceModel->getInformationFromOnline('http://prodrezerv.altlog.ru/api/reference/companies/', 'N6kERS4GrQQh7D42');
         //return new ApiProblem(405, 'The GET method has not been defined for collections');
     }
 
