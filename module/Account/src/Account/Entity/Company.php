@@ -195,11 +195,6 @@ class Company
      */
     protected $deletedAt;
 
-    /**
-     * @Annotation\Type("Zend\Form\Element\Submit")
-     * @Annotation\Attributes({"value":"Отправить"})
-     */
-
     public function setData($data)
     {
         if ($data !== null && is_array($data)) {
