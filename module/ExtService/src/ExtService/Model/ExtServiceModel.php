@@ -194,4 +194,22 @@ class ExtServiceModel {
         return $this->queryBuilderModel->delete('ExtService\Entity\ExtServiceCompany',$findParams);
     }
 
+    public function addCompanyIntersect($data , $currentAccount) {
+        $data = array_map('strval', $data);
+        $object = $this->fetch(array('id' => $data['id'], 'online_code' => $data['source']));
+        if(!empty($object)) {
+            $relativeCompanies=$object->getRelativeCompanies();
+            if(in_array($relativeCompanies[$currentAccount],$data['company'])) {
+                return true;
+            } else {
+                array_push($relativeCompanies[$relativeCompanies], $data['company']);
+                $object->setRelativeCompanies($relativeCompanies);
+                $this->documentManager->persist($object);
+                $this->documentManager->flush();
+            }
+        } else {
+            return false;
+        }
+
+    }
 }
