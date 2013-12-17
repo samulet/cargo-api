@@ -101,20 +101,13 @@ class ExtServiceModel {
     }
 
     public function getInformationFromAllOnline() {
-        $resultArray=array(
-            'processed' => 0,
-            'new'  => 0,
-            'changed'  => 0,
-            'exists'  => 0,
-        );
+        $resultArray=array();
         foreach($this->configOnline as $onlineName=>$data) {
             foreach($data as $url => $key) {
                 $res = $this->getInformationFromOnline($url,$key,$onlineName);
                 if(!empty($res)) {
-                    $resultArray['processed']+=$res['processed'];
-                    $resultArray['new']+=$res['new'];
-                    $resultArray['changed']+=$res['changed'];
-                    $resultArray['exists']+=$res['exists'];
+                    $res['ext_service_company_code'] = $onlineName;
+                    array_push($resultArray, $res);
                 }
             }
         }
