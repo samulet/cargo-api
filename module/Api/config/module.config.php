@@ -151,8 +151,7 @@ return array(
     ),
     'service_manager' => array(
         'invokables' => array(
-            'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectResource' => 'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectResource',
-        ),
+                    ),
     ),
     'zf-rest' => array(
         'Api\\V1\\Rest\\Account\\Controller' => array(
