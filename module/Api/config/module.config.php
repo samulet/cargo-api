@@ -806,7 +806,7 @@ return array(
             'Api\\V1\\Rest\\ExtService\\ExtServiceEntity' => array(
                 'identifier_name' => 'ext_service_type',
                 'route_name' => 'api.rest.ext-service',
-                'hydrator' => 'ArraySerializable',
+                'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\ExtService\\ExtServiceCollection' => array(
                 'identifier_name' => 'ext_service_type',
@@ -816,7 +816,7 @@ return array(
             'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyEntity' => array(
                 'identifier_name' => 'ext_service_company_code',
                 'route_name' => 'api.rest.ext-service-company',
-                'hydrator' => 'ArraySerializable',
+                'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyCollection' => array(
                 'identifier_name' => 'ext_service_company_code',
@@ -826,7 +826,7 @@ return array(
             'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectEntity' => array(
                 'identifier_name' => 'ext_service_company_code',
                 'route_name' => 'api.rest.ext-service-company-intersect',
-                'hydrator' => 'ArraySerializable',
+                'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectCollection' => array(
                 'identifier_name' => 'ext_service_company_code',
