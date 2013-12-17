@@ -3,6 +3,8 @@ namespace Api\V1\Rest\ExtServiceCompany;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use Api\Entity\ApiStaticErrorList;
+use Zend\Paginator\Adapter\ArrayAdapter;
 
 class ExtServiceCompanyResource extends AbstractResourceListener {
 
@@ -70,9 +72,17 @@ class ExtServiceCompanyResource extends AbstractResourceListener {
      */
     public function fetchAll($params = array())
     {
-       $res=$this->extServiceModel->getInformationFromOnline('http://prodrezerv.altlog.ru', 'N6kERS4GrQQh7D42', 'prodrezerv');
-        die(var_dump($res));
-        //return new ApiProblem(405, 'The GET method has not been defined for collections');
+        $data=$this->extServiceModel->getInformationFromAllOnline();
+        if(!empty($data)) {
+            $resultArray=array();
+            foreach($data as $d) {
+                array_push($resultArray,new ExtServiceCompanyEntity($d));
+            }
+            $adapter = new ArrayAdapter($resultArray);
+            return new ExtServiceCompanyCollection($adapter);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
     }
 
     /**

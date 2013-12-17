@@ -10,6 +10,25 @@ class ExtServiceCompanyEntity implements ArraySerializableInterface
     protected $stat = array();
     protected $reason;
 
+    public function __construct(array $entity = null){
+        if(!empty($entity)) {
+            $this->setData($entity);
+        }
+    }
+
+    public function setData($data)
+    {
+        if ($data !== null && is_array($data)) {
+            foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
+                if (isset($data[$key]) ) {
+                    $this->$key = $data[$key];
+                }
+            }
+        }
+        return $this;
+
+    }
+
     /**
      * @param mixed $ext_service_company_code
      */

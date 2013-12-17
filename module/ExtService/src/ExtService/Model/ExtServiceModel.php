@@ -105,10 +105,20 @@ class ExtServiceModel {
         foreach($this->configOnline as $onlineName=>$data) {
             foreach($data as $url => $key) {
                 $res = $this->getInformationFromOnline($url,$key,$onlineName);
-                if(!empty($res)) {
-                    $res['ext_service_company_code'] = $onlineName;
-                    array_push($resultArray, $res);
+                if(!is_string($res)) {
+                    $res=array(
+                        'stat' => $res,
+                        'ext_service_company_code' => $onlineName,
+                        'status' => 'success'
+                    );
+                } else {
+                    $res=array(
+                        'reason' => $res,
+                        'status' => 'fail',
+                        'ext_service_company_code' => $onlineName
+                    );
                 }
+                array_push($resultArray, $res);
             }
         }
         return $resultArray;
@@ -126,7 +136,7 @@ class ExtServiceModel {
             if(!empty($result)) {
                 if(!empty($result->authentication)) {
                     if($result->authentication=='error') {
-                        return null;
+                        return 'Ошибка авторизации';
                     }
                 } else {
                     if(!empty($result->companies)) {
@@ -138,14 +148,14 @@ class ExtServiceModel {
                         $resultArray=$resultArray+$this->onlineChangeFindUpdate($result->companies, $onlineCode);
                         return $resultArray;
                     } else {
-                        return null;
+                        return 'Список компаний пуст';
                     }
                 }
             } else {
-                return null;
+                return 'Невозможно выполнить запрос';
             }
         } else {
-            return null;
+            return 'Невозможно получить токен';
         }
     }
 
