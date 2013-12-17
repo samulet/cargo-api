@@ -28,7 +28,7 @@ class ApiStaticErrorList {
         if(empty($errorText)) {
             return new ApiProblem($errorNumber, self::$errorList[$errorNumber]);
         } else {
-            return new ApiProblem($errorNumber, self::$errorList[$errorNumber].'_'.strtoupper(str_replace(' ', '_', $errorText)));
+            return new ApiProblem($errorNumber, $errorText);
         }
     }
 }
