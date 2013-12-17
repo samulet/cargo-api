@@ -8,6 +8,21 @@ use Api\Entity\ApiStaticErrorList;
 class AccessDeniedResource extends AbstractResourceListener
 {
     /**
+     * @var int
+     */
+    private $code;
+    /**
+     * @var string
+     */
+    private $message;
+
+    public function __construct($code = 401, $message = '')
+    {
+        $this->code = $code;
+        $this->message = $message;
+    }
+
+    /**
      * Create a resource
      *
      * @param  mixed $data
@@ -15,7 +30,7 @@ class AccessDeniedResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return ApiStaticErrorList::getError(401);
+        return ApiStaticErrorList::getError($this->code, $this->message);
     }
 
     /**
@@ -26,7 +41,7 @@ class AccessDeniedResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return ApiStaticErrorList::getError(401);
+        return ApiStaticErrorList::getError($this->code, $this->message);
     }
 
     /**
@@ -37,7 +52,7 @@ class AccessDeniedResource extends AbstractResourceListener
      */
     public function deleteList($data)
     {
-        return ApiStaticErrorList::getError(401);
+        return ApiStaticErrorList::getError($this->code, $this->message);
     }
 
     /**
@@ -48,7 +63,7 @@ class AccessDeniedResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return ApiStaticErrorList::getError(401);
+        return ApiStaticErrorList::getError($this->code, $this->message);
     }
 
     /**
@@ -59,7 +74,7 @@ class AccessDeniedResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return ApiStaticErrorList::getError(401);
+        return ApiStaticErrorList::getError($this->code, $this->message);
     }
 
     /**
@@ -71,7 +86,7 @@ class AccessDeniedResource extends AbstractResourceListener
      */
     public function patch($id, $data)
     {
-        return ApiStaticErrorList::getError(401);
+        return ApiStaticErrorList::getError($this->code, $this->message);
     }
 
     /**
@@ -82,7 +97,7 @@ class AccessDeniedResource extends AbstractResourceListener
      */
     public function replaceList($data)
     {
-        return ApiStaticErrorList::getError(401);
+        return ApiStaticErrorList::getError($this->code, $this->message);
     }
 
     /**
@@ -94,6 +109,6 @@ class AccessDeniedResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        return ApiStaticErrorList::getError(401);
+        return ApiStaticErrorList::getError($this->code, $this->message);
     }
 }
