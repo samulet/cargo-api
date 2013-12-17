@@ -25,7 +25,7 @@ class ExtServiceCompany
     protected $_id;
     /**
      * @var array
-     * @ODM\Collection(strategy="pushAll")
+     * @ODM\Field(type="hash")
      */
     protected $relative_companies = array();
 
