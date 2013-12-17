@@ -74,22 +74,24 @@ class ExtServiceModel {
         foreach($companies as $res) {
 
             $resVars = get_object_vars($res);
+            $resVars['online_code'] = $onlineCode;
             $resVars = array_map('strval', $resVars);
-            $resVars['online_code'] = $online_code;
+
             $object = $this->fetch($resVars);
             if(!empty($object)) {
                 $resultArray['exists']++;
             } else {
-                $object = $this->fetch(array('id' => $res->id, 'online_code' => $onlineCode));
+                $object = $this->fetch(array('id' => $resVars['id'], 'online_code' => $resVars['online_code']));
                 if(empty($object)) {
                     $resultArray['new']++;
                     $item = new ExtServiceCompany();
-                    $item = $hydrator->hydrate($resVars, $item);
+                    $item->setData($resVars);
+                   // die(var_dump($item, $resVars));
                     $this->documentManager->persist($item);
                     $this->documentManager->flush();
                 } else {
                     $resultArray['changed']++;
-                    $object = $hydrator->hydrate($resVars, $object);
+                    $object->setData($resVars);
                     $this->documentManager->persist($object);
                     $this->documentManager->flush();
                 }

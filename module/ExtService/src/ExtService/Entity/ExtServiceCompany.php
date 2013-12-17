@@ -32,7 +32,7 @@ class ExtServiceCompany
     /**
      * @var string
      * @ODM\Field(type="string")
-    */
+     */
     protected $online_code;
     /**
      * @var string
@@ -1777,21 +1777,57 @@ class ExtServiceCompany
         return $this->work_type;
     }
 
-
     /**
-     * @param mixed $onlineCode
+     * @param string $online_code
      */
-    public function setOnlineCode($onlineCode)
+    public function setOnlineCode($online_code)
     {
-        $this->onlineCode = $onlineCode;
+        $this->online_code = $online_code;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getOnlineCode()
     {
-        return $this->onlineCode;
+        return $this->online_code;
     }
 
+    /**
+     * @param array $relative_companies
+     */
+    public function setRelativeCompanies($relative_companies)
+    {
+        $this->relative_companies = $relative_companies;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRelativeCompanies()
+    {
+        return $this->relative_companies;
+    }
+
+    public function setData($data)
+    {
+        if ($data !== null && is_array($data)) {
+            foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
+                if (isset($data[$key])) {
+                    $this->$key = $data[$key];
+                }
+            }
+        }
+        return $this;
+
+    }
+
+    public function getData()
+    {
+        $data = array();
+        foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
+            $data[$key] = $this->$key;
+        }
+        return $data;
+    }
 }
