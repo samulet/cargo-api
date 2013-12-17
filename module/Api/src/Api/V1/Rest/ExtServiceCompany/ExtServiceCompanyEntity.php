@@ -8,6 +8,8 @@ class ExtServiceCompanyEntity implements ArraySerializableInterface
     protected $ext_service_company_code;
     protected $status;
     protected $stat = array();
+    protected $reason;
+
     /**
      * @param mixed $ext_service_company_code
      */
@@ -55,7 +57,21 @@ class ExtServiceCompanyEntity implements ArraySerializableInterface
     {
         return $this->status;
     }
+    /**
+     * @param mixed $reason
+     */
+    public function setReason($reason)
+    {
+        $this->reason = $reason;
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getReason()
+    {
+        return $this->reason;
+    }
     /**
      * Exchange internal values from provided array
      *
