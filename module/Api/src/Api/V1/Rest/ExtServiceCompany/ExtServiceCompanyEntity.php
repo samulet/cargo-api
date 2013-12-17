@@ -5,6 +5,57 @@ use Zend\Stdlib\ArraySerializableInterface;
 
 class ExtServiceCompanyEntity implements ArraySerializableInterface
 {
+    protected $ext_service_company_code;
+    protected $status;
+    protected $stat = array();
+    /**
+     * @param mixed $ext_service_company_code
+     */
+    public function setExtServiceCompanyCode($ext_service_company_code)
+    {
+        $this->ext_service_company_code = $ext_service_company_code;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getExtServiceCompanyCode()
+    {
+        return $this->ext_service_company_code;
+    }
+
+    /**
+     * @param array $stat
+     */
+    public function setStat($stat)
+    {
+        $this->stat = $stat;
+    }
+
+    /**
+     * @return array
+     */
+    public function getStat()
+    {
+        return $this->stat;
+    }
+
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
     /**
      * Exchange internal values from provided array
      *
