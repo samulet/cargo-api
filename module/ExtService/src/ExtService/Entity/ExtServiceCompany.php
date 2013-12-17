@@ -18,7 +18,11 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class ExtServiceCompany
 {
-
+    /**
+     * @ODM\Id
+     * @var int
+     */
+    protected $_id;
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")

@@ -63,22 +63,24 @@ class ExtServiceModel {
         return $ch;
     }
 
-    public function onlineChangeFindUpdate($companies, $code) {
+    public function onlineChangeFindUpdate($companies, $onlineCode) {
         $resultArray=array(
             'new'  => 0,
             'changed'  => 0,
             'exists'  => 0,
         );
         $hydrator = new DoctrineHydrator($this->documentManager, 'ExtService\Entity\ExtServiceCompany');
-
+        ini_set('max_execution_time', 300);
         foreach($companies as $res) {
+
             $resVars = get_object_vars($res);
-            $findParams=$resVars + array('online_code' => $code);
-            $object = $this->fetch($findParams);
+            $resVars = array_map('strval', $resVars);
+            $resVars['online_code'] = $online_code;
+            $object = $this->fetch($resVars);
             if(!empty($object)) {
                 $resultArray['exists']++;
             } else {
-                $object = $this->fetch(array('id' => $res->id, 'online_code' => $code));
+                $object = $this->fetch(array('id' => $res->id, 'online_code' => $onlineCode));
                 if(empty($object)) {
                     $resultArray['new']++;
                     $item = new ExtServiceCompany();
@@ -96,24 +98,29 @@ class ExtServiceModel {
         }
         return $resultArray;
     }
-    public function getInformationFromOnline($url, $code) {
+    public function getInformationFromOnline($url, $code, $onlineCode) {
         $ch=$this->setCurl();
         $fullUrl=$url.'/api/reference/companies/';
         $token = $this->onlineGetToken($ch, $fullUrl);
         if(!empty($token)) {
-            curl_setopt($ch, CURLOPT_URL, $fullUrl.'/?key='.sha1($token.$code));
+            $ch = $this->setCurl();
+            curl_setopt($ch, CURLOPT_URL, $fullUrl.'?key='.sha1($token.$code));
             $res = curl_exec($ch);
             $result = json_decode($res);
+
             if(!empty($result)) {
                 if(!empty($result->authentication)) {
-                    return null;
+                    if($result->authentication=='error') {
+                        return null;
+                    }
                 } else {
                     if(!empty($result->companies)) {
+
                         $resultArray=array(
                             'processed' => sizeof($result->companies),
 
                         );
-                        $resultArray=$resultArray+$this->onlineChangeFindUpdate($result->companies(), $code);
+                        $resultArray=$resultArray+$this->onlineChangeFindUpdate($result->companies, $onlineCode);
                         return $resultArray;
                     } else {
                         return null;
