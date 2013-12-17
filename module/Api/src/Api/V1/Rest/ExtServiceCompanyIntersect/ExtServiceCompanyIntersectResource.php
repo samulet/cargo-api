@@ -3,9 +3,24 @@ namespace Api\V1\Rest\ExtServiceCompanyIntersect;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use Api\Entity\ApiStaticErrorList;
+use Zend\Paginator\Adapter\ArrayAdapter;
 
 class ExtServiceCompanyIntersectResource extends AbstractResourceListener
 {
+    protected $currentAccount;
+    protected $extServiceModel;
+    /**
+     * @var \User\Entity\User
+     */
+    protected $userEntity;
+
+    public function __construct($extServiceModel = null,$userEntity=null,$currentAccount = null)
+    {
+        $this->extServiceModel = $extServiceModel;
+        $this->userEntity = $userEntity;
+        $this->currentAccount = $currentAccount;
+    }
     /**
      * Create a resource
      *
@@ -14,7 +29,12 @@ class ExtServiceCompanyIntersectResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        $data=get_object_vars($data);
+        if(!empty($this->extServiceModel->addCompanyIntersect($data, $this->currentAccount))) {
+            return ApiStaticErrorList::getError(202);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
     }
 
     /**
