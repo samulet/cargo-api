@@ -24,10 +24,10 @@ class ExtServiceCompany
      */
     protected $_id;
     /**
-     * @var array
-     * @ODM\Field(type="hash")
+     * @var string
+     * @ODM\Field(type="string")
      */
-    protected $relative_companies = array();
+    protected $link;
 
     /**
      * @var string
@@ -1794,19 +1794,19 @@ class ExtServiceCompany
     }
 
     /**
-     * @param array $relative_companies
+     * @param string $link
      */
-    public function setRelativeCompanies($relative_companies)
+    public function setLink($link)
     {
-        $this->relative_companies = $relative_companies;
+        $this->link = $link;
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getRelativeCompanies()
+    public function getLink()
     {
-        return $this->relative_companies;
+        return $this->link;
     }
 
     public function setData($data)
