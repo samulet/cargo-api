@@ -648,7 +648,7 @@ API предназначено для взаимодействием с учет
 
 + Response 201
 
-# Company import service [/service/import/company]
+# Company import service [/service/import/company/{ext_service_company_code}]
 Сервис для импорта юридических лиц из систем "Онлайн". Необходим для синхронизации списка юридических лиц между Cargo и системами "Онлайн".
 
 
@@ -660,6 +660,7 @@ API предназначено для взаимодействием с учет
             "_links": {
                 "self": { "href": "/api/service/import/company" }
             },
+            "ext_service_company_code": "vesta",
             "status": "success",
             "stat": {
                 "processed": 10,
@@ -679,7 +680,48 @@ API предназначено для взаимодействием с учет
             "reason": "Сообщение об ошибке"
         }
 
-# Link companies with external records [/service/import/company-intersect]
+## Запрос списка юридических лиц [GET]
+
++ Response 200 (application/hal+json)
+
+        {
+            "_links": {
+                "self": { "href": "/api/service/import/company" }
+            },
+            _embedded: {
+                "ext_service_company" : [
+                    "ext_service_company_code": "vesta",
+                    "status": "success",
+                    "stat": {
+                        "processed": 10,
+                        "new": 3,
+                        "changed": 2,
+                        "exists": 5
+                        }
+                    ]
+            }
+
+        }
+
++ Response 202 (application/hal+json)
+
+        {
+            "_links": {
+                "self": { "href": "/api/service/import/company" }
+            },
+            _embedded: {
+                "ext_service_company" : [
+                        {
+                        "status": "fail",
+                        "reason": "Сообщение об ошибке"
+                         }
+                ]
+            }
+
+        }
+
+
+# Link companies with external records [/service/import/company-intersect/{source-id}]
 Сервис для связи юридических лиц, импортированных из систем "Онлайн", с юридическими лицами Cargo.
 
 ## Запрос списка импортированных юридических лиц [GET]
