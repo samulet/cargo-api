@@ -60,8 +60,12 @@ class ExtServiceCompanyResource extends AbstractResourceListener {
      */
     public function fetch($id)
     {
-
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        $data=$this->extServiceModel->getInformationFromOnlineByOnlineName($id);
+        if(!empty($data)) {
+            return new ExtServiceCompanyEntity($data);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
     }
 
     /**
