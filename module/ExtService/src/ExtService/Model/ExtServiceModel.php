@@ -126,7 +126,6 @@ class ExtServiceModel {
     public function getInformationFromOnlineByOnlineName($onlineName) {
         if(!empty($this->configOnline[$onlineName])) {
             $data = $this->configOnline[$onlineName];
-            $resultArray=array();
             foreach($data as $url => $key) {
                 $res = $this->getInformationFromOnline($url,$key,$onlineName);
                 if(!is_string($res)) {
@@ -142,7 +141,7 @@ class ExtServiceModel {
                         'ext_service_company_code' => $onlineName
                     );
                 }
-                return $resultArray;
+                return $res;
             }
         } else {
             return null;
