@@ -123,6 +123,32 @@ class ExtServiceModel {
         }
         return $resultArray;
     }
+    public function getInformationFromOnlineByOnlineName($onlineName) {
+        if(!empty($this->configOnline[$onlineName])) {
+            $data = $this->configOnline[$onlineName];
+            $resultArray=array();
+            foreach($data as $url => $key) {
+                $res = $this->getInformationFromOnline($url,$key,$onlineName);
+                if(!is_string($res)) {
+                    $res=array(
+                        'stat' => $res,
+                        'ext_service_company_code' => $onlineName,
+                        'status' => 'success'
+                    );
+                } else {
+                    $res=array(
+                        'reason' => $res,
+                        'status' => 'fail',
+                        'ext_service_company_code' => $onlineName
+                    );
+                }
+                return $resultArray;
+            }
+        } else {
+            return null;
+        }
+
+    }
     public function getInformationFromOnline($url, $code, $onlineCode) {
         $ch=$this->setCurl();
         $fullUrl=$url.'/api/reference/companies/';
