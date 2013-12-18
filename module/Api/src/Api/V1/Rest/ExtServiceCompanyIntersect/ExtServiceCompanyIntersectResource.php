@@ -76,7 +76,17 @@ class ExtServiceCompanyIntersectResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        $data=$this->extServiceModel->fetchAll($params);
+        if(!empty($data)) {
+            $resultArray=array();
+            foreach($data as $d) {
+                array_push($resultArray,new ExtServiceCompanyIntersectEntity($d->getData()));
+            }
+            $adapter = new ArrayAdapter($resultArray);
+            return new ExtServiceCompanyIntersectCollection($adapter);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
     }
 
     /**

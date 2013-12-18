@@ -14,6 +14,7 @@ class ExtServiceCompanyIntersectEntity implements ArraySerializableInterface
     public function __construct(array $entity = null){
         if(!empty($entity)) {
             $this->setData($entity);
+            $this->ext_service_company_code=$entity['source'].$entity['id'];
         }
     }
 
