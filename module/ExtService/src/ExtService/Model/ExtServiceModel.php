@@ -208,7 +208,7 @@ class ExtServiceModel {
 
     public function deleteCompanyIntersect($data) {
         $data = array_map('strval', $data);
-        $object = $this->fetch(array('id' => $data['id'], 'source' => $data['source'], 'link' => $data['company']));
+        $object = $this->fetch(array('id' => $data[1], 'source' => $data[0]));
         if(!empty($object)) {
             $object->setLink(null);
             $this->documentManager->persist($object);

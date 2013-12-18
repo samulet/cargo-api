@@ -43,7 +43,12 @@ class ExtServiceCompanyIntersectResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        $data=$this->extServiceModel->deleteCompanyIntersect(explode('-',$id));
+        if($data) {
+            return ApiStaticErrorList::getError(202);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
     }
 
     /**
