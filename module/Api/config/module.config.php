@@ -101,6 +101,33 @@ return array(
                     ),
                 ),
             ),
+            'api.rest.ext-service' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/api/extservices[/:ext_service_type]',
+                    'defaults' => array(
+                        'controller' => 'Api\\V1\\Rest\\ExtService\\Controller',
+                    ),
+                ),
+            ),
+            'api.rest.ext-service-company' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/api/service/import/company[/:ext_service_company_code]',
+                    'defaults' => array(
+                        'controller' => 'Api\\V1\\Rest\\ExtServiceCompany\\Controller',
+                    ),
+                ),
+            ),
+            'api.rest.ext-service-company-intersect' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/api/service/import/company-intersect[/:ext_service_company_code]',
+                    'defaults' => array(
+                        'controller' => 'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\Controller',
+                    ),
+                ),
+            ),
         ),
     ),
     'zf-versioning' => array(
@@ -117,11 +144,13 @@ return array(
             9 => 'api.rest.reference',
             10 => 'api.rest.reference-product-group',
             11 => 'api.rest.cargo',
+            12 => 'api.rest.ext-service',
+            13 => 'api.rest.ext-service-company',
+            14 => 'api.rest.ext-service-company-intersect',
         ),
     ),
     'service_manager' => array(
-        'invokables' => array(
-        ),
+        'invokables' => array(),
     ),
     'zf-rest' => array(
         'Api\\V1\\Rest\\Account\\Controller' => array(
@@ -399,6 +428,81 @@ return array(
             'entity_class' => 'Api\\V1\\Rest\\Cargo\\CargoEntity',
             'collection_class' => 'Api\\V1\\Rest\\Cargo\\CargoCollection',
         ),
+        'Api\\V1\\Rest\\ExtService\\Controller' => array(
+            'listener' => 'Api\\V1\\Rest\\ExtService\\ExtServiceResource',
+            'route_name' => 'api.rest.ext-service',
+            'identifier_name' => 'ext_service_type',
+            'collection_name' => 'ext_service',
+            'resource_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+                4 => 'POST',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+                2 => 'PUT',
+                3 => 'PATCH',
+                4 => 'DELETE',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'Api\\V1\\Rest\\ExtService\\ExtServiceEntity',
+            'collection_class' => 'Api\\V1\\Rest\\ExtService\\ExtServiceCollection',
+        ),
+        'Api\\V1\\Rest\\ExtServiceCompany\\Controller' => array(
+            'listener' => 'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyResource',
+            'route_name' => 'api.rest.ext-service-company',
+            'identifier_name' => 'ext_service_company_code',
+            'collection_name' => 'ext_service_company',
+            'resource_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+                4 => 'POST',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+                2 => 'DELETE',
+                3 => 'PATCH',
+                4 => 'PUT',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyEntity',
+            'collection_class' => 'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyCollection',
+        ),
+        'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\Controller' => array(
+            'listener' => 'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectResource',
+            'route_name' => 'api.rest.ext-service-company-intersect',
+            'identifier_name' => 'ext_service_company_code',
+            'collection_name' => 'ext_service_company_intersect',
+            'resource_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+                4 => 'POST',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+                2 => 'PUT',
+                3 => 'PATCH',
+                4 => 'DELETE',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectEntity',
+            'collection_class' => 'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectCollection',
+        ),
     ),
     'zf-content-negotiation' => array(
         'controllers' => array(
@@ -414,6 +518,9 @@ return array(
             'Api\\V1\\Rest\\Reference\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\ReferenceProductGroup\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\Cargo\\Controller' => 'HalJson',
+            'Api\\V1\\Rest\\ExtService\\Controller' => 'HalJson',
+            'Api\\V1\\Rest\\ExtServiceCompany\\Controller' => 'HalJson',
+            'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\Controller' => 'HalJson',
         ),
         'accept-whitelist' => array(
             'Api\\V1\\Rest\\Account\\Controller' => array(
@@ -518,6 +625,21 @@ return array(
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ),
+            'Api\\V1\\Rest\\ExtService\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\ExtServiceCompany\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
         ),
         'content_type_whitelist' => array(
             'Api\\V1\\Rest\\ResourceMeta\\Controller' => array(
@@ -551,6 +673,18 @@ return array(
                 1 => 'application/json',
             ),
             'Api\\V1\\Rest\\Cargo\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\ExtService\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\ExtServiceCompany\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\Controller' => array(
                 0 => 'application/vnd.api.v1+json',
                 1 => 'application/json',
             ),
@@ -667,6 +801,36 @@ return array(
                 'identifier_name' => 'cargo_uuid',
                 'route_name' => 'api.rest.cargo',
                 'is_collection' => '1',
+            ),
+            'Api\\V1\\Rest\\ExtService\\ExtServiceEntity' => array(
+                'identifier_name' => 'ext_service_type',
+                'route_name' => 'api.rest.ext-service',
+                'hydrator' => 'Reflection',
+            ),
+            'Api\\V1\\Rest\\ExtService\\ExtServiceCollection' => array(
+                'identifier_name' => 'ext_service_type',
+                'route_name' => 'api.rest.ext-service',
+                'is_collection' => true,
+            ),
+            'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyEntity' => array(
+                'identifier_name' => 'ext_service_company_code',
+                'route_name' => 'api.rest.ext-service-company',
+                'hydrator' => 'Reflection',
+            ),
+            'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyCollection' => array(
+                'identifier_name' => 'ext_service_company_code',
+                'route_name' => 'api.rest.ext-service-company',
+                'is_collection' => true,
+            ),
+            'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectEntity' => array(
+                'identifier_name' => 'ext_service_company_code',
+                'route_name' => 'api.rest.ext-service-company-intersect',
+                'hydrator' => 'Reflection',
+            ),
+            'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectCollection' => array(
+                'identifier_name' => 'ext_service_company_code',
+                'route_name' => 'api.rest.ext-service-company-intersect',
+                'is_collection' => true,
             ),
         ),
     ),

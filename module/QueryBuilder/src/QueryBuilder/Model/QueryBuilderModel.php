@@ -14,6 +14,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\EventManager;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
+use Exception;
 
 class QueryBuilderModel
 {
@@ -99,7 +100,8 @@ class QueryBuilderModel
      *
      * @return ?|null
      */
-    public function createOrUpdate($entityLink, $data, $uuid = null) {
+    public function createOrUpdate($entityLink, $data, $uuid = null)
+    {
         $entityName="\\".$entityLink;
         if(empty($uuid)) {
             $item = new $entityName();
@@ -126,7 +128,8 @@ class QueryBuilderModel
      *
      * @return ?|null
      */
-    public function fetch($entityLink, $findParams) {
+    public function fetch($entityLink, $findParams)
+    {
         $item = $this->createQuery($this->documentManager->createQueryBuilder($entityLink), $findParams)->getQuery()->getSingleResult();
         if(empty($item)) {
             return null;
@@ -142,7 +145,8 @@ class QueryBuilderModel
      *
      * @return array(?)|null
      */
-    public function fetchAll($entityLink, $findParams) {
+    public function fetchAll($entityLink, $findParams)
+    {
         $items = $this->createQuery($this->documentManager->createQueryBuilder($entityLink), $findParams)->getQuery()->execute()->toArray();
         if(empty($items)) {
             return array();
@@ -151,7 +155,22 @@ class QueryBuilderModel
         }
     }
 
-    public function fillEntity($entityLink, $objectNew ,$objectOld) {
+    public function delete($entityLink, $findParams)
+    {
+        $qb3 = $this->documentManager->getRepository($entityLink)->findBy(
+            array($findParams)
+        );
+        try {
+            $this->documentManager->remove($qb3);
+            $this->documentManager->flush();
+            return $findParams;
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+
+    public function fillEntity($entityLink, $objectNew ,$objectOld)
+    {
         $hydrator = new DoctrineHydrator($this->documentManager, $entityLink);
         return $hydrator->hydrate($hydrator->extract($objectOld), $objectNew);
     }

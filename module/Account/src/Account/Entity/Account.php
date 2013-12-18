@@ -5,10 +5,6 @@ namespace Account\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-use Zend\Form\Annotation;
-use Zend\Form\Element;
-use Zend\Form\Form;
-use Zend\Form\Element\Collection;
 
 /**
  *

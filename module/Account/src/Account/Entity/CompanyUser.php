@@ -11,11 +11,6 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
  */
 class CompanyUser
 {
-    public function __construct()
-    {
-
-    }
-
     /**
      * @ODM\Id
      * @var int
