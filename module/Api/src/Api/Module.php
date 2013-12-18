@@ -282,7 +282,6 @@ class Module implements ApigilityModuleInterface
                     /** @var \Zend\Http\Header\GenericHeader $authToken */
                     try {
                         $authToken = $sm->get('request')->getHeaders()->get('X-Auth-UserToken');
-                        $currentAccount = $sm->get('request')->getHeaders()->get('X-Auth-UserToken');
                     } catch (Exception $e) {
                         return new AccessDeniedResource();
                     }
@@ -296,8 +295,7 @@ class Module implements ApigilityModuleInterface
                     if (!empty($tokenEntity)) {
                         return new ExtServiceCompanyIntersectResource(
                             $sm->get('ExtServiceModel'),
-                            $tokenEntity->getUser(),
-                            $currentAccount
+                            $tokenEntity->getUser()
                         );
                     } else {
                         return new AccessDeniedResource();

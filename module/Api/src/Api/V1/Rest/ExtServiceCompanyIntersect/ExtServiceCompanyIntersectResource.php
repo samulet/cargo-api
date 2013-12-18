@@ -8,18 +8,16 @@ use Zend\Paginator\Adapter\ArrayAdapter;
 
 class ExtServiceCompanyIntersectResource extends AbstractResourceListener
 {
-    protected $currentAccount;
     protected $extServiceModel;
     /**
      * @var \User\Entity\User
      */
     protected $userEntity;
 
-    public function __construct($extServiceModel = null,$userEntity=null,$currentAccount = null)
+    public function __construct($extServiceModel = null,$userEntity=null)
     {
         $this->extServiceModel = $extServiceModel;
         $this->userEntity = $userEntity;
-        $this->currentAccount = $currentAccount;
     }
     /**
      * Create a resource
@@ -30,7 +28,7 @@ class ExtServiceCompanyIntersectResource extends AbstractResourceListener
     public function create($data)
     {
         $data=get_object_vars($data);
-        if(!empty($this->extServiceModel->addCompanyIntersect($data, $this->currentAccount))) {
+        if(!empty($this->extServiceModel->addCompanyIntersect($data))) {
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);

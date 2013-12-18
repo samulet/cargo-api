@@ -194,7 +194,7 @@ class ExtServiceModel {
         return $this->queryBuilderModel->delete('ExtService\Entity\ExtServiceCompany',$findParams);
     }
 
-    public function addCompanyIntersect($data , $currentAccount) {
+    public function addCompanyIntersect($data) {
         $data = array_map('strval', $data);
         $object = $this->fetch(array('id' => $data['id'], 'online_code' => $data['source']));
         if(!empty($object)) {
