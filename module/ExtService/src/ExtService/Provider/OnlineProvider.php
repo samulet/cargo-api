@@ -6,7 +6,7 @@ class OnlineProvider
 {
     protected $config;
 
-    public function __construct($config)
+    public function __construct($config = null)
     {
         $this->config=$config;
     }

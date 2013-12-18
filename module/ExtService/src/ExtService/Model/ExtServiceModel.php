@@ -17,14 +17,14 @@ class ExtServiceModel
     protected $documentManager;
     protected $uuidGenerator;
     protected $queryBuilderModel;
-    protected $configOnline;
+    protected $onlineProvider;
 
-    public function __construct(DocumentManager $documentManager,$queryBuilderModel,$configOnline)
+    public function __construct(DocumentManager $documentManager,$queryBuilderModel,$onlineProvider)
     {
         $this->uuidGenerator = new UuidGenerator();
         $this->documentManager=$documentManager;
         $this->queryBuilderModel=$queryBuilderModel;
-        $this->configOnline=$configOnline;
+        $this->onlineProvider=$onlineProvider;
     }
 
     protected function onlineGetToken($ch, $url)
@@ -99,7 +99,7 @@ class ExtServiceModel
     public function getInformationFromAllOnline()
     {
         $resultArray=array();
-        foreach($this->configOnline as $onlineName=>$data) {
+        foreach($this->onlineProvider->getConfig() as $onlineName=>$data) {
             foreach($data as $url => $key) {
                 $res = $this->getInformationFromOnline($url,$key,$onlineName);
                 if(!is_string($res)) {
@@ -122,8 +122,8 @@ class ExtServiceModel
     }
     public function getInformationFromOnlineByOnlineName($onlineName)
     {
-        if(!empty($this->configOnline[$onlineName])) {
-            $data = $this->configOnline[$onlineName];
+        if(!empty($this->onlineProvider->getConfig()[$onlineName])) {
+            $data = $this->onlineProvider->getConfig()[$onlineName];
             foreach($data as $url => $key) {
                 $res = $this->getInformationFromOnline($url,$key,$onlineName);
                 if(!is_string($res)) {
