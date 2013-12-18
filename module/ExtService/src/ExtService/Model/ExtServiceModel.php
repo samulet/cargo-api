@@ -204,6 +204,17 @@ class ExtServiceModel {
         } else {
             return false;
         }
+    }
 
+    public function deleteCompanyIntersect($data) {
+        $data = array_map('strval', $data);
+        $object = $this->fetch(array('id' => $data['id'], 'source' => $data['source'], 'link' => $data['company']));
+        if(!empty($object)) {
+            $object->setLink(null);
+            $this->documentManager->persist($object);
+            $this->documentManager->flush();
+        } else {
+            return false;
+        }
     }
 }
