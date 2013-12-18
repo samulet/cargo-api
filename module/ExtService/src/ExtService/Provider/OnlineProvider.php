@@ -1,16 +1,9 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: salerat
- * Date: 12/12/13
- * Time: 10:00 PM
- * To change this template use File | Settings | File Templates.
- */
 
 namespace ExtService\Provider;
 
-
-class OnlineProvider {
+class OnlineProvider
+{
     protected $config;
 
     public function __construct($config)
@@ -19,15 +12,15 @@ class OnlineProvider {
     }
 
     public function getList() {
-        $resultArray = array();
-        foreach($this->config as $key => $online) {
-            array_push($resultArray, $key);
-        }
-        return $resultArray;
+        return array_keys($this->config);
     }
 
     public function getServiceInfo($code) {
-        return $this->config[$code];
+        if(!empty($this->config[$code])) {
+            return $this->config[$code];
+        } else {
+            return null;
+        }
     }
 
     /**

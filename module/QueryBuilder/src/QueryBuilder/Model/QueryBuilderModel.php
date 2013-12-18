@@ -100,7 +100,8 @@ class QueryBuilderModel
      *
      * @return ?|null
      */
-    public function createOrUpdate($entityLink, $data, $uuid = null) {
+    public function createOrUpdate($entityLink, $data, $uuid = null)
+    {
         $entityName="\\".$entityLink;
         if(empty($uuid)) {
             $item = new $entityName();
@@ -127,7 +128,8 @@ class QueryBuilderModel
      *
      * @return ?|null
      */
-    public function fetch($entityLink, $findParams) {
+    public function fetch($entityLink, $findParams)
+    {
         $item = $this->createQuery($this->documentManager->createQueryBuilder($entityLink), $findParams)->getQuery()->getSingleResult();
         if(empty($item)) {
             return null;
@@ -143,7 +145,8 @@ class QueryBuilderModel
      *
      * @return array(?)|null
      */
-    public function fetchAll($entityLink, $findParams) {
+    public function fetchAll($entityLink, $findParams)
+    {
         $items = $this->createQuery($this->documentManager->createQueryBuilder($entityLink), $findParams)->getQuery()->execute()->toArray();
         if(empty($items)) {
             return array();
@@ -166,11 +169,10 @@ class QueryBuilderModel
         }
     }
 
-    public function fillEntity($entityLink, $objectNew ,$objectOld) {
+    public function fillEntity($entityLink, $objectNew ,$objectOld)
+    {
         $hydrator = new DoctrineHydrator($this->documentManager, $entityLink);
         return $hydrator->hydrate($hydrator->extract($objectOld), $objectNew);
     }
-
-
 
 }

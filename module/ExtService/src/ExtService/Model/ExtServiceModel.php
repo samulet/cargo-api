@@ -1,14 +1,6 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: salerat
- * Date: 12/12/13
- * Time: 10:20 PM
- * To change this template use File | Settings | File Templates.
- */
 
 namespace ExtService\Model;
-
 
 use Doctrine\MongoDB\Connection;
 use Doctrine\ODM\MongoDB\Configuration;
@@ -20,8 +12,8 @@ use Zend\Http\ClientStatic;
 use ExtService\Entity\ExtServiceCompany;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 
-class ExtServiceModel {
-
+class ExtServiceModel
+{
     protected $documentManager;
     protected $uuidGenerator;
     protected $queryBuilderModel;
@@ -34,7 +26,9 @@ class ExtServiceModel {
         $this->queryBuilderModel=$queryBuilderModel;
         $this->configOnline=$configOnline;
     }
-    protected function onlineGetToken($ch, $url) {
+
+    protected function onlineGetToken($ch, $url)
+    {
         curl_setopt($ch, CURLOPT_URL, $url);
         $authTokenJson = curl_exec($ch);
         $authToken = json_decode($authTokenJson);
@@ -49,7 +43,8 @@ class ExtServiceModel {
         }
     }
 
-    protected function setCurl() {
+    protected function setCurl()
+    {
         $ch = curl_init();
         $headers = array(
             'Accept: application/json',
@@ -63,7 +58,8 @@ class ExtServiceModel {
         return $ch;
     }
 
-    public function onlineChangeFindUpdate($companies, $onlineCode) {
+    public function onlineChangeFindUpdate($companies, $onlineCode)
+    {
         $resultArray=array(
             'new'  => 0,
             'changed'  => 0,
@@ -100,7 +96,8 @@ class ExtServiceModel {
         return $resultArray;
     }
 
-    public function getInformationFromAllOnline() {
+    public function getInformationFromAllOnline()
+    {
         $resultArray=array();
         foreach($this->configOnline as $onlineName=>$data) {
             foreach($data as $url => $key) {
@@ -123,7 +120,8 @@ class ExtServiceModel {
         }
         return $resultArray;
     }
-    public function getInformationFromOnlineByOnlineName($onlineName) {
+    public function getInformationFromOnlineByOnlineName($onlineName)
+    {
         if(!empty($this->configOnline[$onlineName])) {
             $data = $this->configOnline[$onlineName];
             foreach($data as $url => $key) {
@@ -148,7 +146,9 @@ class ExtServiceModel {
         }
 
     }
-    public function getInformationFromOnline($url, $code, $onlineCode) {
+
+    public function getInformationFromOnline($url, $code, $onlineCode)
+    {
         $ch=$this->setCurl();
         $fullUrl=$url.'/api/reference/companies/';
         $token = $this->onlineGetToken($ch, $fullUrl);
@@ -157,7 +157,6 @@ class ExtServiceModel {
             curl_setopt($ch, CURLOPT_URL, $fullUrl.'?key='.sha1($token.$code));
             $res = curl_exec($ch);
             $result = json_decode($res);
-
             if(!empty($result)) {
                 if(!empty($result->authentication)) {
                     if($result->authentication=='error') {
@@ -165,10 +164,8 @@ class ExtServiceModel {
                     }
                 } else {
                     if(!empty($result->companies)) {
-
                         $resultArray=array(
                             'processed' => sizeof($result->companies),
-
                         );
                         $resultArray=$resultArray+$this->onlineChangeFindUpdate($result->companies, $onlineCode);
                         return $resultArray;
@@ -191,7 +188,8 @@ class ExtServiceModel {
      * @param null $uuid
      * @return mixed
      */
-    public function createOrUpdate($data, $uuid = null) {
+    public function createOrUpdate($data, $uuid = null)
+    {
         return $this->queryBuilderModel->createOrUpdate('ExtService\Entity\ExtServiceCompany',$data,$uuid);
     }
 
@@ -199,7 +197,8 @@ class ExtServiceModel {
      * @param $findParams
      * @return mixed
      */
-    public function fetch($findParams) {
+    public function fetch($findParams)
+    {
         return $this->queryBuilderModel->fetch('ExtService\Entity\ExtServiceCompany',$findParams);
     }
 
@@ -207,7 +206,8 @@ class ExtServiceModel {
      * @param $findParams
      * @return mixed
      */
-    public function fetchAll($findParams) {
+    public function fetchAll($findParams)
+    {
         return $this->queryBuilderModel->fetchAll('ExtService\Entity\ExtServiceCompany',$findParams);
     }
 
@@ -215,11 +215,13 @@ class ExtServiceModel {
      * @param $findParams
      * @return mixed
      */
-    public function delete($findParams) {
+    public function delete($findParams)
+    {
         return $this->queryBuilderModel->delete('ExtService\Entity\ExtServiceCompany',$findParams);
     }
 
-    public function addCompanyIntersect($data) {
+    public function addCompanyIntersect($data)
+    {
         $data = array_map('strval', $data);
         $object = $this->fetch(array('id' => $data['id'], 'source' => $data['source']));
         if(!empty($object)) {
@@ -231,7 +233,8 @@ class ExtServiceModel {
         }
     }
 
-    public function deleteCompanyIntersect($data) {
+    public function deleteCompanyIntersect($data)
+    {
         $data = array_map('strval', $data);
         $object = $this->fetch(array('id' => $data[1], 'source' => $data[0]));
         if(!empty($object)) {

@@ -150,8 +150,7 @@ return array(
         ),
     ),
     'service_manager' => array(
-        'invokables' => array(
-                    ),
+        'invokables' => array(),
     ),
     'zf-rest' => array(
         'Api\\V1\\Rest\\Account\\Controller' => array(
