@@ -74,14 +74,14 @@ class ExtServiceModel {
         foreach($companies as $res) {
 
             $resVars = get_object_vars($res);
-            $resVars['online_code'] = $onlineCode;
+            $resVars['source'] = $onlineCode;
             $resVars = array_map('strval', $resVars);
 
             $object = $this->fetch($resVars);
             if(!empty($object)) {
                 $resultArray['exists']++;
             } else {
-                $object = $this->fetch(array('id' => $resVars['id'], 'online_code' => $resVars['online_code']));
+                $object = $this->fetch(array('id' => $resVars['id'], 'source' => $resVars['source']));
                 if(empty($object)) {
                     $resultArray['new']++;
                     $item = new ExtServiceCompany();
@@ -196,17 +196,11 @@ class ExtServiceModel {
 
     public function addCompanyIntersect($data) {
         $data = array_map('strval', $data);
-        $object = $this->fetch(array('id' => $data['id'], 'online_code' => $data['source']));
+        $object = $this->fetch(array('id' => $data['id'], 'source' => $data['source']));
         if(!empty($object)) {
-            $relativeCompanies=$object->getRelativeCompanies();
-            if(in_array($relativeCompanies[$currentAccount],$data['company'])) {
-                return true;
-            } else {
-                array_push($relativeCompanies[$relativeCompanies], $data['company']);
-                $object->setRelativeCompanies($relativeCompanies);
-                $this->documentManager->persist($object);
-                $this->documentManager->flush();
-            }
+            $object->setLink($data['company']);
+            $this->documentManager->persist($object);
+            $this->documentManager->flush();
         } else {
             return false;
         }

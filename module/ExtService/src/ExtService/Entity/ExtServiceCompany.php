@@ -33,7 +33,7 @@ class ExtServiceCompany
      * @var string
      * @ODM\Field(type="string")
      */
-    protected $online_code;
+    protected $source;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -1778,19 +1778,19 @@ class ExtServiceCompany
     }
 
     /**
-     * @param string $online_code
+     * @param string $source
      */
-    public function setOnlineCode($online_code)
+    public function setSource($source)
     {
-        $this->online_code = $online_code;
+        $this->source = $source;
     }
 
     /**
      * @return string
      */
-    public function getOnlineCode()
+    public function getSource()
     {
-        return $this->online_code;
+        return $this->source;
     }
 
     /**
