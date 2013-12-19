@@ -13,6 +13,8 @@ use Api\V1\Rest\ProfileStatus\ProfileStatusResource;
 use Api\V1\Rest\ReferenceProductGroup\ReferenceProductGroupResource;
 use Api\V1\Rest\Reference\ReferenceResource;
 use Api\V1\Rest\Cargo\CargoResource;
+use Api\V1\Rest\ExtServiceCompany\ExtServiceCompanyResource;
+use Api\V1\Rest\ExtServiceCompanyIntersect\ExtServiceCompanyIntersectResource;
 use Exception;
 
 class Module implements ApigilityModuleInterface
@@ -47,9 +49,20 @@ class Module implements ApigilityModuleInterface
                 'CargoModel' => 'Cargo\Factory\CargoModelFactory',
                 'AddListProductGroupModel' => 'Reference\Factory\AddListProductGroupModelFactory',
                 'ReferenceModel' => 'Reference\Factory\ReferenceModelFactory',
+                'ExtServiceModel' => 'ExtService\Factory\ExtServiceModelFactory',
                 'Api\V1\Rest\Account\AccountResource' => function ($sm) {
-                    /** @var \User\Identity\IdentityProvider $identity */
-                    $identity = $sm->get('User\Identity\IdentityProvider')->getIdentity();
+                    try {
+                        /** @var \User\Identity\IdentityProvider $identity */
+                        $identity = $sm->get('User\Identity\IdentityProvider')->getIdentity();
+                    } catch (Exception $e) {
+                        $prev = $e->getPrevious();
+                        $exception = empty($prev) ? $e : $prev;
+                        $code = $exception->getCode();
+                        if (empty($code)) {
+                            $code = 500;
+                        }
+                        return new AccessDeniedResource($code, $exception->getMessage());
+                    }
 
                     if (!empty($identity)) {
                         return new AccountResource(
@@ -251,9 +264,50 @@ class Module implements ApigilityModuleInterface
                     } else {
                         return new AccessDeniedResource();
                     }
-
-                    $request=$sm->get('request');
-                    if(empty($request)) {
+                },
+                'Api\V1\Rest\ExtServiceCompany\ExtServiceCompanyResource' => function ($sm) {
+                    /** @var \Zend\Http\Header\GenericHeader $authToken */
+                    try {
+                        $authToken = $sm->get('request')->getHeaders()->get('X-Auth-UserToken');
+                    } catch (Exception $e) {
+                        return new AccessDeniedResource();
+                    }
+                    /** @var \AuthToken\Model\AuthToken $AuthTokenModel */
+                    $AuthTokenModel = $sm->get('AuthToken\\Model\\AuthToken');
+                    if(!empty($authToken)) {
+                        $tokenEntity = $AuthTokenModel->fetch($authToken->getFieldValue());
+                    } else {
+                        return new AccessDeniedResource();
+                    }
+                    if (!empty($tokenEntity)) {
+                        return new ExtServiceCompanyResource(
+                            $sm->get('ExtServiceModel'),
+                            $tokenEntity->getUser()
+                        );
+                    } else {
+                        return new AccessDeniedResource();
+                    }
+                },
+                'Api\V1\Rest\ExtServiceCompanyIntersect\ExtServiceCompanyIntersectResource' => function ($sm) {
+                    /** @var \Zend\Http\Header\GenericHeader $authToken */
+                    try {
+                        $authToken = $sm->get('request')->getHeaders()->get('X-Auth-UserToken');
+                    } catch (Exception $e) {
+                        return new AccessDeniedResource();
+                    }
+                    /** @var \AuthToken\Model\AuthToken $AuthTokenModel */
+                    $AuthTokenModel = $sm->get('AuthToken\\Model\\AuthToken');
+                    if(!empty($authToken)) {
+                        $tokenEntity = $AuthTokenModel->fetch($authToken->getFieldValue());
+                    } else {
+                        return new AccessDeniedResource();
+                    }
+                    if (!empty($tokenEntity)) {
+                        return new ExtServiceCompanyIntersectResource(
+                            $sm->get('ExtServiceModel'),
+                            $tokenEntity->getUser()
+                        );
+                    } else {
                         return new AccessDeniedResource();
                     }
                 },

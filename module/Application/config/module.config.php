@@ -55,6 +55,9 @@ return array(
             'Zend\Db\Adapter\AdapterAbstractServiceFactory',
             'Zend\Log\LoggerAbstractServiceFactory',
         ),
+        'initializers' => array(
+            'authorizer' => 'Application\Initializer\AuthorizationServiceInitializer',
+        ),
         'aliases' => array(
             'translator' => 'MvcTranslator',
         ),

@@ -2,13 +2,8 @@
 
 namespace Account\Entity;
 
-use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Zend\Form\Annotation;
-use Zend\Form\Element;
-use Zend\Form\Form;
-use Zend\Form\Element\Collection;
 
 /**
  * @ODM\Document(collection="company", repositoryClass="Account\Repository\CompanyRepository")
@@ -199,11 +194,6 @@ class Company
      * @ODM\Date
      */
     protected $deletedAt;
-
-    /**
-     * @Annotation\Type("Zend\Form\Element\Submit")
-     * @Annotation\Attributes({"value":"Отправить"})
-     */
 
     public function setData($data)
     {
@@ -589,5 +579,53 @@ class Company
         return $this;
     }
 
+
+    /**
+     * @param string $ownerAccUuid
+     */
+    public function setOwnerAccUuid($ownerAccUuid)
+    {
+        $this->ownerAccUuid = $ownerAccUuid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOwnerAccUuid()
+    {
+        return $this->ownerAccUuid;
+    }
+
+    /**
+     * @param mixed $updated_at
+     */
+    public function setUpdatedAt($updated_at)
+    {
+        $this->updated_at = $updated_at;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at;
+    }
+
+    /**
+     * @param mixed $created_at
+     */
+    public function setCreatedAt($created_at)
+    {
+        $this->created_at = $created_at;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
 
 }

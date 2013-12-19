@@ -1,18 +1,22 @@
 <?php
-namespace Api\V1\Rest\Profile;
+namespace Api\V1\Rest\ExtServiceCompanyIntersect;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
-use Zend\Paginator\Adapter\ArrayAdapter;
 use Api\Entity\ApiStaticErrorList;
+use Zend\Paginator\Adapter\ArrayAdapter;
 
-class ProfileResource extends AbstractResourceListener
+class ExtServiceCompanyIntersectResource extends AbstractResourceListener
 {
-    protected $userModel;
+    protected $extServiceModel;
+    /**
+     * @var \User\Entity\User
+     */
+    protected $userEntity;
 
-    public function __construct($userModel = null, $userEntity=null)
+    public function __construct($extServiceModel = null,$userEntity=null)
     {
-        $this->userModel = $userModel;
+        $this->extServiceModel = $extServiceModel;
         $this->userEntity = $userEntity;
     }
     /**
@@ -23,8 +27,8 @@ class ProfileResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $data=$this->userModel->createOrUpdate(get_object_vars($data));
-        if(!empty($data)) {
+        $data=get_object_vars($data);
+        if(!empty($this->extServiceModel->addCompanyIntersect($data))) {
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);
@@ -39,7 +43,12 @@ class ProfileResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        $data=$this->extServiceModel->deleteCompanyIntersect(explode('-',$id));
+        if($data) {
+            return ApiStaticErrorList::getError(202);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
     }
 
     /**
@@ -61,12 +70,7 @@ class ProfileResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $data=$this->userModel->fetch(array('uuid'=>$id));
-        if(!empty($data)) {
-            return new ProfileEntity($data->getData());
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
     }
 
     /**
@@ -77,21 +81,14 @@ class ProfileResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data=$this->userModel->fetchAll($params);
-
+        $data=$this->extServiceModel->fetchAll($params);
         if(!empty($data)) {
             $resultArray=array();
             foreach($data as $d) {
-                array_push($resultArray,new ProfileEntity($d->getData()));
+                array_push($resultArray,new ExtServiceCompanyIntersectEntity($d->getData()));
             }
             $adapter = new ArrayAdapter($resultArray);
-            $collection = new ProfileCollection($adapter);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
-
-        if(!empty($collection)) {
-            return $collection;
+            return new ExtServiceCompanyIntersectCollection($adapter);
         } else {
             return ApiStaticErrorList::getError(404);
         }
@@ -129,11 +126,6 @@ class ProfileResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data=$this->userModel->createOrUpdate(get_object_vars($data),$id);
-        if(!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
     }
 }

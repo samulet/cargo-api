@@ -98,6 +98,7 @@ return [
                 'system.admin' => 'system.moderator',
                 'system.moderator' => 'system',
                 'system' => 'user',
+                'account' => 'user',
                 'account.admin' => 'account',
                 'company.admin' => 'company',
                 'company.manager' => 'company',
@@ -118,7 +119,15 @@ return [
          *
          * Supported options depend of the permission provider, so please refer to the official documentation
          */
-        'permission_providers' => [],
+        'permission_providers' => [
+            'ZfcRbac\Permission\InMemoryPermissionProvider' => [
+               'account.create' => ['user'],
+               'account.edit' => ['account.admin', 'system'],
+               'account.list' => ['user', 'system'],
+               'account.info' => ['user', 'system'],
+               'company.create' => ['account.admin', 'system'],
+            ]
+        ],
 
         /**
          * Configure the unauthorized strategy. It is used to render a template whenever a user is unauthorized

@@ -1,12 +1,15 @@
 <?php
 namespace Api\V1\Rest\Account;
 
+use Application\Service\AuthorizationServiceAwareInterface;
 use ZF\Rest\AbstractResourceListener;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use Api\Entity\ApiStaticErrorList;
 use ZF\ApiProblem\ApiProblem;
+use ZfcRbac\Exception\UnauthorizedException;
+use ZfcRbac\Service\AuthorizationService;
 
-class AccountResource extends AbstractResourceListener
+class AccountResource extends AbstractResourceListener implements AuthorizationServiceAwareInterface
 {
     protected $accountModel;
     protected $companyUserModel;
@@ -15,6 +18,11 @@ class AccountResource extends AbstractResourceListener
      * @var \User\Entity\User
      */
     protected $userEntity;
+
+    /**
+     * @var AuthorizationService
+     */
+    protected $authorizationService;
 
     public function __construct($accountModel = null,$companyUserModel = null, $companyModel = null, $userEntity=null)
     {
@@ -32,6 +40,10 @@ class AccountResource extends AbstractResourceListener
      */
     public function create($data)
     {
+        if (!$this->authorizationService->isGranted('account.create')) {
+            throw new UnauthorizedException('Insufficient permissions to perform the account creation', 403);
+        }
+
         $data = $this->accountModel->createOrUpdate(get_object_vars($data));
         if (!empty($data)) {
             return new AccountEntity(array('uuid' => $data->getUuid(), 'title' => $data->getTitle()));
@@ -150,5 +162,21 @@ class AccountResource extends AbstractResourceListener
         } else {
             return ApiStaticErrorList::getError(404);
         }
+    }
+
+    /**
+     * @param AuthorizationService $authorizationService
+     */
+    public function setAuthorizationService($authorizationService)
+    {
+        $this->authorizationService = $authorizationService;
+    }
+
+    /**
+     * @return AuthorizationService
+     */
+    public function getAuthorizationService()
+    {
+        return $this->authorizationService;
     }
 }

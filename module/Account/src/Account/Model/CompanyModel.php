@@ -9,17 +9,12 @@
 
 namespace Account\Model;
 
-use Account\Entity\Company;
 
-use Account\Entity\ContractAgents;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 use Doctrine\MongoDB\Connection;
 use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-use User\Entity\User;
 
 class CompanyModel
 {
@@ -75,18 +70,8 @@ class CompanyModel
      *
      * @return string|null
      */
-    public function delete($uuid)
-    {
-        if(!empty($accId)) {
-            $qb3 = $this->documentManager->getRepository('Account\Entity\Company')->findOneBy(
-                array('uuid' => new \MongoId($uuid))
-            );
-            $this->documentManager->remove($qb3);
-            $this->documentManager->flush();
-            return $uuid;
-        } else {
-            return null;
-        }
+    public function delete($findParams) {
+        return $this->queryBuilderModel->delete('Account\Entity\Company',$findParams);
     }
 
 

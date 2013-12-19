@@ -1,18 +1,22 @@
 <?php
-namespace Api\V1\Rest\Profile;
+namespace Api\V1\Rest\ExtServiceCompany;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
-use Zend\Paginator\Adapter\ArrayAdapter;
 use Api\Entity\ApiStaticErrorList;
+use Zend\Paginator\Adapter\ArrayAdapter;
 
-class ProfileResource extends AbstractResourceListener
-{
-    protected $userModel;
+class ExtServiceCompanyResource extends AbstractResourceListener {
 
-    public function __construct($userModel = null, $userEntity=null)
+    protected $extServiceModel;
+    /**
+     * @var \User\Entity\User
+     */
+    protected $userEntity;
+
+    public function __construct($extServiceModel = null,$userEntity=null)
     {
-        $this->userModel = $userModel;
+        $this->extServiceModel = $extServiceModel;
         $this->userEntity = $userEntity;
     }
     /**
@@ -23,12 +27,7 @@ class ProfileResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $data=$this->userModel->createOrUpdate(get_object_vars($data));
-        if(!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return new ApiProblem(405, 'The POST method has not been defined');
     }
 
     /**
@@ -61,9 +60,9 @@ class ProfileResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $data=$this->userModel->fetch(array('uuid'=>$id));
+        $data=$this->extServiceModel->getInformationFromOnlineByOnlineName($id);
         if(!empty($data)) {
-            return new ProfileEntity($data->getData());
+            return new ExtServiceCompanyEntity($data);
         } else {
             return ApiStaticErrorList::getError(404);
         }
@@ -77,21 +76,14 @@ class ProfileResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data=$this->userModel->fetchAll($params);
-
+        $data=$this->extServiceModel->getInformationFromAllOnline();
         if(!empty($data)) {
             $resultArray=array();
             foreach($data as $d) {
-                array_push($resultArray,new ProfileEntity($d->getData()));
+                array_push($resultArray,new ExtServiceCompanyEntity($d));
             }
             $adapter = new ArrayAdapter($resultArray);
-            $collection = new ProfileCollection($adapter);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
-
-        if(!empty($collection)) {
-            return $collection;
+            return new ExtServiceCompanyCollection($adapter);
         } else {
             return ApiStaticErrorList::getError(404);
         }
@@ -129,11 +121,6 @@ class ProfileResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data=$this->userModel->createOrUpdate(get_object_vars($data),$id);
-        if(!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
     }
 }
