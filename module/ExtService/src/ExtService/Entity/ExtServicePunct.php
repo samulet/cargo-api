@@ -23,8 +23,6 @@ class ExtServicePunct
     protected $code_1c;
     protected $coordinates;
 
-
-
     /**
      * @param mixed $activity
      */
