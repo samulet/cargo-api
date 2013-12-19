@@ -51,8 +51,18 @@ class Module implements ApigilityModuleInterface
                 'ReferenceModel' => 'Reference\Factory\ReferenceModelFactory',
                 'ExtServiceModel' => 'ExtService\Factory\ExtServiceModelFactory',
                 'Api\V1\Rest\Account\AccountResource' => function ($sm) {
-                    /** @var \User\Identity\IdentityProvider $identity */
-                    $identity = $sm->get('User\Identity\IdentityProvider')->getIdentity();
+                    try {
+                        /** @var \User\Identity\IdentityProvider $identity */
+                        $identity = $sm->get('User\Identity\IdentityProvider')->getIdentity();
+                    } catch (Exception $e) {
+                        $prev = $e->getPrevious();
+                        $exception = empty($prev) ? $e : $prev;
+                        $code = $exception->getCode();
+                        if (empty($code)) {
+                            $code = 500;
+                        }
+                        return new AccessDeniedResource($code, $exception->getMessage());
+                    }
 
                     if (!empty($identity)) {
                         return new AccountResource(

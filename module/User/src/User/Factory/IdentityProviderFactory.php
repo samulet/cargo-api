@@ -22,14 +22,19 @@ class IdentityProviderFactory implements FactoryInterface
         try {
             $authToken = $serviceLocator->get('request')->getHeaders()->get('X-Auth-UserToken');
         } catch (\Exception $e) {
-            throw new Exception\UnauthorizedException('Auth token don\'t exists');
+            throw new Exception\UnauthorizedException('Auth token don\'t exists', 403);
         }
+
+        if (empty($authToken)) {
+            throw new Exception\UnauthorizedException('Auth token not known', 403);
+        }
+
         /** @var \AuthToken\Model\AuthToken $AuthTokenModel */
         $AuthTokenModel = $serviceLocator->get('AuthToken\\Model\\AuthToken');
-        if(!empty($authToken)) {
-            $tokenEntity = $AuthTokenModel->fetch($authToken->getFieldValue());
-        } else {
-            throw new Exception\UnauthorizedException('Auth token not known');
+        $tokenEntity = $AuthTokenModel->fetch($authToken->getFieldValue());
+
+        if (empty($tokenEntity)) {
+            throw new Exception\UnauthorizedException('Auth token not found', 403);
         }
 
         return new IdentityProvider($tokenEntity->getUser());
