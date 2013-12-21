@@ -74,37 +74,6 @@ class AccountModel
      */
     public function delete($uuid)
     {
-        $accId=$this->getAccIdByUUID($uuid);
-        if(!empty($accId)) {
-            $qb = $this->documentManager->getRepository('Account\Entity\Account')->find(new \MongoId($accId));
-            $this->documentManager->remove($qb);
-            $this->documentManager->flush();
-
-            $qb2 = $this->documentManager->createQueryBuilder('Account\Entity\CompanyUser');
-            $qb2->remove()->field('orgId')->equals(new \MongoId($accId))->getQuery()
-                ->execute();
-
-            $qb3 = $this->documentManager->getRepository('Account\Entity\Company')->findBy(
-                array('ownerAccId' => new \MongoId($accId))
-            );
-            $this->documentManager->remove($qb3);
-            $this->documentManager->flush();
-
-            $qb4 = $this->documentManager->getRepository('Resource\Entity\Resource')->findBy(
-                array('ownerAccId' => new \MongoId($accId))
-            );
-            $this->documentManager->remove($qb4);
-            $this->documentManager->flush();
-
-            $qb5 = $this->documentManager->getRepository('Ticket\Entity\Ticket')->findBy(
-                array('ownerAccId' => new \MongoId($accId))
-            );
-
-            $this->documentManager->remove($qb5);
-            $this->documentManager->flush();
-            return $uuid;
-        } else {
-            return null;
-        }
+        $this->queryBuilderModel->delete('Account\Entity\Account', array('uuid' => $uuid));
     }
 }
