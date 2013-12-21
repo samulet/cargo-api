@@ -1,31 +1,31 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: solov
- * Date: 4/24/13
- * Time: 1:35 PM
- * To change this template use File | Settings | File Templates.
- */
 namespace Account\Model;
 
 use Account\Entity\Account;
-
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-
+use QueryBuilder\Model\QueryBuilderModel;
 
 class AccountModel
 {
+    /**
+     * @var \Doctrine\ODM\MongoDB\DocumentManager
+     */
     protected $documentManager;
+    /**
+     * @var UuidGenerator
+     */
     protected $uuidGenerator;
+    /**
+     * @var QueryBuilderModel
+     */
     protected $queryBuilderModel;
 
-    public function __construct(DocumentManager $documentManager,$queryBuilderModel)
+    public function __construct(DocumentManager $documentManager, $queryBuilderModel)
     {
         $this->uuidGenerator = new UuidGenerator();
-        $this->documentManager=$documentManager;
-        $this->queryBuilderModel=$queryBuilderModel;
+        $this->documentManager = $documentManager;
+        $this->queryBuilderModel = $queryBuilderModel;
     }
 
     /**
@@ -36,8 +36,9 @@ class AccountModel
      *
      * @return \Account\Entity\Account|null
      */
-    public function createOrUpdate($data, $uuid = null) {
-        return $this->queryBuilderModel->createOrUpdate('Account\Entity\Account',$data,$uuid);
+    public function createOrUpdate($data, $uuid = null)
+    {
+        return $this->queryBuilderModel->createOrUpdate('Account\Entity\Account', $data, $uuid);
     }
 
     /**
@@ -47,8 +48,9 @@ class AccountModel
      *
      * @return \Account\Entity\Account|null
      */
-    public function fetch($findParams) {
-        return $this->queryBuilderModel->fetch('Account\Entity\Account',$findParams);
+    public function fetch($findParams)
+    {
+        return $this->queryBuilderModel->fetch('Account\Entity\Account', $findParams);
     }
 
     /**
@@ -58,8 +60,9 @@ class AccountModel
      *
      * @return array(\Account\Entity\Account)|null
      */
-    public function fetchAll($findParams) {
-        return $this->queryBuilderModel->fetchAll('Account\Entity\Account',$findParams);
+    public function fetchAll($findParams)
+    {
+        return $this->queryBuilderModel->fetchAll('Account\Entity\Account', $findParams);
     }
 
     /**
@@ -71,38 +74,6 @@ class AccountModel
      */
     public function delete($uuid)
     {
-        $accId=$this->getAccIdByUUID($uuid);
-        if(!empty($accId)) {
-            $qb = $this->documentManager->getRepository('Account\Entity\Account')->find(new \MongoId($accId));
-            $this->documentManager->remove($qb);
-            $this->documentManager->flush();
-
-            $qb2 = $this->documentManager->createQueryBuilder('Account\Entity\CompanyUser');
-            $qb2->remove()->field('orgId')->equals(new \MongoId($accId))->getQuery()
-                ->execute();
-
-            $qb3 = $this->documentManager->getRepository('Account\Entity\Company')->findBy(
-                array('ownerAccId' => new \MongoId($accId))
-            );
-            $this->documentManager->remove($qb3);
-            $this->documentManager->flush();
-
-            $qb4 = $this->documentManager->getRepository('Resource\Entity\Resource')->findBy(
-                array('ownerAccId' => new \MongoId($accId))
-            );
-            $this->documentManager->remove($qb4);
-            $this->documentManager->flush();
-
-            $qb5 = $this->documentManager->getRepository('Ticket\Entity\Ticket')->findBy(
-                array('ownerAccId' => new \MongoId($accId))
-            );
-
-            $this->documentManager->remove($qb5);
-            $this->documentManager->flush();
-            return $uuid;
-        } else {
-            return null;
-        }
+        $this->queryBuilderModel->delete('Account\Entity\Account', array('uuid' => $uuid));
     }
-
 }
