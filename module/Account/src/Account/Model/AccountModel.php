@@ -1,31 +1,31 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: solov
- * Date: 4/24/13
- * Time: 1:35 PM
- * To change this template use File | Settings | File Templates.
- */
 namespace Account\Model;
 
 use Account\Entity\Account;
-
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-
+use QueryBuilder\Model\QueryBuilderModel;
 
 class AccountModel
 {
+    /**
+     * @var \Doctrine\ODM\MongoDB\DocumentManager
+     */
     protected $documentManager;
+    /**
+     * @var UuidGenerator
+     */
     protected $uuidGenerator;
+    /**
+     * @var QueryBuilderModel
+     */
     protected $queryBuilderModel;
 
-    public function __construct(DocumentManager $documentManager,$queryBuilderModel)
+    public function __construct(DocumentManager $documentManager, $queryBuilderModel)
     {
         $this->uuidGenerator = new UuidGenerator();
-        $this->documentManager=$documentManager;
-        $this->queryBuilderModel=$queryBuilderModel;
+        $this->documentManager = $documentManager;
+        $this->queryBuilderModel = $queryBuilderModel;
     }
 
     /**
@@ -36,8 +36,9 @@ class AccountModel
      *
      * @return \Account\Entity\Account|null
      */
-    public function createOrUpdate($data, $uuid = null) {
-        return $this->queryBuilderModel->createOrUpdate('Account\Entity\Account',$data,$uuid);
+    public function createOrUpdate($data, $uuid = null)
+    {
+        return $this->queryBuilderModel->createOrUpdate('Account\Entity\Account', $data, $uuid);
     }
 
     /**
@@ -47,8 +48,9 @@ class AccountModel
      *
      * @return \Account\Entity\Account|null
      */
-    public function fetch($findParams) {
-        return $this->queryBuilderModel->fetch('Account\Entity\Account',$findParams);
+    public function fetch($findParams)
+    {
+        return $this->queryBuilderModel->fetch('Account\Entity\Account', $findParams);
     }
 
     /**
@@ -58,8 +60,9 @@ class AccountModel
      *
      * @return array(\Account\Entity\Account)|null
      */
-    public function fetchAll($findParams) {
-        return $this->queryBuilderModel->fetchAll('Account\Entity\Account',$findParams);
+    public function fetchAll($findParams)
+    {
+        return $this->queryBuilderModel->fetchAll('Account\Entity\Account', $findParams);
     }
 
     /**
@@ -104,5 +107,4 @@ class AccountModel
             return null;
         }
     }
-
 }
