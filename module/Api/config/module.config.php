@@ -23,7 +23,7 @@ return array(
             'api.rest.company' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/companies[/:company_uuid]',
+                    'route' => '/api/companies[/:uuid]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\Company\\Controller',
                     ),
@@ -206,7 +206,7 @@ return array(
         'Api\\V1\\Rest\\Company\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\Company\\CompanyResource',
             'route_name' => 'api.rest.company',
-            'identifier_name' => 'company_uuid',
+            'identifier_name' => 'uuid',
             'collection_name' => 'companies',
             'resource_http_methods' => array(
                 0 => 'GET',
@@ -713,12 +713,12 @@ return array(
                 'is_collection' => '1',
             ),
             'Api\\V1\\Rest\\Company\\CompanyEntity' => array(
-                'identifier_name' => 'company_uuid',
+                'identifier_name' => 'uuid',
                 'route_name' => 'api.rest.company',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\Company\\CompanyCollection' => array(
-                'identifier_name' => 'company_uuid',
+                'identifier_name' => 'uuid',
                 'route_name' => 'api.rest.company',
                 'is_collection' => '1',
             ),
