@@ -19,7 +19,7 @@ class ImportService {
         return $ch;
     }
 
-    public function fetch($fullUrl, $params = null) {
+    public function fetchData($fullUrl, $params = null) {
         $paramsString = '';
         if(!empty($params)) {
             foreach($params as $key => $value) {
@@ -32,9 +32,30 @@ class ImportService {
         return json_decode($res);
     }
 
-    public function onlineGetToken($fullUrl)
+    public function fetch($fullUrl, $code)
     {
-        $authToken = $this->fetch($fullUrl);
+        $token = $this->onlineGetToken($fullUrl);
+        if(!empty($token)) {
+            $result = $this->fetchData($fullUrl, array('key' => sha1($token.$code)));
+            if(!empty($result)) {
+                if(!empty($result->authentication)) {
+                    if($result->authentication=='error') {
+                        return 'Ошибка авторизации';
+                    }
+                } else {
+                    return $result;
+                }
+            } else {
+                return 'Невозможно выполнить запрос';
+            }
+        } else {
+            return 'Невозможно получить токен';
+        }
+    }
+
+    protected  function onlineGetToken($fullUrl)
+    {
+        $authToken = $this->fetchData($fullUrl);
         if(!empty($authToken)) {
             if(!empty($authToken->token)) {
                 return $authToken->token;
@@ -45,6 +66,5 @@ class ImportService {
             return null;
         }
     }
-
 
 }
