@@ -2,7 +2,6 @@
 namespace ExtService;
 
 use Zend\Db\ResultSet\ResultSet;
-use ExtService\Entity\ExtServiceList;
 
 class Module
 {
@@ -30,9 +29,7 @@ class Module
     {
 
         return array(
-            'factories' => array(
-
-            ),
+            'factories' => array(),
         );
     }
 
