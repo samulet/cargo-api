@@ -5,10 +5,10 @@ namespace ExtService\Factory;
 use Zend\Log\Logger;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use ExtService\Model\ExtServiceModel;
+use ExtService\Model\ExternalCompanyImportModel;
 use ExtService\Provider\OnlineProvider;
 
-class ExtServiceModelFactory implements FactoryInterface
+class ExternalCompanyImportModelFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
@@ -18,6 +18,6 @@ class ExtServiceModelFactory implements FactoryInterface
         } else {
             $configOnline=null;
         }
-        return new ExtServiceModel($serviceLocator->get('doctrine.documentmanager.odm_default'),$serviceLocator->get('QueryBuilderModel'), new OnlineProvider($configOnline));
+        return new ExternalCompanyImportModel($serviceLocator->get('doctrine.documentmanager.odm_default'),$serviceLocator->get('QueryBuilderModel'), new OnlineProvider($configOnline),$serviceLocator->get('ExternalCompanyModel'));
     }
 }

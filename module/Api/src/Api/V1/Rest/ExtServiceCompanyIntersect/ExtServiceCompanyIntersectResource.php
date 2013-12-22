@@ -8,15 +8,15 @@ use Zend\Paginator\Adapter\ArrayAdapter;
 
 class ExtServiceCompanyIntersectResource extends AbstractResourceListener
 {
-    protected $extServiceModel;
+    protected $externalCompanyIntersectModel;
     /**
      * @var \User\Entity\User
      */
     protected $userEntity;
 
-    public function __construct($extServiceModel = null,$userEntity=null)
+    public function __construct($externalCompanyIntersectModel = null, $userEntity=null)
     {
-        $this->extServiceModel = $extServiceModel;
+        $this->externalCompanyIntersectModel = $externalCompanyIntersectModel;
         $this->userEntity = $userEntity;
     }
     /**
@@ -28,7 +28,7 @@ class ExtServiceCompanyIntersectResource extends AbstractResourceListener
     public function create($data)
     {
         $data=get_object_vars($data);
-        if(!empty($this->extServiceModel->addCompanyIntersect($data))) {
+        if(!empty($this->externalCompanyIntersectModel->addCompanyIntersect($data))) {
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);
@@ -43,7 +43,7 @@ class ExtServiceCompanyIntersectResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        $data=$this->extServiceModel->deleteCompanyIntersect(explode('-',$id));
+        $data=$this->externalCompanyIntersectModel->deleteCompanyIntersect(explode('-',$id));
         if($data) {
             return ApiStaticErrorList::getError(202);
         } else {
@@ -81,7 +81,7 @@ class ExtServiceCompanyIntersectResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data=$this->extServiceModel->fetchAll($params);
+        $data=$this->externalCompanyIntersectModel->getExternalCompanyModel()->fetchAll($params);
         if(!empty($data)) {
             $resultArray=array();
             foreach($data as $d) {

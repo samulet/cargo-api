@@ -7,55 +7,27 @@ use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-use Zend\Http\Client;
-use Zend\Http\ClientStatic;
-use ExtService\Entity\ExtServiceCompany;
+use ExtService\Entity\ExternalCompany;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
+use ExtService\Service\ImportService;
 
-class ExtServiceModel
+class ExternalCompanyImportModel
 {
     protected $documentManager;
     protected $uuidGenerator;
     protected $queryBuilderModel;
     protected $onlineProvider;
+    protected $externalCompanyModel;
+    protected $importService;
 
-    public function __construct(DocumentManager $documentManager,$queryBuilderModel,$onlineProvider)
+    public function __construct(DocumentManager $documentManager,$queryBuilderModel,$onlineProvider,$externalCompanyModel)
     {
         $this->uuidGenerator = new UuidGenerator();
         $this->documentManager=$documentManager;
         $this->queryBuilderModel=$queryBuilderModel;
         $this->onlineProvider=$onlineProvider;
-    }
-
-    protected function onlineGetToken($ch, $url)
-    {
-        curl_setopt($ch, CURLOPT_URL, $url);
-        $authTokenJson = curl_exec($ch);
-        $authToken = json_decode($authTokenJson);
-        if(!empty($authToken)) {
-            if(!empty($authToken->token)) {
-                return $authToken->token;
-            } else {
-                return null;
-            }
-        } else {
-            return null;
-        }
-    }
-
-    protected function setCurl()
-    {
-        $ch = curl_init();
-        $headers = array(
-            'Accept: application/json',
-            'Content-Type: application/json',
-        );
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-        return $ch;
+        $this->externalCompanyModel = $externalCompanyModel;
+        $this->importService = new ImportService();
     }
 
     public function onlineChangeFindUpdate($companies, $onlineCode)
@@ -65,31 +37,27 @@ class ExtServiceModel
             'changed'  => 0,
             'exists'  => 0,
         );
-        $hydrator = new DoctrineHydrator($this->documentManager, 'ExtService\Entity\ExtServiceCompany');
+        $hydrator = new DoctrineHydrator($this->documentManager, 'ExtService\Entity\ExternalCompany');
         ini_set('max_execution_time', 300);
         foreach($companies as $res) {
-
             $resVars = get_object_vars($res);
             $resVars['source'] = $onlineCode;
             $resVars = array_map('strval', $resVars);
-
-            $object = $this->fetch($resVars);
+            $resVars = $this->importService->camelCaseKeys($resVars);
+            $object = $this->externalCompanyModel->fetch($resVars);
             if(!empty($object)) {
                 $resultArray['exists']++;
             } else {
-                $object = $this->fetch(array('id' => $resVars['id'], 'source' => $resVars['source']));
-                if(empty($object)) {
+                $item = $this->externalCompanyModel->fetch(array('id' => $resVars['id'], 'source' => $resVars['source']));
+                if(empty($item)) {
                     $resultArray['new']++;
-                    $item = new ExtServiceCompany();
-                    $item->setData($resVars);
-                    $this->documentManager->persist($item);
-                    $this->documentManager->flush();
+                    $item = new ExternalCompany();
                 } else {
                     $resultArray['changed']++;
-                    $object->setData($resVars);
-                    $this->documentManager->persist($object);
-                    $this->documentManager->flush();
                 }
+                $item = $hydrator->hydrate($resVars, $item);
+                $this->documentManager->persist($item);
+                $this->documentManager->flush();
             }
 
         }
@@ -149,14 +117,10 @@ class ExtServiceModel
 
     public function getInformationFromOnline($url, $code, $onlineCode)
     {
-        $ch=$this->setCurl();
         $fullUrl=$url.'/api/reference/companies/';
-        $token = $this->onlineGetToken($ch, $fullUrl);
+        $token = $this->importService->onlineGetToken($fullUrl);
         if(!empty($token)) {
-            $ch = $this->setCurl();
-            curl_setopt($ch, CURLOPT_URL, $fullUrl.'?key='.sha1($token.$code));
-            $res = curl_exec($ch);
-            $result = json_decode($res);
+            $result = $this->importService->fetch($fullUrl, array('key' => sha1($token.$code)));
             if(!empty($result)) {
                 if(!empty($result->authentication)) {
                     if($result->authentication=='error') {
@@ -181,68 +145,20 @@ class ExtServiceModel
         }
     }
 
-
-
     /**
-     * @param $data
-     * @param null $uuid
-     * @return mixed
+     * @param mixed $externalCompanyModel
      */
-    public function createOrUpdate($data, $uuid = null)
+    public function setExternalCompanyModel($externalCompanyModel)
     {
-        return $this->queryBuilderModel->createOrUpdate('ExtService\Entity\ExtServiceCompany',$data,$uuid);
+        $this->externalCompanyModel = $externalCompanyModel;
     }
 
     /**
-     * @param $findParams
      * @return mixed
      */
-    public function fetch($findParams)
+    public function getExternalCompanyModel()
     {
-        return $this->queryBuilderModel->fetch('ExtService\Entity\ExtServiceCompany',$findParams);
+        return $this->externalCompanyModel;
     }
 
-    /**
-     * @param $findParams
-     * @return mixed
-     */
-    public function fetchAll($findParams)
-    {
-        return $this->queryBuilderModel->fetchAll('ExtService\Entity\ExtServiceCompany',$findParams);
-    }
-
-    /**
-     * @param $findParams
-     * @return mixed
-     */
-    public function delete($findParams)
-    {
-        return $this->queryBuilderModel->delete('ExtService\Entity\ExtServiceCompany',$findParams);
-    }
-
-    public function addCompanyIntersect($data)
-    {
-        $data = array_map('strval', $data);
-        $object = $this->fetch(array('id' => $data['id'], 'source' => $data['source']));
-        if(!empty($object)) {
-            $object->setLink($data['company']);
-            $this->documentManager->persist($object);
-            $this->documentManager->flush();
-        } else {
-            return false;
-        }
-    }
-
-    public function deleteCompanyIntersect($data)
-    {
-        $data = array_map('strval', $data);
-        $object = $this->fetch(array('id' => $data[1], 'source' => $data[0]));
-        if(!empty($object)) {
-            $object->setLink(null);
-            $this->documentManager->persist($object);
-            $this->documentManager->flush();
-        } else {
-            return false;
-        }
-    }
 }

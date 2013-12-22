@@ -49,7 +49,9 @@ class Module implements ApigilityModuleInterface
                 'CargoModel' => 'Cargo\Factory\CargoModelFactory',
                 'AddListProductGroupModel' => 'Reference\Factory\AddListProductGroupModelFactory',
                 'ReferenceModel' => 'Reference\Factory\ReferenceModelFactory',
-                'ExtServiceModel' => 'ExtService\Factory\ExtServiceModelFactory',
+                'ExternalCompanyModel' => 'ExtService\Factory\ExternalCompanyModelFactory',
+                'ExternalCompanyIntersectModel' => 'ExtService\Factory\ExternalCompanyIntersectModelFactory',
+                'ExternalCompanyImportModel' => 'ExtService\Factory\ExternalCompanyImportModelFactory',
                 'Api\V1\Rest\Account\AccountResource' => function ($sm) {
                     try {
                         /** @var \User\Identity\IdentityProvider $identity */
@@ -281,7 +283,7 @@ class Module implements ApigilityModuleInterface
                     }
                     if (!empty($tokenEntity)) {
                         return new ExtServiceCompanyResource(
-                            $sm->get('ExtServiceModel'),
+                            $sm->get('ExternalCompanyImportModel'),
                             $tokenEntity->getUser()
                         );
                     } else {
@@ -289,6 +291,7 @@ class Module implements ApigilityModuleInterface
                     }
                 },
                 'Api\V1\Rest\ExtServiceCompanyIntersect\ExtServiceCompanyIntersectResource' => function ($sm) {
+
                     /** @var \Zend\Http\Header\GenericHeader $authToken */
                     try {
                         $authToken = $sm->get('request')->getHeaders()->get('X-Auth-UserToken');
@@ -304,7 +307,7 @@ class Module implements ApigilityModuleInterface
                     }
                     if (!empty($tokenEntity)) {
                         return new ExtServiceCompanyIntersectResource(
-                            $sm->get('ExtServiceModel'),
+                            $sm->get('ExternalCompanyIntersectModel'),
                             $tokenEntity->getUser()
                         );
                     } else {

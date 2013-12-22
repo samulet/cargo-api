@@ -8,15 +8,15 @@ use Zend\Paginator\Adapter\ArrayAdapter;
 
 class ExtServiceCompanyResource extends AbstractResourceListener {
 
-    protected $extServiceModel;
+    protected $extServiceCompanyImportModel;
     /**
      * @var \User\Entity\User
      */
     protected $userEntity;
 
-    public function __construct($extServiceModel = null,$userEntity=null)
+    public function __construct($extServiceCompanyImportModel = null,$userEntity=null)
     {
-        $this->extServiceModel = $extServiceModel;
+        $this->extServiceCompanyImportModel = $extServiceCompanyImportModel;
         $this->userEntity = $userEntity;
     }
     /**
@@ -60,7 +60,7 @@ class ExtServiceCompanyResource extends AbstractResourceListener {
      */
     public function fetch($id)
     {
-        $data=$this->extServiceModel->getInformationFromOnlineByOnlineName($id);
+        $data=$this->extServiceCompanyImportModel->getInformationFromOnlineByOnlineName($id);
         if(!empty($data)) {
             return new ExtServiceCompanyEntity($data);
         } else {
@@ -76,7 +76,7 @@ class ExtServiceCompanyResource extends AbstractResourceListener {
      */
     public function fetchAll($params = array())
     {
-        $data=$this->extServiceModel->getInformationFromAllOnline();
+        $data=$this->extServiceCompanyImportModel->getInformationFromAllOnline();
         if(!empty($data)) {
             $resultArray=array();
             foreach($data as $d) {
