@@ -43,7 +43,7 @@ class ExternalCompanyImportModel
             $resVars = get_object_vars($res);
             $resVars['source'] = $onlineCode;
             $resVars = array_map('strval', $resVars);
-            $resVars = $this->importService->camelCaseKeys($resVars);
+            $resVars = $this->queryBuilderModel->camelCaseKeys($resVars);
             $object = $this->externalCompanyModel->fetch($resVars);
             if(!empty($object)) {
                 $resultArray['exists']++;
