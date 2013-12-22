@@ -19,7 +19,7 @@ class ImportService {
         return $ch;
     }
 
-    public function fetch($fullUrl, $params = null) {
+    public function fetchData($fullUrl, $params = null) {
         $paramsString = '';
         if(!empty($params)) {
             foreach($params as $key => $value) {
@@ -32,31 +32,30 @@ class ImportService {
         return json_decode($res);
     }
 
-    /**
-     * Convert under_score type array's keys to camelCase type array's keys
-     * @param   array   $array          array to convert
-     * @param   array   $arrayHolder    parent array holder for recursive array
-     * @return  array   camelCase array
-     */
-    public function camelCaseKeys($array, $arrayHolder = array()) {
-        $camelCaseArray = !empty($arrayHolder) ? $arrayHolder : array();
-        foreach ($array as $key => $val) {
-            $newKey = @explode('_', $key);
-            array_walk($newKey, create_function('&$v', '$v = ucwords($v);'));
-            $newKey = @implode('', $newKey);
-            $newKey{0} = strtolower($newKey{0});
-            if (!is_array($val)) {
-                $camelCaseArray[$newKey] = $val;
+    public function fetch($fullUrl, $code)
+    {
+        $token = $this->onlineGetToken($fullUrl);
+        if(!empty($token)) {
+            $result = $this->fetchData($fullUrl, array('key' => sha1($token.$code)));
+            if(!empty($result)) {
+                if(!empty($result->authentication)) {
+                    if($result->authentication=='error') {
+                        return 'Ошибка авторизации';
+                    }
+                } else {
+                    return $result;
+                }
             } else {
-                $camelCaseArray[$newKey] = $this->camelCaseKeys($val, $camelCaseArray[$newKey]);
+                return 'Невозможно выполнить запрос';
             }
+        } else {
+            return 'Невозможно получить токен';
         }
-        return $camelCaseArray;
     }
 
-    public function onlineGetToken($fullUrl)
+    protected  function onlineGetToken($fullUrl)
     {
-        $authToken = $this->fetch($fullUrl);
+        $authToken = $this->fetchData($fullUrl);
         if(!empty($authToken)) {
             if(!empty($authToken->token)) {
                 return $authToken->token;
@@ -67,6 +66,5 @@ class ImportService {
             return null;
         }
     }
-
 
 }
