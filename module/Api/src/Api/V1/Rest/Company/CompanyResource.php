@@ -8,6 +8,9 @@ use Api\Entity\ApiStaticErrorList;
 
 class CompanyResource extends AbstractResourceListener
 {
+    /**
+     * @var \Account\Model\CompanyModel
+     */
     protected $companyModel;
     protected $userEntity;
 
@@ -62,7 +65,7 @@ class CompanyResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $data=$this->companyModel->fetch(array('uuid'=>$id,'activated' => '1','deletedAt' => null));
+        $data = $this->companyModel->fetch(array('uuid'=>$id));
         if(!empty($data)) {
             return new CompanyEntity($data->getData());
         } else {

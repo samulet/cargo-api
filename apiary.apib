@@ -648,11 +648,11 @@ API предназначено для взаимодействием с учет
 
 + Response 201
 
-# Company import service [/service/import/company/{ext_service_company_code}]
+# Company import service [/service/import/company]
 Сервис для импорта юридических лиц из систем "Онлайн". Необходим для синхронизации списка юридических лиц между Cargo и системами "Онлайн".
 
 
-## Запрос списка юридических лиц [GET]
+## Выполнение импорта юридических лиц [GET]
 
 + Response 200 (application/hal+json)
 
@@ -660,7 +660,6 @@ API предназначено для взаимодействием с учет
             "_links": {
                 "self": { "href": "/api/service/import/company" }
             },
-            "ext_service_company_code": "vesta",
             "status": "success",
             "stat": {
                 "processed": 10,
@@ -680,48 +679,8 @@ API предназначено для взаимодействием с учет
             "reason": "Сообщение об ошибке"
         }
 
-## Запрос списка юридических лиц [GET]
 
-+ Response 200 (application/hal+json)
-
-        {
-            "_links": {
-                "self": { "href": "/api/service/import/company" }
-            },
-            _embedded: {
-                "ext_service_company" : [
-                    "ext_service_company_code": "vesta",
-                    "status": "success",
-                    "stat": {
-                        "processed": 10,
-                        "new": 3,
-                        "changed": 2,
-                        "exists": 5
-                        }
-                    ]
-            }
-
-        }
-
-+ Response 202 (application/hal+json)
-
-        {
-            "_links": {
-                "self": { "href": "/api/service/import/company" }
-            },
-            _embedded: {
-                "ext_service_company" : [
-                        {
-                        "status": "fail",
-                        "reason": "Сообщение об ошибке"
-                         }
-                ]
-            }
-
-        }
-
-
-# Link companies with external records [/service/import/company-intersect/{source-id}]
+# Link companies with external records [/service/import/company-intersect]
 Сервис для связи юридических лиц, импортированных из систем "Онлайн", с юридическими лицами Cargo.
 
 ## Запрос списка импортированных юридических лиц [GET]
@@ -764,14 +723,103 @@ API предназначено для взаимодействием с учет
 
 + Response 202
 
+# Modify companies link with external records [/service/import/company-intersect{/source}{/id}]
+Ресурс для изменения связей между юридическими лицами, импортированными из систем "Онлайн", и юридическими лицами Cargo.
+
++ Parameters
+    + source (required, string, `vesta`) ... Код внешней системы (Онлайн-а)
+    + id (required, integer, `123`) ... Идентификатор юридического лица во внешней системе
+
 ## Удаление связи между юридическими лицами [DELETE]
+
++ Response 204
+
++ Response 404
+
+
+# Place import service [/service/import/place]
+Ресурс для импорта **пунктов доставки**, **складов**, **офисов** из систем "Онлайн". Необходим для синхронизации списка **пунктов** между Cargo и системами "Онлайн".
+
+## Выполнение импорта списка пунктов доставки [GET]
+
++ Response 200 (application/hal+json)
+
+        {
+            "_links": {
+                "self": { "href": "/api/service/import/place" }
+            },
+            "status": "success",
+            "stat": {
+                "processed": 10,
+                "new": 3,
+                "changed": 2,
+                "exists": 5
+            }
+        }
+    
++ Response 400 (application/hal+json)
+
+        {
+            "_links": {
+                "self": { "href": "/api/service/import/place" }
+            },
+            "status": "fail",
+            "reason": "Сообщение об ошибке"
+        }
+
+# Link places with external records [/service/import/place-intersect]
+Сервис для связи юридических лиц, импортированных из систем "Онлайн", с юридическими лицами Cargo.
+
+## Запрос списка импортированных пунктов [GET]
+
++ Response 200 (application/hal+json)
+
+        {
+            "_links": {
+                "self": { "href": "/api/service/import/place-intersect" }
+            },
+            "places": [
+                {
+                    "id": 123,
+                    "source": "vesta",
+                    "name": "Вторая нагатиская",
+                    "type": "dp", // dp - пункт доставки / wh - склад / office - офис
+                    "link": "5e292178-523e-11e3-a4e4-080027ab4d7b" // uuid связанной компании
+                }
+            ]
+        }
+    
++ Response 404 (application/hal+json)
+
+        {
+            "_links": {
+                "self": { "href": "/api/service/import/place-intersect" }
+            },
+            "places": [
+            ]
+        }
+        
+## Добавление связи между пунктами [POST]
 
 + Request (application/json)
 
         {
             "source": "vesta",
             "id": 123,
-            "company": "5e292178-523e-11e3-a4e4-080027ab4d7b"
+            "place": "5e292178-523e-11e3-a4e4-080027ab4d7b"
         }
 
++ Response 202
+
+# Modify places link with external records [/service/import/place-intersect{/source}{/id}]
+Ресурс для изменения связей между пунктами, импортированными из систем "Онлайн", и пунктами Cargo.
+
++ Parameters
+    + source (required, string, `vesta`) ... Код внешней системы (Онлайн-а)
+    + id (required, integer, `123`) ... Идентификатор пункта во внешней системе
+
+## Удаление связи между пунктами [DELETE]
+
 + Response 204
+
++ Response 404

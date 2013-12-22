@@ -7,7 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ODM\Document(collection="company", repositoryClass="Account\Repository\CompanyRepository")
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
  */
 class Company
 {
@@ -20,42 +20,36 @@ class Company
     /**
      * @var string
      * @ODM\Field(type="string")
-
      */
     protected $uuid;
 
     /**
      * @var string
-     * @ODM\Field(type="string")
-
+     * @ODM\Field(type="string", name="owner")
      */
     protected $ownerAccUuid;
 
     /**
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
-
      */
-    protected $created_at;
+    protected $created;
 
     /**
      * @Gedmo\Timestampable(on="update")
      * @ODM\Date
-
      */
-    protected $updated_at;
+    protected $updated;
 
     /**
      * @var string
      * @ODM\Field(type="string")
-
      */
     protected $activated;
 
     /**
      * @var string
      * @ODM\Field(type="string")
-
      */
     protected $dirty;
 
@@ -193,7 +187,7 @@ class Company
     /**
      * @ODM\Date
      */
-    protected $deletedAt;
+    protected $deleted;
 
     public function setData($data)
     {
@@ -253,17 +247,17 @@ class Company
     /**
      * @return mixed
      */
-    public function getDeletedAt()
+    public function getDeleted()
     {
-        return $this->deletedAt;
+        return $this->deleted;
     }
 
     /**
-     * @param mixed $deletedAt
+     * @param mixed $deleted
      */
-    public function setDeletedAt($deletedAt)
+    public function setDeleted($deleted)
     {
-        $this->deletedAt = $deletedAt;
+        $this->deleted = $deleted;
     }
 
     public function setDirty($dirty)
@@ -579,7 +573,6 @@ class Company
         return $this;
     }
 
-
     /**
      * @param string $ownerAccUuid
      */
@@ -595,37 +588,4 @@ class Company
     {
         return $this->ownerAccUuid;
     }
-
-    /**
-     * @param mixed $updated_at
-     */
-    public function setUpdatedAt($updated_at)
-    {
-        $this->updated_at = $updated_at;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updated_at;
-    }
-
-    /**
-     * @param mixed $created_at
-     */
-    public function setCreatedAt($created_at)
-    {
-        $this->created_at = $created_at;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCreatedAt()
-    {
-        return $this->created_at;
-    }
-
 }

@@ -1,11 +1,10 @@
 <?php
 namespace Api\V1\Rest\Company;
 
-
-class CompanyEntity{
-
-    protected $company_uuid;
-    protected $created_at;
+class CompanyEntity
+{
+    protected $uuid;
+    protected $created;
     protected $name;
     protected $short;
     protected $property;
@@ -28,19 +27,22 @@ class CompanyEntity{
     protected $accounts = array();
     protected $persons = array();
     protected $sites = array();
+    protected $ownerAccId;
 
-    public function __construct(array $entity = null){
-        if(!empty($entity)) {
+    public function __construct(array $entity = null)
+    {
+        if (!empty($entity)) {
             $this->setData($entity);
-            $this->company_uuid=$entity['uuid'];
+            $this->uuid = $entity['uuid'];
         }
+        error_log(print_r($this,1));
     }
 
     public function setData($data)
     {
         if ($data !== null && is_array($data)) {
             foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
-                if (isset($data[$key]) && ($key != 'id') ) {
+                if (isset($data[$key]) && ($key != 'id')) {
                     $this->$key = $data[$key];
                 }
             }
@@ -55,20 +57,20 @@ class CompanyEntity{
         foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
             $data[$key] = $this->$key;
         }
-        if(!empty($this->created_at)) {
-            $this->created_at=$this->created_at->getTimestamp();
+        if (!empty($this->created_at)) {
+            $this->created_at = $this->created_at->getTimestamp();
         }
         return $data;
     }
 
-    public function getCompanyUuid()
+    public function getUuid()
     {
-        return $this->company_uuid;
+        return $this->uuid;
     }
 
-    public function setCompanyUuid($company_uuid = null)
+    public function setUuid($company_uuid = null)
     {
-        $this->company_uuid = $company_uuid;
+        $this->uuid = $company_uuid;
         return $this;
     }
 
@@ -82,7 +84,6 @@ class CompanyEntity{
         $this->created = $created;
     }
 
-
     public function getOwnerAccId()
     {
         return $this->ownerAccId;
@@ -94,18 +95,10 @@ class CompanyEntity{
         return $this;
     }
 
-
     public function getName()
     {
         return $this->name;
     }
-
-    /**
-     * Set name.
-     *
-     * @param string $name
-     * @return AccountInterface
-     */
 
     public function setName($name)
     {
@@ -343,6 +336,4 @@ class CompanyEntity{
         $this->sites = $sites;
         return $this;
     }
-
 }
-
