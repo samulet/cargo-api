@@ -122,7 +122,7 @@ return array(
             'api.rest.ext-service-company-intersect' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/service/import/company-intersect[/:ext_service_company_intersect_id]',
+                    'route' => '/api/service/import/company-intersect[/:source][/:ext_service_company_intersect_id]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\Controller',
                     ),
@@ -140,7 +140,7 @@ return array(
             'api.rest.external-service-place-intersect' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/service/import/place-intersect[/:source][/:id]',
+                    'route' => '/api/service/import/place-intersect[/:source][/:external_service_place_intersect_id]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\Controller',
                     ),
