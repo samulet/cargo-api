@@ -128,6 +128,24 @@ return array(
                     ),
                 ),
             ),
+            'api.rest.ext-service-place-intersect' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/ext-service-place-intersect[/:ext_service_place_intersect_id]',
+                    'defaults' => array(
+                        'controller' => 'Api\\V1\\Rest\\ExtServicePlaceIntersect\\Controller',
+                    ),
+                ),
+            ),
+            'api.rest.ext-service-place' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/ext-service-place[/:ext_service_place_id]',
+                    'defaults' => array(
+                        'controller' => 'Api\\V1\\Rest\\ExtServicePlace\\Controller',
+                    ),
+                ),
+            ),
         ),
     ),
     'zf-versioning' => array(
@@ -147,10 +165,15 @@ return array(
             12 => 'api.rest.ext-service',
             13 => 'api.rest.ext-service-company',
             14 => 'api.rest.ext-service-company-intersect',
+            15 => 'api.rest.ext-service-place-intersect',
+            16 => 'api.rest.ext-service-place',
         ),
     ),
     'service_manager' => array(
-        'invokables' => array(),
+        'invokables' => array(
+            'Api\\V1\\Rest\\ExtServicePlaceIntersect\\ExtServicePlaceIntersectResource' => 'Api\\V1\\Rest\\ExtServicePlaceIntersect\\ExtServicePlaceIntersectResource',
+            'Api\\V1\\Rest\\ExtServicePlace\\ExtServicePlaceResource' => 'Api\\V1\\Rest\\ExtServicePlace\\ExtServicePlaceResource',
+        ),
     ),
     'zf-rest' => array(
         'Api\\V1\\Rest\\Account\\Controller' => array(
@@ -503,6 +526,48 @@ return array(
             'entity_class' => 'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectEntity',
             'collection_class' => 'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectCollection',
         ),
+        'Api\\V1\\Rest\\ExtServicePlaceIntersect\\Controller' => array(
+            'listener' => 'Api\\V1\\Rest\\ExtServicePlaceIntersect\\ExtServicePlaceIntersectResource',
+            'route_name' => 'api.rest.ext-service-place-intersect',
+            'identifier_name' => 'ext_service_place_intersect_id',
+            'collection_name' => 'ext_service_place_intersect',
+            'resource_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'Api\\V1\\Rest\\ExtServicePlaceIntersect\\ExtServicePlaceIntersectEntity',
+            'collection_class' => 'Api\\V1\\Rest\\ExtServicePlaceIntersect\\ExtServicePlaceIntersectCollection',
+        ),
+        'Api\\V1\\Rest\\ExtServicePlace\\Controller' => array(
+            'listener' => 'Api\\V1\\Rest\\ExtServicePlace\\ExtServicePlaceResource',
+            'route_name' => 'api.rest.ext-service-place',
+            'identifier_name' => 'ext_service_place_id',
+            'collection_name' => 'ext_service_place',
+            'resource_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'Api\\V1\\Rest\\ExtServicePlace\\ExtServicePlaceEntity',
+            'collection_class' => 'Api\\V1\\Rest\\ExtServicePlace\\ExtServicePlaceCollection',
+        ),
     ),
     'zf-content-negotiation' => array(
         'controllers' => array(
@@ -521,6 +586,8 @@ return array(
             'Api\\V1\\Rest\\ExtService\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\ExtServiceCompany\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\Controller' => 'HalJson',
+            'Api\\V1\\Rest\\ExtServicePlaceIntersect\\Controller' => 'HalJson',
+            'Api\\V1\\Rest\\ExtServicePlace\\Controller' => 'HalJson',
         ),
         'accept-whitelist' => array(
             'Api\\V1\\Rest\\Account\\Controller' => array(
@@ -640,6 +707,16 @@ return array(
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ),
+            'Api\\V1\\Rest\\ExtServicePlaceIntersect\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\ExtServicePlace\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
         ),
         'content_type_whitelist' => array(
             'Api\\V1\\Rest\\ResourceMeta\\Controller' => array(
@@ -685,6 +762,14 @@ return array(
                 1 => 'application/json',
             ),
             'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\ExtServicePlaceIntersect\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\ExtServicePlace\\Controller' => array(
                 0 => 'application/vnd.api.v1+json',
                 1 => 'application/json',
             ),
@@ -830,6 +915,26 @@ return array(
             'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectCollection' => array(
                 'identifier_name' => 'ext_service_company_code',
                 'route_name' => 'api.rest.ext-service-company-intersect',
+                'is_collection' => true,
+            ),
+            'Api\\V1\\Rest\\ExtServicePlaceIntersect\\ExtServicePlaceIntersectEntity' => array(
+                'identifier_name' => 'ext_service_place_intersect_id',
+                'route_name' => 'api.rest.ext-service-place-intersect',
+                'hydrator' => 'ArraySerializable',
+            ),
+            'Api\\V1\\Rest\\ExtServicePlaceIntersect\\ExtServicePlaceIntersectCollection' => array(
+                'identifier_name' => 'ext_service_place_intersect_id',
+                'route_name' => 'api.rest.ext-service-place-intersect',
+                'is_collection' => true,
+            ),
+            'Api\\V1\\Rest\\ExtServicePlace\\ExtServicePlaceEntity' => array(
+                'identifier_name' => 'ext_service_place_id',
+                'route_name' => 'api.rest.ext-service-place',
+                'hydrator' => 'ArraySerializable',
+            ),
+            'Api\\V1\\Rest\\ExtServicePlace\\ExtServicePlaceCollection' => array(
+                'identifier_name' => 'ext_service_place_id',
+                'route_name' => 'api.rest.ext-service-place',
                 'is_collection' => true,
             ),
         ),
