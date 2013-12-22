@@ -122,9 +122,27 @@ return array(
             'api.rest.ext-service-company-intersect' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/service/import/company-intersect[/:ext_service_company_code]',
+                    'route' => '/api/service/import/company-intersect[/:ext_service_company_intersect_id]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\Controller',
+                    ),
+                ),
+            ),
+            'api.rest.external-service-place' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/api/service/import/place[/:external_service_place_code]',
+                    'defaults' => array(
+                        'controller' => 'Api\\V1\\Rest\\ExternalServicePlace\\Controller',
+                    ),
+                ),
+            ),
+            'api.rest.external-service-place-intersect' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/api/service/import/place-intersect[/:source][/:id]',
+                    'defaults' => array(
+                        'controller' => 'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\Controller',
                     ),
                 ),
             ),
@@ -147,10 +165,15 @@ return array(
             12 => 'api.rest.ext-service',
             13 => 'api.rest.ext-service-company',
             14 => 'api.rest.ext-service-company-intersect',
+            15 => 'api.rest.external-service-place',
+            16 => 'api.rest.external-service-place-intersect',
         ),
     ),
     'service_manager' => array(
-        'invokables' => array(),
+        'invokables' => array(
+            'Api\\V1\\Rest\\ExternalServicePlace\\ExternalServicePlaceResource' => 'Api\\V1\\Rest\\ExternalServicePlace\\ExternalServicePlaceResource',
+            'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\ExternalServicePlaceIntersectResource' => 'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\ExternalServicePlaceIntersectResource',
+        ),
     ),
     'zf-rest' => array(
         'Api\\V1\\Rest\\Account\\Controller' => array(
@@ -481,7 +504,7 @@ return array(
         'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectResource',
             'route_name' => 'api.rest.ext-service-company-intersect',
-            'identifier_name' => 'ext_service_company_code',
+            'identifier_name' => 'ext_service_company_intersect_id',
             'collection_name' => 'ext_service_company_intersect',
             'resource_http_methods' => array(
                 0 => 'GET',
@@ -503,6 +526,56 @@ return array(
             'entity_class' => 'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectEntity',
             'collection_class' => 'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectCollection',
         ),
+        'Api\\V1\\Rest\\ExternalServicePlace\\Controller' => array(
+            'listener' => 'Api\\V1\\Rest\\ExternalServicePlace\\ExternalServicePlaceResource',
+            'route_name' => 'api.rest.external-service-place',
+            'identifier_name' => 'external_service_place_id',
+            'collection_name' => 'external_service_place',
+            'resource_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+                4 => 'POST',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+                2 => 'PUT',
+                3 => 'PATCH',
+                4 => 'DELETE',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'Api\\V1\\Rest\\ExternalServicePlace\\ExternalServicePlaceEntity',
+            'collection_class' => 'Api\\V1\\Rest\\ExternalServicePlace\\ExternalServicePlaceCollection',
+        ),
+        'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\Controller' => array(
+            'listener' => 'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\ExternalServicePlaceIntersectResource',
+            'route_name' => 'api.rest.external-service-place-intersect',
+            'identifier_name' => 'external_service_place_intersect_id',
+            'collection_name' => 'external_service_place_intersect',
+            'resource_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+                4 => 'POST',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+                2 => 'PUT',
+                3 => 'PATCH',
+                4 => 'DELETE',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\ExternalServicePlaceIntersectEntity',
+            'collection_class' => 'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\ExternalServicePlaceIntersectCollection',
+        ),
     ),
     'zf-content-negotiation' => array(
         'controllers' => array(
@@ -521,6 +594,8 @@ return array(
             'Api\\V1\\Rest\\ExtService\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\ExtServiceCompany\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\Controller' => 'HalJson',
+            'Api\\V1\\Rest\\ExternalServicePlace\\Controller' => 'HalJson',
+            'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\Controller' => 'HalJson',
         ),
         'accept-whitelist' => array(
             'Api\\V1\\Rest\\Account\\Controller' => array(
@@ -640,6 +715,16 @@ return array(
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ),
+            'Api\\V1\\Rest\\ExternalServicePlace\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
         ),
         'content_type_whitelist' => array(
             'Api\\V1\\Rest\\ResourceMeta\\Controller' => array(
@@ -685,6 +770,14 @@ return array(
                 1 => 'application/json',
             ),
             'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\ExternalServicePlace\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\Controller' => array(
                 0 => 'application/vnd.api.v1+json',
                 1 => 'application/json',
             ),
@@ -823,13 +916,33 @@ return array(
                 'is_collection' => true,
             ),
             'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectEntity' => array(
-                'identifier_name' => 'ext_service_company_code',
+                'identifier_name' => 'ext_service_company_intersect_id',
                 'route_name' => 'api.rest.ext-service-company-intersect',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectCollection' => array(
-                'identifier_name' => 'ext_service_company_code',
+                'identifier_name' => 'ext_service_company_intersect_id',
                 'route_name' => 'api.rest.ext-service-company-intersect',
+                'is_collection' => true,
+            ),
+            'Api\\V1\\Rest\\ExternalServicePlace\\ExternalServicePlaceEntity' => array(
+                'identifier_name' => 'external_service_place_code',
+                'route_name' => 'api.rest.external-service-place',
+                'hydrator' => 'Reflection',
+            ),
+            'Api\\V1\\Rest\\ExternalServicePlace\\ExternalServicePlaceCollection' => array(
+                'identifier_name' => 'external_service_place_code',
+                'route_name' => 'api.rest.external-service-place',
+                'is_collection' => true,
+            ),
+            'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\ExternalServicePlaceIntersectEntity' => array(
+                'identifier_name' => 'external_service_place_intersect_id',
+                'route_name' => 'api.rest.external-service-place-intersect',
+                'hydrator' => 'Reflection',
+            ),
+            'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\ExternalServicePlaceIntersectCollection' => array(
+                'identifier_name' => 'external_service_place_intersect_id',
+                'route_name' => 'api.rest.external-service-place-intersect',
                 'is_collection' => true,
             ),
         ),
