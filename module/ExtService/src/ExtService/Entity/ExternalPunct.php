@@ -16,7 +16,26 @@ class ExternalPunct
      * @var int
      */
     protected $_id;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
 
+    protected $link;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+
+    protected $source;
+
+    /**
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -457,4 +476,27 @@ class ExternalPunct
 
     }
 
+    /**
+     * @param string $link
+     */
+    public function setLink($link)
+    {
+        $this->link = $link;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    /**
+     * @param string $source
+     */
+    public function setSource($source)
+    {
+        $this->source = $source;
+    }
 }
