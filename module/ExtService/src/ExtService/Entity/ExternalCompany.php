@@ -520,6 +520,7 @@ class ExternalCompany
      */
 
     protected $transit;
+
     /**
      * @ODM\Date
      */
