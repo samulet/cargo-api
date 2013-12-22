@@ -520,6 +520,7 @@ class ExternalCompany
      */
 
     protected $transit;
+
     /**
      * @ODM\Date
      */
@@ -1909,15 +1910,4 @@ class ExternalCompany
         return $this->workType;
     }
 
-    public function dashesToCamelCase($string, $capitalizeFirstCharacter = false)
-    {
-
-        $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $string)));
-
-        if (!$capitalizeFirstCharacter) {
-            $str[0] = strtolower($str[0]);
-        }
-
-        return $str;
-    }
 }

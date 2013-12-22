@@ -7,51 +7,73 @@ use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-use ExtService\Entity\ExternalCompany;
+use ExtService\Entity\ExternalPunct;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use ExtService\Service\ImportService;
 
-class ExternalCompanyImportModel
+class ExternalPunctImportModel
 {
     protected $documentManager;
     protected $uuidGenerator;
     protected $queryBuilderModel;
     protected $onlineProvider;
-    protected $externalCompanyModel;
+    protected $externalPunctModel;
     protected $importService;
 
-    public function __construct(DocumentManager $documentManager,$queryBuilderModel,$onlineProvider,$externalCompanyModel)
+    public function __construct(DocumentManager $documentManager, $queryBuilderModel, $onlineProvider, $externalPunctModel)
     {
         $this->uuidGenerator = new UuidGenerator();
         $this->documentManager=$documentManager;
         $this->queryBuilderModel=$queryBuilderModel;
         $this->onlineProvider=$onlineProvider;
-        $this->externalCompanyModel = $externalCompanyModel;
+        $this->externalPunctModel = $externalPunctModel;
         $this->importService = new ImportService();
     }
 
-    public function onlineChangeFindUpdate($companies, $onlineCode)
+    public function onlineChangeFindUpdate($places, $onlineCode)
     {
         $resultArray=array(
             'new'  => 0,
             'changed'  => 0,
             'exists'  => 0,
         );
-        $hydrator = new DoctrineHydrator($this->documentManager, 'ExtService\Entity\ExternalCompany');
+        $hydrator = new DoctrineHydrator($this->documentManager, 'ExtService\Entity\ExternalPunct');
         ini_set('max_execution_time', 1000);
-        foreach($companies as $res) {
+        foreach($places as $res) {
             $resVars = get_object_vars($res);
             $resVars['source'] = $onlineCode;
+
+            if(!empty($resVars['city'])) {
+                $cityTmp = $resVars['city'];
+                unset($resVars['city']);
+            }
+
+            if(!empty($resVars['net'])) {
+                $netTmp = $resVars['net'];
+                unset($resVars['net']);
+            }
+
             $resVars = array_map('strval', $resVars);
             $resVars = $this->queryBuilderModel->camelCaseKeys($resVars);
-            $object = $this->externalCompanyModel->fetch($resVars);
+
+            if(!empty($cityTmp)) {
+                $cityTmp = array_map('strval', get_object_vars($cityTmp));
+                $resVars['city'] = $this->queryBuilderModel->camelCaseKeys($cityTmp);
+            }
+
+            if(!empty($netTmp)) {
+                $netTmp = array_map('strval', get_object_vars($netTmp));
+                $resVars['net'] = $this->queryBuilderModel->camelCaseKeys($netTmp);
+            }
+
+            $object = $this->externalPunctModel->fetch($resVars);
             if(!empty($object)) {
                 $resultArray['exists']++;
             } else {
-                $item = $this->externalCompanyModel->fetch(array('id' => $resVars['id'], 'source' => $resVars['source']));
+                $item = $this->externalPunctModel->fetch(array('id' => $resVars['id'], 'source' => $resVars['source']));
                 if(empty($item)) {
                     $resultArray['new']++;
-                    $item = new ExternalCompany();
+                    $item = new ExternalPunct();
                 } else {
                     $resultArray['changed']++;
                 }
@@ -73,7 +95,7 @@ class ExternalCompanyImportModel
                 if(!is_string($res)) {
                     $res=array(
                         'stat' => $res,
-                        'external_code' => $onlineName,
+                        'ext_service_punct_code' => $onlineName,
                         'status' => 'success'
                     );
                 } else {
@@ -117,16 +139,16 @@ class ExternalCompanyImportModel
 
     public function getInformationFromOnline($url, $code, $onlineCode)
     {
-        $result = $this->importService->fetch($url.'/api/reference/companies/', $code);
+        $result = $this->importService->fetch($url.'/api/reference/places/', $code);
         if(!is_string($result)) {
-            if(!empty($result->companies)) {
+            if(!empty($result->delivery_points)) {
                 $resultArray=array(
-                    'processed' => sizeof($result->companies),
+                    'processed' => sizeof($result->delivery_points),
                 );
-                $resultArray=$resultArray+$this->onlineChangeFindUpdate($result->companies, $onlineCode);
+                $resultArray=$resultArray+$this->onlineChangeFindUpdate($result->delivery_points, $onlineCode);
                 return $resultArray;
             } else {
-                return 'Список компаний пуст';
+                return 'Список пунктов доставки пуст';
             }
         } else {
             return $result;
@@ -134,19 +156,19 @@ class ExternalCompanyImportModel
     }
 
     /**
-     * @param mixed $externalCompanyModel
+     * @param mixed $externalPunctModel
      */
-    public function setExternalCompanyModel($externalCompanyModel)
+    public function setExternalPunctModel($externalPunctModel)
     {
-        $this->externalCompanyModel = $externalCompanyModel;
+        $this->externalPunctModel = $externalPunctModel;
     }
 
     /**
      * @return mixed
      */
-    public function getExternalCompanyModel()
+    public function getExternalPunctModel()
     {
-        return $this->externalCompanyModel;
+        return $this->externalPunctModel;
     }
 
 }

@@ -15,6 +15,8 @@ use Api\V1\Rest\Reference\ReferenceResource;
 use Api\V1\Rest\Cargo\CargoResource;
 use Api\V1\Rest\ExtServiceCompany\ExtServiceCompanyResource;
 use Api\V1\Rest\ExtServiceCompanyIntersect\ExtServiceCompanyIntersectResource;
+use Api\V1\Rest\ExternalServicePlace\ExternalServicePlaceResource;
+use Api\V1\Rest\ExternalServicePlaceIntersect\ExternalServicePlaceIntersectResource;
 use Exception;
 
 class Module implements ApigilityModuleInterface
@@ -52,6 +54,9 @@ class Module implements ApigilityModuleInterface
                 'ExternalCompanyModel' => 'ExtService\Factory\ExternalCompanyModelFactory',
                 'ExternalCompanyIntersectModel' => 'ExtService\Factory\ExternalCompanyIntersectModelFactory',
                 'ExternalCompanyImportModel' => 'ExtService\Factory\ExternalCompanyImportModelFactory',
+                'ExternalPunctModel' => 'ExtService\Factory\ExternalPunctModelFactory',
+                'ExternalPunctIntersectModel' => 'ExtService\Factory\ExternalPunctIntersectModelFactory',
+                'ExternalPunctImportModel' => 'ExtService\Factory\ExternalPunctImportModelFactory',
                 'Api\V1\Rest\Account\AccountResource' => function ($sm) {
                     try {
                         /** @var \User\Identity\IdentityProvider $identity */
@@ -308,6 +313,53 @@ class Module implements ApigilityModuleInterface
                     if (!empty($tokenEntity)) {
                         return new ExtServiceCompanyIntersectResource(
                             $sm->get('ExternalCompanyIntersectModel'),
+                            $tokenEntity->getUser()
+                        );
+                    } else {
+                        return new AccessDeniedResource();
+                    }
+                },
+                'Api\V1\Rest\ExternalServicePlace\ExternalServicePlaceResource' => function ($sm) {
+                    /** @var \Zend\Http\Header\GenericHeader $authToken */
+                    try {
+                        $authToken = $sm->get('request')->getHeaders()->get('X-Auth-UserToken');
+                    } catch (Exception $e) {
+                        return new AccessDeniedResource();
+                    }
+                    /** @var \AuthToken\Model\AuthToken $AuthTokenModel */
+                    $AuthTokenModel = $sm->get('AuthToken\\Model\\AuthToken');
+                    if(!empty($authToken)) {
+                        $tokenEntity = $AuthTokenModel->fetch($authToken->getFieldValue());
+                    } else {
+                        return new AccessDeniedResource();
+                    }
+                    if (!empty($tokenEntity)) {
+                        return new ExternalServicePlaceResource(
+                            $sm->get('ExternalPunctImportModel'),
+                            $tokenEntity->getUser()
+                        );
+                    } else {
+                        return new AccessDeniedResource();
+                    }
+                },
+                'Api\V1\Rest\ExternalServicePlaceIntersect\ExternalServicePlaceIntersectResource' => function ($sm) {
+
+                    /** @var \Zend\Http\Header\GenericHeader $authToken */
+                    try {
+                        $authToken = $sm->get('request')->getHeaders()->get('X-Auth-UserToken');
+                    } catch (Exception $e) {
+                        return new AccessDeniedResource();
+                    }
+                    /** @var \AuthToken\Model\AuthToken $AuthTokenModel */
+                    $AuthTokenModel = $sm->get('AuthToken\\Model\\AuthToken');
+                    if(!empty($authToken)) {
+                        $tokenEntity = $AuthTokenModel->fetch($authToken->getFieldValue());
+                    } else {
+                        return new AccessDeniedResource();
+                    }
+                    if (!empty($tokenEntity)) {
+                        return new ExternalServicePlaceIntersectResource(
+                            $sm->get('ExternalPunctIntersectModel'),
                             $tokenEntity->getUser()
                         );
                     } else {

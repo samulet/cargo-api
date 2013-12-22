@@ -1,7 +1,7 @@
 <?php
-namespace Api\V1\Rest\ExtServiceCompany;
+namespace Api\V1\Rest\ExternalServicePlace;
 
-class ExtServiceCompanyEntity
+class ExternalServicePlaceEntity
 {
     protected $external_code;
     protected $status;
