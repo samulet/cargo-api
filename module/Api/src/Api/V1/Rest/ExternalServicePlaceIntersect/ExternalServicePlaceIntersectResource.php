@@ -3,9 +3,23 @@ namespace Api\V1\Rest\ExternalServicePlaceIntersect;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use Api\Entity\ApiStaticErrorList;
+use Zend\Paginator\Adapter\ArrayAdapter;
 
 class ExternalServicePlaceIntersectResource extends AbstractResourceListener
 {
+    protected $externalPlaceIntersectModel;
+    /**
+     * @var \User\Entity\User
+     */
+    protected $userEntity;
+
+    public function __construct($externalPlaceIntersectModel = null,$userEntity=null)
+    {
+        $this->externalPlaceIntersectModel = $externalPlaceIntersectModel;
+        $this->userEntity = $userEntity;
+    }
+
     /**
      * Create a resource
      *

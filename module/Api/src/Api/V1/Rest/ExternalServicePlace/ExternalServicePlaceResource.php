@@ -3,9 +3,23 @@ namespace Api\V1\Rest\ExternalServicePlace;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use Api\Entity\ApiStaticErrorList;
+use Zend\Paginator\Adapter\ArrayAdapter;
 
 class ExternalServicePlaceResource extends AbstractResourceListener
 {
+    protected $externalPlaceImportModel;
+    /**
+     * @var \User\Entity\User
+     */
+    protected $userEntity;
+
+    public function __construct($externalPlaceImportModel = null,$userEntity=null)
+    {
+        $this->externalPlaceImportModel = $externalPlaceImportModel;
+        $this->userEntity = $userEntity;
+    }
+
     /**
      * Create a resource
      *
