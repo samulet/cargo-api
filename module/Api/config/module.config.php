@@ -113,7 +113,7 @@ return array(
             'api.rest.ext-service-company' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/service/import/company[/:ext_service_company_code]',
+                    'route' => '/api/service/import/company[/:external_code]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\ExtServiceCompany\\Controller',
                     ),
@@ -131,7 +131,7 @@ return array(
             'api.rest.external-service-place' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/service/import/place[/:external_service_place_code]',
+                    'route' => '/api/service/import/place[/:external_code]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\ExternalServicePlace\\Controller',
                     ),
@@ -479,7 +479,7 @@ return array(
         'Api\\V1\\Rest\\ExtServiceCompany\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyResource',
             'route_name' => 'api.rest.ext-service-company',
-            'identifier_name' => 'ext_service_company_code',
+            'identifier_name' => 'external_code',
             'collection_name' => 'ext_service_company',
             'resource_http_methods' => array(
                 0 => 'GET',
@@ -906,12 +906,12 @@ return array(
                 'is_collection' => true,
             ),
             'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyEntity' => array(
-                'identifier_name' => 'ext_service_company_code',
+                'identifier_name' => 'external_code',
                 'route_name' => 'api.rest.ext-service-company',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyCollection' => array(
-                'identifier_name' => 'ext_service_company_code',
+                'identifier_name' => 'external_code',
                 'route_name' => 'api.rest.ext-service-company',
                 'is_collection' => true,
             ),
@@ -926,12 +926,12 @@ return array(
                 'is_collection' => true,
             ),
             'Api\\V1\\Rest\\ExternalServicePlace\\ExternalServicePlaceEntity' => array(
-                'identifier_name' => 'external_service_place_code',
+                'identifier_name' => 'external_code',
                 'route_name' => 'api.rest.external-service-place',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\ExternalServicePlace\\ExternalServicePlaceCollection' => array(
-                'identifier_name' => 'external_service_place_code',
+                'identifier_name' => 'external_code',
                 'route_name' => 'api.rest.external-service-place',
                 'is_collection' => true,
             ),
