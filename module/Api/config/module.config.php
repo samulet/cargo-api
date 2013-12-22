@@ -170,10 +170,7 @@ return array(
         ),
     ),
     'service_manager' => array(
-        'invokables' => array(
-            'Api\\V1\\Rest\\ExternalServicePlace\\ExternalServicePlaceResource' => 'Api\\V1\\Rest\\ExternalServicePlace\\ExternalServicePlaceResource',
-            'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\ExternalServicePlaceIntersectResource' => 'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\ExternalServicePlaceIntersectResource',
-        ),
+        'invokables' => array(),
     ),
     'zf-rest' => array(
         'Api\\V1\\Rest\\Account\\Controller' => array(

@@ -61,7 +61,12 @@ class ExternalServicePlaceResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        $data=$this->externalPlaceImportModel->getInformationFromOnlineByOnlineName($id);
+        if(!empty($data)) {
+            return new ExternalServicePlaceEntity($data);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
     }
 
     /**
@@ -72,7 +77,17 @@ class ExternalServicePlaceResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        $data=$this->externalPlaceImportModel->getInformationFromAllOnline();
+        if(!empty($data)) {
+            $resultArray=array();
+            foreach($data as $d) {
+                array_push($resultArray,new ExternalServicePlaceEntity($d));
+            }
+            $adapter = new ArrayAdapter($resultArray);
+            return new ExternalServicePlaceCollection($adapter);
+        } else {
+            return ApiStaticErrorList::getError(404);
+        }
     }
 
     /**
