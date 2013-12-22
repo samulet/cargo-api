@@ -42,10 +42,30 @@ class ExternalPunctImportModel
         foreach($places as $res) {
             $resVars = get_object_vars($res);
             $resVars['source'] = $onlineCode;
+
+            if(!empty($resVars['city'])) {
+                $cityTmp = $resVars['city'];
+                unset($resVars['city']);
+            }
+
+            if(!empty($resVars['net'])) {
+                $netTmp = $resVars['net'];
+                unset($resVars['net']);
+            }
+
             $resVars = array_map('strval', $resVars);
             $resVars = $this->queryBuilderModel->camelCaseKeys($resVars);
-            $resVars['city'] = array_map('strval', $resVars['city']);
-            $resVars['city'] = $this->queryBuilderModel->camelCaseKeys($resVars['city']);
+
+            if(!empty($cityTmp)) {
+                $cityTmp = array_map('strval', get_object_vars($cityTmp));
+                $resVars['city'] = $this->queryBuilderModel->camelCaseKeys($cityTmp);
+            }
+
+            if(!empty($netTmp)) {
+                $netTmp = array_map('strval', get_object_vars($netTmp));
+                $resVars['net'] = $this->queryBuilderModel->camelCaseKeys($netTmp);
+            }
+
             $object = $this->externalPunctModel->fetch($resVars);
             if(!empty($object)) {
                 $resultArray['exists']++;
