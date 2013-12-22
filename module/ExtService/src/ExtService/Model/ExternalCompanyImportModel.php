@@ -73,14 +73,14 @@ class ExternalCompanyImportModel
                 if(!is_string($res)) {
                     $res=array(
                         'stat' => $res,
-                        'ext_service_company_code' => $onlineName,
+                        'external_code' => $onlineName,
                         'status' => 'success'
                     );
                 } else {
                     $res=array(
                         'reason' => $res,
                         'status' => 'fail',
-                        'ext_service_company_code' => $onlineName
+                        'external_code' => $onlineName
                     );
                 }
                 array_push($resultArray, $res);
@@ -97,14 +97,14 @@ class ExternalCompanyImportModel
                 if(!is_string($res)) {
                     $res=array(
                         'stat' => $res,
-                        'ext_service_company_code' => $onlineName,
+                        'external_code' => $onlineName,
                         'status' => 'success'
                     );
                 } else {
                     $res=array(
                         'reason' => $res,
                         'status' => 'fail',
-                        'ext_service_company_code' => $onlineName
+                        'external_code' => $onlineName
                     );
                 }
                 return $res;

@@ -5,7 +5,7 @@ use Zend\Stdlib\ArraySerializableInterface;
 
 class ExtServiceCompanyEntity implements ArraySerializableInterface
 {
-    protected $ext_service_company_code;
+    protected $external_code;
     protected $status;
     protected $stat = array();
     protected $reason;
@@ -30,11 +30,11 @@ class ExtServiceCompanyEntity implements ArraySerializableInterface
     }
 
     /**
-     * @param mixed $ext_service_company_code
+     * @param mixed $external_code
      */
-    public function setExtServiceCompanyCode($ext_service_company_code)
+    public function setExtServiceCompanyCode($external_code)
     {
-        $this->ext_service_company_code = $ext_service_company_code;
+        $this->external_code = $external_code;
     }
 
     /**
@@ -42,7 +42,7 @@ class ExtServiceCompanyEntity implements ArraySerializableInterface
      */
     public function getExtServiceCompanyCode()
     {
-        return $this->ext_service_company_code;
+        return $this->external_code;
     }
 
     /**
