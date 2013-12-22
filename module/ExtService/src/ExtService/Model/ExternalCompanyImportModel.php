@@ -43,7 +43,7 @@ class ExternalCompanyImportModel
             $resVars = get_object_vars($res);
             $resVars['source'] = $onlineCode;
             $resVars = array_map('strval', $resVars);
-            $resVars = $this->importService->camelCaseKeys($resVars);
+            $resVars = $this->queryBuilderModel->camelCaseKeys($resVars);
             $object = $this->externalCompanyModel->fetch($resVars);
             if(!empty($object)) {
                 $resultArray['exists']++;
@@ -117,31 +117,19 @@ class ExternalCompanyImportModel
 
     public function getInformationFromOnline($url, $code, $onlineCode)
     {
-        $fullUrl=$url.'/api/reference/companies/';
-        $token = $this->importService->onlineGetToken($fullUrl);
-        if(!empty($token)) {
-            $result = $this->importService->fetch($fullUrl, array('key' => sha1($token.$code)));
-            if(!empty($result)) {
-                if(!empty($result->authentication)) {
-                    if($result->authentication=='error') {
-                        return 'Ошибка авторизации';
-                    }
-                } else {
-                    if(!empty($result->companies)) {
-                        $resultArray=array(
-                            'processed' => sizeof($result->companies),
-                        );
-                        $resultArray=$resultArray+$this->onlineChangeFindUpdate($result->companies, $onlineCode);
-                        return $resultArray;
-                    } else {
-                        return 'Список компаний пуст';
-                    }
-                }
+        $result = $this->importService->fetch($url.'/api/reference/companies/', $code);
+        if(!is_string($result)) {
+            if(!empty($result->companies)) {
+                $resultArray=array(
+                    'processed' => sizeof($result->companies),
+                );
+                $resultArray=$resultArray+$this->onlineChangeFindUpdate($result->companies, $onlineCode);
+                return $resultArray;
             } else {
-                return 'Невозможно выполнить запрос';
+                return 'Список компаний пуст';
             }
         } else {
-            return 'Невозможно получить токен';
+            return $result;
         }
     }
 

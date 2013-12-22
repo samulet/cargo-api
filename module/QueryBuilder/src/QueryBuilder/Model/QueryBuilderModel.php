@@ -175,4 +175,26 @@ class QueryBuilderModel
         return $hydrator->hydrate($hydrator->extract($objectOld), $objectNew);
     }
 
+    /**
+     * Convert under_score type array's keys to camelCase type array's keys
+     * @param   array   $array          array to convert
+     * @param   array   $arrayHolder    parent array holder for recursive array
+     * @return  array   camelCase array
+     */
+    public function camelCaseKeys($array, $arrayHolder = array()) {
+        $camelCaseArray = !empty($arrayHolder) ? $arrayHolder : array();
+        foreach ($array as $key => $val) {
+            $newKey = @explode('_', $key);
+            array_walk($newKey, create_function('&$v', '$v = ucwords($v);'));
+            $newKey = @implode('', $newKey);
+            $newKey{0} = strtolower($newKey{0});
+            if (!is_array($val)) {
+                $camelCaseArray[$newKey] = $val;
+            } else {
+                $camelCaseArray[$newKey] = $this->camelCaseKeys($val, $camelCaseArray[$newKey]);
+            }
+        }
+        return $camelCaseArray;
+    }
+
 }
