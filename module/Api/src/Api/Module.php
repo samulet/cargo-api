@@ -54,6 +54,9 @@ class Module implements ApigilityModuleInterface
                 'ExternalCompanyModel' => 'ExtService\Factory\ExternalCompanyModelFactory',
                 'ExternalCompanyIntersectModel' => 'ExtService\Factory\ExternalCompanyIntersectModelFactory',
                 'ExternalCompanyImportModel' => 'ExtService\Factory\ExternalCompanyImportModelFactory',
+                'ExternalPunctModel' => 'ExtService\Factory\ExternalPunctModelFactory',
+                'ExternalPunctIntersectModel' => 'ExtService\Factory\ExternalPunctIntersectModelFactory',
+                'ExternalPunctImportModel' => 'ExtService\Factory\ExternalPunctImportModelFactory',
                 'Api\V1\Rest\Account\AccountResource' => function ($sm) {
                     try {
                         /** @var \User\Identity\IdentityProvider $identity */
@@ -332,7 +335,7 @@ class Module implements ApigilityModuleInterface
                     }
                     if (!empty($tokenEntity)) {
                         return new ExternalServicePlaceResource(
-                            $sm->get('ExternalPlaceImportModel'),
+                            $sm->get('ExternalPunctImportModel'),
                             $tokenEntity->getUser()
                         );
                     } else {
@@ -356,7 +359,7 @@ class Module implements ApigilityModuleInterface
                     }
                     if (!empty($tokenEntity)) {
                         return new ExternalServicePlaceIntersectResource(
-                            $sm->get('ExternalPlaceIntersectModel'),
+                            $sm->get('ExternalPunctIntersectModel'),
                             $tokenEntity->getUser()
                         );
                     } else {

@@ -38,7 +38,7 @@ class ExternalCompanyImportModel
             'exists'  => 0,
         );
         $hydrator = new DoctrineHydrator($this->documentManager, 'ExtService\Entity\ExternalCompany');
-        ini_set('max_execution_time', 300);
+        ini_set('max_execution_time', 1000);
         foreach($companies as $res) {
             $resVars = get_object_vars($res);
             $resVars['source'] = $onlineCode;
