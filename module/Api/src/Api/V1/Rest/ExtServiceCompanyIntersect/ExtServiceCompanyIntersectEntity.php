@@ -5,7 +5,7 @@ use Zend\Stdlib\ArraySerializableInterface;
 
 class ExtServiceCompanyIntersectEntity implements ArraySerializableInterface
 {
-    protected $external_service_place_intersect_id;
+    protected $external_service_company_intersect_id;
     protected $id;
     protected $source;
     protected $name;
@@ -14,7 +14,7 @@ class ExtServiceCompanyIntersectEntity implements ArraySerializableInterface
     public function __construct(array $entity = null){
         if(!empty($entity)) {
             $this->setData($entity);
-            $this->external_service_place_intersect_id=$entity['source'].'/'.$entity['id'];
+            $this->external_service_company_intersect_id=$entity['source'].'/'.$entity['id'];
         }
     }
 
