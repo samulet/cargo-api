@@ -68,7 +68,7 @@ class AuthorizationServiceInitializerTest extends \Codeception\TestCase\Test
     public function testServiceManagerShouldInitializeService()
     {
         /** @var \Zend\Mvc\Application $app */
-        $app = $this->getModule('Zf2')->application;
+        $app = $this->getModule('ZF2')->application;
         $serviceManager = $app->getServiceManager();
 
         $accountResourceMock = m::mock('Api\V1\Rest\Account\AccountResource')

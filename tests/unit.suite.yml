@@ -5,8 +5,8 @@
 
 class_name: CodeGuy
 modules:
-    enabled: [CodeHelper, Zf2]
+    enabled: [CodeHelper, ZF2]
     config:
-        Zf2:
+        ZF2:
             config: config/application.config.php
 
