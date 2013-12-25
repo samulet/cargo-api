@@ -15,3 +15,4 @@ modules:
             url: http://cargo.dev/
         REST:
             url: http://cargo.dev/api/
+            timeout: 500
