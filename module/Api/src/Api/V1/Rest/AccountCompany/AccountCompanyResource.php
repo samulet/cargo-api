@@ -1,6 +1,7 @@
 <?php
 namespace Api\V1\Rest\AccountCompany;
 
+use Zend\Stdlib\Parameters;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 use Zend\Paginator\Adapter\ArrayAdapter;
@@ -79,29 +80,30 @@ class AccountCompanyResource extends AbstractResourceListener
     /**
      * Fetch all or a subset of resources
      *
-     * @param  array $params
+     * @param array|Parameters $params
      * @return ApiProblem|mixed
      */
     public function fetchAll($params = array())
     {
         $accountUuid = $this->getEvent()->getRouteParam('account_uuid');
+        if (empty($accountUuid)) {
+            return new ApiProblem(400, 'Account UUID required');
+        }
+
+        if ($params instanceof Parameters) {
+            $params = $params->toArray();
+        }
         $params = $params + array('ownerAccUuid' => $accountUuid);
         $data = $this->companyModel->fetchAll($params);
+
+        $resultArray = array();
         if (!empty($data)) {
-            $resultArray = array();
             foreach ($data as $d) {
                 array_push($resultArray, new Company\CompanyEntity($d->getData()));
             }
-            $adapter = new ArrayAdapter($resultArray);
-            $collection = new Company\CompanyCollection($adapter);
-        } else {
-            return ApiStaticErrorList::getError(404);
         }
-        if (!empty($collection)) {
-            return $collection;
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+
+        return new Company\CompanyCollection(new ArrayAdapter($resultArray));
     }
 
     /**

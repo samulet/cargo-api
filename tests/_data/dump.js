@@ -381,7 +381,7 @@ db.getCollection("company").insert({
 db.getCollection("company").insert({
     "_id": ObjectId("52b2480f9e53462e6e8b456e"),
     "uuid": "c14bfc17646343b4afc037fb3c8c5391",
-    "ownerAccUuid": "b21295c8a94c4bb0a4de07bd2d76ed38",
+    "owner": "b21295c8a94c4bb0a4de07bd2d76ed38",
     "created": ISODate("2013-12-19T01:12:47.0Z"),
     "updated": ISODate("2013-12-19T01:12:47.0Z"),
     "short": "demo56",
