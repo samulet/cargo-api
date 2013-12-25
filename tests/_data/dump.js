@@ -429,9 +429,9 @@ db.getCollection("company").insert({
     ]
 });
 
-// ext_service_company_entity records
-db.getCollection("ext_service_company_entity").remove();
-db.getCollection("ext_service_company_entity").insert({
+// externalCompany records
+db.getCollection("externalCompany").remove();
+db.getCollection("externalCompany").insert({
     "_id": ObjectId("52b57f679e53461c2f8b4567"),
     "source": "vesta",
     "id": "29",
@@ -517,7 +517,7 @@ db.getCollection("ext_service_company_entity").insert({
     "order_import_format_id": "9",
     "transit": "1"
 });
-db.getCollection("ext_service_company_entity").insert({
+db.getCollection("externalCompany").insert({
     "_id": ObjectId("52b57f679e53461c2f8b4568"),
     "source": "vesta",
     "id": "9",
@@ -603,7 +603,7 @@ db.getCollection("ext_service_company_entity").insert({
     "order_import_format_id": "0",
     "transit": "1"
 });
-db.getCollection("ext_service_company_entity").insert({
+db.getCollection("externalCompany").insert({
     "_id": ObjectId("52b57f679e53461c2f8b4569"),
     "source": "vesta",
     "id": "28",
@@ -689,7 +689,7 @@ db.getCollection("ext_service_company_entity").insert({
     "order_import_format_id": "15",
     "transit": "1"
 });
-db.getCollection("ext_service_company_entity").insert({
+db.getCollection("externalCompany").insert({
     "_id": ObjectId("52b57f8a9e53461c2f8b46ce"),
     "source": "prodrezerv",
     "id": "1",
@@ -775,7 +775,7 @@ db.getCollection("ext_service_company_entity").insert({
     "order_import_format_id": "0",
     "transit": "1"
 });
-db.getCollection("ext_service_company_entity").insert({
+db.getCollection("externalCompany").insert({
     "_id": ObjectId("52b57f8a9e53461c2f8b46d0"),
     "source": "prodrezerv",
     "id": "4",
@@ -861,7 +861,7 @@ db.getCollection("ext_service_company_entity").insert({
     "order_import_format_id": "0",
     "transit": "0"
 });
-db.getCollection("ext_service_company_entity").insert({
+db.getCollection("externalCompany").insert({
     "_id": ObjectId("52b57f8a9e53461c2f8b46d1"),
     "source": "prodrezerv",
     "id": "82",
@@ -947,7 +947,7 @@ db.getCollection("ext_service_company_entity").insert({
     "order_import_format_id": "0",
     "transit": "0"
 });
-db.getCollection("ext_service_company_entity").insert({
+db.getCollection("externalCompany").insert({
     "_id": ObjectId("52b57f8a9e53461c2f8b46d2"),
     "source": "prodrezerv",
     "id": "6",
