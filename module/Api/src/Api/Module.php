@@ -57,7 +57,7 @@ class Module implements ApigilityModuleInterface
                 'ExternalPunctModel' => 'ExtService\Factory\ExternalPunctModelFactory',
                 'ExternalPunctIntersectModel' => 'ExtService\Factory\ExternalPunctIntersectModelFactory',
                 'ExternalPunctImportModel' => 'ExtService\Factory\ExternalPunctImportModelFactory',
-                'Api\V1\Rest\Account\AccountResource' => function ($sm) {
+                'Api\\V1\\Rest\\Account\\AccountResource' => function ($sm) {
                     try {
                         /** @var \User\Identity\IdentityProvider $identity */
                         $identity = $sm->get('User\Identity\IdentityProvider')->getIdentity();
@@ -70,17 +70,15 @@ class Module implements ApigilityModuleInterface
                         }
                         return new AccessDeniedResource($code, $exception->getMessage());
                     }
-
-                    if (!empty($identity)) {
-                        return new AccountResource(
-                            $sm->get('AccountModel'),
-                            $sm->get('CompanyUserModel'),
-                            $sm->get('CompanyModel'),
-                            $identity
-                        );
-                    } else {
+                    if (empty($identity)) {
                         return new AccessDeniedResource();
                     }
+                    return new AccountResource(
+                        $sm->get('AccountModel'),
+                        $sm->get('CompanyUserModel'),
+                        $sm->get('CompanyModel'),
+                        $identity
+                    );
                 },
                 'Api\V1\Rest\Profile\ProfileResource' => function ($sm) {
                     /** @var \Zend\Http\Header\GenericHeader $authToken */
