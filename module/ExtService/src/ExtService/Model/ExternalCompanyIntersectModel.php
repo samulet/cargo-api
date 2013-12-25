@@ -29,14 +29,15 @@ class ExternalCompanyIntersectModel
     public function addCompanyIntersect($data)
     {
         $data = array_map('strval', $data);
+        /** @var \ExtService\Entity\ExternalCompany $object */
         $object = $this->externalCompanyModel->fetch(array('id' => $data['id'], 'source' => $data['source']));
-        if(!empty($object)) {
-            $object->setLink($data['company']);
-            $this->documentManager->persist($object);
-            $this->documentManager->flush();
-        } else {
+        if(empty($object)) {
             return false;
         }
+        $object->setLink($data['company']);
+        $this->documentManager->persist($object);
+        $this->documentManager->flush();
+        return true;
     }
 
     public function deleteCompanyIntersect($data)

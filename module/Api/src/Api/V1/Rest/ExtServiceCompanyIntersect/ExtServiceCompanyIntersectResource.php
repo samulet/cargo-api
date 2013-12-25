@@ -1,6 +1,7 @@
 <?php
 namespace Api\V1\Rest\ExtServiceCompanyIntersect;
 
+use ExtService\Model\ExternalCompanyIntersectModel;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 use Api\Entity\ApiStaticErrorList;
@@ -8,6 +9,9 @@ use Zend\Paginator\Adapter\ArrayAdapter;
 
 class ExtServiceCompanyIntersectResource extends AbstractResourceListener
 {
+    /**
+     * @var ExternalCompanyIntersectModel
+     */
     protected $externalCompanyIntersectModel;
     /**
      * @var \User\Entity\User
@@ -28,8 +32,6 @@ class ExtServiceCompanyIntersectResource extends AbstractResourceListener
     public function create($data)
     {
         $data=get_object_vars($data);
-        $data['source']=$this->getEvent()->getRouteParam('source');
-        $data['id']=$this->getEvent()->getRouteParam('external_service_company_intersect_id');
         if(!empty($this->externalCompanyIntersectModel->addCompanyIntersect($data))) {
             return ApiStaticErrorList::getError(202);
         } else {

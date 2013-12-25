@@ -502,7 +502,7 @@ return array(
             'listener' => 'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectResource',
             'route_name' => 'api.rest.ext-service-company-intersect',
             'identifier_name' => 'external_service_company_intersect_id',
-            'collection_name' => 'ext_service_company_intersect',
+            'collection_name' => 'external_service_company_intersect',
             'resource_http_methods' => array(
                 0 => 'GET',
                 1 => 'PATCH',
