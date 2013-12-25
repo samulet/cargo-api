@@ -1,24 +1,30 @@
 <?php
 namespace Api\V1\Rest\ExtServiceCompany;
 
+use ExtService\Model\ExternalCompanyImportModel;
+use User\Entity\User;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 use Api\Entity\ApiStaticErrorList;
 use Zend\Paginator\Adapter\ArrayAdapter;
 
-class ExtServiceCompanyResource extends AbstractResourceListener {
-
+class ExtServiceCompanyResource extends AbstractResourceListener
+{
+    /**
+     * @var ExternalCompanyImportModel
+     */
     protected $extServiceCompanyImportModel;
     /**
-     * @var \User\Entity\User
+     * @var User
      */
     protected $userEntity;
 
-    public function __construct($extServiceCompanyImportModel = null,$userEntity=null)
+    public function __construct($extServiceCompanyImportModel = null, $userEntity = null)
     {
         $this->extServiceCompanyImportModel = $extServiceCompanyImportModel;
         $this->userEntity = $userEntity;
     }
+
     /**
      * Create a resource
      *
@@ -76,17 +82,14 @@ class ExtServiceCompanyResource extends AbstractResourceListener {
      */
     public function fetchAll($params = array())
     {
-        $data=$this->extServiceCompanyImportModel->getInformationFromAllOnline();
-        if(!empty($data)) {
-            $resultArray=array();
-            foreach($data as $d) {
-                array_push($resultArray,new ExtServiceCompanyEntity($d));
+        $result = array();
+        $statistic = $this->extServiceCompanyImportModel->getInformationFromAllOnline();
+        if (!empty($statistic)) {
+            foreach ($statistic as $serviceData) {
+                array_push($result, new ExtServiceCompanyEntity($serviceData));
             }
-            $adapter = new ArrayAdapter($resultArray);
-            return new ExtServiceCompanyCollection($adapter);
-        } else {
-            return ApiStaticErrorList::getError(404);
         }
+        return new ExtServiceCompanyCollection(new ArrayAdapter($result));
     }
 
     /**

@@ -10,74 +10,80 @@ use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use ExtService\Entity\ExternalCompany;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use ExtService\Service\ImportService;
+use QueryBuilder\Model\QueryBuilderModel;
 
 class ExternalCompanyImportModel
 {
     protected $documentManager;
     protected $uuidGenerator;
+    /**
+     * @var QueryBuilderModel
+     */
     protected $queryBuilderModel;
     protected $onlineProvider;
+    /**
+     * @var ExternalCompanyModel
+     */
     protected $externalCompanyModel;
     protected $importService;
 
-    public function __construct(DocumentManager $documentManager,$queryBuilderModel,$onlineProvider,$externalCompanyModel)
+    public function __construct(DocumentManager $documentManager, $queryBuilderModel, $onlineProvider, $externalCompanyModel)
     {
         $this->uuidGenerator = new UuidGenerator();
-        $this->documentManager=$documentManager;
-        $this->queryBuilderModel=$queryBuilderModel;
-        $this->onlineProvider=$onlineProvider;
+        $this->documentManager = $documentManager;
+        $this->queryBuilderModel = $queryBuilderModel;
+        $this->onlineProvider = $onlineProvider;
         $this->externalCompanyModel = $externalCompanyModel;
         $this->importService = new ImportService();
     }
 
     public function onlineChangeFindUpdate($companies, $onlineCode)
     {
-        $resultArray=array(
-            'new'  => 0,
-            'changed'  => 0,
-            'exists'  => 0,
-        );
+        $resultArray = array('new' => 0, 'changed' => 0, 'exists' => 0);
         $hydrator = new DoctrineHydrator($this->documentManager, 'ExtService\Entity\ExternalCompany');
-        ini_set('max_execution_time', 1000);
-        foreach($companies as $res) {
+        $filteredKeys = array('_id' => null, 'link' => null, 'deletedAt' => null);
+
+        foreach ($companies as $res) {
             $resVars = get_object_vars($res);
             $resVars['source'] = $onlineCode;
             $resVars = array_map('strval', $resVars);
             $resVars = $this->queryBuilderModel->camelCaseKeys($resVars);
-            $object = $this->externalCompanyModel->fetch($resVars);
-            if(!empty($object)) {
-                $resultArray['exists']++;
-            } else {
-                $item = $this->externalCompanyModel->fetch(array('id' => $resVars['id'], 'source' => $resVars['source']));
-                if(empty($item)) {
-                    $resultArray['new']++;
-                    $item = new ExternalCompany();
+            $conditions = array('source' => $resVars['source'], 'id' => $resVars['id']);
+            /** @var \ExtService\Entity\ExternalCompany $object */
+            $object = $this->externalCompanyModel->fetch($conditions);
+            if (!empty($object)) {
+                $distinction = array_diff_key(array_diff_assoc($object->getData(), $resVars), $filteredKeys);
+                if (empty($distinction)) {
+                    $resultArray['exists']++;
+                    continue;
                 } else {
                     $resultArray['changed']++;
                 }
-                $item = $hydrator->hydrate($resVars, $item);
-                $this->documentManager->persist($item);
-                $this->documentManager->flush();
+            } else {
+                $resultArray['new']++;
+                $object = new ExternalCompany();
             }
-
+            $this->documentManager->persist($hydrator->hydrate($resVars, $object));
         }
+        $this->documentManager->flush();
+
         return $resultArray;
     }
 
     public function getInformationFromAllOnline()
     {
-        $resultArray=array();
-        foreach($this->onlineProvider->getConfig() as $onlineName=>$data) {
-            foreach($data as $url => $key) {
-                $res = $this->getInformationFromOnline($url,$key,$onlineName);
-                if(!is_string($res)) {
-                    $res=array(
+        $resultArray = array();
+        foreach ($this->onlineProvider->getConfig() as $onlineName => $data) {
+            foreach ($data as $url => $key) {
+                $res = $this->getInformationFromOnline($url, $key, $onlineName);
+                if (!is_string($res)) {
+                    $res = array(
                         'stat' => $res,
                         'external_code' => $onlineName,
                         'status' => 'success'
                     );
                 } else {
-                    $res=array(
+                    $res = array(
                         'reason' => $res,
                         'status' => 'fail',
                         'external_code' => $onlineName
@@ -88,20 +94,21 @@ class ExternalCompanyImportModel
         }
         return $resultArray;
     }
+
     public function getInformationFromOnlineByOnlineName($onlineName)
     {
-        if(!empty($this->onlineProvider->getConfig()[$onlineName])) {
+        if (!empty($this->onlineProvider->getConfig()[$onlineName])) {
             $data = $this->onlineProvider->getConfig()[$onlineName];
-            foreach($data as $url => $key) {
-                $res = $this->getInformationFromOnline($url,$key,$onlineName);
-                if(!is_string($res)) {
-                    $res=array(
+            foreach ($data as $url => $key) {
+                $res = $this->getInformationFromOnline($url, $key, $onlineName);
+                if (!is_string($res)) {
+                    $res = array(
                         'stat' => $res,
                         'external_code' => $onlineName,
                         'status' => 'success'
                     );
                 } else {
-                    $res=array(
+                    $res = array(
                         'reason' => $res,
                         'status' => 'fail',
                         'external_code' => $onlineName
@@ -117,19 +124,17 @@ class ExternalCompanyImportModel
 
     public function getInformationFromOnline($url, $code, $onlineCode)
     {
-        $result = $this->importService->fetch($url.'/api/reference/companies/', $code);
-        if(!is_string($result)) {
-            if(!empty($result->companies)) {
-                $resultArray=array(
-                    'processed' => sizeof($result->companies),
-                );
-                $resultArray=$resultArray+$this->onlineChangeFindUpdate($result->companies, $onlineCode);
-                return $resultArray;
+        $data = $this->importService->fetch($url . '/api/reference/companies/', $code);
+        if (!is_string($data)) {
+            if (!empty($data->companies)) {
+                $statistic = $this->onlineChangeFindUpdate($data->companies, $onlineCode);
+                $statistic['processed'] = count($data->companies);
+                return $statistic;
             } else {
                 return 'Список компаний пуст';
             }
         } else {
-            return $result;
+            return $data;
         }
     }
 

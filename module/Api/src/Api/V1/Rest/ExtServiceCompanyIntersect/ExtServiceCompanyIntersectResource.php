@@ -18,11 +18,12 @@ class ExtServiceCompanyIntersectResource extends AbstractResourceListener
      */
     protected $userEntity;
 
-    public function __construct($externalCompanyIntersectModel = null, $userEntity=null)
+    public function __construct($externalCompanyIntersectModel = null, $userEntity = null)
     {
         $this->externalCompanyIntersectModel = $externalCompanyIntersectModel;
         $this->userEntity = $userEntity;
     }
+
     /**
      * Create a resource
      *
@@ -31,8 +32,8 @@ class ExtServiceCompanyIntersectResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $data=get_object_vars($data);
-        if(!empty($this->externalCompanyIntersectModel->addCompanyIntersect($data))) {
+        $data = get_object_vars($data);
+        if (!empty($this->externalCompanyIntersectModel->addCompanyIntersect($data))) {
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);
@@ -47,9 +48,9 @@ class ExtServiceCompanyIntersectResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        $data['source']=$this->getEvent()->getRouteParam('source');
-        $data['id']=$id;
-        if($data) {
+        $data['source'] = $this->getEvent()->getRouteParam('source');
+        $data['id'] = $id;
+        if ($data) {
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);
@@ -86,17 +87,16 @@ class ExtServiceCompanyIntersectResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data=$this->externalCompanyIntersectModel->getExternalCompanyModel()->fetchAll($params);
-        if(!empty($data)) {
-            $resultArray=array();
-            foreach($data as $d) {
-                array_push($resultArray,new ExtServiceCompanyIntersectEntity($d->getData()));
-            }
-            $adapter = new ArrayAdapter($resultArray);
-            return new ExtServiceCompanyIntersectCollection($adapter);
-        } else {
+        $data = $this->externalCompanyIntersectModel->getExternalCompanyModel()->fetchAll($params);
+        if (empty($data)) {
             return ApiStaticErrorList::getError(404);
         }
+
+        $result = array();
+        foreach ($data as $d) {
+            array_push($result, new ExtServiceCompanyIntersectEntity($d->getData()));
+        }
+        return new ExtServiceCompanyIntersectCollection(new ArrayAdapter($result));
     }
 
     /**

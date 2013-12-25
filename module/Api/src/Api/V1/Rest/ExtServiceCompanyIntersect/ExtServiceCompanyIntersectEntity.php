@@ -11,8 +11,9 @@ class ExtServiceCompanyIntersectEntity implements ArraySerializableInterface
     protected $name;
     protected $link;
 
-    public function __construct(array $entity = null){
-        if(!empty($entity)) {
+    public function __construct(array $entity = null)
+    {
+        if (!empty($entity)) {
             $this->setData($entity);
             $this->external_service_company_intersect_id=$entity['source'].'/'.$entity['id'];
         }
@@ -27,6 +28,7 @@ class ExtServiceCompanyIntersectEntity implements ArraySerializableInterface
                 }
             }
         }
+
         return $this;
 
     }
@@ -37,9 +39,10 @@ class ExtServiceCompanyIntersectEntity implements ArraySerializableInterface
         foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
             $data[$key] = $this->$key;
         }
-        if(!empty($this->created_at)) {
+        if (!empty($this->created_at)) {
             $this->created_at=$this->created_at->getTimestamp();
         }
+
         return $data;
     }
 
@@ -122,7 +125,6 @@ class ExtServiceCompanyIntersectEntity implements ArraySerializableInterface
     {
         return $this->source;
     }
-
 
     /**
      * Exchange internal values from provided array
