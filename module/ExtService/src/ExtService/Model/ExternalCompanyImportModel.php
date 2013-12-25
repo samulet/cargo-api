@@ -39,35 +39,34 @@ class ExternalCompanyImportModel
 
     public function onlineChangeFindUpdate($companies, $onlineCode)
     {
-        $resultArray=array(
-            'new'  => 0,
-            'changed'  => 0,
-            'exists'  => 0,
-        );
+        $resultArray = array('new' => 0, 'changed' => 0, 'exists' => 0);
         $hydrator = new DoctrineHydrator($this->documentManager, 'ExtService\Entity\ExternalCompany');
-        ini_set('max_execution_time', 1000);
-        foreach($companies as $res) {
+        $filteredKeys = array('_id' => null, 'link' => null, 'deletedAt' => null);
+
+        foreach ($companies as $res) {
             $resVars = get_object_vars($res);
             $resVars['source'] = $onlineCode;
             $resVars = array_map('strval', $resVars);
             $resVars = $this->queryBuilderModel->camelCaseKeys($resVars);
-            $object = $this->externalCompanyModel->fetch($resVars);
-            if(!empty($object)) {
-                $resultArray['exists']++;
-            } else {
-                $item = $this->externalCompanyModel->fetch(array('id' => $resVars['id'], 'source' => $resVars['source']));
-                if(empty($item)) {
-                    $resultArray['new']++;
-                    $item = new ExternalCompany();
+            $conditions = array('source' => $resVars['source'], 'id' => $resVars['id']);
+            /** @var \ExtService\Entity\ExternalCompany $object */
+            $object = $this->externalCompanyModel->fetch($conditions);
+            if (!empty($object)) {
+                $distinction = array_diff_key(array_diff_assoc($object->getData(), $resVars), $filteredKeys);
+                if (empty($distinction)) {
+                    $resultArray['exists']++;
+                    continue;
                 } else {
                     $resultArray['changed']++;
                 }
-                $item = $hydrator->hydrate($resVars, $item);
-                $this->documentManager->persist($item);
-                $this->documentManager->flush();
+            } else {
+                $resultArray['new']++;
+                $object = new ExternalCompany();
             }
-
+            $this->documentManager->persist($hydrator->hydrate($resVars, $object));
         }
+        $this->documentManager->flush();
+
         return $resultArray;
     }
 
