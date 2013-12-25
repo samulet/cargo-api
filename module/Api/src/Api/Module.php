@@ -42,20 +42,6 @@ class Module implements ApigilityModuleInterface
                 'Doctrine\ODM\MongoDB\DocumentManager' => 'doctrine.documentmanager.odm_default',
             ) ,
             'factories' => array(
-                'AuthTokenModel' => 'AuthToken\ModelFactory',
-                'QueryBuilderModel' => 'QueryBuilder\Factory\QueryBuilderModelFactory',
-                'CompanyModel' => 'Account\Factory\CompanyModelFactory',
-                'CompanyUserModel' => 'Account\Factory\CompanyUserModelFactory',
-                'AccountModel' => 'Account\Factory\AccountModelFactory',
-                'CargoModel' => 'Cargo\Factory\CargoModelFactory',
-                'AddListProductGroupModel' => 'Reference\Factory\AddListProductGroupModelFactory',
-                'ReferenceModel' => 'Reference\Factory\ReferenceModelFactory',
-                'ExternalCompanyModel' => 'ExtService\Factory\ExternalCompanyModelFactory',
-                'ExternalCompanyIntersectModel' => 'ExtService\Factory\ExternalCompanyIntersectModelFactory',
-                'ExternalCompanyImportModel' => 'ExtService\Factory\ExternalCompanyImportModelFactory',
-                'ExternalPunctModel' => 'ExtService\Factory\ExternalPunctModelFactory',
-                'ExternalPunctIntersectModel' => 'ExtService\Factory\ExternalPunctIntersectModelFactory',
-                'ExternalPunctImportModel' => 'ExtService\Factory\ExternalPunctImportModelFactory',
                 'Api\V1\Rest\Profile\ProfileResource' => function ($sm) {
                     /** @var \Zend\Http\Header\GenericHeader $authToken */
                     try {
