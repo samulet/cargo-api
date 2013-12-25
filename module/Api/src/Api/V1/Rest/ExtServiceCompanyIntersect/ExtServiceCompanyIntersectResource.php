@@ -87,17 +87,16 @@ class ExtServiceCompanyIntersectResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data=$this->externalCompanyIntersectModel->getExternalCompanyModel()->fetchAll($params);
-        if(!empty($data)) {
-            $resultArray=array();
-            foreach($data as $d) {
-                array_push($resultArray,new ExtServiceCompanyIntersectEntity($d->getData()));
-            }
-            $adapter = new ArrayAdapter($resultArray);
-            return new ExtServiceCompanyIntersectCollection($adapter);
-        } else {
+        $data = $this->externalCompanyIntersectModel->getExternalCompanyModel()->fetchAll($params);
+        if (empty($data)) {
             return ApiStaticErrorList::getError(404);
         }
+
+        $result = array();
+        foreach ($data as $d) {
+            array_push($result, new ExtServiceCompanyIntersectEntity($d->getData()));
+        }
+        return new ExtServiceCompanyIntersectCollection(new ArrayAdapter($result));
     }
 
     /**

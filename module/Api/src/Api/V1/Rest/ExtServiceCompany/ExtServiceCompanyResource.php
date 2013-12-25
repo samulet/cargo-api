@@ -82,17 +82,14 @@ class ExtServiceCompanyResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data = $this->extServiceCompanyImportModel->getInformationFromAllOnline();
-        if (!empty($data)) {
-            $resultArray = array();
-            foreach ($data as $d) {
-                array_push($resultArray, new ExtServiceCompanyEntity($d));
+        $result = array();
+        $statistic = $this->extServiceCompanyImportModel->getInformationFromAllOnline();
+        if (!empty($statistic)) {
+            foreach ($statistic as $serviceData) {
+                array_push($result, new ExtServiceCompanyEntity($serviceData));
             }
-            $adapter = new ArrayAdapter($resultArray);
-            return new ExtServiceCompanyCollection($adapter);
-        } else {
-            return ApiStaticErrorList::getError(404);
         }
+        return new ExtServiceCompanyCollection(new ArrayAdapter($result));
     }
 
     /**

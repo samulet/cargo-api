@@ -124,19 +124,17 @@ class ExternalCompanyImportModel
 
     public function getInformationFromOnline($url, $code, $onlineCode)
     {
-        $result = $this->importService->fetch($url.'/api/reference/companies/', $code);
-        if(!is_string($result)) {
-            if(!empty($result->companies)) {
-                $resultArray=array(
-                    'processed' => sizeof($result->companies),
-                );
-                $resultArray=$resultArray+$this->onlineChangeFindUpdate($result->companies, $onlineCode);
-                return $resultArray;
+        $data = $this->importService->fetch($url . '/api/reference/companies/', $code);
+        if (!is_string($data)) {
+            if (!empty($data->companies)) {
+                $statistic = $this->onlineChangeFindUpdate($data->companies, $onlineCode);
+                $statistic['processed'] = count($data->companies);
+                return $statistic;
             } else {
                 return 'Список компаний пуст';
             }
         } else {
-            return $result;
+            return $data;
         }
     }
 
