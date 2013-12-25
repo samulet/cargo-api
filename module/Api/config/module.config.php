@@ -171,6 +171,9 @@ return array(
     ),
     'service_manager' => array(
         'invokables' => array(),
+        'factory' => array(
+            'Api\\V1\\Rest\\Account\\AccountResource' => 'Api\\Factory\\AccountResource',
+        ),
     ),
     'zf-rest' => array(
         'Api\\V1\\Rest\\Account\\Controller' => array(

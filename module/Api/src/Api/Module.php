@@ -2,7 +2,6 @@
 namespace Api;
 
 use ZF\Apigility\ApigilityModuleInterface;
-use Api\V1\Rest\Account\AccountResource;
 use Api\V1\Rest\Profile\ProfileResource;
 use Api\V1\Rest\Company\CompanyResource;
 use Api\V1\Rest\CompanyEmployee\CompanyEmployeeResource;
@@ -57,29 +56,6 @@ class Module implements ApigilityModuleInterface
                 'ExternalPunctModel' => 'ExtService\Factory\ExternalPunctModelFactory',
                 'ExternalPunctIntersectModel' => 'ExtService\Factory\ExternalPunctIntersectModelFactory',
                 'ExternalPunctImportModel' => 'ExtService\Factory\ExternalPunctImportModelFactory',
-                'Api\\V1\\Rest\\Account\\AccountResource' => function ($sm) {
-                    try {
-                        /** @var \User\Identity\IdentityProvider $identity */
-                        $identity = $sm->get('User\Identity\IdentityProvider')->getIdentity();
-                    } catch (Exception $e) {
-                        $prev = $e->getPrevious();
-                        $exception = empty($prev) ? $e : $prev;
-                        $code = $exception->getCode();
-                        if (empty($code)) {
-                            $code = 500;
-                        }
-                        return new AccessDeniedResource($code, $exception->getMessage());
-                    }
-                    if (empty($identity)) {
-                        return new AccessDeniedResource();
-                    }
-                    return new AccountResource(
-                        $sm->get('AccountModel'),
-                        $sm->get('CompanyUserModel'),
-                        $sm->get('CompanyModel'),
-                        $identity
-                    );
-                },
                 'Api\V1\Rest\Profile\ProfileResource' => function ($sm) {
                     /** @var \Zend\Http\Header\GenericHeader $authToken */
                     try {
