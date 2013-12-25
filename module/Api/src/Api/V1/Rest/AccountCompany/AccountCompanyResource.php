@@ -9,15 +9,22 @@ use Api\Entity\ApiStaticErrorList;
 
 class AccountCompanyResource extends AbstractResourceListener
 {
+    /**
+     * @var \Account\Model\CompanyModel
+     */
     protected $companyModel;
+    /**
+     * @var \Account\Model\CompanyUserModel
+     */
     protected $companyUserModel;
 
-    public function __construct($companyModel = null, $companyUserModel = null, $userEntity=null)
+    public function __construct($companyModel = null, $companyUserModel = null, $userEntity = null)
     {
         $this->companyModel = $companyModel;
         $this->companyUserModel = $companyUserModel;
         $this->userEntity = $userEntity;
     }
+
     /**
      * Create a resource
      *
@@ -26,10 +33,10 @@ class AccountCompanyResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $data=get_object_vars($data);
-        $data['ownerAccUuid']=$this->getEvent()->getRouteParam('account_uuid');
-        $data=$this->companyModel->createOrUpdate($data);
-        if(!empty($data)) {
+        $data = get_object_vars($data);
+        $data['ownerAccUuid'] = $this->getEvent()->getRouteParam('account_uuid');
+        $data = $this->companyModel->createOrUpdate($data);
+        if (!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);
@@ -77,20 +84,20 @@ class AccountCompanyResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $accountUuid=$this->getEvent()->getRouteParam('account_uuid');
-        $params=$params+array('ownerAccUuid' => $accountUuid);
-        $data=$this->companyModel->fetchAll($params);
-        if(!empty($data)) {
-            $resultArray=array();
-            foreach($data as $d) {
-                array_push($resultArray,new Company\CompanyEntity($d->getData()));
+        $accountUuid = $this->getEvent()->getRouteParam('account_uuid');
+        $params = $params + array('ownerAccUuid' => $accountUuid);
+        $data = $this->companyModel->fetchAll($params);
+        if (!empty($data)) {
+            $resultArray = array();
+            foreach ($data as $d) {
+                array_push($resultArray, new Company\CompanyEntity($d->getData()));
             }
             $adapter = new ArrayAdapter($resultArray);
             $collection = new Company\CompanyCollection($adapter);
         } else {
             return ApiStaticErrorList::getError(404);
         }
-        if(!empty($collection)) {
+        if (!empty($collection)) {
             return $collection;
         } else {
             return ApiStaticErrorList::getError(404);
