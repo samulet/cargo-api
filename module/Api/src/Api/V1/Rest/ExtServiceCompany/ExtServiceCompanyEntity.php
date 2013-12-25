@@ -8,8 +8,9 @@ class ExtServiceCompanyEntity
     protected $stat = array();
     protected $reason;
 
-    public function __construct(array $entity = null){
-        if(!empty($entity)) {
+    public function __construct(array $entity = null)
+    {
+        if (!empty($entity)) {
             $this->setData($entity);
         }
     }
@@ -23,6 +24,7 @@ class ExtServiceCompanyEntity
                 }
             }
         }
+
         return $this;
 
     }

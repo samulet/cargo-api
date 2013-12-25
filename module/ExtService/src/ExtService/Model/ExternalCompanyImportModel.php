@@ -10,22 +10,29 @@ use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use ExtService\Entity\ExternalCompany;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use ExtService\Service\ImportService;
+use QueryBuilder\Model\QueryBuilderModel;
 
 class ExternalCompanyImportModel
 {
     protected $documentManager;
     protected $uuidGenerator;
+    /**
+     * @var QueryBuilderModel
+     */
     protected $queryBuilderModel;
     protected $onlineProvider;
+    /**
+     * @var ExternalCompanyModel
+     */
     protected $externalCompanyModel;
     protected $importService;
 
-    public function __construct(DocumentManager $documentManager,$queryBuilderModel,$onlineProvider,$externalCompanyModel)
+    public function __construct(DocumentManager $documentManager, $queryBuilderModel, $onlineProvider, $externalCompanyModel)
     {
         $this->uuidGenerator = new UuidGenerator();
-        $this->documentManager=$documentManager;
-        $this->queryBuilderModel=$queryBuilderModel;
-        $this->onlineProvider=$onlineProvider;
+        $this->documentManager = $documentManager;
+        $this->queryBuilderModel = $queryBuilderModel;
+        $this->onlineProvider = $onlineProvider;
         $this->externalCompanyModel = $externalCompanyModel;
         $this->importService = new ImportService();
     }
@@ -66,18 +73,18 @@ class ExternalCompanyImportModel
 
     public function getInformationFromAllOnline()
     {
-        $resultArray=array();
-        foreach($this->onlineProvider->getConfig() as $onlineName=>$data) {
-            foreach($data as $url => $key) {
-                $res = $this->getInformationFromOnline($url,$key,$onlineName);
-                if(!is_string($res)) {
-                    $res=array(
+        $resultArray = array();
+        foreach ($this->onlineProvider->getConfig() as $onlineName => $data) {
+            foreach ($data as $url => $key) {
+                $res = $this->getInformationFromOnline($url, $key, $onlineName);
+                if (!is_string($res)) {
+                    $res = array(
                         'stat' => $res,
                         'external_code' => $onlineName,
                         'status' => 'success'
                     );
                 } else {
-                    $res=array(
+                    $res = array(
                         'reason' => $res,
                         'status' => 'fail',
                         'external_code' => $onlineName
@@ -88,20 +95,21 @@ class ExternalCompanyImportModel
         }
         return $resultArray;
     }
+
     public function getInformationFromOnlineByOnlineName($onlineName)
     {
-        if(!empty($this->onlineProvider->getConfig()[$onlineName])) {
+        if (!empty($this->onlineProvider->getConfig()[$onlineName])) {
             $data = $this->onlineProvider->getConfig()[$onlineName];
-            foreach($data as $url => $key) {
-                $res = $this->getInformationFromOnline($url,$key,$onlineName);
-                if(!is_string($res)) {
-                    $res=array(
+            foreach ($data as $url => $key) {
+                $res = $this->getInformationFromOnline($url, $key, $onlineName);
+                if (!is_string($res)) {
+                    $res = array(
                         'stat' => $res,
                         'external_code' => $onlineName,
                         'status' => 'success'
                     );
                 } else {
-                    $res=array(
+                    $res = array(
                         'reason' => $res,
                         'status' => 'fail',
                         'external_code' => $onlineName

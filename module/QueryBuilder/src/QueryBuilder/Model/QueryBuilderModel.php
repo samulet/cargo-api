@@ -16,7 +16,7 @@ class QueryBuilderModel
 
     public function __construct(DocumentManager $documentManager)
     {
-        $this->documentManager=$documentManager;
+        $this->documentManager = $documentManager;
         $this->uuidGenerator = new UuidGenerator();
     }
 
@@ -76,10 +76,11 @@ class QueryBuilderModel
         return $resultArray;
     }
 
-    public function getObjectData($items) {
-        $resultArray=array();
-        foreach($items as $item) {
-            array_push($resultArray,$item->getData());
+    public function getObjectData($items)
+    {
+        $resultArray = array();
+        foreach ($items as $item) {
+            array_push($resultArray, $item->getData());
         }
         return $resultArray;
     }
@@ -95,13 +96,13 @@ class QueryBuilderModel
      */
     public function createOrUpdate($entityLink, $data, $uuid = null)
     {
-        $entityName="\\".$entityLink;
-        if(empty($uuid)) {
+        $entityName = "\\" . $entityLink;
+        if (empty($uuid)) {
             $item = new $entityName();
-            if(empty($data['uuid'])) {
+            if (empty($data['uuid'])) {
                 $data['uuid'] = $this->uuidGenerator->generateV4();
             }
-        } elseif($this->uuidGenerator->isValid($uuid)) {
+        } elseif ($this->uuidGenerator->isValid($uuid)) {
             $item = $this->documentManager->getRepository($entityLink)->findOneBy(
                 array('uuid' => $uuid));
         } else {
@@ -113,6 +114,7 @@ class QueryBuilderModel
         $this->documentManager->flush();
         return $item;
     }
+
     /**
      * Возвращает сущность, определяемую по $entityLink, однозначность результата дает указание uuid в массиве findParams
      *
@@ -124,12 +126,13 @@ class QueryBuilderModel
     public function fetch($entityLink, $findParams)
     {
         $item = $this->createQuery($this->documentManager->createQueryBuilder($entityLink), $findParams)->getQuery()->getSingleResult();
-        if(empty($item)) {
+        if (empty($item)) {
             return null;
         } else {
             return $item;
         }
     }
+
     /**
      * Возвращает сущность, определяемую по $entityLink
      *
@@ -141,7 +144,7 @@ class QueryBuilderModel
     public function fetchAll($entityLink, $findParams)
     {
         $items = $this->createQuery($this->documentManager->createQueryBuilder($entityLink), $findParams)->getQuery()->execute()->toArray();
-        if(empty($items)) {
+        if (empty($items)) {
             return array();
         } else {
             return $items;
@@ -162,7 +165,7 @@ class QueryBuilderModel
         }
     }
 
-    public function fillEntity($entityLink, $objectNew ,$objectOld)
+    public function fillEntity($entityLink, $objectNew, $objectOld)
     {
         $hydrator = new DoctrineHydrator($this->documentManager, $entityLink);
         return $hydrator->hydrate($hydrator->extract($objectOld), $objectNew);
@@ -170,11 +173,12 @@ class QueryBuilderModel
 
     /**
      * Convert under_score type array's keys to camelCase type array's keys
-     * @param   array   $array          array to convert
-     * @param   array   $arrayHolder    parent array holder for recursive array
+     * @param   array $array array to convert
+     * @param   array $arrayHolder parent array holder for recursive array
      * @return  array   camelCase array
      */
-    public function camelCaseKeys($array, $arrayHolder = array()) {
+    public function camelCaseKeys($array, $arrayHolder = array())
+    {
         $camelCaseArray = !empty($arrayHolder) ? $arrayHolder : array();
         foreach ($array as $key => $val) {
             $newKey = @explode('_', $key);
