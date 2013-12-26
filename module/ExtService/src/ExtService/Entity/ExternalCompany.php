@@ -20,512 +20,426 @@ class ExternalCompany
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $link;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $source;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $id;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $ownerId;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $id1s;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $contractNumber1s;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $name;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $fullName;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $uName;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $inn;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $kpp;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $okato;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $legalAdress;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $realAdress;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $orgBase;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $leaderPostIp;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $leaderPostRp;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $leaderPostDp;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $leaderIp;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $leaderRp;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $leaderDp;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $director;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $accountant;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $rs;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $ks;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $bank;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $bankAdress;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $bik;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $okpo;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $okvd;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $phone;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $email;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $contract;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $contractDate;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $saveSum;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $prrSum;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $defPay;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $boxCostA;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $boxCostB;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $boxCostC;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $representative;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $group;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $isOurFirm;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $responsibleWorker;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $nds;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $activity;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $ttn;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $trn;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $blocked;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $periodType;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $contractorId;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $workType;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $printConsignee;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $consigneeForPrint;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $printShipper;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $shipperForPrint;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $noDesposcheme;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $wbImport;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $nonFood;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $whReturn;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $informAboutAccount;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $serviceTitle;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $canChangeAdopted;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $temperature;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $autoAdopt;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $tariffFactor;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $daysOfDifferenceForOrder;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $printMark;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $printReceivingAct;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $printCommissionForwarder;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $printReceiptForwarder;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $docsTn;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $docsTtn;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $docsTrn;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $printActp2;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $actp2ForPrint;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $insurance;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $wbStatusForBills;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $serviceType;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $nameInInvoice;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $cargoTypes;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $noticeOrderAdopt;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $orderImportFormatId;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $transit;
-
     /**
      * @ODM\Date
      */
     protected $deletedAt;
-
 
     public function setData($data)
     {
@@ -536,6 +450,7 @@ class ExternalCompany
                 }
             }
         }
+
         return $this;
 
     }
@@ -546,9 +461,9 @@ class ExternalCompany
         foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
             $data[$key] = $this->$key;
         }
+
         return $data;
     }
-
 
     /**
      * @param int $id
@@ -1909,5 +1824,4 @@ class ExternalCompany
     {
         return $this->workType;
     }
-
 }

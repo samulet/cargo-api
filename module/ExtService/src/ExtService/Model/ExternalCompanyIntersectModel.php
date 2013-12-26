@@ -13,9 +13,18 @@ use ExtService\Entity\ExternalCompany;
 
 class ExternalCompanyIntersectModel
 {
+    /**
+     * @var \Doctrine\ODM\MongoDB\DocumentManager
+     */
     protected $documentManager;
     protected $uuidGenerator;
+    /**
+     * @var \QueryBuilder\Model\QueryBuilderModel
+     */
     protected $queryBuilderModel;
+    /**
+     * @var ExternalCompanyModel
+     */
     protected $externalCompanyModel;
 
     public function __construct(DocumentManager $documentManager,$queryBuilderModel,$externalCompanyModel)
@@ -30,8 +39,8 @@ class ExternalCompanyIntersectModel
     {
         $data = array_map('strval', $data);
         /** @var \ExtService\Entity\ExternalCompany $object */
-        $object = $this->externalCompanyModel->fetch(array('id' => $data['id'], 'source' => $data['source']));
-        if(empty($object)) {
+        $object = $this->externalCompanyModel->fetch(array('source' => $data['source'], 'id' => $data['id']));
+        if (empty($object)) {
             return false;
         }
         $object->setLink($data['company']);
@@ -54,15 +63,15 @@ class ExternalCompanyIntersectModel
     }
 
     /**
-     * @param mixed $externalCompanyModel
+     * @param ExternalCompanyModel $externalCompanyModel
      */
-    public function setExternalCompanyModel($externalCompanyModel)
+    public function setExternalCompanyModel(ExternalCompanyModel $externalCompanyModel)
     {
         $this->externalCompanyModel = $externalCompanyModel;
     }
 
     /**
-     * @return mixed
+     * @return ExternalCompanyModel
      */
     public function getExternalCompanyModel()
     {
