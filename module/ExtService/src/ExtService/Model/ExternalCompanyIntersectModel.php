@@ -2,14 +2,8 @@
 
 namespace ExtService\Model;
 
-use Doctrine\MongoDB\Connection;
-use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
-use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-use Zend\Http\Client;
-use Zend\Http\ClientStatic;
-use ExtService\Entity\ExternalCompany;
+use QueryBuilder\Model\QueryBuilderModel;
 
 class ExternalCompanyIntersectModel
 {
@@ -17,7 +11,6 @@ class ExternalCompanyIntersectModel
      * @var \Doctrine\ODM\MongoDB\DocumentManager
      */
     protected $documentManager;
-    protected $uuidGenerator;
     /**
      * @var \QueryBuilder\Model\QueryBuilderModel
      */
@@ -27,11 +20,13 @@ class ExternalCompanyIntersectModel
      */
     protected $externalCompanyModel;
 
-    public function __construct(DocumentManager $documentManager,$queryBuilderModel,$externalCompanyModel)
-    {
-        $this->uuidGenerator = new UuidGenerator();
-        $this->documentManager=$documentManager;
-        $this->queryBuilderModel=$queryBuilderModel;
+    public function __construct(
+        DocumentManager $documentManager,
+        QueryBuilderModel $queryBuilder,
+        ExternalCompanyModel $externalCompanyModel
+    ) {
+        $this->documentManager = $documentManager;
+        $this->queryBuilderModel = $queryBuilder;
         $this->externalCompanyModel = $externalCompanyModel;
     }
 
@@ -49,14 +44,15 @@ class ExternalCompanyIntersectModel
         return true;
     }
 
-    public function deleteCompanyIntersect($data)
+    public function deleteCompanyIntersect($source, $id)
     {
-        $data = array_map('strval', $data);
-        $object = $this->externalCompanyModel->fetch(array('id' => $data[1], 'source' => $data[0]));
-        if(!empty($object)) {
+        /** @var \ExtService\Entity\ExternalCompany $object */
+        $object = $this->externalCompanyModel->fetch(array('source' => $source, 'id' => $id));
+        if (!empty($object) && !empty($object->getLink())) {
             $object->setLink(null);
             $this->documentManager->persist($object);
             $this->documentManager->flush();
+            return true;
         } else {
             return false;
         }

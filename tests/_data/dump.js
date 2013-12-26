@@ -601,7 +601,8 @@ db.getCollection("externalCompany").insert({
     "cargo_types": "",
     "notice_order_adopt": "0",
     "order_import_format_id": "0",
-    "transit": "1"
+    "transit": "1",
+    "link": "afc66c7dd6234e568317e4799068a03b"
 });
 db.getCollection("externalCompany").insert({
     "_id": ObjectId("52b57f679e53461c2f8b4569"),

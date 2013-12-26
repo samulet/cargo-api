@@ -48,13 +48,8 @@ class ExtServiceCompanyIntersectResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        $data['source'] = $this->getEvent()->getRouteParam('source');
-        $data['id'] = $id;
-        if ($data) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        $source = $this->getEvent()->getRouteParam('source');
+        return $this->externalCompanyIntersectModel->deleteCompanyIntersect($source, $id);
     }
 
     /**
