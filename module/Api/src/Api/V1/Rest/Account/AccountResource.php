@@ -123,22 +123,18 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
      */
     public function fetchAll($params = array())
     {
-        $data=$this->accountModel->fetchAll($params);
-        if(!empty($data)) {
-            $resultArray=array();
-            foreach($data as $d) {
-                array_push($resultArray,new AccountEntity($d->getData()));
+        $data = $this->accountModel->fetchAll($params);
+        $result = array();
+        if (!empty($data)) {
+            /** @var $d \Account\Entity\Account */
+            foreach ($data as $d) {
+                $entity = $d->getData();
+                $companies = $this->companyModel->fetchAll(array('ownerAccUuid' => $entity['uuid']));
+                array_push($result, new AccountEntity($entity, $companies));
             }
-            $adapter = new ArrayAdapter($resultArray);
-            $collection = new AccountCollection($adapter);
-        } else {
-            return ApiStaticErrorList::getError(404);
         }
-        if(!empty($collection)) {
-            return $collection;
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+
+        return new AccountCollection(new ArrayAdapter($result));
     }
 
     /**

@@ -38,13 +38,13 @@ class Account
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
      */
-    protected $created_at;
+    protected $created;
 
     /**
      * @Gedmo\Timestampable(on="update")
      * @ODM\Date
      */
-    protected $updated_at;
+    protected $updated;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -80,8 +80,12 @@ class Account
     public function getData()
     {
         $data = array();
-        foreach(array_keys(get_class_vars(__CLASS__)) as $key){
-            $data[$key]=$this->$key;
+        foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
+            if ('created' == $key) {
+                $data['created_at'] = $this->created->getTimestamp();
+                continue;
+            }
+            $data[$key] = $this->$key;
         }
         return $data;
     }
