@@ -1,46 +1,51 @@
 <?php
 namespace Api\V1\Rest\Account;
 
-class AccountEntity {
+class AccountEntity
+{
     protected $account_uuid;
     protected $title;
     protected $created_at;
     protected $_embedded;
 
-    public function __construct(array $entity = null,$companies = null){
-        if(!empty($entity)) {
+    public function __construct(array $entity = null, $companies = null)
+    {
+        if (!empty($entity)) {
             $this->setData($entity);
-            $this->account_uuid=$entity['uuid'];
-            if(!empty($companies)) {
-                $this->_embedded = array('companies'=>array());
+            $this->account_uuid = $entity['uuid'];
+            if (!empty($companies)) {
+                $this->_embedded = array('companies' => array());
                 $this->setEmbedded($companies);
             }
         }
     }
 
-    public function setData($data) {
+    public function setData($data)
+    {
 
-        if($data !== null && is_array($data)){
-            foreach(array_keys(get_class_vars(__CLASS__)) as $key) {
-                if(isset($data[$key]) && ($key!='id')  ){
+        if ($data !== null && is_array($data)) {
+            foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
+                if (isset($data[$key]) && ($key != 'id')) {
                     $this->$key = $data[$key];
                 }
             }
         }
-        if(!empty($this->created_at)) {
-            $this->created_at=$this->created_at->getTimestamp();
+        if (!empty($this->created)) {
+            $this->created_at = $this->created->getTimestamp();
         }
         return $this;
 
     }
 
-    public function getData() {
+    public function getData()
+    {
         $data = array();
-        foreach(array_keys(get_class_vars(__CLASS__)) as $key){
-            $data[$key]=$this->$key;
+        foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
+            $data[$key] = $this->$key;
         }
         return $data;
     }
+
     public function getTitle()
     {
         return $this->title;
@@ -57,15 +62,16 @@ class AccountEntity {
         return $this;
     }
 
-    public function setEmbedded($companies){
-        foreach($companies as $com) {
-            $arr= array(
+    public function setEmbedded($companies)
+    {
+        foreach ($companies as $com) {
+            $arr = array(
                 '_links' => array(
                     'self' => array(
-                        'href' => '/api/accounts/'.$this->account_uuid.'/companies/'.$com->getUuid()
+                        'href' => '/api/accounts/' . $this->account_uuid . '/companies/' . $com->getUuid()
                     )
                 ),
-                'title' => $com->getProperty().' '.$com->getShort(),
+                'title' => $com->getProperty() . ' ' . $com->getShort(),
                 'company_uuid' => $com->getUuid()
 
             );
@@ -73,7 +79,9 @@ class AccountEntity {
         }
         return $this;
     }
-    public function getEmbedded(){
+
+    public function getEmbedded()
+    {
         return $this->_embedded;
     }
 }

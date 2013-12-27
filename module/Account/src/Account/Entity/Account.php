@@ -15,7 +15,7 @@ class Account
 {
     public function __construct()
     {
-        $this->lastItemNumber=0;
+        $this->lastItemNumber = 0;
     }
 
     /**
@@ -64,27 +64,28 @@ class Account
      * @ODM\Date
      */
     protected $deletedAt;
-    public function setData($data) {
 
-            if($data !== null && is_array($data)){
-                foreach(array_keys(get_class_vars(__CLASS__)) as $key) {
-                    if(isset($data[$key]) && ($key!='id') && ($key!='uuid') ){
-
-                        $this->$key = $data[$key];
-                    }
+    public function setData($data)
+    {
+        if ($data !== null && is_array($data)) {
+            foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
+                if (isset($data[$key]) && ($key != 'id') && ($key != 'uuid')) {
+                    $this->$key = $data[$key];
                 }
             }
+        }
         return $this;
-
     }
 
-    public function getData() {
+    public function getData()
+    {
         $data = array();
         foreach(array_keys(get_class_vars(__CLASS__)) as $key){
             $data[$key]=$this->$key;
         }
         return $data;
     }
+
     /**
      * @return mixed
      */
@@ -115,6 +116,8 @@ class Account
      * Set id.
      *
      * @param int $id
+     *
+     * @return $this
      */
     public function setId($id)
     {
@@ -136,7 +139,8 @@ class Account
      * Set activated.
      *
      * @param string $activated
-     * @return UserInterface
+     *
+     * @return $this
      */
     public function setActivated($activated)
     {
@@ -178,7 +182,7 @@ class Account
      * Set title.
      *
      * @param string $title
-     * @return AccountInterface
+     * @return $this
      */
 
     public function setTitle($title)
@@ -201,7 +205,8 @@ class Account
      * Set type.
      *
      * @param string $type
-     * @return AccountInterface
+     *
+     * @return $this
      */
     public function setType($type)
     {
