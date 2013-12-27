@@ -1,6 +1,9 @@
 <?php
 namespace Api\V1\Rest\Account;
 
+use Account\Model\AccountModel;
+use Account\Model\CompanyModel;
+use Account\Model\CompanyUserModel;
 use Application\Service\AuthorizationServiceAwareInterface;
 use ZF\Rest\AbstractResourceListener;
 use Zend\Paginator\Adapter\ArrayAdapter;
@@ -11,8 +14,17 @@ use ZfcRbac\Service\AuthorizationService;
 
 class AccountResource extends AbstractResourceListener implements AuthorizationServiceAwareInterface
 {
+    /**
+     * @var AccountModel
+     */
     protected $accountModel;
+    /**
+     * @var CompanyUserModel
+     */
     protected $companyUserModel;
+    /**
+     * @var CompanyModel
+     */
     protected $companyModel;
     /**
      * @var \User\Entity\User
@@ -24,11 +36,11 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
      */
     protected $authorizationService;
 
-    public function __construct($accountModel = null,$companyUserModel = null, $companyModel = null, $userEntity=null)
+    public function __construct($accountModel = null, $companyUserModel = null, $companyModel = null, $userEntity = null)
     {
         $this->accountModel = $accountModel;
         $this->companyUserModel = $companyUserModel;
-        $this->companyModel=$companyModel;
+        $this->companyModel = $companyModel;
         $this->userEntity = $userEntity;
     }
 
@@ -36,6 +48,8 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
      * Create a resource
      *
      * @param  mixed $data
+     *
+     * @throws \ZfcRbac\Exception\UnauthorizedException
      * @return ApiProblem|AccountEntity
      */
     public function create($data)
@@ -56,12 +70,13 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
      * Delete a resource
      *
      * @param  mixed $id
+     *
      * @return ApiProblem|mixed
      */
     public function delete($id)
     {
-        $data=$this->accountModel->delete($id);
-        if(!empty($data)) {
+        $data = $this->accountModel->delete($id);
+        if (!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);
@@ -72,6 +87,7 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
      * Delete a collection, or members of a collection
      *
      * @param  mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function deleteList($data)
@@ -83,15 +99,16 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
      * Fetch a resource
      *
      * @param  mixed $id
+     *
      * @return ApiProblem|mixed
      */
     public function fetch($id)
     {
-        $data=$this->accountModel->fetch(array('uuid'=>$id,'activated' => '1','deletedAt' => null));
-        if(!empty($data)) {
-            $dataArray=$data->getData();
-            $dataCompanies=$this->companyModel->fetchAll(array('ownerAccUuid' => $dataArray['uuid']));
-            return new AccountEntity($dataArray,$dataCompanies);
+        $data = $this->accountModel->fetch(array('uuid' => $id, 'activated' => '1', 'deletedAt' => null));
+        if (!empty($data)) {
+            $dataArray = $data->getData();
+            $dataCompanies = $this->companyModel->fetchAll(array('ownerAccUuid' => $dataArray['uuid']));
+            return new AccountEntity($dataArray, $dataCompanies);
         } else {
             return ApiStaticErrorList::getError(404);
         }
@@ -101,26 +118,23 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
      * Fetch all or a subset of resources
      *
      * @param  array $params
+     *
      * @return ApiProblem|mixed
      */
     public function fetchAll($params = array())
     {
-        $data=$this->accountModel->fetchAll($params);
-        if(!empty($data)) {
-            $resultArray=array();
-            foreach($data as $d) {
-                array_push($resultArray,new AccountEntity($d->getData()));
+        $data = $this->accountModel->fetchAll($params);
+        $result = array();
+        if (!empty($data)) {
+            /** @var $d \Account\Entity\Account */
+            foreach ($data as $d) {
+                $entity = $d->getData();
+                $companies = $this->companyModel->fetchAll(array('ownerAccUuid' => $entity['uuid']));
+                array_push($result, new AccountEntity($entity, $companies));
             }
-            $adapter = new ArrayAdapter($resultArray);
-            $collection = new AccountCollection($adapter);
-        } else {
-            return ApiStaticErrorList::getError(404);
         }
-        if(!empty($collection)) {
-            return $collection;
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+
+        return new AccountCollection(new ArrayAdapter($result));
     }
 
     /**
@@ -128,6 +142,7 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
      *
      * @param  mixed $id
      * @param  mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function patch($id, $data)
@@ -139,6 +154,7 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
      * Replace a collection or members of a collection
      *
      * @param  mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function replaceList($data)
@@ -151,13 +167,14 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
      *
      * @param  mixed $id
      * @param  mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function update($id, $data)
     {
-        $data=$this->accountModel->createOrUpdate(get_object_vars($data),$id);
+        $data = $this->accountModel->createOrUpdate(get_object_vars($data), $id);
         //тут еще функция, надо узнать как данные будут получаться
-        if(!empty($data)) {
+        if (!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);
