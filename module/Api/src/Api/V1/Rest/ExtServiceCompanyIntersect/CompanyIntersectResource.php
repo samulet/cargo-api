@@ -41,9 +41,7 @@ class CompanyIntersectResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        if (empty($data->company)) {
-
-        }
+        $this->intersectModel->setInternalCompanyModel($this->companyModel);
         $entity = $this->intersectModel->addCompanyIntersect(get_object_vars($data));
         if (empty($entity)) {
             return false;

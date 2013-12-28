@@ -2,6 +2,8 @@
 
 namespace ExtService\Model;
 
+use Account\Entity\Company;
+use Account\Model\CompanyModel;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use QueryBuilder\Model\QueryBuilderModel;
 
@@ -19,6 +21,10 @@ class ExternalCompanyIntersectModel
      * @var ExternalCompanyModel
      */
     protected $externalCompanyModel;
+    /**
+     * @var \Account\Model\CompanyModel
+     */
+    protected $internalCompanyModel;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -37,6 +43,20 @@ class ExternalCompanyIntersectModel
         $object = $this->externalCompanyModel->fetch(array('source' => $data['source'], 'id' => $data['id']));
         if (empty($object)) {
             return false;
+        }
+        if (empty($data['company'])) {
+            $companyData = array(
+                'short' => $object->getName(),
+                'name' => $object->getFullName(),
+                'inn' => $object->getInn(),
+                'kpp' => $object->getKpp(),
+            );
+            /** @var Company $companyEntity */
+            $companyEntity = $this->internalCompanyModel->createOrUpdate($companyData, null);
+            if (empty($companyEntity)) {
+                return false;
+            }
+            $data['company'] = $companyEntity->getUuid();
         }
         $object->setLink($data['company']);
         $this->documentManager->persist($object);
@@ -72,5 +92,21 @@ class ExternalCompanyIntersectModel
     public function getExternalCompanyModel()
     {
         return $this->externalCompanyModel;
+    }
+
+    /**
+     * @param \Account\Model\CompanyModel $internalCompanyModel
+     */
+    public function setInternalCompanyModel(CompanyModel $internalCompanyModel)
+    {
+        $this->internalCompanyModel = $internalCompanyModel;
+    }
+
+    /**
+     * @return \Account\Model\CompanyModel
+     */
+    public function getInternalCompanyModel()
+    {
+        return $this->internalCompanyModel;
     }
 }
