@@ -1,12 +1,12 @@
 <?php
 namespace Api\V1\Rest\ExtServiceCompany;
 
+use Api\Entity\ApiStaticErrorList;
 use ExtService\Model\ExternalCompanyImportModel;
 use User\Entity\User;
+use Zend\Paginator\Adapter\ArrayAdapter;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
-use Api\Entity\ApiStaticErrorList;
-use Zend\Paginator\Adapter\ArrayAdapter;
 
 class ExtServiceCompanyResource extends AbstractResourceListener
 {
@@ -66,12 +66,7 @@ class ExtServiceCompanyResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $data=$this->extServiceCompanyImportModel->getInformationFromOnlineByOnlineName($id);
-        if(!empty($data)) {
-            return new ExtServiceCompanyEntity($data);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
     }
 
     /**
