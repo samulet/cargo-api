@@ -5,7 +5,7 @@ use Zend\Stdlib\ArraySerializableInterface;
 
 class ExtServiceCompanyIntersectEntity implements ArraySerializableInterface
 {
-    protected $external_service_company_intersect_id;
+    protected $code;
     protected $id;
     protected $source;
     protected $name;
@@ -15,7 +15,6 @@ class ExtServiceCompanyIntersectEntity implements ArraySerializableInterface
     {
         if (!empty($entity)) {
             $this->setData($entity);
-            $this->external_service_company_intersect_id=$entity['source'].'/'.$entity['id'];
         }
     }
 
@@ -23,14 +22,13 @@ class ExtServiceCompanyIntersectEntity implements ArraySerializableInterface
     {
         if ($data !== null && is_array($data)) {
             foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
-                if (isset($data[$key]) ) {
+                if (isset($data[$key])) {
                     $this->$key = $data[$key];
                 }
             }
         }
 
         return $this;
-
     }
 
     public function getData()
@@ -40,26 +38,26 @@ class ExtServiceCompanyIntersectEntity implements ArraySerializableInterface
             $data[$key] = $this->$key;
         }
         if (!empty($this->created_at)) {
-            $this->created_at=$this->created_at->getTimestamp();
+            $this->created_at = $this->created_at->getTimestamp();
         }
 
         return $data;
     }
 
     /**
-     * @param string $external_service_place_intersect_id
+     * @param string $code
      */
-    public function setExternalServicePlaceIntersectId($external_service_place_intersect_id)
+    public function setCode($code)
     {
-        $this->external_service_place_intersect_id = $external_service_place_intersect_id;
+        $this->code = $code;
     }
 
     /**
      * @return string
      */
-    public function getExternalServicePlaceIntersectId()
+    public function getCode()
     {
-        return $this->external_service_place_intersect_id;
+        return $this->code;
     }
 
     /**

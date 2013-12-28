@@ -95,15 +95,15 @@ return [
         'role_providers' => [
             'ZfcRbac\Role\InMemoryRoleProvider' => [
                 'user',
-                'system.admin' => 'system.moderator',
-                'system.moderator' => 'system',
                 'system' => 'user',
+                'system.moderator' => 'system',
+                'system.admin' => 'system.moderator',
                 'account' => 'user',
                 'account.admin' => 'account',
+                'company' => 'user',
                 'company.admin' => 'company',
                 'company.manager' => 'company',
                 'company.dispatcher' => 'company',
-                'company' => 'user',
             ]
         ],
 

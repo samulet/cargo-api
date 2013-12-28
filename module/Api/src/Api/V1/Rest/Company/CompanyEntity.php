@@ -35,7 +35,6 @@ class CompanyEntity
             $this->setData($entity);
             $this->uuid = $entity['uuid'];
         }
-        error_log(print_r($this,1));
     }
 
     public function setData($data)

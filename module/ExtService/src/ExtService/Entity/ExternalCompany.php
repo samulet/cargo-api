@@ -35,6 +35,11 @@ class ExternalCompany
      * @var string
      * @ODM\Field(type="string")
      */
+    protected $code;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
     protected $ownerId;
     /**
      * @var string
@@ -449,6 +454,7 @@ class ExternalCompany
                     $this->$key = $data[$key];
                 }
             }
+            $this->code = sprintf('%s-%s', $this->source, $this->id);
         }
 
         return $this;
@@ -463,6 +469,22 @@ class ExternalCompany
         }
 
         return $data;
+    }
+
+    /**
+     * @param string $code
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
     }
 
     /**
