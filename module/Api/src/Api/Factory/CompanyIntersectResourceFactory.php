@@ -2,7 +2,7 @@
 namespace Api\Factory;
 
 use Api\V1\Rest\AccessDenied\AccessDeniedResource;
-use Api\V1\Rest\ExtServiceCompanyIntersect\ExtServiceCompanyIntersectResource as IntersectController;
+use Api\V1\Rest\ExtServiceCompanyIntersect\CompanyIntersectResource as IntersectController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 

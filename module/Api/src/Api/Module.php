@@ -13,7 +13,7 @@ use Api\V1\Rest\ReferenceProductGroup\ReferenceProductGroupResource;
 use Api\V1\Rest\Reference\ReferenceResource;
 use Api\V1\Rest\Cargo\CargoResource;
 use Api\V1\Rest\ExtServiceCompany\ExtServiceCompanyResource;
-use Api\V1\Rest\ExtServiceCompanyIntersect\ExtServiceCompanyIntersectResource;
+use Api\V1\Rest\ExtServiceCompanyIntersect\CompanyIntersectResource;
 use Api\V1\Rest\ExternalServicePlace\ExternalServicePlaceResource;
 use Api\V1\Rest\ExternalServicePlaceIntersect\ExternalServicePlaceIntersectResource;
 use Exception;

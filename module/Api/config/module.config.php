@@ -187,7 +187,7 @@ return array(
             'ExternalPunctIntersectModel' => 'ExtService\Factory\ExternalPunctIntersectModelFactory',
             'ExternalPunctImportModel' => 'ExtService\Factory\ExternalPunctImportModelFactory',
             'Api\\V1\\Rest\\Account\\AccountResource' => 'Api\\Factory\\AccountResource',
-            'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectResource' => 'Api\\Factory\\CompanyIntersectResourceFactory',
+            'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\CompanyIntersectResource' => 'Api\\Factory\\CompanyIntersectResourceFactory',
         ),
     ),
     'zf-rest' => array(
@@ -517,7 +517,7 @@ return array(
             'collection_class' => 'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyCollection',
         ),
         'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\Controller' => array(
-            'listener' => 'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectResource',
+            'listener' => 'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\CompanyIntersectResource',
             'route_name' => 'api.rest.ext-service-company-intersect',
             'identifier_name' => 'code',
             'collection_name' => 'companies',

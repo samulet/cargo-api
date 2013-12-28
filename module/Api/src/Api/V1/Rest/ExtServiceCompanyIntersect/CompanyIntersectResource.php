@@ -8,7 +8,7 @@ use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 use Zend\Paginator\Adapter\ArrayAdapter;
 
-class ExtServiceCompanyIntersectResource extends AbstractResourceListener
+class CompanyIntersectResource extends AbstractResourceListener
 {
     /**
      * @var ExternalCompanyIntersectModel
