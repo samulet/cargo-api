@@ -99,11 +99,11 @@ class AccountCompanyResource extends AbstractResourceListener
         $resultArray = array();
         if (!empty($data)) {
             foreach ($data as $d) {
-                array_push($resultArray, new Company\CompanyEntity($d->getData()));
+                array_push($resultArray, new AccountCompanyEntity($d->getData()));
             }
         }
 
-        return new Company\CompanyCollection(new ArrayAdapter($resultArray));
+        return new AccountCompanyCollection(new ArrayAdapter($resultArray));
     }
 
     /**
