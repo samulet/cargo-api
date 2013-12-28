@@ -32,12 +32,11 @@ class ExtServiceCompanyIntersectResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $data = get_object_vars($data);
-        if (!empty($this->externalCompanyIntersectModel->addCompanyIntersect($data))) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
+        $entity = $this->externalCompanyIntersectModel->addCompanyIntersect(get_object_vars($data));
+        if (empty($entity)) {
+            return false;
         }
+        return new ExtServiceCompanyIntersectEntity($entity->getData());
     }
 
     /**
@@ -48,7 +47,11 @@ class ExtServiceCompanyIntersectResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        $source = $this->getEvent()->getRouteParam('source');
+        // если в $id нет "-" или он в начале строки - завершаем работу
+        if (0 == strpos($id, '-')) {
+            return false;
+        }
+        list($source, $id) = explode('-', $id);
         return $this->externalCompanyIntersectModel->deleteCompanyIntersect($source, $id);
     }
 
@@ -83,15 +86,13 @@ class ExtServiceCompanyIntersectResource extends AbstractResourceListener
     public function fetchAll($params = array())
     {
         $data = $this->externalCompanyIntersectModel->getExternalCompanyModel()->fetchAll($params);
-        if (empty($data)) {
-            return ApiStaticErrorList::getError(404);
-        }
-
         $result = array();
         foreach ($data as $d) {
-            array_push($result, new ExtServiceCompanyIntersectEntity($d->getData()));
+            $entity = $d->getData();
+            array_push($result, new ExtServiceCompanyIntersectEntity($entity));
         }
-        return new ExtServiceCompanyIntersectCollection(new ArrayAdapter($result));
+        $collection = new ExtServiceCompanyIntersectCollection(new ArrayAdapter($result));
+        return $collection;
     }
 
     /**

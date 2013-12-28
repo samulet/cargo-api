@@ -122,7 +122,7 @@ return array(
             'api.rest.ext-service-company-intersect' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/service/import/company-intersect[/:source][/:id]',
+                    'route' => '/api/service/import/company-intersect[/:code]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\Controller',
                     ),
@@ -518,8 +518,8 @@ return array(
         'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectResource',
             'route_name' => 'api.rest.ext-service-company-intersect',
-            'identifier_name' => 'id',
-            'collection_name' => 'external_service_company_intersect',
+            'identifier_name' => 'code',
+            'collection_name' => 'companies',
             'resource_http_methods' => array(
                 0 => 'GET',
                 1 => 'PATCH',
@@ -930,12 +930,12 @@ return array(
                 'is_collection' => true,
             ),
             'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectEntity' => array(
-                'identifier_name' => 'id',
+                'identifier_name' => 'code',
                 'route_name' => 'api.rest.ext-service-company-intersect',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectCollection' => array(
-                'identifier_name' => 'id',
+                'identifier_name' => 'code',
                 'route_name' => 'api.rest.ext-service-company-intersect',
                 'is_collection' => true,
             ),

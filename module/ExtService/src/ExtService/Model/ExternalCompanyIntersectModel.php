@@ -41,7 +41,7 @@ class ExternalCompanyIntersectModel
         $object->setLink($data['company']);
         $this->documentManager->persist($object);
         $this->documentManager->flush();
-        return true;
+        return $object;
     }
 
     public function deleteCompanyIntersect($source, $id)

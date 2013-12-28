@@ -694,21 +694,12 @@ API предназначено для взаимодействием с учет
             },
             "companies": [
                 {
+                    "code": "vesta-123",
                     "id": 123,
                     "source": "vesta",
                     "name": "ООО Талосто",
                     "link": "5e292178-523e-11e3-a4e4-080027ab4d7b" // uuid связанной компании
                 }
-            ]
-        }
-
-+ Response 404 (application/hal+json)
-
-        {
-            "_links": {
-                "self": { "href": "/api/service/import/company-intersect" }
-            },
-            "companies": [
             ]
         }
 
@@ -722,14 +713,28 @@ API предназначено для взаимодействием с учет
             "company": "5e292178-523e-11e3-a4e4-080027ab4d7b"
         }
 
-+ Response 202
++ Response 201
 
-# Modify companies link with external records [/service/import/company-intersect{/source}{/id}]
+        {
+            "_links": {
+                "self": { "href": "/api/service/import/company-intersect" }
+            },
+            "companies": [
+                {
+                    "code": "vesta-123",
+                    "id": 123,
+                    "source": "vesta",
+                    "name": "ООО Талосто",
+                    "link": "5e292178-523e-11e3-a4e4-080027ab4d7b" // uuid связанной компании
+                }
+            ]
+        }
+
+# Modify companies link with external records [/service/import/company-intersect{/source-id}]
 Ресурс для изменения связей между юридическими лицами, импортированными из систем "Онлайн", и юридическими лицами Cargo.
 
 + Parameters
-    + source (required, string, `vesta`) ... Код внешней системы (Онлайн-а)
-    + id (required, integer, `123`) ... Идентификатор юридического лица во внешней системе
+    + source (required, string, `vesta-123`) ... Идентификатор импортированной компании. Состоит из кода внешней системы (Онлайн-а) и идентификатора компании в той системе, из которой была импортирована запись
 
 ## Удаление связи между юридическими лицами [DELETE]
 
