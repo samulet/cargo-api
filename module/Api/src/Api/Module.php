@@ -255,30 +255,6 @@ class Module implements ApigilityModuleInterface
                         return new AccessDeniedResource();
                     }
                 },
-                'Api\V1\Rest\ExtServiceCompanyIntersect\ExtServiceCompanyIntersectResource' => function ($sm) {
-
-                    /** @var \Zend\Http\Header\GenericHeader $authToken */
-                    try {
-                        $authToken = $sm->get('request')->getHeaders()->get('X-Auth-UserToken');
-                    } catch (Exception $e) {
-                        return new AccessDeniedResource();
-                    }
-                    /** @var \AuthToken\Model\AuthToken $AuthTokenModel */
-                    $AuthTokenModel = $sm->get('AuthToken\\Model\\AuthToken');
-                    if(!empty($authToken)) {
-                        $tokenEntity = $AuthTokenModel->fetch($authToken->getFieldValue());
-                    } else {
-                        return new AccessDeniedResource();
-                    }
-                    if (!empty($tokenEntity)) {
-                        return new ExtServiceCompanyIntersectResource(
-                            $sm->get('ExternalCompanyIntersectModel'),
-                            $tokenEntity->getUser()
-                        );
-                    } else {
-                        return new AccessDeniedResource();
-                    }
-                },
                 'Api\V1\Rest\ExternalServicePlace\ExternalServicePlaceResource' => function ($sm) {
                     /** @var \Zend\Http\Header\GenericHeader $authToken */
                     try {

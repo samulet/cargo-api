@@ -187,6 +187,7 @@ return array(
             'ExternalPunctIntersectModel' => 'ExtService\Factory\ExternalPunctIntersectModelFactory',
             'ExternalPunctImportModel' => 'ExtService\Factory\ExternalPunctImportModelFactory',
             'Api\\V1\\Rest\\Account\\AccountResource' => 'Api\\Factory\\AccountResource',
+            'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectResource' => 'Api\\Factory\\CompanyIntersectResourceFactory',
         ),
     ),
     'zf-rest' => array(
