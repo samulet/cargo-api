@@ -2,9 +2,7 @@
 
 namespace QueryBuilder\Model;
 
-use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\EventManager;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use Exception;
