@@ -1,32 +1,24 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: solov
- * Date: 4/24/13
- * Time: 1:35 PM
- * To change this template use File | Settings | File Templates.
- */
-
 namespace Account\Model;
 
-
-use Doctrine\MongoDB\Connection;
-use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
-use Doctrine\ODM\MongoDB\Id\UuidGenerator;
+use QueryBuilder\Model\QueryBuilderModel;
 
 class CompanyModel
 {
+    /**
+     * @var \Doctrine\ODM\MongoDB\DocumentManager
+     */
     protected $documentManager;
-    protected $uuidGenerator;
+    /**
+     * @var \QueryBuilder\Model\QueryBuilderModel
+     */
     protected $queryBuilderModel;
 
-    public function __construct(DocumentManager $documentManager,$queryBuilderModel)
+    public function __construct(DocumentManager $documentManager, $queryBuilderModel)
     {
-        $this->uuidGenerator = new UuidGenerator();
-        $this->documentManager=$documentManager;
-        $this->queryBuilderModel=$queryBuilderModel;
+        $this->documentManager = $documentManager;
+        $this->queryBuilderModel = $queryBuilderModel;
     }
 
     /**
@@ -37,8 +29,9 @@ class CompanyModel
      *
      * @return \Account\Entity\Company|null
      */
-    public function createOrUpdate($data, $uuid = null) {
-        return $this->queryBuilderModel->createOrUpdate('Account\Entity\Company',$data,$uuid);
+    public function createOrUpdate($data, $uuid = null)
+    {
+        return $this->queryBuilderModel->createOrUpdate('Account\Entity\Company', $data, $uuid);
     }
 
     /**
@@ -48,8 +41,9 @@ class CompanyModel
      *
      * @return \Account\Entity\Company|null
      */
-    public function fetch($findParams) {
-        return $this->queryBuilderModel->fetch('Account\Entity\Company',$findParams);
+    public function fetch($findParams)
+    {
+        return $this->queryBuilderModel->fetch('Account\Entity\Company', $findParams);
     }
 
     /**
@@ -59,23 +53,32 @@ class CompanyModel
      *
      * @return array(\Account\Entity\Company)|null
      */
-    public function fetchAll($findParams) {
-        return $this->queryBuilderModel->fetchAll('Account\Entity\Company',$findParams);
+    public function fetchAll($findParams)
+    {
+        return $this->queryBuilderModel->fetchAll('Account\Entity\Company', $findParams);
     }
 
     /**
      * Удалить юзера. При успехе возвращает uuid удаленой компании
      *
-     * @param string $uuid uuid компании
+     * @param $findParams
      *
      * @return string|null
      */
-    public function delete($findParams) {
-        return $this->queryBuilderModel->delete('Account\Entity\Company',$findParams);
+    public function delete($findParams)
+    {
+        return $this->queryBuilderModel->delete('Account\Entity\Company', $findParams);
     }
 
-
-    public function fillEntity($entityLink, $objectNew ,$objectOld) {
-        return $this->queryBuilderModel->fillEntity($entityLink,$objectNew,$objectOld);
+    /**
+     * @param $entityLink
+     * @param $objectNew
+     * @param $objectOld
+     *
+     * @return mixed
+     */
+    public function fillEntity($entityLink, $objectNew, $objectOld)
+    {
+        return $this->queryBuilderModel->fillEntity($entityLink, $objectNew, $objectOld);
     }
 }

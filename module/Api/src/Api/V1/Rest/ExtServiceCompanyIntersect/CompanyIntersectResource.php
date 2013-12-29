@@ -1,27 +1,36 @@
 <?php
 namespace Api\V1\Rest\ExtServiceCompanyIntersect;
 
+use Account\Model\CompanyModel;
 use ExtService\Model\ExternalCompanyIntersectModel;
+use User\Identity\IdentityProvider;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
-use Api\Entity\ApiStaticErrorList;
 use Zend\Paginator\Adapter\ArrayAdapter;
 
-class ExtServiceCompanyIntersectResource extends AbstractResourceListener
+class CompanyIntersectResource extends AbstractResourceListener
 {
     /**
      * @var ExternalCompanyIntersectModel
      */
-    protected $externalCompanyIntersectModel;
+    protected $intersectModel;
     /**
-     * @var \User\Entity\User
+     * @var CompanyModel
      */
-    protected $userEntity;
+    protected $companyModel;
+    /**
+     * @var \User\Identity\IdentityProvider
+     */
+    protected $identityProvider;
 
-    public function __construct($externalCompanyIntersectModel = null, $userEntity = null)
-    {
-        $this->externalCompanyIntersectModel = $externalCompanyIntersectModel;
-        $this->userEntity = $userEntity;
+    public function __construct(
+        ExternalCompanyIntersectModel $intersectModel,
+        CompanyModel $companyModel,
+        IdentityProvider $identityProvider
+    ) {
+        $this->intersectModel = $intersectModel;
+        $this->companyModel = $companyModel;
+        $this->identityProvider = $identityProvider;
     }
 
     /**
@@ -32,7 +41,8 @@ class ExtServiceCompanyIntersectResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $entity = $this->externalCompanyIntersectModel->addCompanyIntersect(get_object_vars($data));
+        $this->intersectModel->setInternalCompanyModel($this->companyModel);
+        $entity = $this->intersectModel->addCompanyIntersect(get_object_vars($data));
         if (empty($entity)) {
             return false;
         }
@@ -52,7 +62,7 @@ class ExtServiceCompanyIntersectResource extends AbstractResourceListener
             return false;
         }
         list($source, $id) = explode('-', $id);
-        return $this->externalCompanyIntersectModel->deleteCompanyIntersect($source, $id);
+        return $this->intersectModel->deleteCompanyIntersect($source, $id);
     }
 
     /**
@@ -85,7 +95,7 @@ class ExtServiceCompanyIntersectResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data = $this->externalCompanyIntersectModel->getExternalCompanyModel()->fetchAll($params);
+        $data = $this->intersectModel->getExternalCompanyModel()->fetchAll($params);
         $result = array();
         foreach ($data as $d) {
             $entity = $d->getData();

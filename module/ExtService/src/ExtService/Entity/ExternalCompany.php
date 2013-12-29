@@ -58,7 +58,7 @@ class ExternalCompany
     protected $name;
     /**
      * @var string
-     * @ODM\Field(type="string")
+     * @ODM\Field(type="string", name="full_name")
      */
     protected $fullName;
     /**
