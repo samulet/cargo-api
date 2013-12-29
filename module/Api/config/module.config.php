@@ -113,7 +113,7 @@ return array(
             'api.rest.ext-service-company' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/service/import/company[/:external_code]',
+                    'route' => '/api/service/import/company[/:code]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\ExtServiceCompany\\Controller',
                     ),
@@ -494,7 +494,7 @@ return array(
         'Api\\V1\\Rest\\ExtServiceCompany\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyResource',
             'route_name' => 'api.rest.ext-service-company',
-            'identifier_name' => 'external_code',
+            'identifier_name' => 'code',
             'collection_name' => 'ext_service_company',
             'resource_http_methods' => array(
                 0 => 'GET',
@@ -921,12 +921,12 @@ return array(
                 'is_collection' => true,
             ),
             'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyEntity' => array(
-                'identifier_name' => 'external_code',
+                'identifier_name' => 'code',
                 'route_name' => 'api.rest.ext-service-company',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyCollection' => array(
-                'identifier_name' => 'external_code',
+                'identifier_name' => 'code',
                 'route_name' => 'api.rest.ext-service-company',
                 'is_collection' => true,
             ),

@@ -79,14 +79,14 @@ class ExternalCompanyImportModel
                 if (!is_string($res)) {
                     $res = array(
                         'stat' => $res,
-                        'external_code' => $onlineName,
+                        'code' => $onlineName,
                         'status' => 'success'
                     );
                 } else {
                     $res = array(
                         'reason' => $res,
                         'status' => 'fail',
-                        'external_code' => $onlineName
+                        'code' => $onlineName
                     );
                 }
                 array_push($resultArray, $res);
