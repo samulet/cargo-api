@@ -21,7 +21,7 @@ return array(
         'vesta' => array(
             'http://vesta2.altlog.ru' => 'a8ER5Kh8dQi3EYnK'
         ),
-        'device' => array(
+        'dievas' => array(
             'http://dievas.altlog.ru' => 'BAK6bH8R8N6QRKTQ'
         ),
         'prodrezerv' => array(
