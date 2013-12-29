@@ -1,10 +1,10 @@
 <?php
 namespace Api\V1\Rest\ExternalServicePlace;
 
-use ZF\ApiProblem\ApiProblem;
-use ZF\Rest\AbstractResourceListener;
 use Api\Entity\ApiStaticErrorList;
 use Zend\Paginator\Adapter\ArrayAdapter;
+use ZF\ApiProblem\ApiProblem;
+use ZF\Rest\AbstractResourceListener;
 
 class ExternalServicePlaceResource extends AbstractResourceListener
 {
@@ -14,7 +14,7 @@ class ExternalServicePlaceResource extends AbstractResourceListener
      */
     protected $userEntity;
 
-    public function __construct($externalPlaceImportModel = null,$userEntity=null)
+    public function __construct($externalPlaceImportModel = null, $userEntity = null)
     {
         $this->externalPlaceImportModel = $externalPlaceImportModel;
         $this->userEntity = $userEntity;
@@ -61,8 +61,8 @@ class ExternalServicePlaceResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $data=$this->externalPlaceImportModel->getInformationFromOnlineByOnlineName($id);
-        if(!empty($data)) {
+        $data = $this->externalPlaceImportModel->getInformationFromOnlineByOnlineName($id);
+        if (!empty($data)) {
             return new ExternalServicePlaceEntity($data);
         } else {
             return ApiStaticErrorList::getError(404);
@@ -77,11 +77,11 @@ class ExternalServicePlaceResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data=$this->externalPlaceImportModel->getInformationFromAllOnline();
-        if(!empty($data)) {
-            $resultArray=array();
-            foreach($data as $d) {
-                array_push($resultArray,new ExternalServicePlaceEntity($d));
+        $data = $this->externalPlaceImportModel->getInformationFromAllOnline();
+        if (!empty($data)) {
+            $resultArray = array();
+            foreach ($data as $d) {
+                array_push($resultArray, new ExternalServicePlaceEntity($d));
             }
             $adapter = new ArrayAdapter($resultArray);
             return new ExternalServicePlaceCollection($adapter);
