@@ -146,6 +146,15 @@ return array(
                     ),
                 ),
             ),
+            'api.rest.places' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/api/places[/:uuid]',
+                    'defaults' => array(
+                        'controller' => 'Api\\V1\\Rest\\Places\\Controller',
+                    ),
+                ),
+            ),
         ),
     ),
     'zf-versioning' => array(
@@ -167,6 +176,7 @@ return array(
             14 => 'api.rest.ext-service-company-intersect',
             15 => 'api.rest.external-service-place',
             16 => 'api.rest.external-service-place-intersect',
+            17 => 'api.rest.places',
         ),
     ),
     'service_manager' => array(
@@ -188,6 +198,7 @@ return array(
             'ExternalPunctImportModel' => 'ExtService\\Factory\\ExternalPunctImportModelFactory',
             'Api\\V1\\Rest\\Account\\AccountResource' => 'Api\\Factory\\AccountResource',
             'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\CompanyIntersectResource' => 'Api\\Factory\\CompanyIntersectResourceFactory',
+            'Api\\V1\\Rest\\Places\\PlacesResource' => 'Api\\Factory\\PlacesResourceFactory',
         ),
     ),
     'zf-rest' => array(
@@ -589,6 +600,30 @@ return array(
             'entity_class' => 'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\ExternalServicePlaceIntersectEntity',
             'collection_class' => 'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\ExternalServicePlaceIntersectCollection',
         ),
+        'Api\\V1\\Rest\\Places\\Controller' => array(
+            'listener' => 'Api\\V1\\Rest\\Places\\PlacesResource',
+            'route_name' => 'api.rest.places',
+            'identifier_name' => 'uuid',
+            'collection_name' => 'places',
+            'resource_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+            ),
+            'collection_query_whitelist' => array(
+                0 => 'filter',
+                1 => 'sort',
+            ),
+            'page_size' => 25,
+            'page_size_param' => 'p',
+            'entity_class' => 'Api\\V1\\Rest\\Places\\PlacesEntity',
+            'collection_class' => 'Api\\V1\\Rest\\Places\\PlacesCollection',
+        ),
     ),
     'zf-content-negotiation' => array(
         'controllers' => array(
@@ -609,6 +644,7 @@ return array(
             'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\ExternalServicePlace\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\Controller' => 'HalJson',
+            'Api\\V1\\Rest\\Places\\Controller' => 'HalJson',
         ),
         'accept-whitelist' => array(
             'Api\\V1\\Rest\\Account\\Controller' => array(
@@ -738,6 +774,11 @@ return array(
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ),
+            'Api\\V1\\Rest\\Places\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
         ),
         'content_type_whitelist' => array(
             'Api\\V1\\Rest\\ResourceMeta\\Controller' => array(
@@ -791,6 +832,10 @@ return array(
                 1 => 'application/json',
             ),
             'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\Places\\Controller' => array(
                 0 => 'application/vnd.api.v1+json',
                 1 => 'application/json',
             ),
@@ -957,6 +1002,15 @@ return array(
                 'identifier_name' => 'code',
                 'route_name' => 'api.rest.external-service-place-intersect',
                 'is_collection' => true,
+            ),
+            'Api\\V1\\Rest\\Places\\PlacesEntity' => array(
+                'identifier_name' => 'uuid',
+                'route_name' => 'api.rest.places',
+                'hydrator' => 'arrayserializable',
+            ),
+            'Api\\V1\\Rest\\Places\\PlacesCollection' => array(
+                'identifier_name' => 'uuid',
+                'route_name' => 'api.rest.places',
             ),
         ),
     ),
