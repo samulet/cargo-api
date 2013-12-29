@@ -1,8 +1,14 @@
-// Пример создания индекса
-//db.getCollection("account").ensureIndex({
-//  "_id": NumberInt(1)
-//},[
-//]);
+db.getCollection("externalCompany").drop();
+db.getCollection("externalCompany").ensureIndex({
+    "source": 1,
+    "id": 1
+},{uniq:1});
+db.getCollection("externalPlace").drop();
+db.getCollection("externalPlace").ensureIndex({
+    "source": 1,
+    "type": 1,
+    "id": 1
+},{uniq:1});
 
 // account records
 db.getCollection("account").remove();

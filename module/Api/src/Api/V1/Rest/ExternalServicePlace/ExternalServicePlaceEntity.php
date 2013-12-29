@@ -3,7 +3,7 @@ namespace Api\V1\Rest\ExternalServicePlace;
 
 class ExternalServicePlaceEntity
 {
-    protected $external_code;
+    protected $code;
     protected $status;
     protected $stat = array();
     protected $reason;
@@ -28,19 +28,19 @@ class ExternalServicePlaceEntity
     }
 
     /**
-     * @param mixed $external_code
+     * @param mixed $code
      */
-    public function setExtServiceCompanyCode($external_code)
+    public function setCode($code)
     {
-        $this->external_code = $external_code;
+        $this->code = $code;
     }
 
     /**
      * @return mixed
      */
-    public function getExtServiceCompanyCode()
+    public function getCode()
     {
-        return $this->external_code;
+        return $this->code;
     }
 
     /**

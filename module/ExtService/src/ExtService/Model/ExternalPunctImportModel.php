@@ -5,7 +5,6 @@ namespace ExtService\Model;
 use Doctrine\MongoDB\Connection;
 use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use ExtService\Entity\ExternalPunct;
@@ -18,10 +17,6 @@ class ExternalPunctImportModel
      * @var \Doctrine\ODM\MongoDB\DocumentManager
      */
     protected $documentManager;
-    /**
-     * @var \Doctrine\ODM\MongoDB\Id\UuidGenerator
-     */
-    protected $uuidGenerator;
     /**
      * @var \QueryBuilder\Model\QueryBuilderModel
      */
@@ -41,7 +36,6 @@ class ExternalPunctImportModel
 
     public function __construct(DocumentManager $documentManager, $queryBuilderModel, $onlineProvider, $externalPunctModel)
     {
-        $this->uuidGenerator = new UuidGenerator();
         $this->documentManager = $documentManager;
         $this->queryBuilderModel = $queryBuilderModel;
         $this->onlineProvider = $onlineProvider;
@@ -58,14 +52,14 @@ class ExternalPunctImportModel
                 if (!is_string($res)) {
                     $res = array(
                         'stat' => $res,
-                        'ext_service_punct_code' => $onlineName,
-                        'status' => 'success'
+                        'status' => 'success',
+                        'code' => $onlineName,
                     );
                 } else {
                     $res = array(
                         'reason' => $res,
                         'status' => 'fail',
-                        'external_code' => $onlineName
+                        'code' => $onlineName,
                     );
                 }
                 array_push($resultArray, $res);
@@ -94,13 +88,9 @@ class ExternalPunctImportModel
 
     public function onlineChangeFindUpdate($places, $onlineCode)
     {
-        $resultArray = array(
-            'new' => 0,
-            'changed' => 0,
-            'exists' => 0,
-        );
+        $resultArray = array('new' => 0, 'changed' => 0, 'exists' => 0);
         $hydrator = new DoctrineHydrator($this->documentManager, 'ExtService\Entity\ExternalPunct');
-        ini_set('max_execution_time', 1000);
+
         foreach ($places as $res) {
             $resVars = get_object_vars($res);
             $resVars['source'] = $onlineCode;
@@ -115,7 +105,16 @@ class ExternalPunctImportModel
                 unset($resVars['net']);
             }
 
-            $resVars = array_map('strval', $resVars);
+            if (!empty($resVars['legal'])) {
+                $legalTmp = $resVars['legal'];
+                unset($resVars['legal']);
+            }
+
+            if (empty($resVars['type'])) {
+                $resVars['type'] = 'dp';
+            }
+
+            $resVars = array_map('strval', (array)$resVars);
             $resVars = $this->queryBuilderModel->camelCaseKeys($resVars);
 
             if (!empty($cityTmp)) {
@@ -128,23 +127,71 @@ class ExternalPunctImportModel
                 $resVars['net'] = $this->queryBuilderModel->camelCaseKeys($netTmp);
             }
 
-            $object = $this->externalPunctModel->fetch($resVars);
-            if (!empty($object)) {
-                $resultArray['exists']++;
+            if (!empty($legalTmp)) {
+                $legalTmp = array_map('strval', get_object_vars($legalTmp));
+                $resVars['legal'] = $this->queryBuilderModel->camelCaseKeys($legalTmp);
             } else {
-                $item = $this->externalPunctModel->fetch(array('id' => $resVars['id'], 'source' => $resVars['source']));
-                if (empty($item)) {
-                    $resultArray['new']++;
-                    $item = new ExternalPunct();
+                $resVars['legal'] = array();
+            }
+
+            $conditions = ['source' => $resVars['source'], 'type' => $resVars['type'], 'id' => $resVars['id']];
+            $object = $this->externalPunctModel->fetch($conditions);
+            if (!empty($object)) {
+                $distinction = $this->calculateDistriction($object, $resVars);
+                if (empty($distinction)) {
+                    $resultArray['exists']++;
+                    continue;
                 } else {
                     $resultArray['changed']++;
                 }
-                $item = $hydrator->hydrate($resVars, $item);
-                $this->documentManager->persist($item);
-                $this->documentManager->flush();
+            } else {
+                $resultArray['new']++;
+                $object = new ExternalPunct();
+            }
+            $this->documentManager->persist($hydrator->hydrate($resVars, $object));
+        }
+        $this->documentManager->flush();
+        return $resultArray;
+    }
+
+    /**
+     * @param ExternalPunct $object
+     * @param array $resVars
+     *
+     * @return array
+     */
+    protected function calculateDistriction(ExternalPunct $object, $resVars)
+    {
+        $filteredKeys = array('_id' => null, 'link' => null, 'deletedAt' => null);
+
+        return
+            $this->recursiveDiff(
+                array_diff_key($object->getData(), $filteredKeys),
+                $resVars
+            );
+    }
+
+    protected function recursiveDiff($array1, $array2)
+    {
+        $result = array();
+
+        foreach ($array1 as $k => $v) {
+            if (array_key_exists($k, $array2)) {
+                if (is_array($v)) {
+                    $diff = $this->recursiveDiff($v, $array2[$k]);
+                    if (count($diff)) {
+                        $result[$k] = $diff;
+                    }
+                } else {
+                    if ($v != $array2[$k]) {
+                        $result[$k] = $v;
+                    }
+                }
+            } else {
+                $result[$k] = $v;
             }
         }
-        return $resultArray;
+        return $result;
     }
 
     public function getInformationFromOnlineByOnlineName($onlineName)

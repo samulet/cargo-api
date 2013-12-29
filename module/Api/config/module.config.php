@@ -131,7 +131,7 @@ return array(
             'api.rest.external-service-place' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/service/import/place[/:external_code]',
+                    'route' => '/api/service/import/place[/:code]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\ExternalServicePlace\\Controller',
                     ),
@@ -544,8 +544,8 @@ return array(
         'Api\\V1\\Rest\\ExternalServicePlace\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\ExternalServicePlace\\ExternalServicePlaceResource',
             'route_name' => 'api.rest.external-service-place',
-            'identifier_name' => 'external_service_place_id',
-            'collection_name' => 'external_service_place',
+            'identifier_name' => 'code',
+            'collection_name' => 'places',
             'resource_http_methods' => array(
                 0 => 'GET',
                 1 => 'PATCH',
@@ -569,8 +569,8 @@ return array(
         'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\ExternalServicePlaceIntersectResource',
             'route_name' => 'api.rest.external-service-place-intersect',
-            'identifier_name' => 'external_service_place_intersect_id',
-            'collection_name' => 'external_service_place_intersect',
+            'identifier_name' => 'code',
+            'collection_name' => 'places',
             'resource_http_methods' => array(
                 0 => 'GET',
                 1 => 'PATCH',
@@ -941,22 +941,22 @@ return array(
                 'is_collection' => true,
             ),
             'Api\\V1\\Rest\\ExternalServicePlace\\ExternalServicePlaceEntity' => array(
-                'identifier_name' => 'external_code',
+                'identifier_name' => 'code',
                 'route_name' => 'api.rest.external-service-place',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\ExternalServicePlace\\ExternalServicePlaceCollection' => array(
-                'identifier_name' => 'external_code',
+                'identifier_name' => 'code',
                 'route_name' => 'api.rest.external-service-place',
                 'is_collection' => true,
             ),
             'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\ExternalServicePlaceIntersectEntity' => array(
-                'identifier_name' => 'external_service_place_intersect_id',
+                'identifier_name' => 'code',
                 'route_name' => 'api.rest.external-service-place-intersect',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\ExternalServicePlaceIntersectCollection' => array(
-                'identifier_name' => 'external_service_place_intersect_id',
+                'identifier_name' => 'code',
                 'route_name' => 'api.rest.external-service-place-intersect',
                 'is_collection' => true,
             ),

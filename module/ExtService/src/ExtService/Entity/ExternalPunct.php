@@ -6,7 +6,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ODM\Document(collection="externalPunct")
+ * @ODM\Document(collection="externalPlace")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class ExternalPunct
@@ -41,6 +41,16 @@ class ExternalPunct
      * @ODM\Field(type="hash")
      */
     protected $net;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $type;
+    /**
+     * @var array
+     * @ODM\Field(type="hash")
+     */
+    protected $legal;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -448,6 +458,38 @@ class ExternalPunct
             $data[$key] = $this->$key;
         }
         return $data;
+    }
+
+    /**
+     * @return array
+     */
+    public function getLegal()
+    {
+        return $this->legal;
+    }
+
+    /**
+     * @param array $legal
+     */
+    public function setLegal($legal)
+    {
+        $this->legal = $legal;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 
     public function setData($data)
