@@ -44,6 +44,9 @@ class CompanyEntity
                 if (isset($data[$key]) && ($key != 'id')) {
                     $this->$key = $data[$key];
                 }
+                if ('created' === $key && !empty($data[$key]) && $data[$key] instanceof \DateTime) {
+                    $this->created = $data[$key]->getTimestamp();
+                }
             }
         }
         return $this;
@@ -55,9 +58,6 @@ class CompanyEntity
         $data = array();
         foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
             $data[$key] = $this->$key;
-        }
-        if (!empty($this->created_at)) {
-            $this->created_at = $this->created_at->getTimestamp();
         }
         return $data;
     }
