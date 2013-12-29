@@ -46,6 +46,7 @@ class ExternalCompanyImportModel
         foreach ($companies as $res) {
             $resVars = get_object_vars($res);
             $resVars['source'] = $onlineCode;
+            $resVars['code'] = sprintf('%s-%s', $onlineCode, $resVars['id']);
             $resVars = array_map('strval', $resVars);
             $resVars = $this->queryBuilderModel->camelCaseKeys($resVars);
             $conditions = array('source' => $resVars['source'], 'id' => $resVars['id']);
