@@ -8,8 +8,9 @@ class ExternalServicePlaceEntity
     protected $stat = array();
     protected $reason;
 
-    public function __construct(array $entity = null){
-        if(!empty($entity)) {
+    public function __construct(array $entity = null)
+    {
+        if (!empty($entity)) {
             $this->setData($entity);
         }
     }
@@ -18,13 +19,12 @@ class ExternalServicePlaceEntity
     {
         if ($data !== null && is_array($data)) {
             foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
-                if (isset($data[$key]) ) {
+                if (isset($data[$key])) {
                     $this->$key = $data[$key];
                 }
             }
         }
         return $this;
-
     }
 
     /**
@@ -44,6 +44,14 @@ class ExternalServicePlaceEntity
     }
 
     /**
+     * @return array
+     */
+    public function getStat()
+    {
+        return $this->stat;
+    }
+
+    /**
      * @param array $stat
      */
     public function setStat($stat)
@@ -52,11 +60,11 @@ class ExternalServicePlaceEntity
     }
 
     /**
-     * @return array
+     * @return mixed
      */
-    public function getStat()
+    public function getStatus()
     {
-        return $this->stat;
+        return $this->status;
     }
 
     /**
@@ -70,23 +78,16 @@ class ExternalServicePlaceEntity
     /**
      * @return mixed
      */
-    public function getStatus()
+    public function getReason()
     {
-        return $this->status;
+        return $this->reason;
     }
+
     /**
      * @param mixed $reason
      */
     public function setReason($reason)
     {
         $this->reason = $reason;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getReason()
-    {
-        return $this->reason;
     }
 }

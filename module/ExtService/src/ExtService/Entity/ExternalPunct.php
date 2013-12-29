@@ -20,35 +20,22 @@ class ExternalPunct
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $link;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $source;
-
-    /**
-     * @return string
-     */
-    public function getSource()
-    {
-        return $this->source;
-    }
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $id;
     /**
      * @var array
      * @ODM\Field(type="hash")
      */
-
     protected $city;
-
     /**
      * @var array
      * @ODM\Field(type="hash")
@@ -58,97 +45,105 @@ class ExternalPunct
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $stId;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $name;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $adress;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $phone;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $consigneeName;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $consignee;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $activity;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $isLocal;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $localTypeId;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $id1s;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $directDelivery;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $unloadingTime;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $isConsolidating;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $code1c;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
-
     protected $coordinates;
-
     /**
      * @ODM\Date
      */
     protected $deletedAt;
+
+    /**
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    /**
+     * @param string $source
+     */
+    public function setSource($source)
+    {
+        $this->source = $source;
+    }
+
+    /**
+     * @return string
+     */
+    public function getActivity()
+    {
+        return $this->activity;
+    }
 
     /**
      * @param string $activity
@@ -161,9 +156,9 @@ class ExternalPunct
     /**
      * @return string
      */
-    public function getActivity()
+    public function getAdress()
     {
-        return $this->activity;
+        return $this->adress;
     }
 
     /**
@@ -175,11 +170,11 @@ class ExternalPunct
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getAdress()
+    public function getCity()
     {
-        return $this->adress;
+        return $this->city;
     }
 
     /**
@@ -191,11 +186,11 @@ class ExternalPunct
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getCity()
+    public function getCode1c()
     {
-        return $this->city;
+        return $this->code1c;
     }
 
     /**
@@ -209,9 +204,9 @@ class ExternalPunct
     /**
      * @return string
      */
-    public function getCode1c()
+    public function getConsignee()
     {
-        return $this->code1c;
+        return $this->consignee;
     }
 
     /**
@@ -225,9 +220,9 @@ class ExternalPunct
     /**
      * @return string
      */
-    public function getConsignee()
+    public function getConsigneeName()
     {
-        return $this->consignee;
+        return $this->consigneeName;
     }
 
     /**
@@ -241,9 +236,9 @@ class ExternalPunct
     /**
      * @return string
      */
-    public function getConsigneeName()
+    public function getCoordinates()
     {
-        return $this->consigneeName;
+        return $this->coordinates;
     }
 
     /**
@@ -255,11 +250,11 @@ class ExternalPunct
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getCoordinates()
+    public function getDeletedAt()
     {
-        return $this->coordinates;
+        return $this->deletedAt;
     }
 
     /**
@@ -271,11 +266,11 @@ class ExternalPunct
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getDeletedAt()
+    public function getDirectDelivery()
     {
-        return $this->deletedAt;
+        return $this->directDelivery;
     }
 
     /**
@@ -289,9 +284,9 @@ class ExternalPunct
     /**
      * @return string
      */
-    public function getDirectDelivery()
+    public function getId()
     {
-        return $this->directDelivery;
+        return $this->id;
     }
 
     /**
@@ -305,9 +300,9 @@ class ExternalPunct
     /**
      * @return string
      */
-    public function getId()
+    public function getId1s()
     {
-        return $this->id;
+        return $this->id1s;
     }
 
     /**
@@ -321,9 +316,9 @@ class ExternalPunct
     /**
      * @return string
      */
-    public function getId1s()
+    public function getIsConsolidating()
     {
-        return $this->id1s;
+        return $this->isConsolidating;
     }
 
     /**
@@ -337,9 +332,9 @@ class ExternalPunct
     /**
      * @return string
      */
-    public function getIsConsolidating()
+    public function getIsLocal()
     {
-        return $this->isConsolidating;
+        return $this->isLocal;
     }
 
     /**
@@ -353,9 +348,9 @@ class ExternalPunct
     /**
      * @return string
      */
-    public function getIsLocal()
+    public function getLocalTypeId()
     {
-        return $this->isLocal;
+        return $this->localTypeId;
     }
 
     /**
@@ -369,9 +364,9 @@ class ExternalPunct
     /**
      * @return string
      */
-    public function getLocalTypeId()
+    public function getName()
     {
-        return $this->localTypeId;
+        return $this->name;
     }
 
     /**
@@ -383,11 +378,11 @@ class ExternalPunct
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getName()
+    public function getNet()
     {
-        return $this->name;
+        return $this->net;
     }
 
     /**
@@ -399,11 +394,11 @@ class ExternalPunct
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getNet()
+    public function getPhone()
     {
-        return $this->net;
+        return $this->phone;
     }
 
     /**
@@ -417,9 +412,9 @@ class ExternalPunct
     /**
      * @return string
      */
-    public function getPhone()
+    public function getStId()
     {
-        return $this->phone;
+        return $this->stId;
     }
 
     /**
@@ -433,9 +428,9 @@ class ExternalPunct
     /**
      * @return string
      */
-    public function getStId()
+    public function getUnloadingTime()
     {
-        return $this->stId;
+        return $this->unloadingTime;
     }
 
     /**
@@ -444,14 +439,6 @@ class ExternalPunct
     public function setUnloadingTime($unloadingTime)
     {
         $this->unloadingTime = $unloadingTime;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUnloadingTime()
-    {
-        return $this->unloadingTime;
     }
 
     public function getData()
@@ -477,14 +464,6 @@ class ExternalPunct
     }
 
     /**
-     * @param string $link
-     */
-    public function setLink($link)
-    {
-        $this->link = $link;
-    }
-
-    /**
      * @return string
      */
     public function getLink()
@@ -493,10 +472,10 @@ class ExternalPunct
     }
 
     /**
-     * @param string $source
+     * @param string $link
      */
-    public function setSource($source)
+    public function setLink($link)
     {
-        $this->source = $source;
+        $this->link = $link;
     }
 }
