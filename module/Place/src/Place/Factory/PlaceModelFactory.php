@@ -2,6 +2,7 @@
 namespace Place\Factory;
 
 use Place\Model\PlaceModel;
+use Zend\EventManager\EventManager;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -13,10 +14,16 @@ class PlaceModelFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        error_log(__METHOD__);
         /** @var \User\Identity\IdentityProvider $provider */
         $provider = $serviceLocator->get('User\Identity\IdentityProvider');
-        error_log(__METHOD__);
-        return new PlaceModel();
+        /** @var \Doctrine\ODM\MongoDB\DocumentManager $documentManager */
+        $documentManager = $serviceLocator->get('doctrine.documentmanager.odm_default');
+        /** @var EventManager $eventManager */
+        $eventManager = $serviceLocator->get('EventManager');
+
+        $placeModel = new PlaceModel($documentManager, $provider);
+        $placeModel->setEventManager($eventManager);
+
+        return $placeModel;
     }
 }
