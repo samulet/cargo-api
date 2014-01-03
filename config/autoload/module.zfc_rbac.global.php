@@ -121,11 +121,13 @@ return [
          */
         'permission_providers' => [
             'ZfcRbac\Permission\InMemoryPermissionProvider' => [
-               'account.create' => ['user'],
-               'account.edit' => ['account.admin', 'system'],
-               'account.list' => ['user', 'system'],
-               'account.info' => ['user', 'system'],
-               'company.create' => ['account.admin', 'system'],
+                'account.create' => ['user'],
+                'account.edit' => ['account.admin', 'system'],
+                'account.list' => ['user', 'system'],
+                'account.info' => ['user', 'system'],
+                'company.create' => ['account.admin', 'system'],
+                'get.places' => ['user'],
+                'get.places.all' => ['system']
             ]
         ],
 

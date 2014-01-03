@@ -8,10 +8,12 @@ use Place\Entity\PlaceEntity;
 use User\Identity\IdentityProvider;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerAwareTrait;
+use ZfcRbac\Exception\UnauthorizedException;
 
 class PlaceModel implements AuthorizationServiceAwareInterface, EventManagerAwareInterface
 {
     use EventManagerAwareTrait;
+
     /**
      * @var \Doctrine\ODM\MongoDB\DocumentManager
      */
@@ -58,8 +60,16 @@ class PlaceModel implements AuthorizationServiceAwareInterface, EventManagerAwar
     public function fetch()
     {
         if (!$this->getAuthorizationService()->isGranted('get.places')) {
-
+            throw new UnauthorizedException('Dosn`t have permission to get places list');
         }
+        $result = array();
+        if ($this->getAuthorizationService()->isGranted('get.places.all')) {
+            /** @var \Place\Repository\Place $repository */
+            $repository = $this->documentManager->getRepository('Place\\Entity\\PlaceEntity');
+            $result = $repository->getAvailablePlaces()->toArray();
+        }
+
+        return $result;
     }
 
     /**

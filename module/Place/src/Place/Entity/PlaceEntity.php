@@ -6,7 +6,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ODM\Document(collection="place")
+ * @ODM\Document(collection="place", repositoryClass="Place\Repository\Place")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  */
 class PlaceEntity

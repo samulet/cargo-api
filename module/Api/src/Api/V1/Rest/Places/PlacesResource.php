@@ -1,6 +1,7 @@
 <?php
 namespace Api\V1\Rest\Places;
 
+use Place\Entity\PlaceEntity;
 use Place\Model\PlaceModel;
 use User\Identity\IdentityProvider;
 use Zend\Paginator\Adapter\ArrayAdapter;
@@ -72,12 +73,17 @@ class PlacesResource extends AbstractResourceListener
      * Fetch all or a subset of resources
      *
      * @param  array $params
-     * @return ApiProblem|mixed
+     *
+     * @return PlacesCollection
      */
     public function fetchAll($params = array())
     {
-        $this->placeModel->fetch();
-        return new PlacesCollection(new ArrayAdapter(array()));
+        $result = array();
+        $places = $this->placeModel->fetch();
+        foreach ($places as $place) {
+            $result[] = new PlaceEntity($place);
+        }
+        return new PlacesCollection(new ArrayAdapter($result));
     }
 
     /**

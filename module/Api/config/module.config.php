@@ -1006,7 +1006,7 @@ return array(
             'Api\\V1\\Rest\\Places\\PlacesEntity' => array(
                 'identifier_name' => 'uuid',
                 'route_name' => 'api.rest.places',
-                'hydrator' => 'arrayserializable',
+                'hydrator' => 'reflection',
             ),
             'Api\\V1\\Rest\\Places\\PlacesCollection' => array(
                 'identifier_name' => 'uuid',
