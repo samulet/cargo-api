@@ -114,6 +114,7 @@ class PlaceEntity
     /**
      * Дата создания записи
      *
+     * @var \DateTime
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
      */
@@ -121,26 +122,27 @@ class PlaceEntity
     /**
      * Дата удаления записи
      *
+     * @var \DateTime
      * @ODM\Date
      */
     protected $deleted;
     /**
      * Пользователь, создавший запись
      *
-     * @var string
+     * @var \User\Entity\User
      * @ODM\ReferenceOne(targetDocument="User\Entity\User", simple=true)
      */
     protected $creator;
     /**
      * Пользователь, акцептовавший запись
      *
-     * @var string
+     * @var \User\Entity\User
      * @ODM\ReferenceOne(targetDocument="User\Entity\User", simple=true)
      */
     protected $acceptor;
 
     /**
-     * @param string $acceptor
+     * @param \User\Entity\User $acceptor
      */
     public function setAcceptor($acceptor)
     {
@@ -148,7 +150,7 @@ class PlaceEntity
     }
 
     /**
-     * @return string
+     * @return \User\Entity\User
      */
     public function getAcceptor()
     {
@@ -188,7 +190,7 @@ class PlaceEntity
     }
 
     /**
-     * @param mixed $company
+     * @param \Place\Entity\Company $company
      */
     public function setCompany($company)
     {
@@ -196,7 +198,7 @@ class PlaceEntity
     }
 
     /**
-     * @return mixed
+     * @return \Place\Entity\Company|null
      */
     public function getCompany()
     {
@@ -236,7 +238,7 @@ class PlaceEntity
     }
 
     /**
-     * @param mixed $created
+     * @param \DateTime $created
      */
     public function setCreated($created)
     {
@@ -244,7 +246,7 @@ class PlaceEntity
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -252,7 +254,7 @@ class PlaceEntity
     }
 
     /**
-     * @param string $creator
+     * @param \User\Entity\User $creator
      */
     public function setCreator($creator)
     {
@@ -260,7 +262,7 @@ class PlaceEntity
     }
 
     /**
-     * @return string
+     * @return \User\Entity\User
      */
     public function getCreator()
     {
@@ -268,7 +270,7 @@ class PlaceEntity
     }
 
     /**
-     * @param mixed $deleted
+     * @param \DateTime $deleted
      */
     public function setDeleted($deleted)
     {
@@ -276,7 +278,7 @@ class PlaceEntity
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getDeleted()
     {
@@ -316,7 +318,7 @@ class PlaceEntity
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      */
     public function setName($name)
     {
@@ -324,7 +326,7 @@ class PlaceEntity
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getName()
     {
