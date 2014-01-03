@@ -273,7 +273,7 @@ class User implements UserInterface, IdentityInterface
      */
     public function setId($id)
     {
-        $this->id = (int)$id;
+        $this->id = $id;
         return $this;
     }
 
