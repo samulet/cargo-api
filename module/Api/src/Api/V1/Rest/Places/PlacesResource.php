@@ -1,7 +1,6 @@
 <?php
 namespace Api\V1\Rest\Places;
 
-use Place\Entity\PlaceEntity;
 use Place\Model\PlaceModel;
 use User\Identity\IdentityProvider;
 use Zend\Paginator\Adapter\ArrayAdapter;
@@ -33,7 +32,8 @@ class PlacesResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        $place = $this->placeModel->create(get_object_vars($data));
+        return new PlacesEntity($place);
     }
 
     /**
@@ -81,7 +81,7 @@ class PlacesResource extends AbstractResourceListener
         $result = array();
         $places = $this->placeModel->fetch();
         foreach ($places as $place) {
-            $result[] = new PlaceEntity($place);
+            $result[] = new PlacesEntity($place);
         }
         return new PlacesCollection(new ArrayAdapter($result));
     }

@@ -23,6 +23,7 @@ class PlaceModelFactory implements FactoryInterface
 
         $placeModel = new PlaceModel($documentManager, $provider);
         $placeModel->setEventManager($eventManager);
+        $placeModel->setHydrator($documentManager->getHydratorFactory());
 
         return $placeModel;
     }

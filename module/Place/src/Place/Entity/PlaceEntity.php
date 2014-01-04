@@ -129,28 +129,28 @@ class PlaceEntity
     /**
      * Пользователь, создавший запись
      *
-     * @var \User\Entity\User
-     * @ODM\ReferenceOne(targetDocument="User\Entity\User", simple=true)
+     * @var User
+     * @ODM\EmbedOne(targetDocument="Place\Entity\User")
      */
     protected $creator;
     /**
      * Пользователь, акцептовавший запись
      *
-     * @var \User\Entity\User
-     * @ODM\ReferenceOne(targetDocument="User\Entity\User", simple=true)
+     * @var User
+     * @ODM\EmbedOne(targetDocument="Place\Entity\User")
      */
     protected $acceptor;
 
     /**
-     * @param \User\Entity\User $acceptor
+     * @param User $user
      */
-    public function setAcceptor($acceptor)
+    public function setAcceptor($user)
     {
-        $this->acceptor = $acceptor;
+        $this->acceptor = new User($user);
     }
 
     /**
-     * @return \User\Entity\User
+     * @return User
      */
     public function getAcceptor()
     {
@@ -190,11 +190,11 @@ class PlaceEntity
     }
 
     /**
-     * @param \Place\Entity\Company $company
+     * @param \Account\Entity\Company|null $company
      */
-    public function setCompany($company)
+    public function setCompany(\Account\Entity\Company $company = null)
     {
-        $this->company = $company;
+        $this->company = new Company($company);
     }
 
     /**
@@ -254,15 +254,15 @@ class PlaceEntity
     }
 
     /**
-     * @param \User\Entity\User $creator
+     * @param \User\Entity\User $user
      */
-    public function setCreator($creator)
+    public function setCreator(\User\Entity\User $user)
     {
-        $this->creator = $creator;
+        $this->creator = new User($user);
     }
 
     /**
-     * @return \User\Entity\User
+     * @return User
      */
     public function getCreator()
     {
@@ -435,7 +435,15 @@ class PlaceEntity
     public function onPrePersist()
     {
         if (empty($this->uuid)) {
-            $this->uuid = UuidGenerator::generateV4();
+            $this->uuid = $this->getGenerator()->generateV4();
         }
+    }
+
+    /**
+     * @return UuidGenerator
+     */
+    protected function getGenerator()
+    {
+        return new UuidGenerator;
     }
 }
