@@ -74,7 +74,7 @@ class PlacesResource extends AbstractResourceListener
      *
      * @param  array $params
      *
-     * @return PlacesCollection
+     * @return PlacesCollection|array
      */
     public function fetchAll($params = array())
     {
@@ -83,7 +83,11 @@ class PlacesResource extends AbstractResourceListener
         foreach ($places as $place) {
             $result[] = new PlacesEntity($place);
         }
-        return new PlacesCollection(new ArrayAdapter($result));
+        if (!empty($params['page'])) {
+            return new PlacesCollection(new ArrayAdapter($result));
+        } else {
+            return $result;
+        }
     }
 
     /**

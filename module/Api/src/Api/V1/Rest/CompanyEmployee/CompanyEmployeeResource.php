@@ -78,11 +78,15 @@ class CompanyEmployeeResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data = $this->companyUserModel->fetchAll($params);
+        $data = $this->companyUserModel->fetchAll(array());
         $adapter = new ArrayAdapter($data);
         $collection = new ProfileCollection($adapter);
         if (!empty($collection)) {
-            return $collection;
+            if (!empty($params['page'])) {
+                return $collection;
+            } else {
+                return $data;
+            }
         } else {
             return ApiStaticErrorList::getError(404);
         }

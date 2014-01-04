@@ -122,7 +122,7 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
      */
     public function fetchAll($params = array())
     {
-        $data = $this->accountModel->fetchAll($params);
+        $data = $this->accountModel->fetchAll(array());
         $result = array();
         if (!empty($data)) {
             /** @var $d \Account\Entity\Account */
@@ -132,8 +132,11 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
                 array_push($result, new AccountEntity($entity, $companies));
             }
         }
-
-        return new AccountCollection(new ArrayAdapter($result));
+        if (!empty($params['page'])) {
+            return new AccountCollection(new ArrayAdapter($result));
+        } else {
+            return $result;
+        }
     }
 
     /**

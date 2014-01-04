@@ -72,7 +72,7 @@ class ExtServiceCompanyResource extends AbstractResourceListener
      * Fetch all or a subset of resources
      *
      * @param  array $params
-     * @return ApiProblem|mixed
+     * @return ApiProblem|array
      */
     public function fetchAll($params = array())
     {
@@ -83,7 +83,11 @@ class ExtServiceCompanyResource extends AbstractResourceListener
                 array_push($result, new ExtServiceCompanyEntity($serviceData));
             }
         }
-        return new ExtServiceCompanyCollection(new ArrayAdapter($result));
+        if (!empty($params['page'])) {
+            return new ExtServiceCompanyCollection(new ArrayAdapter($result));
+        } else {
+            return $result;
+        }
     }
 
     /**

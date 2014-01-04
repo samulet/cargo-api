@@ -1,7 +1,6 @@
 <?php
 namespace Api\V1\Rest\Reference;
 
-
 use Api\Entity\ApiStaticErrorList;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use ZF\ApiProblem\ApiProblem;
@@ -71,7 +70,7 @@ class ReferenceResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data = $this->referenceModel->fetchAll($params);
+        $data = $this->referenceModel->fetchAll(array());
         if (!empty($data)) {
             $resultArray = array();
             foreach ($data as $d) {
@@ -83,7 +82,11 @@ class ReferenceResource extends AbstractResourceListener
             return ApiStaticErrorList::getError(404);
         }
         if (!empty($collection)) {
-            return $collection;
+            if (!empty($params['page'])) {
+                return $collection;
+            } else {
+                return $resultArray;
+            }
         } else {
             return ApiStaticErrorList::getError(404);
         }

@@ -90,19 +90,23 @@ class CompanyIntersectResource extends AbstractResourceListener
     /**
      * Fetch all or a subset of resources
      *
-     * @param  array $params
-     * @return ApiProblem|mixed
+     * @param  \Zend\Stdlib\Parameters|array $params
+     *
+     * @return array|ExtServiceCompanyIntersectCollection
      */
     public function fetchAll($params = array())
     {
-        $data = $this->intersectModel->getExternalCompanyModel()->fetchAll($params);
+        $data = $this->intersectModel->getExternalCompanyModel()->fetchAll(array());
         $result = array();
         foreach ($data as $d) {
             $entity = $d->getData();
             array_push($result, new ExtServiceCompanyIntersectEntity($entity));
         }
-        $collection = new ExtServiceCompanyIntersectCollection(new ArrayAdapter($result));
-        return $collection;
+        if (!empty($params['page'])) {
+            return new ExtServiceCompanyIntersectCollection(new ArrayAdapter($result));
+        } else {
+            return $result;
+        }
     }
 
     /**

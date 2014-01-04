@@ -82,7 +82,7 @@ class CompanyResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data = $this->companyModel->fetchAll($params);
+        $data = $this->companyModel->fetchAll(array());
         if (!empty($data)) {
             $resultArray = array();
             foreach ($data as $d) {
@@ -94,7 +94,11 @@ class CompanyResource extends AbstractResourceListener
             return ApiStaticErrorList::getError(404);
         }
         if (!empty($collection)) {
-            return $collection;
+            if (!empty($params['page'])) {
+                return $collection;
+            } else {
+                return $resultArray;
+            }
         } else {
             return ApiStaticErrorList::getError(404);
         }

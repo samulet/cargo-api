@@ -86,7 +86,7 @@ class ReferenceProductGroupResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data = $this->productGroupModel->fetchAll($params);
+        $data = $this->productGroupModel->fetchAll(array());
         if (!empty($data)) {
             $resultArray = array();
             foreach ($data as $d) {
@@ -98,7 +98,11 @@ class ReferenceProductGroupResource extends AbstractResourceListener
             return ApiStaticErrorList::getError(404);
         }
         if (!empty($collection)) {
-            return $collection;
+            if (!empty($params['page'])) {
+                return $collection;
+            } else {
+                return $resultArray;
+            }
         } else {
             return ApiStaticErrorList::getError(404);
         }

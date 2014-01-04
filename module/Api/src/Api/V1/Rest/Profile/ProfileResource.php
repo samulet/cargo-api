@@ -78,7 +78,7 @@ class ProfileResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data = $this->userModel->fetchAll($params);
+        $data = $this->userModel->fetchAll(array());
 
         if (!empty($data)) {
             $resultArray = array();
@@ -92,7 +92,11 @@ class ProfileResource extends AbstractResourceListener
         }
 
         if (!empty($collection)) {
-            return $collection;
+            if (!empty($params['page'])) {
+                return $collection;
+            } else {
+                return $resultArray;
+            }
         } else {
             return ApiStaticErrorList::getError(404);
         }

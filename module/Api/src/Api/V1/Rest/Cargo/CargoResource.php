@@ -84,7 +84,7 @@ class CargoResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data = $this->cargoModel->fetchAll($params);
+        $data = $this->cargoModel->fetchAll(array());
         if (!empty($data)) {
             $resultArray = array();
             foreach ($data as $d) {
@@ -96,7 +96,11 @@ class CargoResource extends AbstractResourceListener
             return ApiStaticErrorList::getError(404);
         }
         if (!empty($collection)) {
-            return $collection;
+            if (!empty($params['page'])) {
+                return $collection;
+            } else {
+                return $resultArray;
+            }
         } else {
             return ApiStaticErrorList::getError(404);
         }

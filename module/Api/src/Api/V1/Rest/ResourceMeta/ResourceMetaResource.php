@@ -78,9 +78,13 @@ class ResourceMetaResource extends AbstractResourceListener
             }
         }
         if (!empty($object)) {
-            $adapter = new ArrayAdapter(array($object));
-            $collection = new ResourceMetaCollection($adapter);
-            return $collection;
+            if (!empty($params['page'])) {
+                $adapter = new ArrayAdapter(array($object));
+                $collection = new ResourceMetaCollection($adapter);
+                return $collection;
+            } else {
+                return array($object);
+            }
         } else {
             return ApiStaticErrorList::getError(404);
         }

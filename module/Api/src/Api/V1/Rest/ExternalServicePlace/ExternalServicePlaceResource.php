@@ -83,8 +83,12 @@ class ExternalServicePlaceResource extends AbstractResourceListener
             foreach ($data as $d) {
                 array_push($resultArray, new ExternalServicePlaceEntity($d));
             }
-            $adapter = new ArrayAdapter($resultArray);
-            return new ExternalServicePlaceCollection($adapter);
+            if (!empty($params['page'])) {
+                $adapter = new ArrayAdapter($resultArray);
+                return new ExternalServicePlaceCollection($adapter);
+            } else {
+                return $resultArray;
+            }
         } else {
             return ApiStaticErrorList::getError(404);
         }

@@ -99,20 +99,19 @@ class AccountCompanyResource extends AbstractResourceListener
             return new ApiProblem(400, 'Account UUID required');
         }
 
-        if ($params instanceof Parameters) {
-            $params = $params->toArray();
-        }
-        $params = $params + array('ownerAccUuid' => $accountUuid);
-        $data = $this->companyModel->fetchAll($params);
+        $data = $this->companyModel->fetchAll(array('ownerAccUuid' => $accountUuid));
 
-        $resultArray = array();
+        $result = array();
         if (!empty($data)) {
             foreach ($data as $d) {
-                array_push($resultArray, new AccountCompanyEntity($d->getData()));
+                array_push($result, new AccountCompanyEntity($d->getData()));
             }
         }
-
-        return new AccountCompanyCollection(new ArrayAdapter($resultArray));
+        if (!empty($params['page'])) {
+            return new AccountCompanyCollection(new ArrayAdapter($result));
+        } else {
+            return $result;
+        }
     }
 
     /**
