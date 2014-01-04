@@ -50,14 +50,12 @@ class CompanyUser
     /**
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
-     * @Annotation\Exclude()
      */
     protected $created_at;
 
     /**
      * @Gedmo\Timestampable(on="update")
      * @ODM\Date
-     * @Annotation\Exclude()
      */
     protected $updated_at;
     /**
