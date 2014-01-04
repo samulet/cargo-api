@@ -1,16 +1,16 @@
 <?php
 namespace Api\V1\Rest\CompanyEmployee;
 
+use Api\Entity\ApiStaticErrorList;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
-use Api\Entity\ApiStaticErrorList;
 
 class CompanyEmployeeResource extends AbstractResourceListener
 {
 
     protected $companyUserModel;
 
-    public function __construct($companyUserModel = null, $userEntity=null)
+    public function __construct($companyUserModel = null, $userEntity = null)
     {
         $this->companyUserModel = $companyUserModel;
         $this->userEntity = $userEntity;
@@ -24,8 +24,8 @@ class CompanyEmployeeResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $data=$this->companyUserModel->createOrUpdate(get_object_vars($data));
-        if(!empty($data)) {
+        $data = $this->companyUserModel->createOrUpdate(get_object_vars($data));
+        if (!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);
@@ -62,8 +62,8 @@ class CompanyEmployeeResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $data=$this->companyUserModel->fetch(array('uuid'=>$id));
-        if(!empty($data)) {
+        $data = $this->companyUserModel->fetch(array('uuid' => $id));
+        if (!empty($data)) {
             return $data;
         } else {
             return ApiStaticErrorList::getError(404);
@@ -78,10 +78,10 @@ class CompanyEmployeeResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data=$this->companyUserModel->fetchAll($params);
+        $data = $this->companyUserModel->fetchAll($params);
         $adapter = new ArrayAdapter($data);
         $collection = new ProfileCollection($adapter);
-        if(!empty($collection)) {
+        if (!empty($collection)) {
             return $collection;
         } else {
             return ApiStaticErrorList::getError(404);
@@ -120,8 +120,8 @@ class CompanyEmployeeResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data=$this->companyUserModel->createOrUpdate(get_object_vars($data),$id);
-        if(!empty($data)) {
+        $data = $this->companyUserModel->createOrUpdate(get_object_vars($data), $id);
+        if (!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);

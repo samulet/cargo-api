@@ -1,19 +1,20 @@
 <?php
 namespace Api\V1\Rest\ProfileStatus;
 
+use Api\Entity\ApiStaticErrorList;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
-use Api\Entity\ApiStaticErrorList;
 
 class ProfileStatusResource extends AbstractResourceListener
 {
     protected $userModel;
 
-    public function __construct($userModel = null, $userEntity=null)
+    public function __construct($userModel = null, $userEntity = null)
     {
         $this->userModel = $userModel;
         $this->userEntity = $userEntity;
     }
+
     /**
      * Create a resource
      *
@@ -55,8 +56,8 @@ class ProfileStatusResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $data=$this->userModel->getUserStatus($id);
-        if(!empty($data)) {
+        $data = $this->userModel->getUserStatus($id);
+        if (!empty($data)) {
             return new ProfileStatusEntity($data);
         } else {
             return ApiStaticErrorList::getError(404);
@@ -106,8 +107,8 @@ class ProfileStatusResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data=$this->accountModel->createOrUpdate(array('status' => get_object_vars($data)),$id);
-        if(!empty($data)) {
+        $data = $this->accountModel->createOrUpdate(array('status' => get_object_vars($data)), $id);
+        if (!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);

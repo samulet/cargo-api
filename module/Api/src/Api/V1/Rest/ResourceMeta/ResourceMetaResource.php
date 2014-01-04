@@ -1,11 +1,11 @@
 <?php
 namespace Api\V1\Rest\ResourceMeta;
 
+use Api\Entity\ApiStaticErrorList;
+use stdClass;
+use Zend\Paginator\Adapter\ArrayAdapter;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
-use stdClass;
-use Api\Entity\ApiStaticErrorList;
-use Zend\Paginator\Adapter\ArrayAdapter;
 
 class ResourceMetaResource extends AbstractResourceListener
 {
@@ -69,23 +69,21 @@ class ResourceMetaResource extends AbstractResourceListener
     public function fetchAll($params = array())
     {
         $object = new stdClass();
-        foreach($this->configRouter as $name => $config) {
+        foreach ($this->configRouter as $name => $config) {
             $explodedName = explode('.', $name);
-            if( ('api'==$explodedName[0]) && ('rest'==$explodedName[1]) && (!empty($explodedName[2])) ) {
+            if (('api' == $explodedName[0]) && ('rest' == $explodedName[1]) && (!empty($explodedName[2]))) {
                 $object->$explodedName[2] = array(
                     'href' => $config['options']['route']
                 );
             }
         }
-        if(!empty($object)) {
+        if (!empty($object)) {
             $adapter = new ArrayAdapter(array($object));
             $collection = new ResourceMetaCollection($adapter);
             return $collection;
         } else {
             return ApiStaticErrorList::getError(404);
         }
-
-   //    return new ApiProblem(405, 'The GET method has not been defined for collections');
     }
 
     /**

@@ -1,10 +1,9 @@
 <?php
 namespace Api\V1\Rest\ExternalServicePlaceIntersect;
 
+use Zend\Paginator\Adapter\ArrayAdapter;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
-use Api\Entity\ApiStaticErrorList;
-use Zend\Paginator\Adapter\ArrayAdapter;
 
 class ExternalServicePlaceIntersectResource extends AbstractResourceListener
 {
@@ -14,7 +13,7 @@ class ExternalServicePlaceIntersectResource extends AbstractResourceListener
      */
     protected $userEntity;
 
-    public function __construct($externalPlaceIntersectModel = null,$userEntity=null)
+    public function __construct($externalPlaceIntersectModel = null, $userEntity = null)
     {
         $this->externalPlaceIntersectModel = $externalPlaceIntersectModel;
         $this->userEntity = $userEntity;

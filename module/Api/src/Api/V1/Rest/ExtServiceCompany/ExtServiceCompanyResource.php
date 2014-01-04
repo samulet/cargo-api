@@ -1,7 +1,6 @@
 <?php
 namespace Api\V1\Rest\ExtServiceCompany;
 
-use Api\Entity\ApiStaticErrorList;
 use ExtService\Model\ExternalCompanyImportModel;
 use User\Entity\User;
 use Zend\Paginator\Adapter\ArrayAdapter;

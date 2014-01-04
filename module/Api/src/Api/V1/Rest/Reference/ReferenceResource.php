@@ -2,10 +2,10 @@
 namespace Api\V1\Rest\Reference;
 
 
-use ZF\Rest\AbstractResourceListener;
-use Zend\Paginator\Adapter\ArrayAdapter;
 use Api\Entity\ApiStaticErrorList;
+use Zend\Paginator\Adapter\ArrayAdapter;
 use ZF\ApiProblem\ApiProblem;
+use ZF\Rest\AbstractResourceListener;
 
 class ReferenceResource extends AbstractResourceListener
 {
@@ -13,11 +13,12 @@ class ReferenceResource extends AbstractResourceListener
     protected $referenceModel;
     protected $userEntity;
 
-    public function __construct($referenceModel = null, $userEntity=null)
+    public function __construct($referenceModel = null, $userEntity = null)
     {
         $this->referenceModel = $referenceModel;
         $this->userEntity = $userEntity;
     }
+
     /**
      * Create a resource
      *
@@ -70,18 +71,18 @@ class ReferenceResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data=$this->referenceModel->fetchAll($params);
-        if(!empty($data)) {
-            $resultArray=array();
-            foreach($data as $d) {
-                array_push($resultArray,new ReferenceEntity($d));
+        $data = $this->referenceModel->fetchAll($params);
+        if (!empty($data)) {
+            $resultArray = array();
+            foreach ($data as $d) {
+                array_push($resultArray, new ReferenceEntity($d));
             }
             $adapter = new ArrayAdapter($resultArray);
             $collection = new ReferenceCollection($adapter);
         } else {
             return ApiStaticErrorList::getError(404);
         }
-        if(!empty($collection)) {
+        if (!empty($collection)) {
             return $collection;
         } else {
             return ApiStaticErrorList::getError(404);

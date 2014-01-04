@@ -4,11 +4,11 @@ namespace Api\V1\Rest\Account;
 use Account\Model\AccountModel;
 use Account\Model\CompanyModel;
 use Account\Model\CompanyUserModel;
-use Application\Service\AuthorizationServiceAwareInterface;
-use ZF\Rest\AbstractResourceListener;
-use Zend\Paginator\Adapter\ArrayAdapter;
 use Api\Entity\ApiStaticErrorList;
+use Application\Service\AuthorizationServiceAwareInterface;
+use Zend\Paginator\Adapter\ArrayAdapter;
 use ZF\ApiProblem\ApiProblem;
+use ZF\Rest\AbstractResourceListener;
 use ZfcRbac\Exception\UnauthorizedException;
 use ZfcRbac\Service\AuthorizationService;
 
@@ -30,7 +30,6 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
      * @var \User\Entity\User
      */
     protected $userEntity;
-
     /**
      * @var AuthorizationService
      */
@@ -182,18 +181,18 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
     }
 
     /**
-     * @param AuthorizationService $authorizationService
-     */
-    public function setAuthorizationService($authorizationService)
-    {
-        $this->authorizationService = $authorizationService;
-    }
-
-    /**
      * @return AuthorizationService
      */
     public function getAuthorizationService()
     {
         return $this->authorizationService;
+    }
+
+    /**
+     * @param AuthorizationService $authorizationService
+     */
+    public function setAuthorizationService($authorizationService)
+    {
+        $this->authorizationService = $authorizationService;
     }
 }

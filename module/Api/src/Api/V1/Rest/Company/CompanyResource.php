@@ -1,10 +1,10 @@
 <?php
 namespace Api\V1\Rest\Company;
 
+use Api\Entity\ApiStaticErrorList;
+use Zend\Paginator\Adapter\ArrayAdapter;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
-use Zend\Paginator\Adapter\ArrayAdapter;
-use Api\Entity\ApiStaticErrorList;
 
 class CompanyResource extends AbstractResourceListener
 {
@@ -14,11 +14,12 @@ class CompanyResource extends AbstractResourceListener
     protected $companyModel;
     protected $userEntity;
 
-    public function __construct($companyModel = null, $userEntity=null)
+    public function __construct($companyModel = null, $userEntity = null)
     {
         $this->companyModel = $companyModel;
         $this->userEntity = $userEntity;
     }
+
     /**
      * Create a resource
      *
@@ -38,8 +39,8 @@ class CompanyResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        $data=$this->companyModel->delete($id);
-        if(!empty($data)) {
+        $data = $this->companyModel->delete($id);
+        if (!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);
@@ -65,8 +66,8 @@ class CompanyResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $data = $this->companyModel->fetch(array('uuid'=>$id));
-        if(!empty($data)) {
+        $data = $this->companyModel->fetch(array('uuid' => $id));
+        if (!empty($data)) {
             return new CompanyEntity($data->getData());
         } else {
             return ApiStaticErrorList::getError(404);
@@ -81,18 +82,18 @@ class CompanyResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data=$this->companyModel->fetchAll($params);
-        if(!empty($data)) {
-            $resultArray=array();
-            foreach($data as $d) {
-                array_push($resultArray,new CompanyEntity($d->getData()));
+        $data = $this->companyModel->fetchAll($params);
+        if (!empty($data)) {
+            $resultArray = array();
+            foreach ($data as $d) {
+                array_push($resultArray, new CompanyEntity($d->getData()));
             }
             $adapter = new ArrayAdapter($resultArray);
             $collection = new CompanyCollection($adapter);
         } else {
             return ApiStaticErrorList::getError(404);
         }
-        if(!empty($collection)) {
+        if (!empty($collection)) {
             return $collection;
         } else {
             return ApiStaticErrorList::getError(404);
@@ -131,8 +132,8 @@ class CompanyResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data=$this->companyModel->createOrUpdate(get_object_vars($data),$id);
-        if(!empty($data)) {
+        $data = $this->companyModel->createOrUpdate(get_object_vars($data), $id);
+        if (!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);

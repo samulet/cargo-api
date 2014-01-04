@@ -1,10 +1,10 @@
 <?php
 namespace Api\V1\Rest\ReferenceProductGroup;
 
-use ZF\ApiProblem\ApiProblem;
-use ZF\Rest\AbstractResourceListener;
 use Api\Entity\ApiStaticErrorList;
 use Zend\Paginator\Adapter\ArrayAdapter;
+use ZF\ApiProblem\ApiProblem;
+use ZF\Rest\AbstractResourceListener;
 
 class ReferenceProductGroupResource extends AbstractResourceListener
 {
@@ -12,7 +12,7 @@ class ReferenceProductGroupResource extends AbstractResourceListener
     protected $productGroupModel;
     protected $userEntity;
 
-    public function __construct($productGroupModel = null, $userEntity=null)
+    public function __construct($productGroupModel = null, $userEntity = null)
     {
         $this->productGroupModel = $productGroupModel;
         $this->userEntity = $userEntity;
@@ -26,9 +26,9 @@ class ReferenceProductGroupResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $data=get_object_vars($data);
-        $data=$this->productGroupModel->createOrUpdate($data);
-        if(!empty($data)) {
+        $data = get_object_vars($data);
+        $data = $this->productGroupModel->createOrUpdate($data);
+        if (!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);
@@ -43,8 +43,8 @@ class ReferenceProductGroupResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        $data=$this->productGroupModel->delete($id);
-        if(!empty($data)) {
+        $data = $this->productGroupModel->delete($id);
+        if (!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);
@@ -70,8 +70,8 @@ class ReferenceProductGroupResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $data=$this->productGroupModel->fetch(array('code'=>$id,'deletedAt' => null));
-        if(!empty($data)) {
+        $data = $this->productGroupModel->fetch(array('code' => $id, 'deletedAt' => null));
+        if (!empty($data)) {
             return new ReferenceProductGroupEntity($data->getData());
         } else {
             return ApiStaticErrorList::getError(404);
@@ -86,18 +86,18 @@ class ReferenceProductGroupResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data=$this->productGroupModel->fetchAll($params);
-        if(!empty($data)) {
-            $resultArray=array();
-            foreach($data as $d) {
-                array_push($resultArray,new ReferenceProductGroupEntity($d->getData()));
+        $data = $this->productGroupModel->fetchAll($params);
+        if (!empty($data)) {
+            $resultArray = array();
+            foreach ($data as $d) {
+                array_push($resultArray, new ReferenceProductGroupEntity($d->getData()));
             }
             $adapter = new ArrayAdapter($resultArray);
             $collection = new ReferenceProductGroupCollection($adapter);
         } else {
             return ApiStaticErrorList::getError(404);
         }
-        if(!empty($collection)) {
+        if (!empty($collection)) {
             return $collection;
         } else {
             return ApiStaticErrorList::getError(404);
@@ -136,8 +136,8 @@ class ReferenceProductGroupResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data=$this->productGroupModel->createOrUpdate(get_object_vars($data),$id);
-        if(!empty($data)) {
+        $data = $this->productGroupModel->createOrUpdate(get_object_vars($data), $id);
+        if (!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);

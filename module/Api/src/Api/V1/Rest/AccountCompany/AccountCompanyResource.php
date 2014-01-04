@@ -1,12 +1,12 @@
 <?php
 namespace Api\V1\Rest\AccountCompany;
 
+use Api\Entity\ApiStaticErrorList;
+use Api\V1\Rest\Company;
+use Zend\Paginator\Adapter\ArrayAdapter;
 use Zend\Stdlib\Parameters;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
-use Zend\Paginator\Adapter\ArrayAdapter;
-use Api\V1\Rest\Company;
-use Api\Entity\ApiStaticErrorList;
 
 class AccountCompanyResource extends AbstractResourceListener
 {
@@ -18,6 +18,10 @@ class AccountCompanyResource extends AbstractResourceListener
      * @var \Account\Model\CompanyUserModel
      */
     protected $companyUserModel;
+    /**
+     * @var \User\Entity\User
+     */
+    protected $userEntity;
 
     public function __construct($companyModel = null, $companyUserModel = null, $userEntity = null)
     {
@@ -30,7 +34,8 @@ class AccountCompanyResource extends AbstractResourceListener
      * Create a resource
      *
      * @param  mixed $data
-     * @return ApiProblem|mixed
+     *
+     * @return ApiProblem
      */
     public function create($data)
     {
@@ -48,7 +53,8 @@ class AccountCompanyResource extends AbstractResourceListener
      * Delete a resource
      *
      * @param  mixed $id
-     * @return ApiProblem|mixed
+     *
+     * @return ApiProblem
      */
     public function delete($id)
     {
@@ -59,7 +65,8 @@ class AccountCompanyResource extends AbstractResourceListener
      * Delete a collection, or members of a collection
      *
      * @param  mixed $data
-     * @return ApiProblem|mixed
+     *
+     * @return ApiProblem
      */
     public function deleteList($data)
     {
@@ -70,7 +77,8 @@ class AccountCompanyResource extends AbstractResourceListener
      * Fetch a resource
      *
      * @param  mixed $id
-     * @return ApiProblem|mixed
+     *
+     * @return ApiProblem
      */
     public function fetch($id)
     {
@@ -81,7 +89,8 @@ class AccountCompanyResource extends AbstractResourceListener
      * Fetch all or a subset of resources
      *
      * @param array|Parameters $params
-     * @return ApiProblem|mixed
+     *
+     * @return ApiProblem
      */
     public function fetchAll($params = array())
     {
@@ -111,7 +120,8 @@ class AccountCompanyResource extends AbstractResourceListener
      *
      * @param  mixed $id
      * @param  mixed $data
-     * @return ApiProblem|mixed
+     *
+     * @return ApiProblem
      */
     public function patch($id, $data)
     {
@@ -122,7 +132,8 @@ class AccountCompanyResource extends AbstractResourceListener
      * Replace a collection or members of a collection
      *
      * @param  mixed $data
-     * @return ApiProblem|mixed
+     *
+     * @return ApiProblem
      */
     public function replaceList($data)
     {
@@ -134,7 +145,8 @@ class AccountCompanyResource extends AbstractResourceListener
      *
      * @param  mixed $id
      * @param  mixed $data
-     * @return ApiProblem|mixed
+     *
+     * @return ApiProblem
      */
     public function update($id, $data)
     {

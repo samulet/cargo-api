@@ -1,17 +1,17 @@
 <?php
 namespace Api\V1\Rest\Cargo;
 
-use ZF\Rest\AbstractResourceListener;
-use Zend\Paginator\Adapter\ArrayAdapter;
 use Api\Entity\ApiStaticErrorList;
+use Zend\Paginator\Adapter\ArrayAdapter;
 use ZF\ApiProblem\ApiProblem;
+use ZF\Rest\AbstractResourceListener;
 
 class CargoResource extends AbstractResourceListener
 {
     protected $cargoModel;
     protected $userEntity;
 
-    public function __construct($cargoModel = null, $userEntity=null)
+    public function __construct($cargoModel = null, $userEntity = null)
     {
         $this->cargoModel = $cargoModel;
         $this->userEntity = $userEntity;
@@ -25,9 +25,8 @@ class CargoResource extends AbstractResourceListener
      */
     public function create($data)
     {
-
-        $data=$this->cargoModel->createOrUpdate(get_object_vars($data));
-        if(!empty($data)) {
+        $data = $this->cargoModel->createOrUpdate(get_object_vars($data));
+        if (!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);
@@ -42,8 +41,8 @@ class CargoResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        $data=$this->cargoModel->delete($id);
-        if(!empty($data)) {
+        $data = $this->cargoModel->delete($id);
+        if (!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);
@@ -69,8 +68,8 @@ class CargoResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $data=$this->cargoModel->fetch(array('uuid'=>$id,'deletedAt' => null));
-        if(!empty($data)) {
+        $data = $this->cargoModel->fetch(array('uuid' => $id, 'deletedAt' => null));
+        if (!empty($data)) {
             return new CargoEntity($data->getData());
         } else {
             return ApiStaticErrorList::getError(404);
@@ -85,18 +84,18 @@ class CargoResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data=$this->cargoModel->fetchAll($params);
-        if(!empty($data)) {
-            $resultArray=array();
-            foreach($data as $d) {
-                array_push($resultArray,new CargoEntity($d->getData()));
+        $data = $this->cargoModel->fetchAll($params);
+        if (!empty($data)) {
+            $resultArray = array();
+            foreach ($data as $d) {
+                array_push($resultArray, new CargoEntity($d->getData()));
             }
             $adapter = new ArrayAdapter($resultArray);
             $collection = new CargoCollection($adapter);
         } else {
             return ApiStaticErrorList::getError(404);
         }
-        if(!empty($collection)) {
+        if (!empty($collection)) {
             return $collection;
         } else {
             return ApiStaticErrorList::getError(404);
@@ -135,8 +134,8 @@ class CargoResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data=$this->cargoModel->createOrUpdate(get_object_vars($data),$id);
-        if(!empty($data)) {
+        $data = $this->cargoModel->createOrUpdate(get_object_vars($data), $id);
+        if (!empty($data)) {
             return ApiStaticErrorList::getError(202);
         } else {
             return ApiStaticErrorList::getError(404);
