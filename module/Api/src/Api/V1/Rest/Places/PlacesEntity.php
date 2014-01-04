@@ -112,10 +112,10 @@ class PlacesEntity
     {
         $this->uuid = $entity->getUuid();
         $this->name = $entity->getName();
-        $this->company = get_object_vars($entity->getCompany());
+        $this->company = $this->extractCompany($entity->getCompany());
         $this->purpose = $entity->getPurpose();
-        $this->address = get_object_vars($entity->getAddress());
-        $this->contacts = get_object_vars($entity->getContacts());
+        $this->address = $this->extractAddress($entity->getAddress());
+        $this->contacts = $entity->getContacts();
         $this->operationTime = $entity->getOperationTime();
         $this->coordinates = $entity->getCoordinates();
         $this->staff = $entity->getStaff();
@@ -123,9 +123,67 @@ class PlacesEntity
         $this->electronicWorkflow = $entity->getElectronicWorkflow();
         $this->note = $entity->getNote();
         $this->rating = $entity->getRating();
-        $this->created = $entity->getCreated()->getTimestamp();
-        $this->deleted = $entity->getDeleted()->getTimestamp();
-        $this->creator = $entity->getCreator()->getUuid();
-        $this->acceptor = $entity->getAcceptor()->getUuid();
+        $this->created = !$entity->getCreated() ? : $entity->getCreated()->getTimestamp();
+        $this->deleted = !$entity->getDeleted() ? : $entity->getDeleted()->getTimestamp();
+        $this->creator = $this->extractUser($entity->getCreator());
+        $this->acceptor = $this->extractUser($entity->getAcceptor());
+    }
+
+    /**
+     * @param \Place\Entity\Address $address
+     *
+     * @return array|null
+     */
+    protected function extractAddress(\Place\Entity\Address $address = null)
+    {
+        if (!$address) {
+            return null;
+        }
+
+        $config = new \GeneratedHydrator\Configuration('Place\\Entity\\Address');
+        $hydratorClass = $config->createFactory()->getHydratorClass();
+        $hydrator = new $hydratorClass();
+
+        return $hydrator->extract($address);
+    }
+
+    /**
+     * @param \Place\Entity\Company $company
+     *
+     * @return array|null
+     */
+    protected function extractCompany(\Place\Entity\Company $company = null)
+    {
+        if (!$company) {
+            return null;
+        }
+
+        $config = new \GeneratedHydrator\Configuration('Place\\Entity\\Company');
+        $hydratorClass = $config->createFactory()->getHydratorClass();
+        $hydrator = new $hydratorClass();
+
+        $result = $hydrator->extract($company);
+        unset($result['id']);
+        return $result;
+    }
+
+    /**
+     * @param \Place\Entity\User $user
+     *
+     * @return array|null
+     */
+    protected function extractUser(\Place\Entity\User $user = null)
+    {
+        if (!$user) {
+            return null;
+        }
+
+        $config = new \GeneratedHydrator\Configuration('Place\\Entity\\User');
+        $hydratorClass = $config->createFactory()->getHydratorClass();
+        $hydrator = new $hydratorClass();
+
+        $result = $hydrator->extract($user);
+        unset($result['id']);
+        return $result;
     }
 }

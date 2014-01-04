@@ -47,8 +47,15 @@ class PlaceModel implements AuthorizationServiceAwareInterface, EventManagerAwar
     public function create(array $data)
     {
         $entity = new PlaceEntity();
+
         $this->getHydrator()->hydrate($entity, $data);
         $entity->setCreator($this->provider->getIdentity());
+        if (!empty($data['company']['uuid'])) {
+            $companyRepository = $this->documentManager->getRepository('Account\Entity\Company');
+            $company = $companyRepository->findOneBy(array('uuid' => $data['company']['uuid']));
+            $entity->setCompany($company);
+        }
+
         $this->getEventManager()->trigger('place.create.persist.pre', $this, array('entity' => $entity));
         $this->documentManager->persist($entity);
         $this->documentManager->flush();

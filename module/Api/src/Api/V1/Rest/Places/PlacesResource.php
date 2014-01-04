@@ -32,7 +32,8 @@ class PlacesResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        $place = $this->placeModel->create(get_object_vars($data));
+        return new PlacesEntity($place);
     }
 
     /**

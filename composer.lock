@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f6650e12c8bfee6edb115d28a0f25e28",
+    "hash": "7ef5735823b885dd92e3da751ed5fae0",
     "packages": [
         {
             "name": "bladeofsteel/zfc-user-doctrine-mongo-odm",
@@ -1014,6 +1014,235 @@
                 "issues": "https://github.com/MashaiMedvedi/auth-token/issues"
             },
             "time": "2013-11-27 21:51:48"
+        },
+        {
+            "name": "nikic/php-parser",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nikic/PHP-Parser.git",
+                "reference": "0353c921bd12980399e3e6404ea3931b3356e15a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/0353c921bd12980399e3e6404ea3931b3356e15a",
+                "reference": "0353c921bd12980399e3e6404ea3931b3356e15a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-tokenizer": "*",
+                "php": ">=5.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.9-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "PHPParser": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Nikita Popov"
+                }
+            ],
+            "description": "A PHP parser written in PHP",
+            "keywords": [
+                "parser",
+                "php"
+            ],
+            "time": "2013-11-27 19:33:56"
+        },
+        {
+            "name": "ocramius/code-generator-utils",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Ocramius/CodeGenerationUtils.git",
+                "reference": "0d1033a2ab040826ede33331acacbe5b13ff3bca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Ocramius/CodeGenerationUtils/zipball/0d1033a2ab040826ede33331acacbe5b13ff3bca",
+                "reference": "0d1033a2ab040826ede33331acacbe5b13ff3bca",
+                "shasum": ""
+            },
+            "require": {
+                "nikic/php-parser": "0.9.*",
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpmd/phpmd": "1.4.*",
+                "phpunit/phpunit": ">=3.7",
+                "satooshi/php-coveralls": "~0.6",
+                "squizlabs/php_codesniffer": "1.4.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "CodeGenerationUtils\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marco Pivetta",
+                    "email": "ocramius@gmail.com",
+                    "homepage": "http://ocramius.github.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A set of code generator utilities built on top of PHP-Parsers that ease its use when combined with Reflection",
+            "homepage": "https://github.com/Ocramius/CodeGenerationUtils",
+            "keywords": [
+                "code generation",
+                "compiler",
+                "parser",
+                "php code",
+                "reflection"
+            ],
+            "time": "2013-07-27 00:49:23"
+        },
+        {
+            "name": "ocramius/generated-hydrator",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Ocramius/GeneratedHydrator.git",
+                "reference": "75f315c21f2169510df1cf49d0997cf450f71c12"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Ocramius/GeneratedHydrator/zipball/75f315c21f2169510df1cf49d0997cf450f71c12",
+                "reference": "75f315c21f2169510df1cf49d0997cf450f71c12",
+                "shasum": ""
+            },
+            "require": {
+                "nikic/php-parser": "0.9.*",
+                "ocramius/code-generator-utils": "0.1.*",
+                "php": ">=5.4",
+                "zendframework/zend-stdlib": "2.*"
+            },
+            "require-dev": {
+                "athletic/athletic": "~0.1.6",
+                "phpmd/phpmd": "1.4.*",
+                "phpunit/phpunit": ">=3.7",
+                "satooshi/php-coveralls": "~0.6",
+                "squizlabs/php_codesniffer": "1.4.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "GeneratedHydrator\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marco Pivetta",
+                    "email": "ocramius@gmail.com",
+                    "homepage": "http://ocramius.github.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "An Object Hydrator that allows very fast array to object to array conversion",
+            "homepage": "https://github.com/Ocramius/GeneratedHydrator",
+            "keywords": [
+                "array conversion",
+                "hydrator",
+                "object conversion",
+                "performance",
+                "serializer"
+            ],
+            "time": "2013-08-19 22:21:18"
+        },
+        {
+            "name": "ocramius/proxy-manager",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Ocramius/ProxyManager.git",
+                "reference": "cd66171d6ce3349096a14de197a21340ac59816e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Ocramius/ProxyManager/zipball/cd66171d6ce3349096a14de197a21340ac59816e",
+                "reference": "cd66171d6ce3349096a14de197a21340ac59816e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "zendframework/zend-code": "2.*"
+            },
+            "require-dev": {
+                "phpmd/phpmd": "1.4.*",
+                "phpunit/phpunit": ">=3.7",
+                "satooshi/php-coveralls": "~0.6",
+                "squizlabs/php_codesniffer": "1.4.*"
+            },
+            "suggest": {
+                "ocramius/generated-hydrator": "To have very fast object to array to object conversion for ghost objects",
+                "zendframework/zend-json": "To have the JsonRpc adapter (Remote Object feature)",
+                "zendframework/zend-soap": "To have the Soap adapter (Remote Object feature)",
+                "zendframework/zend-stdlib": "To use the hydrator proxy",
+                "zendframework/zend-xmlrpc": "To have the XmlRpc adapter (Remote Object feature)"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.5.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "ProxyManager\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marco Pivetta",
+                    "email": "ocramius@gmail.com",
+                    "homepage": "http://ocramius.github.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A library providing utilities to generate, instantiate and generally operate with Object Proxies",
+            "homepage": "https://github.com/Ocramius/ProxyManager",
+            "keywords": [
+                "aop",
+                "lazy loading",
+                "proxy",
+                "proxy pattern",
+                "service proxies"
+            ],
+            "time": "2013-12-22 17:49:04"
         },
         {
             "name": "rwoverdijk/assetmanager",

@@ -21,6 +21,10 @@ class CreateTest extends \Codeception\TestCase\Test
      * @var HydratorInterface
      */
     protected $hydrator;
+    /**
+     * @var \User\Entity\User
+     */
+    protected $user;
 
     protected function _before()
     {
@@ -29,6 +33,8 @@ class CreateTest extends \Codeception\TestCase\Test
         $this->serviceManager = $app->getServiceManager();
         $dm = $this->serviceManager->get('doctrine.documentmanager.odm_default');
         $this->hydrator = $dm->getHydratorFactory();
+        $this->user = $dm->getRepository('User\Entity\User')
+                         ->findOneBy(array('uuid' => '93456a97789c4538ba8d0e8d7419e658'));
         $this->serviceManager->setAllowOverride(true);
     }
 
@@ -40,7 +46,7 @@ class CreateTest extends \Codeception\TestCase\Test
     // tests
     public function testReturnEntityAfterCreating()
     {
-        $model = new PlaceModel($this->getDoctrineManager(), $this->getIdentityProvider());
+        $model = new PlaceModel($this->getDoctrineManager(), $this->getIdentityProvider($this->user));
         $model->setEventManager($this->getEventManager());
         $model->setHydrator($this->hydrator);
         $entity = $model->create(array());
@@ -49,7 +55,7 @@ class CreateTest extends \Codeception\TestCase\Test
 
     public function testMethodShouldTwiceTriggerEvents()
     {
-        $model = new PlaceModel($this->getDoctrineManager(), $this->getIdentityProvider());
+        $model = new PlaceModel($this->getDoctrineManager(), $this->getIdentityProvider($this->user));
         $model->setEventManager($this->getEventManager());
         $model->setHydrator($this->hydrator);
         $model->create(array());

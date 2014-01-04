@@ -11,9 +11,10 @@ class Company
     /**
      * Идентификатор компании
      *
+     * @var \Account\Entity\Company
      * @ODM\ObjectId
      * @ODM\Field(name="id")
-     * @var int
+     * @ODM\ReferenceOne(targetDocument="Account\Entity\Company", simple=true)
      */
     protected $id;
     /**
@@ -31,4 +32,13 @@ class Company
      * @ODM\Index
      */
     protected $uuid;
+
+    public function __construct(\Account\Entity\Company $company = null)
+    {
+        if (!empty($company)) {
+            $this->id = $company;
+            $this->name = $company->getShort();
+            $this->uuid = $company->getUuid();
+        }
+    }
 }
