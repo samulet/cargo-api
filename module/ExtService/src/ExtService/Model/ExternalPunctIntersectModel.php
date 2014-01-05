@@ -42,6 +42,11 @@ class ExternalPunctIntersectModel
         if (empty($object)) {
             return false;
         }
+        if (empty($data['place'])) {
+            $place = array('name' => $object->getName());
+            $placeEntity = $this->getPlaceModel()->create($place);
+            $data['place'] = $placeEntity->getUuid();
+        }
         $object->setLink($data['place']);
         $this->documentManager->persist($object);
         $this->documentManager->flush();
