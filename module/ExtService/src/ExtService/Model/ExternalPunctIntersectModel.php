@@ -63,11 +63,11 @@ class ExternalPunctIntersectModel
     }
 
     /**
-     * @param ExternalCompanyModel $externalCompanyModel
+     * @param ExternalPunctModel $externalPunctModel
      */
-    public function setExternalPunctModel(ExternalCompanyModel $externalCompanyModel)
+    public function setExternalPunctModel(ExternalPunctModel $externalPunctModel)
     {
-        $this->externalPunctModel = $externalCompanyModel;
+        $this->externalPunctModel = $externalPunctModel;
     }
 
     /**
