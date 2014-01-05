@@ -23,6 +23,10 @@ class ExternalServicePlaceIntersectResourceFactory implements FactoryInterface
             return new AccessDeniedResource($code, $exception->getMessage());
         }
 
-        return new IntersectController($serviceLocator->get('ExternalPunctIntersectModel'), $provider);
+        return new IntersectController(
+            $serviceLocator->get('ExternalPunctIntersectModel'),
+            $serviceLocator->get('PlaceModel'),
+            $provider
+        );
     }
 }

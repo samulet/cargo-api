@@ -1,6 +1,9 @@
 <?php
 namespace Api\V1\Rest\ExternalServicePlaceIntersect;
 
+use ExtService\Model\ExternalPunctIntersectModel;
+use Place\Model\PlaceModel;
+use User\Identity\IdentityProvider;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
@@ -15,14 +18,23 @@ class ExternalServicePlaceIntersectResource extends AbstractResourceListener
      * @var \User\Identity\IdentityProvider
      */
     protected $identityProvider;
+    /**
+     * @var \Place\Model\PlaceModel
+     */
+    protected $placeModel;
 
     /**
-     * @param $intersectModel
+     * @param \ExtService\Model\ExternalPunctIntersectModel $intersectModel
+     * @param \Place\Model\PlaceModel $placeModel
      * @param \User\Identity\IdentityProvider $identityProvider
      */
-    public function __construct($intersectModel = null, $identityProvider = null)
-    {
+    public function __construct(
+        ExternalPunctIntersectModel $intersectModel,
+        PlaceModel $placeModel,
+        IdentityProvider $identityProvider
+    ) {
         $this->intersectModel = $intersectModel;
+        $this->placeModel = $placeModel;
         $this->identityProvider = $identityProvider;
     }
 
@@ -34,7 +46,12 @@ class ExternalServicePlaceIntersectResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        $this->intersectModel->setPlaceModel($this->placeModel);
+        $entity = $this->intersectModel->addLink(get_object_vars($data));
+        if (empty($entity)) {
+            return false;
+        }
+        return new ExternalServicePlaceIntersectEntity($entity);
     }
 
     /**
@@ -45,7 +62,12 @@ class ExternalServicePlaceIntersectResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        // если в $id нет "-" или он в начале строки - завершаем работу
+        if (0 == strpos($id, '-')) {
+            return false;
+        }
+        list($source, $id) = explode('-', $id);
+        return $this->intersectModel->deleteLink($source, $id);
     }
 
     /**
