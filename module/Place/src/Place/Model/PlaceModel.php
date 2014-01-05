@@ -71,12 +71,33 @@ class PlaceModel implements AuthorizationServiceAwareInterface, EventManagerAwar
         }
         $result = array();
         if ($this->getAuthorizationService()->isGranted('get.places.all')) {
-            /** @var \Place\Repository\Place $repository */
-            $repository = $this->documentManager->getRepository('Place\\Entity\\PlaceEntity');
-            $result = $repository->getAvailablePlaces()->toArray();
+            $result = $this->getRepository()->getAvailablePlaces()->toArray();
         }
 
         return $result;
+    }
+
+    /**
+     * Удаляет пункт
+     *
+     * @param string $uuid
+     *
+     * @return bool
+     */
+    public function delete($uuid)
+    {
+        /** @var \Place\Entity\PlaceEntity $entity */
+        $entity = $this->getRepository()->findOneBy(array('uuid' => $uuid));
+        if (empty($entity)) {
+            return false;
+        }
+
+        $this->getEventManager()->trigger('place.delete.pre', $this, array('entity' => $entity));
+        $this->documentManager->remove($entity);
+        $this->documentManager->flush();
+        $this->getEventManager()->trigger('place.delete.post', $this, array('entity' => $entity));
+
+        return true;
     }
 
     /**
@@ -110,5 +131,13 @@ class PlaceModel implements AuthorizationServiceAwareInterface, EventManagerAwar
     public function getHydrator()
     {
         return $this->hydrator;
+    }
+
+    /**
+     * @return \Place\Repository\Place
+     */
+    protected function getRepository()
+    {
+        return $this->documentManager->getRepository('Place\\Entity\\PlaceEntity');
     }
 }
