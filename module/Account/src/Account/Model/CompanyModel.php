@@ -59,15 +59,24 @@ class CompanyModel
     }
 
     /**
-     * Удалить юзера. При успехе возвращает uuid удаленой компании
+     * Удаляет компанию
      *
-     * @param $findParams
+     * @param string $uuid
      *
-     * @return string|null
+     * @return bool
      */
-    public function delete($findParams)
+    public function delete($uuid)
     {
-        return $this->queryBuilderModel->delete('Account\Entity\Company', $findParams);
+        /** @var \Account\Entity\Company $entity */
+        $entity = $this->documentManager->getRepository('Account\Entity\Company')->findOneBy(array('uuid' => $uuid));
+        if (empty($entity)) {
+            return false;
+        }
+
+        $this->documentManager->remove($entity);
+        $this->documentManager->flush();
+
+        return true;
     }
 
     /**

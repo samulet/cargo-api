@@ -39,12 +39,7 @@ class CompanyResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        $data = $this->companyModel->delete($id);
-        if (!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return $this->companyModel->delete($id);
     }
 
     /**
