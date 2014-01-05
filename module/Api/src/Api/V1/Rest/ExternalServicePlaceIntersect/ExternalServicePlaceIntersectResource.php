@@ -62,7 +62,12 @@ class ExternalServicePlaceIntersectResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        // если в $id нет "-" или он в начале строки - завершаем работу
+        if (0 == strpos($id, '-')) {
+            return false;
+        }
+        list($source, $id) = explode('-', $id);
+        return $this->intersectModel->deleteLink($source, $id);
     }
 
     /**
