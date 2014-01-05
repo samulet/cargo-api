@@ -11,7 +11,7 @@ class ResourceMetaResource extends AbstractResourceListener
 {
     protected $configRouter;
 
-    public function __construct($configRouter = null)
+    public function __construct($configRouter)
     {
         $this->configRouter = $configRouter;
     }
