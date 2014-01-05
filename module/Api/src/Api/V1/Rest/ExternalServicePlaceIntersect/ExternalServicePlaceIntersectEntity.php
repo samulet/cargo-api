@@ -101,6 +101,6 @@ class ExternalServicePlaceIntersectEntity
         foreach ($entity->getData() as $k => $v) {
             $this->$k = $v;
         }
-        $this->code = $entity->getSource() . '-' . $entity->getId();
+        $this->code = sprintf('%s-%s-%s', $entity->getSource(), $entity->getType(), $entity->getId());
     }
 }

@@ -37,8 +37,9 @@ class ExternalPunctIntersectModel
     public function addLink($data)
     {
         $data = array_map('strval', $data);
+        $conditions = array('source' => $data['source'], 'type' => $data['type'], 'id' => $data['id']);
         /** @var \ExtService\Entity\ExternalPunct $object */
-        $object = $this->externalPunctModel->fetch(array('source' => $data['source'], 'id' => $data['id']));
+        $object = $this->externalPunctModel->fetch($conditions);
         if (empty($object)) {
             return false;
         }
@@ -53,10 +54,10 @@ class ExternalPunctIntersectModel
         return $object;
     }
 
-    public function deleteLink($source, $id)
+    public function deleteLink($source, $type, $id)
     {
         /** @var \ExtService\Entity\ExternalPunct $object */
-        $object = $this->externalPunctModel->fetch(array('source' => $source, 'id' => $id));
+        $object = $this->externalPunctModel->fetch(array('source' => $source, 'type' => $type, 'id' => $id));
         if (!empty($object) && !empty($object->getLink())) {
             $object->setLink(null);
             $this->documentManager->persist($object);

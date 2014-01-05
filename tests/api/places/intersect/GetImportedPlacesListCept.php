@@ -124,26 +124,26 @@ $I->seeResponseContainsJson(
         '_embedded' => array(
             'places' => [
                 $entities[0] + array(
-                    'code' => 'vesta-6',
+                    'code' => 'vesta-dp-6',
                     '_links' => array(
                         'self' => array(
-                            'href' => 'http://cargo.dev/api/service/import/place-intersect/vesta-6',
+                            'href' => 'http://cargo.dev/api/service/import/place-intersect/vesta-dp-6',
                         ),
                     ),
                 ),
                 $entities[1] + array(
-                    'code' => 'vesta-216',
+                    'code' => 'vesta-dp-216',
                     '_links' => array(
                         'self' => array(
-                            'href' => 'http://cargo.dev/api/service/import/place-intersect/vesta-216',
+                            'href' => 'http://cargo.dev/api/service/import/place-intersect/vesta-dp-216',
                         ),
                     ),
                 ),
                 $entities[2] + array(
-                    'code' => 'prodrezerv-10',
+                    'code' => 'prodrezerv-wh-10',
                     '_links' => array(
                         'self' => array(
-                            'href' => 'http://cargo.dev/api/service/import/place-intersect/prodrezerv-10',
+                            'href' => 'http://cargo.dev/api/service/import/place-intersect/prodrezerv-wh-10',
                         ),
                     ),
                 ),

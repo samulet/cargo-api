@@ -66,8 +66,8 @@ class ExternalServicePlaceIntersectResource extends AbstractResourceListener
         if (0 == strpos($id, '-')) {
             return false;
         }
-        list($source, $id) = explode('-', $id);
-        return $this->intersectModel->deleteLink($source, $id);
+        list($source, $type, $id) = explode('-', $id);
+        return $this->intersectModel->deleteLink($source, $type, $id);
     }
 
     /**
