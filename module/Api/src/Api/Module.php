@@ -13,9 +13,7 @@ use Api\V1\Rest\ReferenceProductGroup\ReferenceProductGroupResource;
 use Api\V1\Rest\Reference\ReferenceResource;
 use Api\V1\Rest\Cargo\CargoResource;
 use Api\V1\Rest\ExtServiceCompany\ExtServiceCompanyResource;
-use Api\V1\Rest\ExtServiceCompanyIntersect\CompanyIntersectResource;
 use Api\V1\Rest\ExternalServicePlace\ExternalServicePlaceResource;
-use Api\V1\Rest\ExternalServicePlaceIntersect\ExternalServicePlaceIntersectResource;
 use Exception;
 
 class Module implements ApigilityModuleInterface
@@ -38,9 +36,6 @@ class Module implements ApigilityModuleInterface
     public function getServiceConfig()
     {
         return array(
-            'aliases' => array(
-                'Doctrine\ODM\MongoDB\DocumentManager' => 'doctrine.documentmanager.odm_default',
-            ) ,
             'factories' => array(
                 'Api\V1\Rest\Profile\ProfileResource' => function ($sm) {
                     /** @var \Zend\Http\Header\GenericHeader $authToken */
@@ -272,30 +267,6 @@ class Module implements ApigilityModuleInterface
                     if (!empty($tokenEntity)) {
                         return new ExternalServicePlaceResource(
                             $sm->get('ExternalPunctImportModel'),
-                            $tokenEntity->getUser()
-                        );
-                    } else {
-                        return new AccessDeniedResource();
-                    }
-                },
-                'Api\V1\Rest\ExternalServicePlaceIntersect\ExternalServicePlaceIntersectResource' => function ($sm) {
-
-                    /** @var \Zend\Http\Header\GenericHeader $authToken */
-                    try {
-                        $authToken = $sm->get('request')->getHeaders()->get('X-Auth-UserToken');
-                    } catch (Exception $e) {
-                        return new AccessDeniedResource();
-                    }
-                    /** @var \AuthToken\Model\AuthToken $AuthTokenModel */
-                    $AuthTokenModel = $sm->get('AuthToken\\Model\\AuthToken');
-                    if(!empty($authToken)) {
-                        $tokenEntity = $AuthTokenModel->fetch($authToken->getFieldValue());
-                    } else {
-                        return new AccessDeniedResource();
-                    }
-                    if (!empty($tokenEntity)) {
-                        return new ExternalServicePlaceIntersectResource(
-                            $sm->get('ExternalPunctIntersectModel'),
                             $tokenEntity->getUser()
                         );
                     } else {

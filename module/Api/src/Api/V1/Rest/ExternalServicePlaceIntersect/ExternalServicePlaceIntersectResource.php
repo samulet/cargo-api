@@ -7,16 +7,23 @@ use ZF\Rest\AbstractResourceListener;
 
 class ExternalServicePlaceIntersectResource extends AbstractResourceListener
 {
-    protected $externalPlaceIntersectModel;
     /**
-     * @var \User\Entity\User
+     * @var \ExtService\Model\ExternalPunctIntersectModel
      */
-    protected $userEntity;
+    protected $intersectModel;
+    /**
+     * @var \User\Identity\IdentityProvider
+     */
+    protected $identityProvider;
 
-    public function __construct($externalPlaceIntersectModel = null, $userEntity = null)
+    /**
+     * @param $intersectModel
+     * @param \User\Identity\IdentityProvider $identityProvider
+     */
+    public function __construct($intersectModel = null, $identityProvider = null)
     {
-        $this->externalPlaceIntersectModel = $externalPlaceIntersectModel;
-        $this->userEntity = $userEntity;
+        $this->intersectModel = $intersectModel;
+        $this->identityProvider = $identityProvider;
     }
 
     /**
@@ -71,7 +78,16 @@ class ExternalServicePlaceIntersectResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        $data = $this->intersectModel->getExternalPunctModel()->fetchAll(array());
+        $result = array();
+        foreach ($data as $d) {
+            array_push($result, new ExternalServicePlaceIntersectEntity($d));
+        }
+        if (!empty($params['page'])) {
+            return new ExternalServicePlaceIntersectCollection(new ArrayAdapter($result));
+        } else {
+            return $result;
+        }
     }
 
     /**

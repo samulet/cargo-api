@@ -140,7 +140,7 @@ return array(
             'api.rest.external-service-place-intersect' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/service/import/place-intersect[/:source][/:external_service_place_intersect_id]',
+                    'route' => '/api/service/import/place-intersect[/:code]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\Controller',
                     ),
@@ -180,6 +180,9 @@ return array(
         ),
     ),
     'service_manager' => array(
+        'aliases' => array(
+            'Doctrine\ODM\MongoDB\DocumentManager' => 'doctrine.documentmanager.odm_default',
+        ),
         'invokables' => array(),
         'factories' => array(
             'AuthTokenModel' => 'AuthToken\\ModelFactory',
@@ -190,15 +193,10 @@ return array(
             'CargoModel' => 'Cargo\\Factory\\CargoModelFactory',
             'AddListProductGroupModel' => 'Reference\\Factory\\AddListProductGroupModelFactory',
             'ReferenceModel' => 'Reference\\Factory\\ReferenceModelFactory',
-            'ExternalCompanyModel' => 'ExtService\\Factory\\ExternalCompanyModelFactory',
-            'ExternalCompanyIntersectModel' => 'ExtService\\Factory\\ExternalCompanyIntersectModelFactory',
-            'ExternalCompanyImportModel' => 'ExtService\\Factory\\ExternalCompanyImportModelFactory',
-            'ExternalPunctModel' => 'ExtService\\Factory\\ExternalPunctModelFactory',
-            'ExternalPunctIntersectModel' => 'ExtService\\Factory\\ExternalPunctIntersectModelFactory',
-            'ExternalPunctImportModel' => 'ExtService\\Factory\\ExternalPunctImportModelFactory',
             'Api\\V1\\Rest\\Account\\AccountResource' => 'Api\\Factory\\AccountResource',
             'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\CompanyIntersectResource' => 'Api\\Factory\\CompanyIntersectResourceFactory',
             'Api\\V1\\Rest\\Places\\PlacesResource' => 'Api\\Factory\\PlacesResourceFactory',
+            'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\ExternalServicePlaceIntersectResource' => 'Api\\Factory\\ExternalServicePlaceIntersectResourceFactory',
         ),
     ),
     'zf-rest' => array(

@@ -17,6 +17,22 @@ return array(
             )
         )
     ),
+
+    'service_manager' => array(
+        'aliases' => array(
+        ),
+        'invokables' => array(
+        ),
+        'factories' => array(
+            'ExternalCompanyModel' => 'ExtService\\Factory\\ExternalCompanyModelFactory',
+            'ExternalCompanyIntersectModel' => 'ExtService\\Factory\\ExternalCompanyIntersectModelFactory',
+            'ExternalCompanyImportModel' => 'ExtService\\Factory\\ExternalCompanyImportModelFactory',
+            'ExternalPunctModel' => 'ExtService\\Factory\\ExternalPunctModelFactory',
+            'ExternalPunctIntersectModel' => 'ExtService\\Factory\\ExternalPunctIntersectModelFactory',
+            'ExternalPunctImportModel' => 'ExtService\\Factory\\ExternalPunctImportModelFactory',
+        ),
+    ),
+
     'online' => array(
         'vesta' => array(
             'http://vesta2.altlog.ru' => 'a8ER5Kh8dQi3EYnK'
