@@ -1,19 +1,14 @@
 <?php
-
 namespace User\Entity;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Zend\Form\Annotation;
 use ZfcRbac\Identity\IdentityInterface;
 use ZfcUser\Entity\UserInterface;
-use Zend\ServiceManager\ServiceManager;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
 /**
  * @ODM\Document(collection="user")
- * @Annotation\Name("user")
- * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  */
 class User implements UserInterface, IdentityInterface
 {
@@ -27,49 +22,41 @@ class User implements UserInterface, IdentityInterface
      * @ODM\Field(type="string")
      */
     protected $uuid;
-
     /**
      * @var string
      * @ODM\Field(type="string")
      */
     protected $username;
-
     /**
      * @var string
      * @ODM\Field(type="string")
      */
     protected $email;
-
     /**
      * @var string
      * @ODM\Field(type="string")
      */
     protected $displayName;
-
     /**
      * @var string
      * @ODM\Field(type="string")
      */
     protected $password;
-
     /**
      * @var int
      * @ODM\Field(type="int")
      */
     protected $state;
-
     /**
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
      */
     protected $created;
-
     /**
      * @Gedmo\Timestampable(on="update")
      * @ODM\Date
      */
     protected $updated;
-
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")

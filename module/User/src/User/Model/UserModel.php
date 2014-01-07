@@ -1,34 +1,38 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: solov
- * Date: 7/2/13
- * Time: 11:29 PM
- * To change this template use File | Settings | File Templates.
- */
 namespace User\Model;
 
-use Doctrine\ODM\MongoDB\DocumentNotFoundException;
-use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\DocumentNotFoundException;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
+use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
+use QueryBuilder\Model\QueryBuilderModel;
 use User\Entity\User;
 
 class UserModel
 {
+    /**
+     * @var \Doctrine\ODM\MongoDB\DocumentManager
+     */
     protected $documentManager;
+    /**
+     * @var \QueryBuilder\Model\QueryBuilderModel
+     */
     protected $queryBuilderModel;
+    /**
+     * @var \Doctrine\ODM\MongoDB\Id\UuidGenerator
+     */
     protected $uuidGenerator;
 
-    public function __construct(DocumentManager $documentManager,$queryBuilderModel)
+    public function __construct(DocumentManager $documentManager, $queryBuilderModel)
     {
         $this->uuidGenerator = new UuidGenerator();
-        $this->documentManager=$documentManager;
-        $this->queryBuilderModel=$queryBuilderModel;
+        $this->documentManager = $documentManager;
+        $this->queryBuilderModel = $queryBuilderModel;
     }
 
-    public function createOrUpdate($data, $uuid = null) {
-        return $this->queryBuilderModel->fetch('User\Entity\User',$data,$uuid);
+    public function createOrUpdate($data, $uuid = null)
+    {
+        return $this->queryBuilderModel->fetch('User\Entity\User', $data, $uuid);
     }
 
     /**
@@ -38,8 +42,9 @@ class UserModel
      *
      * @return \User\Entity\User|null
      */
-    public function fetch($findParams) {
-        return $this->queryBuilderModel->fetch('User\Entity\User',$findParams);
+    public function fetch($findParams)
+    {
+        return $this->queryBuilderModel->fetch('User\Entity\User', $findParams);
     }
 
     /**
@@ -49,9 +54,11 @@ class UserModel
      *
      * @return array(\User\Entity\User)|null
      */
-    public function fetchAll($findParams) {
-        return $this->queryBuilderModel->fetchAll('User\Entity\User',$findParams);
+    public function fetchAll($findParams)
+    {
+        return $this->queryBuilderModel->fetchAll('User\Entity\User', $findParams);
     }
+
     /**
      * Возвращает текущий статус юзера (активирован, деактивирован....)
      *
@@ -59,10 +66,11 @@ class UserModel
      *
      * @return array()|null
      */
-    public function getUserStatus($uuid) {
-        $user=$this->queryBuilderModel->fetch('User\Entity\User',array('uuid' =>$uuid));
-        $status= $user->getStatus();
-        $status['uuid']=$user->getUuid();
+    public function getUserStatus($uuid)
+    {
+        $user = $this->queryBuilderModel->fetch('User\Entity\User', array('uuid' => $uuid));
+        $status = $user->getStatus();
+        $status['uuid'] = $user->getUuid();
         return $status;
     }
 }
