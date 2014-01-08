@@ -2,33 +2,45 @@
 namespace Api\V1\Rest\Profile;
 
 use Api\Entity\ApiStaticErrorList;
+use User\Identity\IdentityProvider;
+use User\Model\UserModel;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 
 class ProfileResource extends AbstractResourceListener
 {
+    /**
+     * @var \User\Model\UserModel
+     */
     protected $userModel;
+    /**
+     * @var \User\Identity\IdentityProvider
+     */
+    protected $identityProvider;
 
-    public function __construct($userModel = null, $userEntity = null)
+    public function __construct(UserModel $userModel = null, IdentityProvider $identityProvider = null)
     {
         $this->userModel = $userModel;
-        $this->userEntity = $userEntity;
+        $this->identityProvider = $identityProvider;
     }
 
     /**
      * Create a resource
      *
      * @param  mixed $data
-     * @return ApiProblem|mixed
+     *
+     * @return ProfileEntity
      */
     public function create($data)
     {
-        $data = $this->userModel->createOrUpdate(get_object_vars($data));
-        if (!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
+        try {
+            $entity = $this->userModel->create(get_object_vars($data));
+            $profileEntity = new ProfileEntity($entity->getData());
+            return $profileEntity;
+        } catch (\Exception $e) {
+            error_log($e);
+            throw $e;
         }
     }
 
@@ -36,6 +48,7 @@ class ProfileResource extends AbstractResourceListener
      * Delete a resource
      *
      * @param  mixed $id
+     *
      * @return ApiProblem|mixed
      */
     public function delete($id)
@@ -47,6 +60,7 @@ class ProfileResource extends AbstractResourceListener
      * Delete a collection, or members of a collection
      *
      * @param  mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function deleteList($data)
@@ -58,6 +72,7 @@ class ProfileResource extends AbstractResourceListener
      * Fetch a resource
      *
      * @param  mixed $id
+     *
      * @return ApiProblem|mixed
      */
     public function fetch($id)
@@ -111,7 +126,8 @@ class ProfileResource extends AbstractResourceListener
      */
     public function patch($id, $data)
     {
-        return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
+        $entity = $this->userModel->update($id, get_object_vars($data));
+        return new ProfileEntity($entity->getData());
     }
 
     /**
@@ -134,11 +150,6 @@ class ProfileResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $data = $this->userModel->createOrUpdate(get_object_vars($data), $id);
-        if (!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
     }
 }

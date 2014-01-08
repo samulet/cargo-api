@@ -23,7 +23,7 @@ class UserModel
      */
     protected $uuidGenerator;
 
-    public function __construct(DocumentManager $documentManager, $queryBuilderModel)
+    public function __construct(DocumentManager $documentManager, $queryBuilderModel, $identityProvider)
     {
         $this->uuidGenerator = new UuidGenerator();
         $this->documentManager = $documentManager;
@@ -33,6 +33,38 @@ class UserModel
     public function createOrUpdate($data, $uuid = null)
     {
         return $this->queryBuilderModel->fetch('User\Entity\User', $data, $uuid);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return \User\Entity\User
+     */
+    public function create($data)
+    {
+        $entity = new \User\Entity\User();
+        $this->hydrate($entity, $data);
+
+        $this->documentManager->persist($entity);
+        $this->documentManager->flush();
+
+        return $entity;
+    }
+
+    /**
+     * @param string $uuid
+     * @param array $data
+     *
+     * @return \User\Entity\User
+     */
+    public function update($uuid, $data)
+    {
+        $entity = $this->fetch(array('uuid' => $uuid));
+        $this->hydrate($entity, $data);
+        $this->documentManager->persist($entity);
+        $this->documentManager->flush();
+
+        return $entity;
     }
 
     /**
@@ -72,5 +104,16 @@ class UserModel
         $status = $user->getStatus();
         $status['uuid'] = $user->getUuid();
         return $status;
+    }
+
+    /**
+     * @param $entity
+     * @param $data
+     *
+     * @return array
+     */
+    public function hydrate($entity, $data)
+    {
+        return $this->documentManager->getHydratorFactory()->hydrate($entity, $data);
     }
 }

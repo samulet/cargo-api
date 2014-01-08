@@ -1,15 +1,15 @@
 <?php
 namespace Api\V1\Rest\Profile;
 
-
-class ProfileEntity {
-    protected $profile_uuid;
+class ProfileEntity
+{
+    protected $uuid;
     protected $username;
     protected $email;
     protected $displayName;
     protected $password;
     protected $state;
-    protected $created_at;
+    protected $created;
     protected $roles = array();
     protected $currentAcc;
     protected $currentCom;
@@ -25,27 +25,34 @@ class ProfileEntity {
     protected $social = array();
     protected $status = array();
 
-    public function __construct(array $entity = null){
-        if(!empty($entity)) {
+    public function __construct(array $entity = null)
+    {
+        if (!empty($entity)) {
             $this->setData($entity);
-            $this->profile_uuid=$entity['uuid'];
         }
     }
 
-    public function setProfileUuid($profile_uuid)
+    public function setData($data)
     {
-        $this->profile_uuid = $profile_uuid;
+        if ($data !== null && is_array($data)) {
+            foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
+                if (isset($data[$key]) && ($key != 'id')) {
+                    $this->$key = $data[$key];
+                }
+            }
+        }
+
         return $this;
     }
 
-    public function getProfileUuid()
+    public function getUuid()
     {
-        return $this->profile_uuid;
+        return $this->uuid;
     }
 
-    public function setName($name)
+    public function setUuid($profile_uuid)
     {
-        $this->name = $name;
+        $this->uuid = $profile_uuid;
         return $this;
     }
 
@@ -54,14 +61,26 @@ class ProfileEntity {
         return $this->name;
     }
 
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function getDocs()
+    {
+        return $this->docs;
+    }
+
     public function setDocs($docs)
     {
         $this->docs = $docs;
         return $this;
     }
-    public function getDocs()
+
+    public function getSnils()
     {
-        return $this->docs;
+        return $this->snils;
     }
 
     public function setSnils($snils)
@@ -69,9 +88,10 @@ class ProfileEntity {
         $this->snils = $snils;
         return $this;
     }
-    public function getSnils()
+
+    public function getInn()
     {
-        return $this->snils;
+        return $this->inn;
     }
 
     public function setInn($inn)
@@ -79,9 +99,10 @@ class ProfileEntity {
         $this->inn = $inn;
         return $this;
     }
-    public function getInn()
+
+    public function getPhone()
     {
-        return $this->inn;
+        return $this->phone;
     }
 
     public function setPhone($phone)
@@ -89,9 +110,10 @@ class ProfileEntity {
         $this->phone = $phone;
         return $this;
     }
-    public function getPhone()
+
+    public function getSite()
     {
-        return $this->phone;
+        return $this->site;
     }
 
     public function setSite($site)
@@ -99,9 +121,10 @@ class ProfileEntity {
         $this->site = $site;
         return $this;
     }
-    public function getSite()
+
+    public function getAvatar()
     {
-        return $this->site;
+        return $this->avatar;
     }
 
     public function setAvatar($avatar)
@@ -109,15 +132,12 @@ class ProfileEntity {
         $this->avatar = $avatar;
         return $this;
     }
-    public function getAvatar()
-    {
-        return $this->avatar;
-    }
 
     public function getSign()
     {
         return $this->sign;
     }
+
     public function setSign($sign)
     {
         $this->sign = $sign;
@@ -128,19 +148,11 @@ class ProfileEntity {
     {
         return $this->social;
     }
+
     public function setSocial($social)
     {
         $this->social = $social;
         return $this;
-    }
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     public function getCurrentAcc()
@@ -151,19 +163,6 @@ class ProfileEntity {
     public function getCurrentCom()
     {
         return $this->currentCom;
-    }
-
-    /**
-     * Set id.
-     *
-     * @param int $id
-     *
-     * @return UserInterface
-     */
-    public function setId($id)
-    {
-        $this->id = (int)$id;
-        return $this;
     }
 
     /**
@@ -343,34 +342,12 @@ class ProfileEntity {
     {
         $this->roles[] = $role;
     }
-    public function getUuid()
+
+    public function getData()
     {
-        return $this->uuid;
-    }
-
-    public function setUuid($uuid)
-    {
-        $this->uuid = $uuid;
-        return $this;
-    }
-
-
-    public function setData($data) {
-        if($data !== null && is_array($data)){
-            foreach(array_keys(get_class_vars(__CLASS__)) as $key){
-                if(isset($entity[$key]) && ($key!='id')){
-                    $this->$key = $entity[$key];
-                }
-            }
-        }
-        return $this;
-
-    }
-
-    public function getData() {
         $data = array();
-        foreach(array_keys(get_class_vars(__CLASS__)) as $key){
-            $data[$key]=$this->$key;
+        foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
+            $data[$key] = $this->$key;
         }
         return $data;
     }

@@ -14,7 +14,7 @@ return array(
             'api.rest.profile' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/profiles[/:profile_uuid]',
+                    'route' => '/api/profiles[/:uuid]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\Profile\\Controller',
                     ),
@@ -239,21 +239,16 @@ return array(
         'Api\\V1\\Rest\\Profile\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\Profile\\ProfileResource',
             'route_name' => 'api.rest.profile',
-            'identifier_name' => 'profile_uuid',
+            'identifier_name' => 'uuid',
             'collection_name' => 'profiles',
             'resource_http_methods' => array(
                 0 => 'GET',
-                1 => 'POST',
-                2 => 'PUT',
                 3 => 'DELETE',
                 4 => 'PATCH',
             ),
             'collection_http_methods' => array(
                 0 => 'GET',
                 1 => 'POST',
-                2 => 'PUT',
-                3 => 'DELETE',
-                4 => 'PATCH',
             ),
             'collection_query_whitelist' => array(),
             'page_size' => '25',
@@ -863,12 +858,12 @@ return array(
                 'is_collection' => '1',
             ),
             'Api\\V1\\Rest\\Profile\\ProfileEntity' => array(
-                'identifier_name' => 'profile_uuid',
+                'identifier_name' => 'uuid',
                 'route_name' => 'api.rest.profile',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\Profile\\ProfileCollection' => array(
-                'identifier_name' => 'profile_uuid',
+                'identifier_name' => 'uuid',
                 'route_name' => 'api.rest.profile',
                 'is_collection' => '1',
             ),

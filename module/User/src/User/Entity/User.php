@@ -1,14 +1,15 @@
 <?php
 namespace User\Entity;
 
+use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use ZfcRbac\Identity\IdentityInterface;
 use ZfcUser\Entity\UserInterface;
-use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
 /**
- * @ODM\Document(collection="user")
+ * @ODM\Document(collection="user", repositoryClass="User\Repository\User")
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
  */
 class User implements UserInterface, IdentityInterface
 {
@@ -75,7 +76,7 @@ class User implements UserInterface, IdentityInterface
     /**
      * @ODM\Date
      */
-    protected $deletedAt;
+    protected $deleted;
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
@@ -126,19 +127,26 @@ class User implements UserInterface, IdentityInterface
      * @ODM\Collection(strategy="pushAll")
      */
     protected $status = array();
+
     /**
      * @return mixed
      */
-    public function getDeletedAt()
+    public function getDeleted()
     {
-        return $this->deletedAt;
+        return $this->deleted;
     }
+
     /**
      * @param mixed $deletedAt
      */
-    public function setDeletedAt($deletedAt)
+    public function setDeleted($deletedAt)
     {
-        $this->deletedAt = $deletedAt;
+        $this->deleted = $deletedAt;
+    }
+
+    public function getName()
+    {
+        return $this->name;
     }
 
     public function setName($name)
@@ -147,9 +155,9 @@ class User implements UserInterface, IdentityInterface
         return $this;
     }
 
-    public function getName()
+    public function getDocs()
     {
-        return $this->name;
+        return $this->docs;
     }
 
     public function setDocs($docs)
@@ -157,9 +165,10 @@ class User implements UserInterface, IdentityInterface
         $this->docs = $docs;
         return $this;
     }
-    public function getDocs()
+
+    public function getSnils()
     {
-        return $this->docs;
+        return $this->snils;
     }
 
     public function setSnils($snils)
@@ -167,9 +176,10 @@ class User implements UserInterface, IdentityInterface
         $this->snils = $snils;
         return $this;
     }
-    public function getSnils()
+
+    public function getInn()
     {
-        return $this->snils;
+        return $this->inn;
     }
 
     public function setInn($inn)
@@ -177,9 +187,10 @@ class User implements UserInterface, IdentityInterface
         $this->inn = $inn;
         return $this;
     }
-    public function getInn()
+
+    public function getPhone()
     {
-        return $this->inn;
+        return $this->phone;
     }
 
     public function setPhone($phone)
@@ -187,9 +198,10 @@ class User implements UserInterface, IdentityInterface
         $this->phone = $phone;
         return $this;
     }
-    public function getPhone()
+
+    public function getSite()
     {
-        return $this->phone;
+        return $this->site;
     }
 
     public function setSite($site)
@@ -197,9 +209,10 @@ class User implements UserInterface, IdentityInterface
         $this->site = $site;
         return $this;
     }
-    public function getSite()
+
+    public function getAvatar()
     {
-        return $this->site;
+        return $this->avatar;
     }
 
     public function setAvatar($avatar)
@@ -207,15 +220,12 @@ class User implements UserInterface, IdentityInterface
         $this->avatar = $avatar;
         return $this;
     }
-    public function getAvatar()
-    {
-        return $this->avatar;
-    }
 
     public function getSign()
     {
         return $this->sign;
     }
+
     public function setSign($sign)
     {
         $this->sign = $sign;
@@ -226,11 +236,13 @@ class User implements UserInterface, IdentityInterface
     {
         return $this->social;
     }
+
     public function setSocial($social)
     {
         $this->social = $social;
         return $this;
     }
+
     /**
      * Get id.
      *
@@ -239,16 +251,6 @@ class User implements UserInterface, IdentityInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    public function getCurrentAcc()
-    {
-        return $this->currentAcc;
-    }
-
-    public function getCurrentCom()
-    {
-        return $this->currentCom;
     }
 
     /**
@@ -262,6 +264,16 @@ class User implements UserInterface, IdentityInterface
     {
         $this->id = $id;
         return $this;
+    }
+
+    public function getCurrentAcc()
+    {
+        return $this->currentAcc;
+    }
+
+    public function getCurrentCom()
+    {
+        return $this->currentCom;
     }
 
     /**
@@ -412,14 +424,14 @@ class User implements UserInterface, IdentityInterface
         $this->created = $created;
     }
 
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-    }
-
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
     }
 
     /**
@@ -448,6 +460,7 @@ class User implements UserInterface, IdentityInterface
     {
         $this->roles[] = $role;
     }
+
     public function getUuid()
     {
         return $this->uuid;
@@ -459,25 +472,47 @@ class User implements UserInterface, IdentityInterface
         return $this;
     }
 
+    /**
+     * @ODM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        if (empty($this->uuid)) {
+            $this->uuid = $this->getGenerator()->generateV4();
+            if (empty($this->state)) {
+                $this->state = 1;
+            }
+        }
+    }
 
-    public function setData($data) {
-        if($data !== null && is_array($data)){
-            foreach(array_keys(get_class_vars(__CLASS__)) as $key){
-                if(isset($entity[$key]) && ($key!='id') && ($key!='uuid') ){
+    /**
+     * @return UuidGenerator
+     */
+    protected function getGenerator()
+    {
+        return new UuidGenerator;
+    }
+
+    public function setData($data)
+    {
+        if ($data !== null && is_array($data)) {
+            foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
+                if (isset($entity[$key]) && ($key != 'id') && ($key != 'uuid')) {
                     $this->$key = $entity[$key];
                 }
             }
         }
-        return $this;
 
+        return $this;
     }
 
-    public function getData() {
+    public function getData()
+    {
         $data = array();
-        foreach(array_keys(get_class_vars(__CLASS__)) as $key){
-            $data[$key]=$this->$key;
+        foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
+            $data[$key] = $this->$key;
         }
+
         return $data;
     }
-
 }
