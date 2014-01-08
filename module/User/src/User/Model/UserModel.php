@@ -7,6 +7,7 @@ use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use QueryBuilder\Model\QueryBuilderModel;
 use User\Entity\User;
+use User\Identity\IdentityProvider;
 
 class UserModel
 {
@@ -22,12 +23,17 @@ class UserModel
      * @var \Doctrine\ODM\MongoDB\Id\UuidGenerator
      */
     protected $uuidGenerator;
+    /**
+     * @var IdentityProvider
+     */
+    protected $identityProvider;
 
     public function __construct(DocumentManager $documentManager, $queryBuilderModel, $identityProvider)
     {
         $this->uuidGenerator = new UuidGenerator();
         $this->documentManager = $documentManager;
         $this->queryBuilderModel = $queryBuilderModel;
+        $this->identityProvider = $identityProvider;
     }
 
     public function createOrUpdate($data, $uuid = null)
