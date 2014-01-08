@@ -13,9 +13,28 @@ class Module
 {
     public function onBootstrap(MvcEvent $e)
     {
-        $eventManager        = $e->getApplication()->getEventManager();
+        $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+
+        /** @var \Zend\Log\LoggerInterface $logger */
+        $logger = $e->getApplication()->getServiceManager()->get('Application\\Log');
+
+        $eventManager->attach('dispatch.error', function ($event) use ($logger) {
+            $exception = $event->getResult()->exception;
+            if ($exception) {
+                $trace = $exception->getTraceAsString();
+                $i = 1;
+                do {
+                    $messages[] = $i++ . ": " . $exception->getMessage();
+                } while ($exception = $exception->getPrevious());
+
+                $log = "Exception:\n" . implode("\n", $messages);
+                $log .= "\nTrace:\n" . $trace;
+
+                $logger->err($log);
+            }
+        });
     }
 
     public function getConfig()

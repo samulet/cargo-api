@@ -57,6 +57,7 @@ return array(
         ),
         'initializers' => array(
             'authorizer' => 'Application\Initializer\AuthorizationServiceInitializer',
+            'logger' => 'Application\Initializer\LoggerInitializer',
         ),
         'aliases' => array(
             'translator' => 'MvcTranslator',

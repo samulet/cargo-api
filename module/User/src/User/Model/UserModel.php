@@ -2,15 +2,16 @@
 namespace User\Model;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\DocumentNotFoundException;
-use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use QueryBuilder\Model\QueryBuilderModel;
 use User\Entity\User;
 use User\Identity\IdentityProvider;
+use Zend\Log\LoggerAwareInterface;
+use Zend\Log\LoggerAwareTrait;
 
-class UserModel
+class UserModel implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @var \Doctrine\ODM\MongoDB\DocumentManager
      */
@@ -20,20 +21,17 @@ class UserModel
      */
     protected $queryBuilderModel;
     /**
-     * @var \Doctrine\ODM\MongoDB\Id\UuidGenerator
-     */
-    protected $uuidGenerator;
-    /**
      * @var IdentityProvider
      */
     protected $identityProvider;
 
     public function __construct(DocumentManager $documentManager, $queryBuilderModel, $identityProvider)
     {
-        $this->uuidGenerator = new UuidGenerator();
         $this->documentManager = $documentManager;
         $this->queryBuilderModel = $queryBuilderModel;
         $this->identityProvider = $identityProvider;
+
+        $this->setLogger(new \Zend\Log\Logger(['writers' => [['name' => 'null']]]));
     }
 
     public function createOrUpdate($data, $uuid = null)
@@ -67,8 +65,18 @@ class UserModel
     {
         $entity = $this->fetch(array('uuid' => $uuid));
         $this->hydrate($entity, $data);
+
         $this->documentManager->persist($entity);
         $this->documentManager->flush();
+
+        $this->getLogger()->info(
+            'User profile updated',
+            array(
+                'initiator' => $this->identityProvider->getIdentity()->getEmail(),
+                'uuid' => $uuid,
+                'data' => $data,
+            )
+        );
 
         return $entity;
     }
@@ -106,6 +114,7 @@ class UserModel
      */
     public function getUserStatus($uuid)
     {
+        /** @var \User\Entity\User $user */
         $user = $this->queryBuilderModel->fetch('User\Entity\User', array('uuid' => $uuid));
         $status = $user->getStatus();
         $status['uuid'] = $user->getUuid();
