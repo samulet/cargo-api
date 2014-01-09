@@ -2,20 +2,27 @@
 namespace Api\V1\Rest\Reference;
 
 use Api\Entity\ApiStaticErrorList;
+use Reference\Model\ReferenceModel;
+use User\Identity\IdentityProvider;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 
 class ReferenceResource extends AbstractResourceListener
 {
-
+    /**
+     * @var ReferenceModel
+     */
     protected $referenceModel;
-    protected $userEntity;
+    /**
+     * @var IdentityProvider
+     */
+    protected $identityProvider;
 
-    public function __construct($referenceModel = null, $userEntity = null)
+    public function __construct(ReferenceModel $referenceModel, IdentityProvider $identityProvider)
     {
         $this->referenceModel = $referenceModel;
-        $this->userEntity = $userEntity;
+        $this->identityProvider = $identityProvider;
     }
 
     /**
