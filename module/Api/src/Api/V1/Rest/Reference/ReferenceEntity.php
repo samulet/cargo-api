@@ -1,23 +1,31 @@
 <?php
 namespace Api\V1\Rest\Reference;
 
+class ReferenceEntity
+{
+    /**
+     * @var string
+     */
+    protected $code;
+    /**
+     * @var string
+     */
+    protected $title;
 
-class ReferenceEntity {
-    protected $reference_group;
-    protected $nameRus;
-
-    public function __construct(array $entity = null){
-        if(!empty($entity)) {
+    public function __construct(array $entity = null)
+    {
+        if (!empty($entity)) {
             $this->setData($entity);
-            $this->reference_group=$entity['code'];
+            $this->code = $entity['code'];
         }
     }
 
-    public function setData($data) {
+    public function setData($data)
+    {
 
-        if($data !== null && is_array($data)){
-            foreach(array_keys(get_class_vars(__CLASS__)) as $key) {
-                if(isset($data[$key]) && ($key!='id')  ){
+        if ($data !== null && is_array($data)) {
+            foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
+                if (isset($data[$key]) && ($key != 'id')) {
                     $this->$key = $data[$key];
                 }
             }
@@ -26,20 +34,22 @@ class ReferenceEntity {
 
     }
 
-    public function getData() {
+    public function getData()
+    {
         $data = array();
-        foreach(array_keys(get_class_vars(__CLASS__)) as $key){
-            $data[$key]=$this->$key;
+        foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
+            $data[$key] = $this->$key;
         }
         return $data;
     }
-    public function getNameRus()
+
+    public function getTitle()
     {
-        return $this->nameRus;
+        return $this->title;
     }
 
-    public function getReferenceGroup()
+    public function getCode()
     {
-        return $this->reference_group;
+        return $this->code;
     }
 }

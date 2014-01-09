@@ -11,6 +11,9 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
  */
 class ProductGroup
 {
+    const CODE = 'product-group';
+    const TITLE = 'Продуктовые группы';
+
     /**
      * @ODM\Id
      * @var int
