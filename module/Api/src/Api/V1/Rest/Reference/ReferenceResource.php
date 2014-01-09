@@ -77,25 +77,15 @@ class ReferenceResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $data = $this->referenceModel->fetchAll(array());
-        if (!empty($data)) {
-            $resultArray = array();
-            foreach ($data as $d) {
-                array_push($resultArray, new ReferenceEntity($d));
-            }
-            $adapter = new ArrayAdapter($resultArray);
-            $collection = new ReferenceCollection($adapter);
-        } else {
-            return ApiStaticErrorList::getError(404);
+        $result = array();
+        $references = $this->referenceModel->getList(array());
+        foreach ($references as $entity) {
+            array_push($result, new ReferenceEntity($entity));
         }
-        if (!empty($collection)) {
-            if (!empty($params['page'])) {
-                return $collection;
-            } else {
-                return $resultArray;
-            }
+        if (!empty($params['page'])) {
+            return new ReferenceCollection(new ArrayAdapter($result));
         } else {
-            return ApiStaticErrorList::getError(404);
+            return $result;
         }
     }
 
