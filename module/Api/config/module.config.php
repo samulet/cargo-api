@@ -77,7 +77,7 @@ return array(
             'api.rest.reference' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/ref[/:reference_group]',
+                    'route' => '/api/ref[/:code]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\Reference\\Controller',
                     ),
@@ -407,21 +407,12 @@ return array(
         'Api\\V1\\Rest\\Reference\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\Reference\\ReferenceResource',
             'route_name' => 'api.rest.reference',
-            'identifier_name' => 'reference_group',
-            'collection_name' => 'reference',
+            'identifier_name' => 'code',
+            'collection_name' => 'references',
             'resource_http_methods' => array(
-                0 => 'GET',
-                1 => 'PATCH',
-                2 => 'PUT',
-                3 => 'DELETE',
-                4 => 'POST',
             ),
             'collection_http_methods' => array(
                 0 => 'GET',
-                1 => 'POST',
-                2 => 'PUT',
-                3 => 'PATCH',
-                4 => 'DELETE',
             ),
             'collection_query_whitelist' => array(),
             'page_size' => '25',
@@ -928,12 +919,12 @@ return array(
                 'is_collection' => '1',
             ),
             'Api\\V1\\Rest\\Reference\\ReferenceEntity' => array(
-                'identifier_name' => 'reference_group',
+                'identifier_name' => 'code',
                 'route_name' => 'api.rest.reference',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\Reference\\ReferenceCollection' => array(
-                'identifier_name' => 'reference_group',
+                'identifier_name' => 'code',
                 'route_name' => 'api.rest.reference',
                 'is_collection' => '1',
             ),
