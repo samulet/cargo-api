@@ -37,13 +37,8 @@ class ReferenceProductGroupResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $data = get_object_vars($data);
-        $data = $this->productGroupModel->createOrUpdate($data);
-        if (!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        $entity = $this->productGroupModel->create(get_object_vars($data));
+        return new ReferenceProductGroupEntity($entity->getData());
     }
 
     /**

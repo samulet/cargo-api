@@ -1,29 +1,26 @@
 <?php
-
 namespace Reference\Entity;
 
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ODM\Document(collection="product_group")
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
+ * @ODM\Document(collection="reference", repositoryClass="Reference\Repository\ProductGroup")
+ * @ODM\DiscriminatorField("type")
+ * @ODM\DiscriminatorMap({
+ *      "prodgroup"="Reference\Entity\ProductGroup"
+ * })
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
  */
 class ProductGroup
 {
     const CODE = 'product-group';
     const TITLE = 'Продуктовые группы';
-
     /**
      * @ODM\Id
      * @var int
      */
     protected $id;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     */
-    protected $uuid;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -38,26 +35,26 @@ class ProductGroup
      * @Gedmo\Timestampable(on="create")
      * @ODM\Date
      */
-    protected $created_at;
-
+    protected $created;
     /**
      * @Gedmo\Timestampable(on="update")
      * @ODM\Date
      */
-    protected $updated_at;
+    protected $updated;
     /**
      * @ODM\Date
      */
-    protected $deletedAt;
+    protected $deleted;
 
-    public function setData($data) {
-        if($data !== null && is_array($data)){
-            foreach(array_keys(get_class_vars(__CLASS__)) as $key){
-                if(isset($data[$key]) && ($key!='id') && ($key!='uuid') ){
-                    if(!is_array($this->$key)) {
+    public function setData($data)
+    {
+        if ($data !== null && is_array($data)) {
+            foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
+                if (isset($data[$key]) && ($key != 'id')) {
+                    if (!is_array($this->$key)) {
                         $this->$key = $data[$key];
                     } else {
-                        $this->$key=$this->$key+$data[$key];
+                        $this->$key = $this->$key + $data[$key];
                     }
 
                 }
@@ -67,10 +64,11 @@ class ProductGroup
 
     }
 
-    public function getData() {
+    public function getData()
+    {
         $data = array();
-        foreach(array_keys(get_class_vars(__CLASS__)) as $key){
-            $data[$key]=$this->$key;
+        foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
+            $data[$key] = $this->$key;
         }
         return $data;
     }
@@ -85,50 +83,46 @@ class ProductGroup
         $this->id = $id;
         return $this;
     }
-    public function setUuid($uuid)
-    {
-        $this->uuid = $uuid;
-        return $this;
-    }
-    public function getUuid()
-    {
-        return $this->uuid;
-    }
+
     /**
      * @return mixed
      */
-    public function getDeletedAt()
+    public function getDeleted()
     {
-        return $this->deletedAt;
+        return $this->deleted;
     }
 
     /**
-     * @param mixed $deletedAt
+     * @param mixed $deleted
      */
-    public function setDeletedAt($deletedAt)
+    public function setDeleted($deleted)
     {
-        $this->deletedAt = $deletedAt;
+        $this->deleted = $deleted;
     }
-
 
     public function getCreated()
     {
-        return $this->created_at;
+        return $this->created;
     }
 
     public function setCreated($created)
     {
-        $this->created_at = $created;
-    }
-
-    public function setUpdated($updated)
-    {
-        $this->updated_at = $updated;
+        $this->created = $created;
     }
 
     public function getUpdated()
     {
-        return $this->updated_at;
+        return $this->updated;
+    }
+
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+    }
+
+    public function getCode()
+    {
+        return $this->code;
     }
 
     public function setCode($code)
@@ -136,18 +130,15 @@ class ProductGroup
         $this->code = $code;
         return $this;
     }
-    public function getCode()
+
+    public function getTitle()
     {
-        return $this->code;
+        return $this->title;
     }
 
     public function setTitle($title)
     {
         $this->title = $title;
         return $this;
-    }
-    public function getTitle()
-    {
-        return $this->title;
     }
 }
