@@ -885,6 +885,28 @@ API предназначено для взаимодействием с учет
 ## Удаление продуктовой группы [DELETE]
 + Response 204
 
+## Изменение продуктовой группы [PATCH]
+Изменение данных продуктовой группы.
+
++ Request (application/json)
+
+        {
+            "title": "Молочные продукты",
+        }
+
++ Response 200
+
+    + Body
+
+            {
+                "_links": {
+                    "self": { "href": "/api/ref/product-group/milk" },
+                },
+                "code": "milk",
+                "title": "Молочные продукты"
+            }
+
+
 # Product Group Reference Collection [/ref/product-group]
 Список продуктовых групп
 
@@ -942,28 +964,6 @@ API предназначено для взаимодействием с учет
             }
 
 + Response 201
-
-    + Body
-
-            {
-                "_links": {
-                    "self": { "href": "/api/ref/product-group/milk" },
-                },
-                "code": "milk",
-                "title": "Молочные продукты"
-            }
-
-## Изменение продуктовой группы [PATCH]
-Изменение данных продуктовой группы.
-
-+ Request (application/json)
-
-        {
-            "code": "milk",
-            "title": "Молочные продукты",
-        }
-
-+ Response 200
 
     + Body
 
