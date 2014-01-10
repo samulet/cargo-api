@@ -17,6 +17,7 @@ class ProductGroupModel implements AuthorizationServiceAwareInterface, LoggerAwa
     use LoggerAwareTrait;
 
     const PERMISSION_CREATE = 'ref.create';
+    const PERMISSION_DELETE = 'ref.delete';
 
     /**
      * @var \Doctrine\ODM\MongoDB\DocumentManager
@@ -99,11 +100,16 @@ class ProductGroupModel implements AuthorizationServiceAwareInterface, LoggerAwa
      * @param string $code код продуктовой группы для удаления
      *
      * @throws \Doctrine\ODM\MongoDB\DocumentNotFoundException
+     * @throws \ZfcRbac\Exception\UnauthorizedException
      * @return boolean
      */
     public function delete($code)
     {
         $this->getLogger()->debug('Delete product group', ['code' => $code]);
+
+        if (!$this->getAuthorizationService()->isGranted(self::PERMISSION_DELETE)) {
+            throw new UnauthorizedException();
+        }
 
         $entity = $this->getRepository()->exists()->code($code)->fetchOne();
         if (empty($entity)) {
