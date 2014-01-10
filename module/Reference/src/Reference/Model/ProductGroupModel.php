@@ -1,6 +1,8 @@
 <?php
 namespace Reference\Model;
 
+use Api\Factory\ReferenceProductGroupResource;
+use Api\V1\Rest\ReferenceProductGroup\ReferenceProductGroupEntity;
 use Application\Service\AuthorizationServiceAwareInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Hydrator\HydratorInterface;
@@ -75,14 +77,17 @@ class ProductGroupModel implements AuthorizationServiceAwareInterface
     }
 
     /**
-     * Возвращает массив сущностей аккаунтов по поисковым параметрам
+     * Возвращает массив проуктовых групп
      *
-     * @param array $findParams ассоциативный массив
-     *
-     * @return array(\Reference\Entity\Reference)|null
+     * @return \Reference\Entity\ProductGroup[]
      */
-    public function fetchAll($findParams)
+    public function fetchAll()
     {
+        $result = array();
+        foreach ($this->getRepository()->exists()->fetchAll() as $doc) {
+            $result[] = new ReferenceProductGroupEntity($doc->getData());
+        }
+        return $result;
     }
 
     /**
@@ -136,7 +141,7 @@ class ProductGroupModel implements AuthorizationServiceAwareInterface
     }
 
     /**
-     * @return \Place\Repository\Place
+     * @return \Reference\Repository\ProductGroup
      */
     protected function getRepository()
     {

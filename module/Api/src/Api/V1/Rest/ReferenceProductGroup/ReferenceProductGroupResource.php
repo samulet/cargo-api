@@ -88,29 +88,19 @@ class ReferenceProductGroupResource extends AbstractResourceListener
      * Fetch all or a subset of resources
      *
      * @param  array $params
-     * @return ApiProblem|mixed
+     *
+     * @return ReferenceProductGroupCollection|array
      */
     public function fetchAll($params = array())
     {
-        $data = $this->productGroupModel->fetchAll(array());
-        if (!empty($data)) {
-            $resultArray = array();
-            foreach ($data as $d) {
-                array_push($resultArray, new ReferenceProductGroupEntity($d->getData()));
-            }
-            $adapter = new ArrayAdapter($resultArray);
-            $collection = new ReferenceProductGroupCollection($adapter);
-        } else {
-            return ApiStaticErrorList::getError(404);
+        $result = array();
+        foreach ($this->productGroupModel->fetchAll() as $entity) {
+            array_push($result, new ReferenceProductGroupEntity($entity->getData()));
         }
-        if (!empty($collection)) {
-            if (!empty($params['page'])) {
-                return $collection;
-            } else {
-                return $resultArray;
-            }
+        if (!empty($params['page'])) {
+            return new ReferenceProductGroupCollection(new ArrayAdapter($result));
         } else {
-            return ApiStaticErrorList::getError(404);
+            return $result;
         }
     }
 
