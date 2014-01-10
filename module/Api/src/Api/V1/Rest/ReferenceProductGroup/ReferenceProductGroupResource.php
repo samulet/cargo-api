@@ -2,20 +2,31 @@
 namespace Api\V1\Rest\ReferenceProductGroup;
 
 use Api\Entity\ApiStaticErrorList;
+use Reference\Model\ProductGroupModel;
+use User\Identity\IdentityProvider;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 
 class ReferenceProductGroupResource extends AbstractResourceListener
 {
-
+    /**
+     * @var ProductGroupModel
+     */
     protected $productGroupModel;
-    protected $userEntity;
+    /**
+     * @var \User\Identity\IdentityProvider
+     */
+    protected $identityProvider;
 
-    public function __construct($productGroupModel = null, $userEntity = null)
+    /**
+     * @param ProductGroupModel $productGroupModel
+     * @param IdentityProvider $identityProvider
+     */
+    public function __construct(ProductGroupModel $productGroupModel = null, IdentityProvider $identityProvider = null)
     {
         $this->productGroupModel = $productGroupModel;
-        $this->userEntity = $userEntity;
+        $this->identityProvider = $identityProvider;
     }
 
     /**

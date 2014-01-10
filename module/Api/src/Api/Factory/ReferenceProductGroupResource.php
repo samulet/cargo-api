@@ -11,8 +11,8 @@ class ReferenceProductGroupResource implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         try {
-            /** @var \User\Identity\IdentityProvider $identity */
-            $identity = $serviceLocator->get('User\Identity\IdentityProvider')->getIdentity();
+            /** @var \User\Identity\IdentityProvider $provider */
+            $provider = $serviceLocator->get('User\Identity\IdentityProvider');
         } catch (\Exception $e) {
             $prev = $e->getPrevious();
             $exception = empty($prev) ? $e : $prev;
@@ -22,10 +22,7 @@ class ReferenceProductGroupResource implements FactoryInterface
             }
             return new AccessDeniedResource($code, $exception->getMessage());
         }
-        if (empty($identity)) {
-            return new AccessDeniedResource();
-        }
 
-        return new Controller($serviceLocator->get('AddListProductGroupModel'), $identity);
+        return new Controller($serviceLocator->get('AddListProductGroupModel'), $provider);
     }
 }
