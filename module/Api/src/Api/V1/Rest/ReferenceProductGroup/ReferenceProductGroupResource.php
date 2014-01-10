@@ -44,17 +44,13 @@ class ReferenceProductGroupResource extends AbstractResourceListener
     /**
      * Delete a resource
      *
-     * @param  mixed $id
-     * @return ApiProblem|mixed
+     * @param  string $id
+     *
+     * @return boolean
      */
     public function delete($id)
     {
-        $data = $this->productGroupModel->delete($id);
-        if (!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return $this->productGroupModel->delete($id);
     }
 
     /**

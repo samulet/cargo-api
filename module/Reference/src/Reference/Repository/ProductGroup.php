@@ -19,9 +19,28 @@ class ProductGroup extends DocumentRepository
         return $this;
     }
 
+    /**
+     * @param string $value
+     *
+     * @return ProductGroup
+     */
+    public function code($value)
+    {
+        $this->getQueryBuilder()->field('code')->equals($value);
+        return $this;
+    }
+
     public function fetchAll()
     {
         return $this->getQueryBuilder()->getQuery()->execute();
+    }
+
+    /**
+     * @return array|null|object
+     */
+    public function fetchOne()
+    {
+        return $this->getQueryBuilder()->getQuery()->getSingleResult();
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 $I = new ApiGuy($scenario);
-$I->am('Service Moderator');
+$I->am('System Moderator');
 $I->wantTo('Add new product group');
 
 $I->haveHttpHeader('Content-Type', 'application/json');

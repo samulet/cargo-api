@@ -1,18 +1,21 @@
 <?php
 namespace Reference\Model;
 
-use Api\Factory\ReferenceProductGroupResource;
 use Api\V1\Rest\ReferenceProductGroup\ReferenceProductGroupEntity;
 use Application\Service\AuthorizationServiceAwareInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\DocumentNotFoundException;
 use Doctrine\ODM\MongoDB\Hydrator\HydratorInterface;
 use QueryBuilder\Model\QueryBuilderModel;
 use Reference\Entity\ProductGroup;
-use User\Identity\IdentityProvider;
+use Zend\Log\LoggerAwareInterface;
+use Zend\Log\LoggerAwareTrait;
 use ZfcRbac\Exception\UnauthorizedException;
 
-class ProductGroupModel implements AuthorizationServiceAwareInterface
+class ProductGroupModel implements AuthorizationServiceAwareInterface, LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     const PERMISSION_CREATE = 'ref.create';
 
     /**
@@ -91,20 +94,27 @@ class ProductGroupModel implements AuthorizationServiceAwareInterface
     }
 
     /**
-     * Удалить аккаунт. При успехе возвращает uuid удаленого аккаунта
+     * Удаляет продуктовую группу
      *
-     * @param string $uuid uuid аккаунта
+     * @param string $code код продуктовой группы для удаления
      *
-     * @return string|null
+     * @throws \Doctrine\ODM\MongoDB\DocumentNotFoundException
+     * @return boolean
      */
-    public function delete($uuid)
+    public function delete($code)
     {
-        $qb3 = $this->documentManager->getRepository($this->entityLink)->findBy(
-            array('uuid' => new \MongoId($uuid))
-        );
-        $this->documentManager->remove($qb3);
+        $this->getLogger()->debug('Delete product group', ['code' => $code]);
+
+        $entity = $this->getRepository()->exists()->code($code)->fetchOne();
+        if (empty($entity)) {
+            $this->getLogger()->debug('Product group not found', ['code' => $code]);
+            throw DocumentNotFoundException::documentNotFound('Reference\\Entity\\ProductGroup', $code);
+        }
+
+        $this->documentManager->remove($entity);
         $this->documentManager->flush();
-        return $uuid;
+
+        return true;
     }
 
     /**

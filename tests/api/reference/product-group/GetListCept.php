@@ -1,5 +1,6 @@
 <?php
 $I = new ApiGuy($scenario);
+$I->am('System Moderator');
 $I->wantTo('Get a list of product groups');
 
 $entities = [
