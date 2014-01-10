@@ -55,7 +55,7 @@ class ProductGroupModel implements AuthorizationServiceAwareInterface, LoggerAwa
     public function create($data)
     {
         if (!$this->getAuthorizationService()->isGranted(self::PERMISSION_CREATE)) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException('Insufficient rights to create a record');
         }
 
         $entity = new ProductGroup();
@@ -108,7 +108,7 @@ class ProductGroupModel implements AuthorizationServiceAwareInterface, LoggerAwa
         $this->getLogger()->debug('Delete product group', ['code' => $code]);
 
         if (!$this->getAuthorizationService()->isGranted(self::PERMISSION_DELETE)) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException('Insufficient rights to delete a record');
         }
 
         $entity = $this->getRepository()->exists()->code($code)->fetchOne();
