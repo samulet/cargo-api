@@ -1,28 +1,37 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: salerat
- * Date: 9/20/13
- * Time: 11:23 AM
- * To change this template use File | Settings | File Templates.
- */
-
 namespace Account\Entity;
 
+use Application\Entity\BaseEntity;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Zend\Form\Annotation;
-use Zend\Form\Element;
-use Zend\Form\Form;
 
 /**
  * @ODM\Document(collection="contractAgents")
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
- * @Annotation\Name("company")
- * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
  */
-class ContractAgents
+class ContractAgents extends BaseEntity
 {
+    /**
+     * @ODM\ObjectId
+     * @var int
+     */
+    protected $comId;
+    /**
+     * @ODM\ObjectId
+     * @var int
+     */
+    protected $accId;
+    /**
+     * @ODM\ObjectId
+     * @var int
+     */
+    protected $contactAgentId;
+    /**
+     * @var string
+     * @ODM\Field(type="string")
+     */
+    protected $activated;
+
     public function __construct($itemId, $contactAgentId, $param)
     {
         if ($param == 'company') {
@@ -31,122 +40,6 @@ class ContractAgents
             $this->accId = $itemId;
         }
         $this->contactAgentId = $contactAgentId;
-    }
-
-    /**
-     * @ODM\Id
-     * @var int
-     * @Annotation\Exclude()
-     */
-    protected $id;
-
-    /**
-     * @ODM\ObjectId
-     * @var int
-     * @Annotation\Exclude()
-     */
-    protected $comId;
-    /**
-     * @ODM\ObjectId
-     * @var int
-     * @Annotation\Exclude()
-     */
-    protected $accId;
-    /**
-     * @ODM\ObjectId
-     * @var int
-     * @Annotation\Type("Zend\Form\Element\Select")
-     * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Options({"label":"Выберите когнтрагента для добавления"})
-     * @Annotation\Required({"required":"true" })
-     * @Annotation\Attributes({"value":"0"})
-     */
-    protected $contactAgentId;
-    /**
-     * @Gedmo\Timestampable(on="create")
-     * @ODM\Date
-     * @Annotation\Exclude()
-     */
-    protected $created;
-
-    /**
-     * @Gedmo\Timestampable(on="update")
-     * @ODM\Date
-     * @Annotation\Exclude()
-     */
-    protected $updated;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     * @Annotation\Exclude()
-     */
-    protected $activated;
-
-    /**
-     * @Annotation\Type("Zend\Form\Element\Submit")
-     * @Annotation\Attributes({"value":"Отправить"})
-     */
-
-    protected $submit;
-
-    /**
-     * @ODM\Date
-     */
-    protected $deletedAt;
-
-    public function setData($data) {
-        if($data !== null && is_array($data)){
-            foreach(array_keys(get_class_vars(__CLASS__)) as $key){
-                if(isset($entity[$key]) && ($key!='id') && ($key!='uuid') ){
-                    $this->$key = $entity[$key];
-                }
-            }
-        }
-        return $this;
-
-    }
-
-    public function getData() {
-        $data = array();
-        foreach(array_keys(get_class_vars(__CLASS__)) as $key){
-            $data[$key]=$this->$key;
-        }
-        return $data;
-    }
-
-    public function getDeletedAt()
-    {
-        return $this->deletedAt;
-    }
-
-    /**
-     * @param mixed $deletedAt
-     */
-    public function setDeletedAt($deletedAt)
-    {
-        $this->deletedAt = $deletedAt;
-    }
-
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set id.
-     *
-     * @param int $id
-     * @return UserInterface
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
     }
 
     /**
@@ -191,26 +84,6 @@ class ContractAgents
     {
         $this->activated = $activated;
         return $this;
-    }
-
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    public function setCreated($created)
-    {
-        $this->created = $created;
-    }
-
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-    }
-
-    public function getUpdated()
-    {
-        return $this->updated;
     }
 
     public function getUUID()

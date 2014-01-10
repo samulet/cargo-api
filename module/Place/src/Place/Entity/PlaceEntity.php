@@ -1,6 +1,7 @@
 <?php
 namespace Place\Entity;
 
+use Application\Entity\BaseEntity;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -9,7 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ODM\Document(collection="place", repositoryClass="Place\Repository\Place")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  */
-class PlaceEntity
+class PlaceEntity extends BaseEntity
 {
     const TYPE_OFFICE = 'of';
     const TYPE_WHAREHOUSE = 'wh';
@@ -17,11 +18,6 @@ class PlaceEntity
     const TYPE_LOAD = 'ld';
     const TYPE_UNLOAD = 'ul';
 
-    /**
-     * @ODM\Id
-     * @var int
-     */
-    protected $id;
     /**
      * UUID
      *
@@ -111,21 +107,6 @@ class PlaceEntity
      * @ODM\Field(type="int")
      */
     protected $rating;
-    /**
-     * Дата создания записи
-     *
-     * @var \DateTime
-     * @Gedmo\Timestampable(on="create")
-     * @ODM\Date
-     */
-    protected $created;
-    /**
-     * Дата удаления записи
-     *
-     * @var \DateTime
-     * @ODM\Date
-     */
-    protected $deleted;
     /**
      * Пользователь, создавший запись
      *
@@ -238,22 +219,6 @@ class PlaceEntity
     }
 
     /**
-     * @param \DateTime $created
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
      * @param \User\Entity\User $user
      */
     public function setCreator(\User\Entity\User $user)
@@ -270,22 +235,6 @@ class PlaceEntity
     }
 
     /**
-     * @param \DateTime $deleted
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
-    }
-
-    /**
      * @param boolean $electronicWorkflow
      */
     public function setElectronicWorkflow($electronicWorkflow)
@@ -299,22 +248,6 @@ class PlaceEntity
     public function getElectronicWorkflow()
     {
         return $this->electronicWorkflow;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

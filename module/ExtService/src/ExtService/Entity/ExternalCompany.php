@@ -1,15 +1,15 @@
 <?php
-
 namespace ExtService\Entity;
 
+use Application\Entity\BaseEntity;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ODM\Document(collection="externalCompany")
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
  */
-class ExternalCompany
+class ExternalCompany extends BaseEntity
 {
     /**
      * @ODM\Id
@@ -441,12 +441,8 @@ class ExternalCompany
      * @ODM\Field(type="string")
      */
     protected $transit;
-    /**
-     * @ODM\Date
-     */
-    protected $deletedAt;
 
-    public function setData($data)
+    public function setData(array $data)
     {
         if ($data !== null && is_array($data)) {
             foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
@@ -459,16 +455,6 @@ class ExternalCompany
 
         return $this;
 
-    }
-
-    public function getData()
-    {
-        $data = array();
-        foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
-            $data[$key] = $this->$key;
-        }
-
-        return $data;
     }
 
     /**
@@ -821,22 +807,6 @@ class ExternalCompany
     public function getDefPay()
     {
         return $this->defPay;
-    }
-
-    /**
-     * @param mixed $deletedAt
-     */
-    public function setDeletedAt($deletedAt)
-    {
-        $this->deletedAt = $deletedAt;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDeletedAt()
-    {
-        return $this->deletedAt;
     }
 
     /**
