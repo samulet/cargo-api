@@ -127,7 +127,10 @@ return [
                 'account.info' => ['user', 'system'],
                 'company.create' => ['account.admin', 'system'],
                 'get.places' => ['user'],
-                'get.places.all' => ['system']
+                'get.places.all' => ['system'],
+                'ref.create' => ['system'],
+                'ref.delete' => ['system'],
+                'ref.update' => ['system'],
             ]
         ],
 

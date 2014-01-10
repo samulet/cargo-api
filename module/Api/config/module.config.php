@@ -86,7 +86,7 @@ return array(
             'api.rest.reference-product-group' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/ref/product-group[/:reference_code]',
+                    'route' => '/api/ref/product-group[/:code]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\ReferenceProductGroup\\Controller',
                     ),
@@ -191,7 +191,7 @@ return array(
             'CompanyUserModel' => 'Account\\Factory\\CompanyUserModelFactory',
             'AccountModel' => 'Account\\Factory\\AccountModelFactory',
             'CargoModel' => 'Cargo\\Factory\\CargoModelFactory',
-            'AddListProductGroupModel' => 'Reference\\Factory\\AddListProductGroupModelFactory',
+            'AddListProductGroupModel' => 'Reference\\Factory\\ProductGroupModel',
             'ReferenceModel' => 'Reference\\Factory\\ReferenceModelFactory',
             'Api\\V1\\Rest\\Account\\AccountResource' => 'Api\\Factory\\AccountResource',
             'Api\\V1\\Rest\\AccountCompany\\AccountCompanyResource' => 'Api\\Factory\\AccountCompanyResource',
@@ -423,21 +423,16 @@ return array(
         'Api\\V1\\Rest\\ReferenceProductGroup\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\ReferenceProductGroup\\ReferenceProductGroupResource',
             'route_name' => 'api.rest.reference-product-group',
-            'identifier_name' => 'reference_code',
-            'collection_name' => 'reference_product_group',
+            'identifier_name' => 'code',
+            'collection_name' => 'items',
             'resource_http_methods' => array(
                 0 => 'GET',
                 1 => 'PATCH',
-                2 => 'PUT',
-                3 => 'DELETE',
-                4 => 'POST',
+                2 => 'DELETE',
             ),
             'collection_http_methods' => array(
                 0 => 'GET',
                 1 => 'POST',
-                2 => 'PUT',
-                3 => 'PATCH',
-                4 => 'DELETE',
             ),
             'collection_query_whitelist' => array(),
             'page_size' => '25',
@@ -929,12 +924,12 @@ return array(
                 'is_collection' => '1',
             ),
             'Api\\V1\\Rest\\ReferenceProductGroup\\ReferenceProductGroupEntity' => array(
-                'identifier_name' => 'reference_code',
+                'identifier_name' => 'code',
                 'route_name' => 'api.rest.reference-product-group',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\ReferenceProductGroup\\ReferenceProductGroupCollection' => array(
-                'identifier_name' => 'reference_code',
+                'identifier_name' => 'code',
                 'route_name' => 'api.rest.reference-product-group',
                 'is_collection' => '1',
             ),

@@ -2,20 +2,31 @@
 namespace Api\V1\Rest\ReferenceProductGroup;
 
 use Api\Entity\ApiStaticErrorList;
+use Reference\Model\ProductGroupModel;
+use User\Identity\IdentityProvider;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 
 class ReferenceProductGroupResource extends AbstractResourceListener
 {
-
+    /**
+     * @var ProductGroupModel
+     */
     protected $productGroupModel;
-    protected $userEntity;
+    /**
+     * @var \User\Identity\IdentityProvider
+     */
+    protected $identityProvider;
 
-    public function __construct($productGroupModel = null, $userEntity = null)
+    /**
+     * @param ProductGroupModel $productGroupModel
+     * @param IdentityProvider $identityProvider
+     */
+    public function __construct(ProductGroupModel $productGroupModel = null, IdentityProvider $identityProvider = null)
     {
         $this->productGroupModel = $productGroupModel;
-        $this->userEntity = $userEntity;
+        $this->identityProvider = $identityProvider;
     }
 
     /**
@@ -26,29 +37,20 @@ class ReferenceProductGroupResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $data = get_object_vars($data);
-        $data = $this->productGroupModel->createOrUpdate($data);
-        if (!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        $entity = $this->productGroupModel->create(get_object_vars($data));
+        return new ReferenceProductGroupEntity($entity->getData());
     }
 
     /**
      * Delete a resource
      *
-     * @param  mixed $id
-     * @return ApiProblem|mixed
+     * @param  string $id
+     *
+     * @return boolean
      */
     public function delete($id)
     {
-        $data = $this->productGroupModel->delete($id);
-        if (!empty($data)) {
-            return ApiStaticErrorList::getError(202);
-        } else {
-            return ApiStaticErrorList::getError(404);
-        }
+        return $this->productGroupModel->delete($id);
     }
 
     /**
@@ -82,29 +84,19 @@ class ReferenceProductGroupResource extends AbstractResourceListener
      * Fetch all or a subset of resources
      *
      * @param  array $params
-     * @return ApiProblem|mixed
+     *
+     * @return ReferenceProductGroupCollection|array
      */
     public function fetchAll($params = array())
     {
-        $data = $this->productGroupModel->fetchAll(array());
-        if (!empty($data)) {
-            $resultArray = array();
-            foreach ($data as $d) {
-                array_push($resultArray, new ReferenceProductGroupEntity($d->getData()));
-            }
-            $adapter = new ArrayAdapter($resultArray);
-            $collection = new ReferenceProductGroupCollection($adapter);
-        } else {
-            return ApiStaticErrorList::getError(404);
+        $result = array();
+        foreach ($this->productGroupModel->fetchAll() as $entity) {
+            array_push($result, new ReferenceProductGroupEntity($entity->getData()));
         }
-        if (!empty($collection)) {
-            if (!empty($params['page'])) {
-                return $collection;
-            } else {
-                return $resultArray;
-            }
+        if (!empty($params['page'])) {
+            return new ReferenceProductGroupCollection(new ArrayAdapter($result));
         } else {
-            return ApiStaticErrorList::getError(404);
+            return $result;
         }
     }
 
@@ -117,7 +109,8 @@ class ReferenceProductGroupResource extends AbstractResourceListener
      */
     public function patch($id, $data)
     {
-        return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
+        $entity = $this->productGroupModel->update($id, get_object_vars($data));
+        return new ReferenceProductGroupEntity($entity->getData());
     }
 
     /**

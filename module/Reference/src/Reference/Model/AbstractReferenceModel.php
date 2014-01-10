@@ -1,32 +1,26 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: solov
- * Date: 5/3/13
- * Time: 7:55 PM
- * To change this template use File | Settings | File Templates.
- */
-
 namespace Reference\Model;
 
-use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\Id\UuidGenerator;
+use QueryBuilder\Model\QueryBuilderModel;
 
 abstract class AbstractReferenceModel
 {
+    /**
+     * @var \Doctrine\ODM\MongoDB\DocumentManager
+     */
     protected $documentManager;
-    protected $uuidGenerator;
+    /**
+     * @var QueryBuilderModel
+     */
     protected $queryBuilderModel;
     protected $entityLink;
 
     public function __construct(DocumentManager $documentManager, $queryBuilderModel)
     {
-        $this->uuidGenerator = new UuidGenerator();
         $this->documentManager = $documentManager;
         $this->queryBuilderModel = $queryBuilderModel;
     }
-
 
     /**
      * Создать или обновить аккаунт. Возвращает сущность созданного или модифицированого аккаунта
@@ -81,6 +75,4 @@ abstract class AbstractReferenceModel
         $this->documentManager->flush();
         return $uuid;
     }
-
-
 }
