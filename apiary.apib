@@ -134,25 +134,6 @@ API предназначено для взаимодействием с учет
 
     [Accounts Collection][]
 
-+ Response 404
-
-    + Headers
-
-            Content-Type: application/hal+json
-
-    + Body
-
-            {
-                "_links": {
-                    "self": { "href": "/api/accounts" }
-                },
-                "_embedded": {
-                    "accounts": [
-                    ]
-                },
-                "total": 0
-            }
-
 
 ## Создание нового аккаунта [POST]
 Чтобы создать новый аккаунт просто передайте JSON-объект с названием аккаунта в атрибуте *title*.
@@ -891,7 +872,6 @@ API предназначено для взаимодействием с учет
             {
                 "_links": {
                     "self": { "href": "/api/ref/product-group/milk" },
-                    "list": { "href": "/api/ref/product-group" }
                 },
                 "code": "milk",
                 "title": "Молочные продукты",
@@ -908,10 +888,6 @@ API предназначено для взаимодействием с учет
 # Product Group Reference Collection [/ref/product-group]
 Список продуктовых групп
 
-Атрибуты ресурса:
-
-- **total** - количество продуктовых групп
-
 + Model (application/hal+json)
 
     HAL+JSON предсавление списка аккаунтов.
@@ -923,34 +899,30 @@ API предназначено для взаимодействием с учет
                     "self": { "href": "/api/ref/product-group" }
                 },
                 "_embedded": {
-                    "groups": [
+                    "items": [
                         {
                             "_links": {
                                 "self": { "href": "/api/ref/product-group/fish" },
-                                "list": { "href": "/api/ref/product-group" }
                             },
                             "code": "fish",
-                            "title": "Рыба",
+                            "title": "Рыба"
                         },
                         {
                             "_links": {
                                 "self": { "href": "/api/ref/product-group/milk" },
-                                "list": { "href": "/api/ref/product-group" }
                             },
                             "code": "milk",
-                            "title": "Молочные продукты",
+                            "title": "Молочные продукты"
                         },
                         {
                             "_links": {
                                 "self": { "href": "/api/ref/product-group/food" },
-                                "list": { "href": "/api/ref/product-group" }
                             },
                             "code": "food",
-                            "title": "Продукты питания",
+                            "title": "Продукты питания"
                         }
                     ]
                 },
-                "total": 3
             }
 
 ## Список всех продуктовых групп [GET]
@@ -958,21 +930,6 @@ API предназначено для взаимодействием с учет
 + Response 200
 
     [Product Group Reference Collection][]
-
-+ Response 404 (application/hal+json)
-
-    + Body
-
-            {
-                "_links": {
-                    "self": { "href": "/api/ref/product-group" }
-                },
-                "_embedded": {
-                    "groups": [
-                    ]
-                },
-                "total": 0
-            }
 
 ## Создание новой продуктовой группы [POST]
 Для создания новой продуктовой группы нужно передать json-объект с кодом продуктовой группы и её названием.
@@ -986,8 +943,18 @@ API предназначено для взаимодействием с учет
 
 + Response 201
 
-## Изменение продуктовой группы [PUT]
-Изменение данных продуктовой группы. Если группа с таким кодом существует, то она будет изменена, иначе будет создана новая.
+    + Body
+
+            {
+                "_links": {
+                    "self": { "href": "/api/ref/product-group/milk" },
+                },
+                "code": "milk",
+                "title": "Молочные продукты"
+            }
+
+## Изменение продуктовой группы [PATCH]
+Изменение данных продуктовой группы.
 
 + Request (application/json)
 
@@ -996,9 +963,17 @@ API предназначено для взаимодействием с учет
             "title": "Молочные продукты",
         }
 
-+ Response 202
++ Response 200
 
-+ Response 201
+    + Body
+
+            {
+                "_links": {
+                    "self": { "href": "/api/ref/product-group/milk" },
+                },
+                "code": "milk",
+                "title": "Молочные продукты"
+            }
 
 # Company import service [/service/import/company]
 Сервис для импорта юридических лиц из систем "Онлайн". Необходим для синхронизации списка юридических лиц между Cargo и системами "Онлайн".
