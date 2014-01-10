@@ -162,7 +162,8 @@ class ExternalPunctImportModel
      */
     protected function calculateDistriction(ExternalPunct $object, $resVars)
     {
-        $filteredKeys = array('_id' => null, 'link' => null, 'deletedAt' => null);
+        $filteredKeys = array('_id' => null, 'link' => null, 'deleted' => null, 'version' => null,
+            'created' => null, 'updated' => null);
 
         return
             $this->recursiveDiff(

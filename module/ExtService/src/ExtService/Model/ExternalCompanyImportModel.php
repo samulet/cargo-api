@@ -41,7 +41,8 @@ class ExternalCompanyImportModel
     {
         $resultArray = array('new' => 0, 'changed' => 0, 'exists' => 0);
         $hydrator = new DoctrineHydrator($this->documentManager, 'ExtService\Entity\ExternalCompany');
-        $filteredKeys = array('_id' => null, 'link' => null, 'deletedAt' => null);
+        $filteredKeys = array('_id' => null, 'link' => null, 'deleted' => null, 'version' => null,
+            'created' => null, 'updated' => null);
 
         foreach ($companies as $res) {
             $resVars = get_object_vars($res);
