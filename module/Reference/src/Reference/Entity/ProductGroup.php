@@ -45,6 +45,11 @@ class ProductGroup
      * @ODM\Date
      */
     protected $deleted;
+    /**
+     * @var int
+     * @ODM\Field(type="increment", name="v")
+     */
+    protected $version = 0;
 
     public function setData(array $data)
     {
@@ -136,5 +141,26 @@ class ProductGroup
     {
         $this->title = $title;
         return $this;
+    }
+
+    /**
+     * @param int $version
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
+    }
+
+    /**
+     * @return int
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+    public function incrementVersion()
+    {
+        ++$this->version;
     }
 }

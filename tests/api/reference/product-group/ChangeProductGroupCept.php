@@ -8,6 +8,7 @@ $entities = [
         'type' => 'prodgroup',
         'code' => 'milk',
         'title' => 'Молочные продукты',
+        'v' => 3,
     ],
     [
         'type' => 'prodgroup',
@@ -40,9 +41,9 @@ $I->seeResponseContainsJson([
 ]);
 $I->seeInCollection(
     'reference',
-    ['type' => 'prodgroup', 'code' => 'milk', 'title' => 'Молочные продукты', 'deleted' => ['$ne' => null]]
+    ['type' => 'prodgroup', 'code' => 'milk', 'title' => 'Молочные продукты', 'deleted' => ['$ne' => null], 'v' => 3]
 );
 $I->seeInCollection(
     'reference',
-    ['type' => 'prodgroup', 'code' => 'milk', 'title' => 'Промышленное обородувание', 'deleted' => null]
+    ['type' => 'prodgroup', 'code' => 'milk', 'title' => 'Промышленное обородувание', 'deleted' => null, 'v' => 4]
 );

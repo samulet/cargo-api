@@ -158,6 +158,7 @@ class ProductGroupModel implements AuthorizationServiceAwareInterface, LoggerAwa
         $newEntity->setDeleted(new \DateTime());
 
         $this->getHydrator()->hydrate($entity, $data);
+        $entity->incrementVersion();
 
         $this->documentManager->persist($entity);
         $this->documentManager->persist($newEntity);
