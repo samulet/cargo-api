@@ -18,6 +18,7 @@ class ProductGroupModel implements AuthorizationServiceAwareInterface, LoggerAwa
 
     const PERMISSION_CREATE = 'ref.create';
     const PERMISSION_DELETE = 'ref.delete';
+    const PERMISSION_UPDATE = 'ref.update';
 
     /**
      * @var \Doctrine\ODM\MongoDB\DocumentManager
@@ -121,6 +122,49 @@ class ProductGroupModel implements AuthorizationServiceAwareInterface, LoggerAwa
         $this->documentManager->flush();
 
         return true;
+    }
+
+    /**
+     * Обновляет продуктовую группу
+     *
+     * Обновление выполняется путем удаления старой записи и создания новой.
+     * Новая запись создается из данных предыдущей версии
+     *
+     * @param string $code код продуктовой группы для удаления
+     * @param array $data
+     *
+     * @throws \Doctrine\ODM\MongoDB\DocumentNotFoundException
+     * @throws \ZfcRbac\Exception\UnauthorizedException
+     * @return \Reference\Entity\ProductGroup
+     */
+    public function update($code, array $data)
+    {
+        $this->getLogger()->debug('Change product group', ['code' => $code, 'data' => $data, '_method' => __METHOD__]);
+
+        if (!$this->getAuthorizationService()->isGranted(self::PERMISSION_UPDATE)) {
+            $this->getLogger()->debug('Insufficient rights to change a record', ['code' => $code, '_method' => __METHOD__]);
+            throw new UnauthorizedException('Insufficient rights to change a record');
+        }
+
+        /** @var ProductGroup $entity */
+        $entity = $this->getRepository()->exists()->code($code)->fetchOne();
+        if (empty($entity)) {
+            $this->getLogger()->debug('Product group not found', ['code' => $code, '_method' => __METHOD__]);
+            throw DocumentNotFoundException::documentNotFound('Reference\\Entity\\ProductGroup', $code);
+        }
+
+        $newEntity = new ProductGroup();
+        $newEntity->setData($entity->getData());
+        $newEntity->setDeleted(new \DateTime());
+
+        $this->getHydrator()->hydrate($entity, $data);
+
+        $this->documentManager->persist($entity);
+        $this->documentManager->persist($newEntity);
+
+        $this->documentManager->flush();
+
+        return $entity;
     }
 
     /**

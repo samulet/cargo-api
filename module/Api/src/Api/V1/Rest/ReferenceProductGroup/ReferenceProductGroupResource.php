@@ -109,7 +109,8 @@ class ReferenceProductGroupResource extends AbstractResourceListener
      */
     public function patch($id, $data)
     {
-        return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
+        $entity = $this->productGroupModel->update($id, get_object_vars($data));
+        return new ReferenceProductGroupEntity($entity->getData());
     }
 
     /**
