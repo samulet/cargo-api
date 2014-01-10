@@ -55,6 +55,9 @@ class CompanyModel
      */
     public function fetchAll($findParams)
     {
+        if (!isset($findParams['deleted'])) {
+            $findParams['deleted'] = null;
+        }
         return $this->queryBuilderModel->fetchAll('Account\Entity\Company', $findParams);
     }
 

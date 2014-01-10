@@ -1,6 +1,7 @@
 <?php
 $I = new ApiGuy($scenario);
-$I->wantTo('Get a list of all companies in system');
+$I->am('System Moderator');
+$I->wantTo('Get a list of non deleted companies');
 
 $I->haveHttpHeader('Content-Type', 'application/json');
 $I->haveHttpHeader('Accept', '*/*');
@@ -14,4 +15,6 @@ $I->seeResponseContainsJson(array(
         "companies" => array(),
     ),
 ));
-$I->SeeResponseContains('"uuid":"7e7f422230554465b121c6bb8b313554"');
+$I->seeResponseContains('"uuid":"7e7f422230554465b121c6bb8b313554"');
+$I->seeResponseContains('"uuid":"7fa1a29e95c949c8ae27ca0d6bfd0e70"');
+$I->dontSeeResponseContains('"uuid":"c14bfc17646343b4afc037fb3c8c5391"');

@@ -241,6 +241,7 @@ db.getCollection("company").insert({
     "uuid": "7fa1a29e95c949c8ae27ca0d6bfd0e70",
     "created": ISODate("2013-12-17T08:47:15.0Z"),
     "updated": ISODate("2013-12-17T08:47:15.0Z"),
+    "owner": "b21295c8a94c4bb0a4de07bd2d76ed38",
     "name": "ООО \"Маша и медведи\"",
     "short": "Маша и МЕдведи",
     "inn": "222222222222",
@@ -287,109 +288,11 @@ db.getCollection("company").insert({
     ]
 });
 db.getCollection("company").insert({
-    "_id": ObjectId("52b0120f9e534607468b457d"),
-    "uuid": "52200700e9df4b1c992fa727f04961d6",
-    "created": ISODate("2013-12-17T08:57:51.0Z"),
-    "updated": ISODate("2013-12-17T08:57:51.0Z"),
-    "short": "sssssssss",
-    "inn": "111111111111",
-    "tax": [
-
-    ],
-    "contacts": {
-        "phones": [
-
-        ],
-        "emails": [
-
-        ],
-        "sites": [
-
-        ],
-        "addresses": [
-
-        ]
-    },
-    "founders": [
-
-    ],
-    "okved": [
-
-    ],
-    "pfr": [
-
-    ],
-    "fms": [
-
-    ],
-    "licenses": [
-
-    ],
-    "applicants": [
-
-    ],
-    "accounts": [
-
-    ],
-    "persons": [
-
-    ]
-});
-db.getCollection("company").insert({
-    "_id": ObjectId("52b08f1a9e534644348b4581"),
-    "uuid": "afc66c7dd6234e568317e4799068a03b",
-    "created": ISODate("2013-12-17T17:51:22.0Z"),
-    "updated": ISODate("2013-12-17T17:51:22.0Z"),
-    "short": "Рога и Ко",
-    "inn": "1234567899",
-    "tax": [
-
-    ],
-    "contacts": {
-        "phones": [
-
-        ],
-        "emails": [
-
-        ],
-        "sites": [
-
-        ],
-        "addresses": [
-
-        ]
-    },
-    "founders": [
-
-    ],
-    "okved": [
-
-    ],
-    "pfr": [
-
-    ],
-    "fms": [
-
-    ],
-    "licenses": [
-
-    ],
-    "applicants": [
-
-    ],
-    "accounts": [
-
-    ],
-    "persons": [
-
-    ]
-});
-db.getCollection("company").insert({
     "_id": ObjectId("52b2480f9e53462e6e8b456e"),
     "uuid": "c14bfc17646343b4afc037fb3c8c5391",
-    "owner": "b21295c8a94c4bb0a4de07bd2d76ed38",
     "created": ISODate("2013-12-19T01:12:47.0Z"),
     "updated": ISODate("2013-12-19T01:12:47.0Z"),
+    "deleted": ISODate("2013-12-19T01:12:47.0Z"),
     "short": "demo56",
     "inn": "111111111111",
     "tax": [
