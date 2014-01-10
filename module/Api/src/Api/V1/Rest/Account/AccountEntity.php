@@ -3,9 +3,21 @@ namespace Api\V1\Rest\Account;
 
 class AccountEntity
 {
+    /**
+     * @var string
+     */
     protected $account_uuid;
+    /**
+     * @var string
+     */
     protected $title;
-    protected $created_at;
+    /**
+     * @var \DateTime
+     */
+    protected $created;
+    /**
+     * @var array
+     */
     protected $_embedded;
 
     public function __construct(array $entity = null, $companies = null)
@@ -20,10 +32,9 @@ class AccountEntity
         }
     }
 
-    public function setData($data)
+    public function setData(array $data)
     {
-
-        if ($data !== null && is_array($data)) {
+        if (!empty($data)) {
             foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
                 if (isset($data[$key]) && ($key != 'id')) {
                     $this->$key = $data[$key];
@@ -31,7 +42,7 @@ class AccountEntity
             }
         }
         if (!empty($this->created)) {
-            $this->created_at = $this->created->getTimestamp();
+            $this->created = $this->created->getTimestamp();
         }
         return $this;
 

@@ -1,15 +1,15 @@
 <?php
-
 namespace ExtService\Entity;
 
+use Application\Entity\BaseEntity;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ODM\Document(collection="externalPlace")
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
  */
-class ExternalPunct
+class ExternalPunct extends BaseEntity
 {
     /**
      * @ODM\Id
@@ -126,10 +126,6 @@ class ExternalPunct
      * @ODM\Field(type="string")
      */
     protected $coordinates;
-    /**
-     * @ODM\Date
-     */
-    protected $deletedAt;
 
     /**
      * @return string
@@ -257,22 +253,6 @@ class ExternalPunct
     public function setCoordinates($coordinates)
     {
         $this->coordinates = $coordinates;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDeletedAt()
-    {
-        return $this->deletedAt;
-    }
-
-    /**
-     * @param mixed $deletedAt
-     */
-    public function setDeletedAt($deletedAt)
-    {
-        $this->deletedAt = $deletedAt;
     }
 
     /**
@@ -492,7 +472,7 @@ class ExternalPunct
         $this->type = $type;
     }
 
-    public function setData($data)
+    public function setData(array $data)
     {
         if ($data !== null && is_array($data)) {
             foreach (array_keys(get_class_vars(__CLASS__)) as $key) {

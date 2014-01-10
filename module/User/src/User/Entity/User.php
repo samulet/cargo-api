@@ -1,6 +1,7 @@
 <?php
 namespace User\Entity;
 
+use Application\Entity\BaseEntity;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -11,13 +12,8 @@ use ZfcUser\Entity\UserInterface;
  * @ODM\Document(collection="user", repositoryClass="User\Repository\User")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  */
-class User implements UserInterface, IdentityInterface
+class User extends BaseEntity implements UserInterface, IdentityInterface
 {
-    /**
-     * @ODM\Id
-     * @var int
-     */
-    protected $id;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -49,16 +45,6 @@ class User implements UserInterface, IdentityInterface
      */
     protected $state;
     /**
-     * @Gedmo\Timestampable(on="create")
-     * @ODM\Date
-     */
-    protected $created;
-    /**
-     * @Gedmo\Timestampable(on="update")
-     * @ODM\Date
-     */
-    protected $updated;
-    /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
      */
@@ -73,10 +59,6 @@ class User implements UserInterface, IdentityInterface
      * @var int
      */
     protected $currentCom;
-    /**
-     * @ODM\Date
-     */
-    protected $deleted;
     /**
      * @var array
      * @ODM\Collection(strategy="pushAll")
@@ -127,22 +109,6 @@ class User implements UserInterface, IdentityInterface
      * @ODM\Collection(strategy="pushAll")
      */
     protected $status = array();
-
-    /**
-     * @return mixed
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
-    }
-
-    /**
-     * @param mixed $deletedAt
-     */
-    public function setDeleted($deletedAt)
-    {
-        $this->deleted = $deletedAt;
-    }
 
     public function getName()
     {
@@ -240,29 +206,6 @@ class User implements UserInterface, IdentityInterface
     public function setSocial($social)
     {
         $this->social = $social;
-        return $this;
-    }
-
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set id.
-     *
-     * @param int $id
-     *
-     * @return UserInterface
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
         return $this;
     }
 
@@ -414,26 +357,6 @@ class User implements UserInterface, IdentityInterface
         return $this;
     }
 
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    public function setCreated($created)
-    {
-        $this->created = $created;
-    }
-
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-    }
-
     /**
      * Get role.
      *
@@ -491,28 +414,5 @@ class User implements UserInterface, IdentityInterface
     protected function getGenerator()
     {
         return new UuidGenerator;
-    }
-
-    public function setData($data)
-    {
-        if ($data !== null && is_array($data)) {
-            foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
-                if (isset($entity[$key]) && ($key != 'id') && ($key != 'uuid')) {
-                    $this->$key = $entity[$key];
-                }
-            }
-        }
-
-        return $this;
-    }
-
-    public function getData()
-    {
-        $data = array();
-        foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
-            $data[$key] = $this->$key;
-        }
-
-        return $data;
     }
 }

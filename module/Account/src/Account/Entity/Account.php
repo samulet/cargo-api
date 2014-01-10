@@ -2,6 +2,7 @@
 
 namespace Account\Entity;
 
+use Application\Entity\BaseEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
@@ -9,42 +10,20 @@ use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 /**
  *
  * @ODM\Document(collection="account", repositoryClass="Account\Repository\AccountRepository")
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
+ * @Gedmo\SoftDeleteable(fieldName="deleted")
  */
-class Account
+class Account extends BaseEntity
 {
-    public function __construct()
-    {
-        $this->lastItemNumber = 0;
-    }
-
-    /**
-     * @ODM\Id
-     * @var int
-     */
-    protected $id;
     /**
      * @var string
      * @ODM\Field(type="string")
      */
     protected $uuid;
-
     /**
      * @ODM\ObjectId
      * @var int
      */
     protected $ownerId;
-    /**
-     * @Gedmo\Timestampable(on="create")
-     * @ODM\Date
-     */
-    protected $created;
-
-    /**
-     * @Gedmo\Timestampable(on="update")
-     * @ODM\Date
-     */
-    protected $updated;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -55,79 +34,6 @@ class Account
      * @ODM\Field(type="string")
      */
     protected $title;
-    /**
-     * @var string
-     * @ODM\Field(type="string")
-     */
-    protected $lastItemNumber;
-    /**
-     * @ODM\Date
-     */
-    protected $deletedAt;
-
-    public function setData($data)
-    {
-        if ($data !== null && is_array($data)) {
-            foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
-                if (isset($data[$key]) && ($key != 'id') && ($key != 'uuid')) {
-                    $this->$key = $data[$key];
-                }
-            }
-        }
-        return $this;
-    }
-
-    public function getData()
-    {
-        $data = array();
-        foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
-            if ('created' == $key) {
-                $data['created_at'] = $this->created->getTimestamp();
-                continue;
-            }
-            $data[$key] = $this->$key;
-        }
-        return $data;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDeletedAt()
-    {
-        return $this->deletedAt;
-    }
-
-    /**
-     * @param mixed $deletedAt
-     */
-    public function setDeletedAt($deletedAt)
-    {
-        $this->deletedAt = $deletedAt;
-    }
-
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set id.
-     *
-     * @param int $id
-     *
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
-    }
 
     /**
      * Get activated.
@@ -150,26 +56,6 @@ class Account
     {
         $this->activated = $activated;
         return $this;
-    }
-
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    public function setCreated($created)
-    {
-        $this->created = $created;
-    }
-
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-    }
-
-    public function getUpdated()
-    {
-        return $this->updated;
     }
 
     /**
@@ -195,29 +81,6 @@ class Account
         return $this;
     }
 
-    /**
-     * Get type.
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Set type.
-     *
-     * @param string $type
-     *
-     * @return $this
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-        return $this;
-    }
-
     public function getOwnerId()
     {
         return $this->ownerId;
@@ -239,18 +102,4 @@ class Account
         $this->uuid = $uuid;
         return $this;
     }
-
-    public function getLastItemNumber()
-    {
-        return $this->lastItemNumber;
-    }
-
-    public function setLastItemNumber($lastItemNumber)
-    {
-        $this->lastItemNumber = $lastItemNumber;
-        return $this;
-    }
-
-
 }
-

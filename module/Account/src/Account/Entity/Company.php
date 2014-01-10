@@ -1,7 +1,7 @@
 <?php
-
 namespace Account\Entity;
 
+use Application\Entity\BaseEntity;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -9,14 +9,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ODM\Document(collection="company", repositoryClass="Account\Repository\CompanyRepository")
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  */
-class Company
+class Company extends BaseEntity
 {
-    /**
-     * @ODM\Id
-     * @var int
-     */
-    protected $id;
-
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -28,18 +22,6 @@ class Company
      * @ODM\Field(type="string", name="owner")
      */
     protected $ownerAccUuid;
-
-    /**
-     * @Gedmo\Timestampable(on="create")
-     * @ODM\Date
-     */
-    protected $created;
-
-    /**
-     * @Gedmo\Timestampable(on="update")
-     * @ODM\Date
-     */
-    protected $updated;
 
     /**
      * @var string
@@ -184,54 +166,6 @@ class Company
      * @ODM\Field(type="hash")
      */
     protected $sites;
-    /**
-     * @ODM\Date
-     */
-    protected $deleted;
-
-    public function setData($data)
-    {
-        if ($data !== null && is_array($data)) {
-            foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
-                if (isset($data[$key]) && ($key != 'id') && ($key != 'uuid')) {
-                    $this->$key = $data[$key];
-                }
-            }
-        }
-        return $this;
-
-    }
-
-    public function getData()
-    {
-        $data = array();
-        foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
-            $data[$key] = $this->$key;
-        }
-        return $data;
-    }
-
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set id.
-     *
-     * @param int $id
-     * @return UserInterface
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
-    }
 
     public function getUuid()
     {
@@ -242,22 +176,6 @@ class Company
     {
         $this->uuid = $uuid;
         return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
-    }
-
-    /**
-     * @param mixed $deleted
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
     }
 
     public function setDirty($dirty)
@@ -290,26 +208,6 @@ class Company
     {
         $this->activated = $activated;
         return $this;
-    }
-
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    public function setCreated($created)
-    {
-        $this->created = $created;
-    }
-
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-    }
-
-    public function getUpdated()
-    {
-        return $this->updated;
     }
 
     public function getOwnerAccId()
