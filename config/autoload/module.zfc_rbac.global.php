@@ -129,6 +129,7 @@ return [
                 'get.places' => ['user'],
                 'get.places.all' => ['system'],
                 'ref.create' => ['system'],
+                'ref.delete' => ['system'],
             ]
         ],
 
