@@ -2,20 +2,22 @@
 namespace Account\Model;
 
 use Account\Entity\Account;
+use Application\Service\AuthorizationServiceAwareInterface;
+use Application\Service\AuthorizationServiceAwareTrait;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use QueryBuilder\Model\QueryBuilderModel;
+use Zend\EventManager\EventManagerAwareInterface;
+use Zend\EventManager\EventManagerAwareTrait;
 
-class AccountModel
+class AccountModel implements AuthorizationServiceAwareInterface, EventManagerAwareInterface
 {
+    use EventManagerAwareTrait;
+    use AuthorizationServiceAwareTrait;
+
     /**
      * @var \Doctrine\ODM\MongoDB\DocumentManager
      */
     protected $documentManager;
-    /**
-     * @var UuidGenerator
-     */
-    protected $uuidGenerator;
     /**
      * @var QueryBuilderModel
      */
@@ -23,7 +25,6 @@ class AccountModel
 
     public function __construct(DocumentManager $documentManager, $queryBuilderModel)
     {
-        $this->uuidGenerator = new UuidGenerator();
         $this->documentManager = $documentManager;
         $this->queryBuilderModel = $queryBuilderModel;
     }
