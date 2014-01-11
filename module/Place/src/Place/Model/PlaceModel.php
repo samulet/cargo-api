@@ -9,6 +9,7 @@ use User\Identity\IdentityProvider;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerAwareTrait;
 use ZfcRbac\Exception\UnauthorizedException;
+use ZfcRbac\Service\AuthorizationService;
 
 class PlaceModel implements AuthorizationServiceAwareInterface, EventManagerAwareInterface
 {
@@ -103,7 +104,7 @@ class PlaceModel implements AuthorizationServiceAwareInterface, EventManagerAwar
     /**
      * @param \ZfcRbac\Service\AuthorizationService $authorizationService
      */
-    public function setAuthorizationService($authorizationService)
+    public function setAuthorizationService(AuthorizationService $authorizationService)
     {
         $this->authorizationService = $authorizationService;
     }

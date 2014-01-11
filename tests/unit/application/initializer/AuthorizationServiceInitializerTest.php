@@ -40,7 +40,7 @@ class AuthorizationServiceInitializerTest extends \Codeception\TestCase\Test
             ->getMock();
         $serviceLocator = m::mock('Zend\ServiceManager\ServiceManager')
             ->shouldReceive('get')
-            ->andReturn(null)
+            ->andReturn(m::mock('ZfcRbac\\Service\\AuthorizationService'))
             ->once()
             ->getMock();
         $this->service->initialize($instance, $serviceLocator);

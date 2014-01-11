@@ -11,6 +11,7 @@ use Reference\Entity\ProductGroup;
 use Zend\Log\LoggerAwareInterface;
 use Zend\Log\LoggerAwareTrait;
 use ZfcRbac\Exception\UnauthorizedException;
+use ZfcRbac\Service\AuthorizationService;
 
 class ProductGroupModel implements AuthorizationServiceAwareInterface, LoggerAwareInterface
 {
@@ -171,7 +172,7 @@ class ProductGroupModel implements AuthorizationServiceAwareInterface, LoggerAwa
     /**
      * @param \ZfcRbac\Service\AuthorizationService $authorizationService
      */
-    public function setAuthorizationService($authorizationService)
+    public function setAuthorizationService(AuthorizationService $authorizationService)
     {
         $this->authorizationService = $authorizationService;
     }

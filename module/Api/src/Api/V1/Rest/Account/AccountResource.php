@@ -194,7 +194,7 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
     /**
      * @param AuthorizationService $authorizationService
      */
-    public function setAuthorizationService($authorizationService)
+    public function setAuthorizationService(AuthorizationService $authorizationService)
     {
         $this->authorizationService = $authorizationService;
     }
