@@ -21,5 +21,17 @@ return array(
                 )
             )
         )
-    )
+    ),
+    'service_manager' => array(
+        'aliases' => array(
+            'CompanyModel' => 'Account\\Model\\CompanyModel',
+            'CompanyUserModel' => 'Account\\Model\\CompanyUserModel',
+            'AccountModel' => 'Account\\Model\\AccountModel',
+        ),
+        'factories' => array(
+            'Account\\Model\\CompanyModel' => 'Account\\Factory\\CompanyModelFactory',
+            'Account\\Model\\CompanyUserModel' => 'Account\\Factory\\CompanyUserModelFactory',
+            'Account\\Model\\AccountModel' => 'Account\\Factory\\AccountModelFactory',
+        ),
+    ),
 );

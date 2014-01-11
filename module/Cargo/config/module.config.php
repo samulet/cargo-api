@@ -18,5 +18,13 @@ return array(
                 )
             )
         )
-    )
+    ),
+    'service_manager' => array(
+        'aliases' => array(
+            'CargoModel' => 'Cargo\\Model\\CargoModel',
+        ),
+        'factories' => array(
+            'Cargo\\Model\\CargoModel' => 'Cargo\\Factory\\CargoModelFactory',
+        ),
+    ),
 );

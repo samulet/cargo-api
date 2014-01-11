@@ -23,6 +23,6 @@ class ReferenceProductGroupResource implements FactoryInterface
             return new AccessDeniedResource($code, $exception->getMessage());
         }
 
-        return new Controller($serviceLocator->get('AddListProductGroupModel'), $provider);
+        return new Controller($serviceLocator->get('ProductGroupModel'), $provider);
     }
 }

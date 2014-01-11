@@ -61,6 +61,10 @@ return array(
         ),
         'aliases' => array(
             'translator' => 'MvcTranslator',
+            'AuthTokenModel' => 'AuthToken\\Model\\AuthToken',
+        ),
+        'factories' => array(
+            'AuthToken\\Model\\AuthToken' => 'AuthToken\\ModelFactory',
         ),
     ),
     'translator' => array(

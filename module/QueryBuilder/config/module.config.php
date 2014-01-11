@@ -14,5 +14,13 @@ return array(
                 )
             )
         )
-    )
+    ),
+    'service_manager' => array(
+        'aliases' => array(
+            'QueryBuilderModel' => 'QueryBuilder\\Model\\QueryBuilderModel',
+        ),
+        'factories' => array(
+            'QueryBuilder\\Model\\QueryBuilderModel' => 'QueryBuilder\\Factory\\QueryBuilderModelFactory',
+        ),
+    ),
 );

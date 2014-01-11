@@ -16,5 +16,15 @@ return array(
                 )
             )
         )
-    )
+    ),
+    'service_manager' => array(
+        'aliases' => array(
+            'ProductGroupModel' => 'Reference\\Model\\ProductGroupModel',
+            'ReferenceModel' => 'Reference\\Model\\ReferenceModel',
+        ),
+        'factories' => array(
+            'Reference\\Model\\ProductGroupModel' => 'Reference\\Factory\\ProductGroupModel',
+            'Reference\\Model\\ReferenceModel' => 'Reference\\Factory\\ReferenceModelFactory',
+        ),
+    ),
 );
