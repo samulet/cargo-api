@@ -6,7 +6,7 @@ class AccountEntity
     /**
      * @var string
      */
-    protected $account_uuid;
+    protected $uuid;
     /**
      * @var string
      */
@@ -24,7 +24,7 @@ class AccountEntity
     {
         if (!empty($entity)) {
             $this->setData($entity);
-            $this->account_uuid = $entity['uuid'];
+            $this->uuid = $entity['uuid'];
             if (!empty($companies)) {
                 $this->_embedded = array('companies' => array());
                 $this->setEmbedded($companies);
@@ -62,14 +62,14 @@ class AccountEntity
         return $this->title;
     }
 
-    public function getAccountUuid()
+    public function getUuid()
     {
-        return $this->account_uuid;
+        return $this->uuid;
     }
 
-    public function setAccountUuid($account_uuid)
+    public function setUuid($account_uuid)
     {
-        $this->account_uuid = $account_uuid;
+        $this->uuid = $account_uuid;
         return $this;
     }
 
@@ -79,7 +79,7 @@ class AccountEntity
             $arr = array(
                 '_links' => array(
                     'self' => array(
-                        'href' => '/api/accounts/' . $this->account_uuid . '/companies/' . $com->getUuid()
+                        'href' => '/api/accounts/' . $this->uuid . '/companies/' . $com->getUuid()
                     )
                 ),
                 'title' => $com->getProperty() . ' ' . $com->getShort(),

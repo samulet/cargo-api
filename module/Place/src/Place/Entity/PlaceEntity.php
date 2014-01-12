@@ -8,6 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ODM\Document(collection="place", repositoryClass="Place\Repository\Place")
+ * @ODM\HasLifecycleCallbacks
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  */
 class PlaceEntity extends BaseEntity

@@ -10,6 +10,7 @@ use ZfcUser\Entity\UserInterface;
 
 /**
  * @ODM\Document(collection="user", repositoryClass="User\Repository\User")
+ * @ODM\HasLifecycleCallbacks
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  */
 class User extends BaseEntity implements UserInterface, IdentityInterface

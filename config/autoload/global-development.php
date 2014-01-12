@@ -11,7 +11,7 @@ return array(
                 array(
                     'name' => 'stream',
                     'options' => array(
-                        'stream' => '/vagrant/logs/api-app.log',
+                        'stream' => __DIR__ . '/../../data/log/api-app.log',
                         'formatter' => array(
                             'name' => 'Simple',
                             'options' => array(
@@ -33,7 +33,7 @@ return array(
                     'name' => 'stream',
                     'priority' => 10,
                     'options' => array(
-                        'stream' => '/vagrant/logs/api-app.debug.log',
+                        'stream' => __DIR__ . '/../../data/log/api-app.debug.log',
                         'formatter' => array(
                             'name' => 'Simple',
                             'options' => array(

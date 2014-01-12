@@ -5,7 +5,7 @@ return array(
             'api.rest.account' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/accounts[/:account_uuid]',
+                    'route' => '/api/accounts[/:uuid]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\Account\\Controller',
                     ),
@@ -41,7 +41,7 @@ return array(
             'api.rest.company-employee' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/companies[/:company_employee_uuid]/employees',
+                    'route' => '/api/companies[/:uuid]/employees',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\CompanyEmployee\\Controller',
                     ),
@@ -50,7 +50,7 @@ return array(
             'api.rest.company-partner' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/companies[/:company_partner_uuid]/partners',
+                    'route' => '/api/companies[/:uuid]/partners',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\CompanyPartner\\Controller',
                     ),
@@ -59,7 +59,7 @@ return array(
             'api.rest.resource-meta' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/meta[/:resource_meta_id]',
+                    'route' => '/api/meta[/:id]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\ResourceMeta\\Controller',
                     ),
@@ -68,7 +68,7 @@ return array(
             'api.rest.profile-status' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/profile[/:profile_uuid]/status',
+                    'route' => '/api/profile[/:uuid]/status',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\ProfileStatus\\Controller',
                     ),
@@ -95,18 +95,9 @@ return array(
             'api.rest.cargo' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/api/cargo[/:cargo_uuid]',
+                    'route' => '/api/cargo[/:uuid]',
                     'defaults' => array(
                         'controller' => 'Api\\V1\\Rest\\Cargo\\Controller',
-                    ),
-                ),
-            ),
-            'api.rest.ext-service' => array(
-                'type' => 'Segment',
-                'options' => array(
-                    'route' => '/api/extservices[/:ext_service_type]',
-                    'defaults' => array(
-                        'controller' => 'Api\\V1\\Rest\\ExtService\\Controller',
                     ),
                 ),
             ),
@@ -181,7 +172,7 @@ return array(
     ),
     'service_manager' => array(
         'aliases' => array(
-            'Doctrine\ODM\MongoDB\DocumentManager' => 'doctrine.documentmanager.odm_default',
+            'Doctrine\\ODM\\MongoDB\\DocumentManager' => 'doctrine.documentmanager.odm_default',
         ),
         'invokables' => array(),
         'factories' => array(
@@ -194,7 +185,7 @@ return array(
             'Api\\V1\\Rest\\Reference\\ReferenceResource' => 'Api\\Factory\\ReferenceResource',
             'Api\\V1\\Rest\\ReferenceProductGroup\\ReferenceProductGroupResource' => 'Api\\Factory\\ReferenceProductGroupResource',
             'Api\\V1\\Rest\\ProfileStatus\\ProfileStatusResource' => 'Api\\Factory\\ProfileStatusResource',
-            'Api\\V1\\Rest\\ResourceMeta\ResourceMetaResource' => 'Api\\Factory\\ResourceMetaResource',
+            'Api\\V1\\Rest\\ResourceMeta\\ResourceMetaResource' => 'Api\\Factory\\ResourceMetaResource',
             'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyResource' => 'Api\\Factory\\ExtServiceCompanyResource',
             'Api\\V1\\Rest\\ExternalServicePlace\\ExternalServicePlaceResource' => 'Api\\Factory\\ExternalServicePlaceResource',
             'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\CompanyIntersectResource' => 'Api\\Factory\\CompanyIntersectResourceFactory',
@@ -227,6 +218,7 @@ return array(
             'page_size_param' => 'psize',
             'entity_class' => 'Api\\V1\\Rest\\Account\\AccountEntity',
             'collection_class' => 'Api\\V1\\Rest\\Account\\AccountCollection',
+            'route_identifier_name' => 'uuid',
         ),
         'Api\\V1\\Rest\\Profile\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\Profile\\ProfileResource',
@@ -235,8 +227,8 @@ return array(
             'collection_name' => 'profiles',
             'resource_http_methods' => array(
                 0 => 'GET',
-                3 => 'DELETE',
-                4 => 'PATCH',
+                1 => 'DELETE',
+                2 => 'PATCH',
             ),
             'collection_http_methods' => array(
                 0 => 'GET',
@@ -247,6 +239,7 @@ return array(
             'page_size_param' => 'psize',
             'entity_class' => 'Api\\V1\\Rest\\Profile\\ProfileEntity',
             'collection_class' => 'Api\\V1\\Rest\\Profile\\ProfileCollection',
+            'route_identifier_name' => 'uuid',
         ),
         'Api\\V1\\Rest\\Company\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\Company\\CompanyResource',
@@ -270,6 +263,7 @@ return array(
             'page_size_param' => 'psize',
             'entity_class' => 'Api\\V1\\Rest\\Company\\CompanyEntity',
             'collection_class' => 'Api\\V1\\Rest\\Company\\CompanyCollection',
+            'route_identifier_name' => 'uuid',
         ),
         'Api\\V1\\Rest\\AccountCompany\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\AccountCompany\\AccountCompanyResource',
@@ -295,6 +289,7 @@ return array(
             'page_size_param' => 'psize',
             'entity_class' => 'Api\\V1\\Rest\\AccountCompany\\AccountCompanyEntity',
             'collection_class' => 'Api\\V1\\Rest\\AccountCompany\\AccountCompanyCollection',
+            'route_identifier_name' => 'uuid',
         ),
         'Api\\V1\\Rest\\CompanyEmployee\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\CompanyEmployee\\CompanyEmployeeResource',
@@ -320,6 +315,7 @@ return array(
             'page_size_param' => 'psize',
             'entity_class' => 'Api\\V1\\Rest\\CompanyEmployee\\CompanyEmployeeEntity',
             'collection_class' => 'Api\\V1\\Rest\\CompanyEmployee\\CompanyEmployeeCollection',
+            'route_identifier_name' => 'uuid',
         ),
         'Api\\V1\\Rest\\CompanyPartner\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerResource',
@@ -345,6 +341,7 @@ return array(
             'page_size_param' => 'psize',
             'entity_class' => 'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerEntity',
             'collection_class' => 'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerCollection',
+            'route_identifier_name' => 'uuid',
         ),
         'Api\\V1\\Rest\\ResourceMeta\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\ResourceMeta\\ResourceMetaResource',
@@ -370,6 +367,7 @@ return array(
             'page_size_param' => 'psize',
             'entity_class' => 'Api\\V1\\Rest\\ResourceMeta\\ResourceMetaEntity',
             'collection_class' => 'Api\\V1\\Rest\\ResourceMeta\\ResourceMetaCollection',
+            'route_identifier_name' => 'id',
         ),
         'Api\\V1\\Rest\\ProfileStatus\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\ProfileStatus\\ProfileStatusResource',
@@ -378,31 +376,26 @@ return array(
             'collection_name' => 'profile_status',
             'resource_http_methods' => array(
                 0 => 'GET',
-                1 => 'PATCH',
-                2 => 'PUT',
-                3 => 'DELETE',
-                4 => 'POST',
+                1 => 'DELETE',
+                2 => 'POST',
+                3 => 'PATCH',
             ),
             'collection_http_methods' => array(
-                0 => 'GET',
-                1 => 'POST',
-                2 => 'DELETE',
-                3 => 'PATCH',
-                4 => 'PUT',
+                0 => 'PUT',
             ),
             'collection_query_whitelist' => array(),
             'page_size' => '25',
             'page_size_param' => 'psize',
             'entity_class' => 'Api\\V1\\Rest\\ProfileStatus\\ProfileStatusEntity',
             'collection_class' => 'Api\\V1\\Rest\\ProfileStatus\\ProfileStatusCollection',
+            'route_identifier_name' => 'uuid',
         ),
         'Api\\V1\\Rest\\Reference\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\Reference\\ReferenceResource',
             'route_name' => 'api.rest.reference',
             'identifier_name' => 'code',
             'collection_name' => 'references',
-            'resource_http_methods' => array(
-            ),
+            'resource_http_methods' => array(),
             'collection_http_methods' => array(
                 0 => 'GET',
             ),
@@ -411,6 +404,7 @@ return array(
             'page_size_param' => 'psize',
             'entity_class' => 'Api\\V1\\Rest\\Reference\\ReferenceEntity',
             'collection_class' => 'Api\\V1\\Rest\\Reference\\ReferenceCollection',
+            'route_identifier_name' => 'code',
         ),
         'Api\\V1\\Rest\\ReferenceProductGroup\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\ReferenceProductGroup\\ReferenceProductGroupResource',
@@ -431,6 +425,7 @@ return array(
             'page_size_param' => 'psize',
             'entity_class' => 'Api\\V1\\Rest\\ReferenceProductGroup\\ReferenceProductGroupEntity',
             'collection_class' => 'Api\\V1\\Rest\\ReferenceProductGroup\\ReferenceProductGroupCollection',
+            'route_identifier_name' => 'code',
         ),
         'Api\\V1\\Rest\\Cargo\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\Cargo\\CargoResource',
@@ -456,31 +451,7 @@ return array(
             'page_size_param' => 'psize',
             'entity_class' => 'Api\\V1\\Rest\\Cargo\\CargoEntity',
             'collection_class' => 'Api\\V1\\Rest\\Cargo\\CargoCollection',
-        ),
-        'Api\\V1\\Rest\\ExtService\\Controller' => array(
-            'listener' => 'Api\\V1\\Rest\\ExtService\\ExtServiceResource',
-            'route_name' => 'api.rest.ext-service',
-            'identifier_name' => 'ext_service_type',
-            'collection_name' => 'ext_service',
-            'resource_http_methods' => array(
-                0 => 'GET',
-                1 => 'PATCH',
-                2 => 'PUT',
-                3 => 'DELETE',
-                4 => 'POST',
-            ),
-            'collection_http_methods' => array(
-                0 => 'GET',
-                1 => 'POST',
-                2 => 'PUT',
-                3 => 'PATCH',
-                4 => 'DELETE',
-            ),
-            'collection_query_whitelist' => array(),
-            'page_size' => 25,
-            'page_size_param' => 'psize',
-            'entity_class' => 'Api\\V1\\Rest\\ExtService\\ExtServiceEntity',
-            'collection_class' => 'Api\\V1\\Rest\\ExtService\\ExtServiceCollection',
+            'route_identifier_name' => 'uuid',
         ),
         'Api\\V1\\Rest\\ExtServiceCompany\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyResource',
@@ -506,6 +477,7 @@ return array(
             'page_size_param' => 'psize',
             'entity_class' => 'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyEntity',
             'collection_class' => 'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyCollection',
+            'route_identifier_name' => 'code',
         ),
         'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\CompanyIntersectResource',
@@ -531,6 +503,7 @@ return array(
             'page_size_param' => 'psize',
             'entity_class' => 'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectEntity',
             'collection_class' => 'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectCollection',
+            'route_identifier_name' => 'code',
         ),
         'Api\\V1\\Rest\\ExternalServicePlace\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\ExternalServicePlace\\ExternalServicePlaceResource',
@@ -556,6 +529,7 @@ return array(
             'page_size_param' => 'psize',
             'entity_class' => 'Api\\V1\\Rest\\ExternalServicePlace\\ExternalServicePlaceEntity',
             'collection_class' => 'Api\\V1\\Rest\\ExternalServicePlace\\ExternalServicePlaceCollection',
+            'route_identifier_name' => 'code',
         ),
         'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\ExternalServicePlaceIntersectResource',
@@ -581,6 +555,7 @@ return array(
             'page_size_param' => 'psize',
             'entity_class' => 'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\ExternalServicePlaceIntersectEntity',
             'collection_class' => 'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\ExternalServicePlaceIntersectCollection',
+            'route_identifier_name' => 'code',
         ),
         'Api\\V1\\Rest\\Places\\Controller' => array(
             'listener' => 'Api\\V1\\Rest\\Places\\PlacesResource',
@@ -605,6 +580,7 @@ return array(
             'page_size_param' => 'psize',
             'entity_class' => 'Api\\V1\\Rest\\Places\\PlacesEntity',
             'collection_class' => 'Api\\V1\\Rest\\Places\\PlacesCollection',
+            'route_identifier_name' => 'uuid',
         ),
     ),
     'zf-content-negotiation' => array(
@@ -761,6 +737,14 @@ return array(
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ),
+            'Api\\V1\\Rest\\CompanyEmployee\\Controller' => array(
+                0 => 'application/json',
+                1 => 'application/*+json',
+            ),
+            'Api\\V1\\Rest\\CompanyPartner\\Controller' => array(
+                0 => 'application/json',
+                1 => 'application/*+json',
+            ),
         ),
         'content_type_whitelist' => array(
             'Api\\V1\\Rest\\ResourceMeta\\Controller' => array(
@@ -821,119 +805,136 @@ return array(
                 0 => 'application/vnd.api.v1+json',
                 1 => 'application/json',
             ),
+            'Api\\V1\\Rest\\CompanyEmployee\\Controller' => array(
+                0 => 'application/json',
+            ),
+            'Api\\V1\\Rest\\CompanyPartner\\Controller' => array(
+                0 => 'application/json',
+            ),
         ),
     ),
     'zf-hal' => array(
         'metadata_map' => array(
             'Api\\V1\\Rest\\Account\\AccountEntity' => array(
-                'identifier_name' => 'account_uuid',
+                'route_identifier_name' => 'uuid',
+                'entity_identifier_name' => 'uuid',
                 'route_name' => 'api.rest.account',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\Account\\AccountCollection' => array(
-                'identifier_name' => 'account_uuid',
+                'route_identifier_name' => 'uuid',
+                'entity_identifier_name' => 'uuid',
                 'route_name' => 'api.rest.account',
-                'is_collection' => '1',
             ),
             'Api\\V1\\Rest\\Profile\\ProfileEntity' => array(
-                'identifier_name' => 'uuid',
+                'route_identifier_name' => 'uuid',
+                'entity_identifier_name' => 'uuid',
                 'route_name' => 'api.rest.profile',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\Profile\\ProfileCollection' => array(
-                'identifier_name' => 'uuid',
+                'route_identifier_name' => 'uuid',
+                'entity_identifier_name' => 'uuid',
                 'route_name' => 'api.rest.profile',
-                'is_collection' => '1',
             ),
             'Api\\V1\\Rest\\Company\\CompanyEntity' => array(
-                'identifier_name' => 'uuid',
+                'route_identifier_name' => 'uuid',
+                'entity_identifier_name' => 'uuid',
                 'route_name' => 'api.rest.company',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\Company\\CompanyCollection' => array(
-                'identifier_name' => 'uuid',
+                'route_identifier_name' => 'uuid',
+                'entity_identifier_name' => 'uuid',
                 'route_name' => 'api.rest.company',
-                'is_collection' => '1',
             ),
             'Api\\V1\\Rest\\AccountCompany\\AccountCompanyEntity' => array(
-                'identifier_name' => 'uuid',
+                'route_identifier_name' => 'uuid',
+                'entity_identifier_name' => 'uuid',
                 'route_name' => 'api.rest.account-company',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\AccountCompany\\AccountCompanyCollection' => array(
-                'identifier_name' => 'uuid',
+                'route_identifier_name' => 'uuid',
+                'entity_identifier_name' => 'uuid',
                 'route_name' => 'api.rest.account-company',
-                'is_collection' => '1',
             ),
             'Api\\V1\\Rest\\CompanyEmployee\\CompanyEmployeeEntity' => array(
-                'identifier_name' => 'company_employee_uuid',
+                'route_identifier_name' => 'uuid',
+                'entity_identifier_name' => 'uuid',
                 'route_name' => 'api.rest.company-employee',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\CompanyEmployee\\CompanyEmployeeCollection' => array(
-                'identifier_name' => 'company_employee_uuid',
+                'route_identifier_name' => 'uuid',
+                'entity_identifier_name' => 'uuid',
                 'route_name' => 'api.rest.company-employee',
-                'is_collection' => '1',
             ),
             'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerEntity' => array(
-                'identifier_name' => 'company_partner_uuid',
+                'route_identifier_name' => 'uuid',
+                'entity_identifier_name' => 'uuid',
                 'route_name' => 'api.rest.company-partner',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\CompanyPartner\\CompanyPartnerCollection' => array(
-                'identifier_name' => 'company_partner_uuid',
+                'route_identifier_name' => 'uuid',
+                'entity_identifier_name' => 'uuid',
                 'route_name' => 'api.rest.company-partner',
-                'is_collection' => '1',
             ),
             'Api\\V1\\Rest\\ResourceMeta\\ResourceMetaEntity' => array(
-                'identifier_name' => 'resource_meta_id',
+                'route_identifier_name' => 'id',
+                'entity_identifier_name' => 'id',
                 'route_name' => 'api.rest.resource-meta',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\ResourceMeta\\ResourceMetaCollection' => array(
-                'identifier_name' => 'resource_meta_id',
+                'route_identifier_name' => 'id',
+                'entity_identifier_name' => 'id',
                 'route_name' => 'api.rest.resource-meta',
-                'is_collection' => '1',
             ),
             'Api\\V1\\Rest\\ProfileStatus\\ProfileStatusEntity' => array(
-                'identifier_name' => 'profile_uuid',
+                'route_identifier_name' => 'uuid',
+                'entity_identifier_name' => 'uuid',
                 'route_name' => 'api.rest.profile-status',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\ProfileStatus\\ProfileStatusCollection' => array(
-                'identifier_name' => 'profile_uuid',
+                'route_identifier_name' => 'uuid',
+                'entity_identifier_name' => 'uuid',
                 'route_name' => 'api.rest.profile-status',
-                'is_collection' => '1',
             ),
             'Api\\V1\\Rest\\Reference\\ReferenceEntity' => array(
-                'identifier_name' => 'code',
+                'route_identifier_name' => 'code',
+                'entity_identifier_name' => 'code',
                 'route_name' => 'api.rest.reference',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\Reference\\ReferenceCollection' => array(
-                'identifier_name' => 'code',
+                'route_identifier_name' => 'code',
+                'entity_identifier_name' => 'code',
                 'route_name' => 'api.rest.reference',
-                'is_collection' => '1',
             ),
             'Api\\V1\\Rest\\ReferenceProductGroup\\ReferenceProductGroupEntity' => array(
-                'identifier_name' => 'code',
+                'route_identifier_name' => 'code',
+                'entity_identifier_name' => 'code',
                 'route_name' => 'api.rest.reference-product-group',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\ReferenceProductGroup\\ReferenceProductGroupCollection' => array(
-                'identifier_name' => 'code',
+                'route_identifier_name' => 'code',
+                'entity_identifier_name' => 'code',
                 'route_name' => 'api.rest.reference-product-group',
-                'is_collection' => '1',
             ),
             'Api\\V1\\Rest\\Cargo\\CargoEntity' => array(
-                'identifier_name' => 'cargo_uuid',
+                'route_identifier_name' => 'uuid',
+                'entity_identifier_name' => 'uuid',
                 'route_name' => 'api.rest.cargo',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\Cargo\\CargoCollection' => array(
-                'identifier_name' => 'cargo_uuid',
+                'route_identifier_name' => 'uuid',
+                'entity_identifier_name' => 'uuid',
                 'route_name' => 'api.rest.cargo',
-                'is_collection' => '1',
             ),
             'Api\\V1\\Rest\\ExtService\\ExtServiceEntity' => array(
                 'identifier_name' => 'ext_service_type',
@@ -946,52 +947,58 @@ return array(
                 'is_collection' => true,
             ),
             'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyEntity' => array(
-                'identifier_name' => 'code',
+                'route_identifier_name' => 'code',
+                'entity_identifier_name' => 'code',
                 'route_name' => 'api.rest.ext-service-company',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\ExtServiceCompany\\ExtServiceCompanyCollection' => array(
-                'identifier_name' => 'code',
+                'route_identifier_name' => 'code',
+                'entity_identifier_name' => 'code',
                 'route_name' => 'api.rest.ext-service-company',
-                'is_collection' => true,
             ),
             'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectEntity' => array(
-                'identifier_name' => 'code',
+                'route_identifier_name' => 'code',
+                'entity_identifier_name' => 'code',
                 'route_name' => 'api.rest.ext-service-company-intersect',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\ExtServiceCompanyIntersect\\ExtServiceCompanyIntersectCollection' => array(
-                'identifier_name' => 'code',
+                'route_identifier_name' => 'code',
+                'entity_identifier_name' => 'code',
                 'route_name' => 'api.rest.ext-service-company-intersect',
-                'is_collection' => true,
             ),
             'Api\\V1\\Rest\\ExternalServicePlace\\ExternalServicePlaceEntity' => array(
-                'identifier_name' => 'code',
+                'route_identifier_name' => 'code',
+                'entity_identifier_name' => 'code',
                 'route_name' => 'api.rest.external-service-place',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\ExternalServicePlace\\ExternalServicePlaceCollection' => array(
-                'identifier_name' => 'code',
+                'route_identifier_name' => 'code',
+                'entity_identifier_name' => 'code',
                 'route_name' => 'api.rest.external-service-place',
-                'is_collection' => true,
             ),
             'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\ExternalServicePlaceIntersectEntity' => array(
-                'identifier_name' => 'code',
+                'route_identifier_name' => 'code',
+                'entity_identifier_name' => 'code',
                 'route_name' => 'api.rest.external-service-place-intersect',
                 'hydrator' => 'Reflection',
             ),
             'Api\\V1\\Rest\\ExternalServicePlaceIntersect\\ExternalServicePlaceIntersectCollection' => array(
-                'identifier_name' => 'code',
+                'route_identifier_name' => 'code',
+                'entity_identifier_name' => 'code',
                 'route_name' => 'api.rest.external-service-place-intersect',
-                'is_collection' => true,
             ),
             'Api\\V1\\Rest\\Places\\PlacesEntity' => array(
-                'identifier_name' => 'uuid',
+                'route_identifier_name' => 'uuid',
+                'entity_identifier_name' => 'uuid',
                 'route_name' => 'api.rest.places',
                 'hydrator' => 'reflection',
             ),
             'Api\\V1\\Rest\\Places\\PlacesCollection' => array(
-                'identifier_name' => 'uuid',
+                'route_identifier_name' => 'uuid',
+                'entity_identifier_name' => 'uuid',
                 'route_name' => 'api.rest.places',
             ),
         ),
