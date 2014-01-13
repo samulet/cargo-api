@@ -828,12 +828,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/l3pp4rd/DoctrineExtensions.git",
-                "reference": "2d12d64f5353499321d92ca37e8d178098774345"
+                "reference": "35adcaae1a3f50d0d5b73aa50ed8fd28ee35ce54"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/l3pp4rd/DoctrineExtensions/zipball/2d12d64f5353499321d92ca37e8d178098774345",
-                "reference": "2d12d64f5353499321d92ca37e8d178098774345",
+                "url": "https://api.github.com/repos/l3pp4rd/DoctrineExtensions/zipball/35adcaae1a3f50d0d5b73aa50ed8fd28ee35ce54",
+                "reference": "35adcaae1a3f50d0d5b73aa50ed8fd28ee35ce54",
                 "shasum": ""
             },
             "require": {
@@ -900,7 +900,7 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2014-01-12 16:18:13"
+            "time": "2014-01-12 16:34:06"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -2618,12 +2618,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Goutte.git",
-                "reference": "93743429e205e2bafcfcf37c7840021d3ebfb53e"
+                "reference": "91653aacc36f47e8d3a07c8607e885af5ec1d43a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Goutte/zipball/93743429e205e2bafcfcf37c7840021d3ebfb53e",
-                "reference": "93743429e205e2bafcfcf37c7840021d3ebfb53e",
+                "url": "https://api.github.com/repos/fabpot/Goutte/zipball/91653aacc36f47e8d3a07c8607e885af5ec1d43a",
+                "reference": "91653aacc36f47e8d3a07c8607e885af5ec1d43a",
                 "shasum": ""
             },
             "require": {
@@ -2666,7 +2666,7 @@
             "keywords": [
                 "scraper"
             ],
-            "time": "2014-01-10 17:31:29"
+            "time": "2014-01-12 19:53:04"
         },
         {
             "name": "facebook/webdriver",
