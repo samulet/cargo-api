@@ -9,9 +9,9 @@ $I->seeResponseCodeIs(403);
 $I->seeResponseIsJson();
 $I->seeResponseContainsJson(
     array(
-        "problemType" => "http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html",
+        "type" => "http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html",
         "title" => "Forbidden",
-        "httpStatus" => 403,
+        "status" => 403,
         "detail" => "Auth token not found"
     )
 );

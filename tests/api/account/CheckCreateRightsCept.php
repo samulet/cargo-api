@@ -7,5 +7,12 @@ $I->haveHttpHeader('X-Auth-UserToken','e7ef06c7e36e304be52190f73000764670d1ed4e5
 $I->sendPOST('accounts', array('title' => 'Test account'));
 $I->seeResponseCodeIs(403);
 $I->seeResponseIsJson();
-$I->seeResponseContains('{"problemType":"http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html","title":"Forbidden","httpStatus":403,"detail":"Insufficient permissions to perform the account creation"}');
+$I->seeResponseContainsJson(
+    array(
+        "type" => "http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html",
+        "title" => "Forbidden",
+        "status" => 403,
+        "detail" => "Insufficient permissions to perform the account creation",
+    )
+);
 $I->dontSeeInCollection('account', array('title' => 'Test account'));
