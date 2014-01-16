@@ -1413,12 +1413,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "723a50ab5054f0fd504a52171fe75bc7d49db873"
+                "reference": "92c92833bc80feb56bc03f19cff8fc7c3b66f4f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf2/zipball/723a50ab5054f0fd504a52171fe75bc7d49db873",
-                "reference": "723a50ab5054f0fd504a52171fe75bc7d49db873",
+                "url": "https://api.github.com/repos/zendframework/zf2/zipball/92c92833bc80feb56bc03f19cff8fc7c3b66f4f9",
+                "reference": "92c92833bc80feb56bc03f19cff8fc7c3b66f4f9",
                 "shasum": ""
             },
             "require": {
@@ -1523,7 +1523,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2014-01-13 18:12:43"
+            "time": "2014-01-16 17:00:46"
         },
         {
             "name": "zf-commons/zfc-base",
@@ -2331,12 +2331,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Mink.git",
-                "reference": "83a8ef9268a3a2f4bcba76aec2af9a1db672f29e"
+                "reference": "7ae005d9ce7ec0104de5083b4733c94da653aec0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Mink/zipball/83a8ef9268a3a2f4bcba76aec2af9a1db672f29e",
-                "reference": "83a8ef9268a3a2f4bcba76aec2af9a1db672f29e",
+                "url": "https://api.github.com/repos/Behat/Mink/zipball/7ae005d9ce7ec0104de5083b4733c94da653aec0",
+                "reference": "7ae005d9ce7ec0104de5083b4733c94da653aec0",
                 "shasum": ""
             },
             "require": {
@@ -2378,7 +2378,7 @@
                 "testing",
                 "web"
             ],
-            "time": "2014-01-14 08:48:25"
+            "time": "2014-01-15 10:44:59"
         },
         {
             "name": "behat/mink-browserkit-driver",
@@ -2968,12 +2968,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/padraic/mockery.git",
-                "reference": "4a528e507e26f58dde32de7e34cc4169e9300286"
+                "reference": "0c200b8a360ff6353bb0e55eb1052cb272ead116"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/4a528e507e26f58dde32de7e34cc4169e9300286",
-                "reference": "4a528e507e26f58dde32de7e34cc4169e9300286",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/0c200b8a360ff6353bb0e55eb1052cb272ead116",
+                "reference": "0c200b8a360ff6353bb0e55eb1052cb272ead116",
                 "shasum": ""
             },
             "require": {
@@ -3024,7 +3024,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2014-01-14 21:15:04"
+            "time": "2014-01-16 09:48:17"
         },
         {
             "name": "monolog/monolog",
@@ -3032,12 +3032,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "296095fe2ee052161f8226d55df775103bb6c259"
+                "reference": "01a01a4841ea749426834d127c897f4dc9d62611"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/296095fe2ee052161f8226d55df775103bb6c259",
-                "reference": "296095fe2ee052161f8226d55df775103bb6c259",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/01a01a4841ea749426834d127c897f4dc9d62611",
+                "reference": "01a01a4841ea749426834d127c897f4dc9d62611",
                 "shasum": ""
             },
             "require": {
@@ -3091,7 +3091,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-01-14 13:24:06"
+            "time": "2014-01-15 09:37:32"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -3343,12 +3343,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "5b150a8229d645aeea49546284bf74cc561a1182"
+                "reference": "0a32f059e6e66cdfdd0d7c757646fdcbf822b0ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/5b150a8229d645aeea49546284bf74cc561a1182",
-                "reference": "5b150a8229d645aeea49546284bf74cc561a1182",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0a32f059e6e66cdfdd0d7c757646fdcbf822b0ca",
+                "reference": "0a32f059e6e66cdfdd0d7c757646fdcbf822b0ca",
                 "shasum": ""
             },
             "require": {
@@ -3409,7 +3409,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-01-11 08:28:18"
+            "time": "2014-01-15 07:18:27"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
