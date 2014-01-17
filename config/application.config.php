@@ -10,6 +10,7 @@ return array(
         'AssetManager',
         'ZF\ApiProblem',
         'ZF\MvcAuth',
+        'Phpro\MvcAuthToken',
         'ZF\Hal',
         'ZF\ContentNegotiation',
         'ZF\Rest',

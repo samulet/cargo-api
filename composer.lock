@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "7ef5735823b885dd92e3da751ed5fae0",
+    "hash": "86e92ce76d19f03343bfd3c0ae3aec77",
     "packages": [
         {
             "name": "bladeofsteel/zfc-user-doctrine-mongo-odm",
@@ -1243,6 +1243,51 @@
                 "service proxies"
             ],
             "time": "2013-12-22 17:49:04"
+        },
+        {
+            "name": "phpro/zf-mvc-auth-token",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpro/zf-mvc-auth-token.git",
+                "reference": "7191a221cda1cea97b4bf2b73924aedaa13fb2f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpro/zf-mvc-auth-token/zipball/7191a221cda1cea97b4bf2b73924aedaa13fb2f4",
+                "reference": "7191a221cda1cea97b4bf2b73924aedaa13fb2f4",
+                "shasum": ""
+            },
+            "require": {
+                "zendframework/zend-eventmanager": "2.*",
+                "zendframework/zend-http": "2.*",
+                "zendframework/zend-modulemanager": "2.*",
+                "zendframework/zend-mvc": "2.*",
+                "zendframework/zend-servicemanager": "2.*",
+                "zendframework/zend-stdlib": "2.*",
+                "zfcampus/zf-mvc-auth": "~1.0-dev"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "*",
+                "phpspec/phpspec": "2.0.*@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Phpro\\MvcAuthToken": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Toon Verwerft",
+                    "email": "toon.verwerft@phpro.be"
+                }
+            ],
+            "time": "2014-01-15 07:37:42"
         },
         {
             "name": "rwoverdijk/assetmanager",
@@ -4054,6 +4099,7 @@
         "bladeofsteel/zfc-user-doctrine-mongo-odm": 20,
         "masha-i-medvedi/auth-token": 20,
         "doctrine/doctrine-mongo-odm-module": 20,
+        "phpro/zf-mvc-auth-token": 20,
         "zendframework/zftool": 20,
         "zendframework/zend-developer-tools": 20,
         "zfcampus/zf-apigility-admin": 20,
