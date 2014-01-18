@@ -1,15 +1,33 @@
 <?php
 namespace Application\Authentication\Adapter;
 
+use AuthToken\Model\AuthToken;
 use Phpro\MvcAuthToken\Adapter\AdapterInterface;
 use Phpro\MvcAuthToken\Token;
 
 class TokenAdapter implements AdapterInterface
 {
     /**
-     * @param $nonce
+     * @var string
+     */
+    protected $user;
+    /**
+     * @var \AuthToken\Model\AuthToken
+     */
+    protected $tokenModel;
+
+    /**
+     * @param AuthToken $tokenModel
+     */
+    public function __construct(AuthToken $tokenModel)
+    {
+        $this->tokenModel = $tokenModel;
+    }
+
+    /**
+     * @param string $nonce
      *
-     * @return mixed
+     * @return bool
      */
     public function validateNonce($nonce)
     {
@@ -17,9 +35,9 @@ class TokenAdapter implements AdapterInterface
     }
 
     /**
-     * @param $timestamp
+     * @param int $timestamp
      *
-     * @return mixed
+     * @return bool
      */
     public function validateTimestamp($timestamp)
     {
@@ -29,20 +47,28 @@ class TokenAdapter implements AdapterInterface
     /**
      * @param Token $token
      *
-     * @return mixed
+     * @return bool
      */
     public function validateToken(Token $token)
     {
+        $tokenEntity = $this->tokenModel->fetch($token->getToken());
+
+        if (empty($tokenEntity)) {
+            return false;
+        }
+
+        $this->user = $tokenEntity->getUser()->getUuid();
+
         return true;
     }
 
     /**
      * @param Token $token
      *
-     * @return string|\Zf\MvcAuth\Identity\IdentityInterface
+     * @return string
      */
     public function getUserId(Token $token)
     {
-        return 'admin';
+        return $this->user;
     }
 }
