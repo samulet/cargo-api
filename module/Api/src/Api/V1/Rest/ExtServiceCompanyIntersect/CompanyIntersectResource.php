@@ -18,19 +18,13 @@ class CompanyIntersectResource extends AbstractResourceListener
      * @var CompanyModel
      */
     protected $companyModel;
-    /**
-     * @var \User\Identity\IdentityProvider
-     */
-    protected $identityProvider;
 
     public function __construct(
         ExternalCompanyIntersectModel $intersectModel,
-        CompanyModel $companyModel,
-        IdentityProvider $identityProvider
+        CompanyModel $companyModel
     ) {
         $this->intersectModel = $intersectModel;
         $this->companyModel = $companyModel;
-        $this->identityProvider = $identityProvider;
     }
 
     /**

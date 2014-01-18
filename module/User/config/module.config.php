@@ -10,11 +10,12 @@ return array(
     ),
     'service_manager' => array(
         'aliases' => array(
-            'Doctrine\ODM\MongoDB\DocumentManager' => 'doctrine.documentmanager.odm_default',
+            'UserModel' => 'User\\Model\\UserModel',
+            'Doctrine\\ODM\\MongoDB\\DocumentManager' => 'doctrine.documentmanager.odm_default',
         ),
         'factories' => array(
-            'UserModel' => 'User\Factory\UserModelFactory',
-            'User\Identity\IdentityProvider' => 'User\Factory\IdentityProviderFactory',
+            'User\\Model\\UserModel' => 'User\\Factory\\UserModelFactory',
+            'User\\Identity\\IdentityProvider' => 'User\\Factory\\IdentityProviderFactory',
         )
     ),
     'doctrine' => array(

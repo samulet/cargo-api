@@ -14,10 +14,9 @@ class CompanyResource extends AbstractResourceListener
     protected $companyModel;
     protected $userEntity;
 
-    public function __construct($companyModel = null, $userEntity = null)
+    public function __construct($companyModel)
     {
         $this->companyModel = $companyModel;
-        $this->userEntity = $userEntity;
     }
 
     /**

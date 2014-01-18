@@ -27,8 +27,7 @@ foreach ($entities as $entity) {
 
 $I->haveHttpHeader('Content-Type', 'application/json');
 $I->haveHttpHeader('Accept', '*/*');
-$I->haveHttpHeader('X-Auth-UserToken', 'db057553f1a4989210ae84a2825982e1d04d6879a2690365e1fcecb619fb77e2');
-$I->haveHttpHeader('Authorization', 'Token token="h480djs93hd8", coverage="base", timestamp="137131200", nonce="dj83hs9s", auth="djosJKDKJSD8743243/jdk33klY="');
+$I->haveHttpHeader('Authorization', 'Token token="db057553f1a4989210ae84a2825982e1d04d6879a2690365e1fcecb619fb77e2"');
 $I->sendGET('ref/product-group');
 
 $I->seeResponseCodeIs(200);

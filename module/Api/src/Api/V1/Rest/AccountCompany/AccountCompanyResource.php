@@ -18,16 +18,11 @@ class AccountCompanyResource extends AbstractResourceListener
      * @var \Account\Model\CompanyUserModel
      */
     protected $companyUserModel;
-    /**
-     * @var \User\Entity\User
-     */
-    protected $userEntity;
 
-    public function __construct($companyModel = null, $companyUserModel = null, $userEntity = null)
+    public function __construct($companyModel = null, $companyUserModel = null)
     {
         $this->companyModel = $companyModel;
         $this->companyUserModel = $companyUserModel;
-        $this->userEntity = $userEntity;
     }
 
     /**

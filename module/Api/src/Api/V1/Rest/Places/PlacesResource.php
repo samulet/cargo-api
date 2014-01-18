@@ -13,15 +13,10 @@ class PlacesResource extends AbstractResourceListener
      * @var PlaceModel
      */
     protected $placeModel;
-    /**
-     * @var \User\Identity\IdentityProvider
-     */
-    protected $identityProvider;
 
-    public function __construct(PlaceModel $placeModel, IdentityProvider $provider)
+    public function __construct(PlaceModel $placeModel)
     {
         $this->placeModel = $placeModel;
-        $this->identityProvider = $provider;
     }
 
     /**

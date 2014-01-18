@@ -14,19 +14,13 @@ class ReferenceProductGroupResource extends AbstractResourceListener
      * @var ProductGroupModel
      */
     protected $productGroupModel;
-    /**
-     * @var \User\Identity\IdentityProvider
-     */
-    protected $identityProvider;
 
     /**
      * @param ProductGroupModel $productGroupModel
-     * @param IdentityProvider $identityProvider
      */
-    public function __construct(ProductGroupModel $productGroupModel = null, IdentityProvider $identityProvider = null)
+    public function __construct(ProductGroupModel $productGroupModel)
     {
         $this->productGroupModel = $productGroupModel;
-        $this->identityProvider = $identityProvider;
     }
 
     /**

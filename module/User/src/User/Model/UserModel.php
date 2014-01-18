@@ -4,7 +4,6 @@ namespace User\Model;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use QueryBuilder\Model\QueryBuilderModel;
 use User\Entity\User;
-use User\Identity\IdentityProvider;
 use Zend\Log\LoggerAwareInterface;
 use Zend\Log\LoggerAwareTrait;
 
@@ -21,15 +20,15 @@ class UserModel implements LoggerAwareInterface
      */
     protected $queryBuilderModel;
     /**
-     * @var IdentityProvider
+     * @var \ZF\MvcAuth\Identity\IdentityInterface
      */
-    protected $identityProvider;
+    protected $identity;
 
-    public function __construct(DocumentManager $documentManager, $queryBuilderModel, $identityProvider)
+    public function __construct(DocumentManager $documentManager, $queryBuilderModel, $identity)
     {
         $this->documentManager = $documentManager;
         $this->queryBuilderModel = $queryBuilderModel;
-        $this->identityProvider = $identityProvider;
+        $this->identity = $identity;
 
         $this->setLogger(new \Zend\Log\Logger(['writers' => [['name' => 'null']]]));
     }
@@ -72,7 +71,7 @@ class UserModel implements LoggerAwareInterface
         $this->getLogger()->info(
             'User profile updated',
             array(
-                'initiator' => $this->identityProvider->getIdentity()->getEmail(),
+                'initiator' => $this->identity->getAuthenticationIdentity(),
                 'uuid' => $uuid,
                 'data' => $data,
             )

@@ -1,9 +1,7 @@
 <?php
 namespace User\Identity;
 
-use User\Entity\User;
-use Zend\Authentication\AuthenticationService;
-use ZfcRbac\Exception;
+use User\Model\UserModel;
 use ZfcRbac\Identity\IdentityProviderInterface;
 
 /**
@@ -15,15 +13,25 @@ class IdentityProvider implements IdentityProviderInterface
      * @var \User\Entity\User
      */
     protected $entity;
+    /**
+     * @var string
+     */
+    protected $userId;
+    /**
+     * @var UserModel
+     */
+    protected $userModel;
 
     /**
      * Constructor
      *
-     * @param \User\Entity\User $entity
+     * @param $userId
+     * @param UserModel $userModel
      */
-    public function __construct(User $entity)
+    public function __construct($userId, UserModel $userModel)
     {
-        $this->entity = $entity;
+        $this->userId = $userId;
+        $this->userModel = $userModel;
     }
 
     /**
@@ -31,6 +39,9 @@ class IdentityProvider implements IdentityProviderInterface
      */
     public function getIdentity()
     {
+        if (empty($this->entity)) {
+            $this->entity = $this->userModel->fetch(array('uuid' => $this->userId));
+        }
         return $this->entity;
     }
 }
