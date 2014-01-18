@@ -65,14 +65,12 @@ return array(
         ),
         'factories' => array(
             'AuthToken\\Model\\AuthToken' => 'AuthToken\\ModelFactory',
+            'Application\\Authentication\\Adapter\\TokenAdapter' => 'Application\\Factory\\TokenAdapterFactory',
         ),
-        'invokables' => array(
-            'Application\Authentication\Adapter\TokenAdapter' => 'Application\Authentication\Adapter\TokenAdapter',
-        )
     ),
     'mvc-auth-token-authentication-listener' => array(
-        'Application\Authentication\Listener\TokenListener' => array(
-            'adapter' => 'Application\Authentication\Adapter\TokenAdapter',
+        'Application\\Authentication\\Listener\\TokenListener' => array(
+            'adapter' => 'Application\\Authentication\\Adapter\\TokenAdapter',
         ),
     ),
     'translator' => array(
