@@ -1,7 +1,7 @@
 <?php
 namespace Account\Model;
 
-use Account\Entity\Account;
+use Account\Entity\Account as AccountEntity;
 use Application\Service\AuthorizationServiceAwareInterface;
 use Application\Service\AuthorizationServiceAwareTrait;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -9,11 +9,20 @@ use QueryBuilder\Model\QueryBuilderModel;
 use User\Identity\IdentityProvider;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerAwareTrait;
+use Zend\Log\LoggerAwareInterface;
+use Zend\Log\LoggerAwareTrait;
+use ZfcRbac\Exception\UnauthorizedException;
 
-class AccountModel implements AuthorizationServiceAwareInterface, EventManagerAwareInterface
+class AccountModel implements AuthorizationServiceAwareInterface, EventManagerAwareInterface, LoggerAwareInterface
 {
     use EventManagerAwareTrait;
     use AuthorizationServiceAwareTrait;
+    use LoggerAwareTrait;
+
+    const PERMISSION_CREATE = 'account.create';
+    const PERMISSION_DELETE = 'account.delete';
+    const PERMISSION_UPDATE = 'account.update';
+    const PERMISSION_LIST   = 'account.list';
 
     /**
      * @var \Doctrine\ODM\MongoDB\DocumentManager
@@ -33,6 +42,8 @@ class AccountModel implements AuthorizationServiceAwareInterface, EventManagerAw
         $this->documentManager = $documentManager;
         $this->queryBuilderModel = $queryBuilderModel;
         $this->provider = $provider;
+
+        $this->setLogger(new \Zend\Log\Logger(['writers' => [['name' => 'null']]]));
     }
 
     /**
@@ -65,11 +76,23 @@ class AccountModel implements AuthorizationServiceAwareInterface, EventManagerAw
      *
      * @param array $findParams ассоциативный массив
      *
-     * @return array(\Account\Entity\Account)|null
+     * @throws \ZfcRbac\Exception\UnauthorizedException
+     * @return \Account\Entity\Account[]|null
      */
     public function fetchAll($findParams)
     {
-        return $this->queryBuilderModel->fetchAll('Account\Entity\Account', $findParams);
+        if (!$this->authorizationService->isGranted(self::PERMISSION_LIST)) {
+            throw new UnauthorizedException('Insufficient permissions to perform the account creation', 403);
+        }
+
+        $query = $this->getRepository()->exists()->active();
+
+        if (!in_array('system', $this->authorizationService->getIdentityRoles())) {
+            $uuid = $this->provider->getIdentity()->getUuid();
+            $query->user($uuid);
+        }
+
+        return $query->fetchAll()->toArray();
     }
 
     /**
@@ -82,5 +105,13 @@ class AccountModel implements AuthorizationServiceAwareInterface, EventManagerAw
     public function delete($uuid)
     {
         $this->queryBuilderModel->delete('Account\Entity\Account', array('uuid' => $uuid));
+    }
+
+    /**
+     * @return \Account\Repository\AccountRepository
+     */
+    protected function getRepository()
+    {
+        return $this->documentManager->getRepository('Account\\Entity\\Account');
     }
 }

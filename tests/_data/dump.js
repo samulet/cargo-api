@@ -73,7 +73,7 @@ db.getCollection("user").insert({
     "state": NumberInt(1),
     "created": ISODate("2013-12-08T18:15:45.0Z"),
     "updated": ISODate("2013-12-08T18:15:45.0Z"),
-    "roles": [ "user" ],
+    "roles": [ "user", "system" ],
     "name": [ ],
     "docs": [ ],
     "phone": [ ],

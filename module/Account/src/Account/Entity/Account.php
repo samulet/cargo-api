@@ -34,6 +34,11 @@ class Account extends BaseEntity
      * @ODM\Field(type="string")
      */
     protected $title;
+    /**
+     * @var array
+     * @ODM\Collection(strategy="addToSet")
+     */
+    protected $staff = array();
 
     /**
      * Get activated.
