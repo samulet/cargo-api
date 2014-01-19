@@ -17,7 +17,7 @@ db.getCollection("account").insert({
     "ownerId": ObjectId("52a4b7519e534607468b456f"),
     "created": ISODate("2013-10-28T17:44:59.0Z"),
     "updated": ISODate("2013-10-28T17:44:59.0Z"),
-    "activated": "1",
+    "activated": true,
     "title": "Аккаунт нумбер ван",
     "lastItemNumber": "0"
 });
@@ -26,7 +26,7 @@ db.getCollection("account").insert({
     "ownerId": ObjectId("52a4b7519e534607468b456f"),
     "created": ISODate("2013-11-05T17:31:12.0Z"),
     "updated": ISODate("2013-11-05T17:31:12.0Z"),
-    "activated": "1",
+    "activated": true,
     "title": "ТЭК Продрезерв",
     "lastItemNumber": "0"
 });
@@ -35,7 +35,7 @@ db.getCollection("account").insert({
     "ownerId": ObjectId("52a4b7519e534607468b456f"),
     "created": ISODate("2013-11-05T17:31:12.0Z"),
     "updated": ISODate("2013-11-05T17:31:12.0Z"),
-    "activated": "1",
+    "activated": true,
     "title": "Рога и Ко",
     "lastItemNumber": "0"
 });
@@ -44,7 +44,7 @@ db.getCollection("account").insert({
     "ownerId": ObjectId("52b00f009e534607468b4579"),
     "created": ISODate("2013-11-05T17:31:12.0Z"),
     "updated": ISODate("2013-11-05T17:31:12.0Z"),
-    "activated": "1",
+    "activated": true,
     "title": "Трансэнергосбыт",
     "lastItemNumber": "0"
 });

@@ -25,8 +25,8 @@ class Account extends BaseEntity
      */
     protected $ownerId;
     /**
-     * @var string
-     * @ODM\Field(type="string")
+     * @var bool
+     * @ODM\Field(type="boolean")
      */
     protected $activated;
     /**
