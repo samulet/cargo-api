@@ -11,7 +11,9 @@ class AccountModelFactory implements FactoryInterface
     {
         $documentManager = $serviceLocator->get('doctrine.documentmanager.odm_default');
         $queryBuilderModel = $serviceLocator->get('QueryBuilderModel');
-        $acc = new AccountModel($documentManager, $queryBuilderModel);
-        return $acc;
+        /** @var \User\Identity\IdentityProvider $provider */
+        $provider = $serviceLocator->get('User\Identity\IdentityProvider');
+
+        return new AccountModel($documentManager, $queryBuilderModel, $provider);
     }
 }

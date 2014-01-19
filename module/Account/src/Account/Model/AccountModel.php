@@ -6,6 +6,7 @@ use Application\Service\AuthorizationServiceAwareInterface;
 use Application\Service\AuthorizationServiceAwareTrait;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use QueryBuilder\Model\QueryBuilderModel;
+use User\Identity\IdentityProvider;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerAwareTrait;
 
@@ -22,11 +23,16 @@ class AccountModel implements AuthorizationServiceAwareInterface, EventManagerAw
      * @var QueryBuilderModel
      */
     protected $queryBuilderModel;
+    /**
+     * @var \User\Identity\IdentityProvider
+     */
+    protected $provider;
 
-    public function __construct(DocumentManager $documentManager, $queryBuilderModel)
+    public function __construct(DocumentManager $documentManager, $queryBuilderModel, IdentityProvider $provider)
     {
         $this->documentManager = $documentManager;
         $this->queryBuilderModel = $queryBuilderModel;
+        $this->provider = $provider;
     }
 
     /**
