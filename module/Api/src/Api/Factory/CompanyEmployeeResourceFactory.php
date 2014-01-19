@@ -2,14 +2,14 @@
 namespace Api\Factory;
 
 use Api\V1\Rest\AccessDenied\AccessDeniedResource;
-use Api\V1\Rest\Cargo\CargoResource as Controller;
+use Api\V1\Rest\CompanyEmployee\CompanyEmployeeResource as Controller;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class CargoResource implements FactoryInterface
+class CompanyEmployeeResourceFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new Controller($serviceLocator->get('CargoModel'));
+        return new Controller($serviceLocator->get('CompanyUserModel'));
     }
 }

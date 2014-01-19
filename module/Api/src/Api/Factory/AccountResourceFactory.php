@@ -6,7 +6,7 @@ use Api\V1\Rest\Account\AccountResource as AccountController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class AccountResource implements FactoryInterface
+class AccountResourceFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {

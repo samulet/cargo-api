@@ -5,7 +5,7 @@ use Reference\Model\ProductGroupModel as Model;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class ProductGroupModel implements FactoryInterface
+class ProductGroupModelFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {

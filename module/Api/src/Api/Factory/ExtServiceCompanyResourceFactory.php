@@ -2,14 +2,14 @@
 namespace Api\Factory;
 
 use Api\V1\Rest\AccessDenied\AccessDeniedResource;
-use Api\V1\Rest\Company\CompanyResource as Controller;
+use Api\V1\Rest\ExtServiceCompany\ExtServiceCompanyResource as Controller;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class CompanyResource implements FactoryInterface
+class ExtServiceCompanyResourceFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new Controller($serviceLocator->get('CompanyModel'));
+        return new Controller($serviceLocator->get('ExternalCompanyImportModel'));
     }
 }

@@ -23,7 +23,7 @@ return array(
             'ReferenceModel' => 'Reference\\Model\\ReferenceModel',
         ),
         'factories' => array(
-            'Reference\\Model\\ProductGroupModel' => 'Reference\\Factory\\ProductGroupModel',
+            'Reference\\Model\\ProductGroupModel' => 'Reference\\Factory\\ProductGroupModelFactory',
             'Reference\\Model\\ReferenceModel' => 'Reference\\Factory\\ReferenceModelFactory',
         ),
     ),

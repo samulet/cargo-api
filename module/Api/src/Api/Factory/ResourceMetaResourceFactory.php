@@ -5,7 +5,7 @@ use Api\V1\Rest\ResourceMeta\ResourceMetaResource as Controller;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class ResourceMetaResource implements FactoryInterface
+class ResourceMetaResourceFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {

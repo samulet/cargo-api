@@ -2,14 +2,14 @@
 namespace Api\Factory;
 
 use Api\V1\Rest\AccessDenied\AccessDeniedResource;
-use Api\V1\Rest\ExternalServicePlace\ExternalServicePlaceResource as Controller;
+use Api\V1\Rest\ReferenceProductGroup\ReferenceProductGroupResource as Controller;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class ExternalServicePlaceResource implements FactoryInterface
+class ReferenceProductGroupResourceFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new Controller($serviceLocator->get('ExternalPunctImportModel'));
+        return new Controller($serviceLocator->get('ProductGroupModel'));
     }
 }
