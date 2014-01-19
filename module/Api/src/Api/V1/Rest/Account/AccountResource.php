@@ -27,20 +27,15 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
      */
     protected $companyModel;
     /**
-     * @var \User\Entity\User
-     */
-    protected $userEntity;
-    /**
      * @var AuthorizationService
      */
     protected $authorizationService;
 
-    public function __construct($accountModel = null, $companyUserModel = null, $companyModel = null, $userEntity = null)
+    public function __construct($accountModel, $companyUserModel, $companyModel)
     {
         $this->accountModel = $accountModel;
         $this->companyUserModel = $companyUserModel;
         $this->companyModel = $companyModel;
-        $this->userEntity = $userEntity;
     }
 
     /**

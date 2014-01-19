@@ -21,7 +21,7 @@ foreach ($entities as $entity) {
 
 $I->haveHttpHeader('Content-Type','application/json');
 $I->haveHttpHeader('Accept','*/*');
-$I->haveHttpHeader('X-Auth-UserToken','db057553f1a4989210ae84a2825982e1d04d6879a2690365e1fcecb619fb77e2');
+$I->haveHttpHeader('Authorization', 'Token token="db057553f1a4989210ae84a2825982e1d04d6879a2690365e1fcecb619fb77e2"');
 $I->sendDELETE('ref/product-group/milk');
 
 $I->seeResponseCodeIs(204);

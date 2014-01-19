@@ -27,7 +27,8 @@
         "doctrine/doctrine-mongo-odm-module": "dev-master",
         "zf-commons/zfc-rbac": "~1.0",
         "ocramius/proxy-manager": "0.5.*",
-        "ocramius/generated-hydrator": "*"
+        "ocramius/generated-hydrator": "*",
+        "phpro/zf-mvc-auth-token": "dev-master"
     },
     "require-dev": {
         "zendframework/zftool": "dev-master",

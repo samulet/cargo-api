@@ -9,15 +9,10 @@ use ZF\Rest\AbstractResourceListener;
 class ExternalServicePlaceResource extends AbstractResourceListener
 {
     protected $externalPlaceImportModel;
-    /**
-     * @var \User\Entity\User
-     */
-    protected $userEntity;
 
-    public function __construct($externalPlaceImportModel = null, $userEntity = null)
+    public function __construct($externalPlaceImportModel)
     {
         $this->externalPlaceImportModel = $externalPlaceImportModel;
-        $this->userEntity = $userEntity;
     }
 
     /**

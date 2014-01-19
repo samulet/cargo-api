@@ -14,15 +14,10 @@ class ProfileResource extends AbstractResourceListener
      * @var \User\Model\UserModel
      */
     protected $userModel;
-    /**
-     * @var \User\Identity\IdentityProvider
-     */
-    protected $identityProvider;
 
-    public function __construct(UserModel $userModel = null, IdentityProvider $identityProvider = null)
+    public function __construct(UserModel $userModel)
     {
         $this->userModel = $userModel;
-        $this->identityProvider = $identityProvider;
     }
 
     /**

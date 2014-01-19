@@ -8,6 +8,7 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use ZF\MvcAuth\MvcAuthEvent;
 
 class Module
 {
@@ -17,8 +18,13 @@ class Module
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
 
+        $serviceManager = $e->getApplication()->getServiceManager();
+
+        $tokenListener = $serviceManager->get('Application\Authentication\Listener\TokenListener');
+        $eventManager->attach(MvcAuthEvent::EVENT_AUTHENTICATION, $tokenListener, 1000);
+
         /** @var \Zend\Log\LoggerInterface $logger */
-        $logger = $e->getApplication()->getServiceManager()->get('Application\\Log');
+        $logger = $serviceManager->get('Application\\Log');
 
         $eventManager->attach('dispatch.error', function ($event) use ($logger) {
             $exception = $event->getResult()->exception;

@@ -9,10 +9,9 @@ class ProfileStatusResource extends AbstractResourceListener
 {
     protected $userModel;
 
-    public function __construct($userModel = null, $userEntity = null)
+    public function __construct($userModel)
     {
         $this->userModel = $userModel;
-        $this->userEntity = $userEntity;
     }
 
     /**

@@ -19,7 +19,7 @@ $I->haveInCollection('place',
 
 $I->haveHttpHeader('Content-Type', 'application/json');
 $I->haveHttpHeader('Accept', '*/*');
-$I->haveHttpHeader('X-Auth-UserToken', 'db057553f1a4989210ae84a2825982e1d04d6879a2690365e1fcecb619fb77e2');
+$I->haveHttpHeader('Authorization', 'Token token="db057553f1a4989210ae84a2825982e1d04d6879a2690365e1fcecb619fb77e2"');
 $I->sendPOST(
     'service/import/place-intersect',
     json_encode(array('source' => 'vesta', 'id' => '29', 'type' => 'dp', 'place' => 'ec4d945a763f11e39fe6080027ab4d7b'))

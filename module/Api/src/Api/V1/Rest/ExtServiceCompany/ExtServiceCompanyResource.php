@@ -13,15 +13,10 @@ class ExtServiceCompanyResource extends AbstractResourceListener
      * @var ExternalCompanyImportModel
      */
     protected $extServiceCompanyImportModel;
-    /**
-     * @var User
-     */
-    protected $userEntity;
 
-    public function __construct($extServiceCompanyImportModel = null, $userEntity = null)
+    public function __construct($extServiceCompanyImportModel)
     {
         $this->extServiceCompanyImportModel = $extServiceCompanyImportModel;
-        $this->userEntity = $userEntity;
     }
 
     /**

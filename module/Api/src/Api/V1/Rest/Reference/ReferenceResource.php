@@ -14,15 +14,10 @@ class ReferenceResource extends AbstractResourceListener
      * @var ReferenceModel
      */
     protected $referenceModel;
-    /**
-     * @var IdentityProvider
-     */
-    protected $identityProvider;
 
-    public function __construct(ReferenceModel $referenceModel, IdentityProvider $identityProvider)
+    public function __construct(ReferenceModel $referenceModel)
     {
         $this->referenceModel = $referenceModel;
-        $this->identityProvider = $identityProvider;
     }
 
     /**

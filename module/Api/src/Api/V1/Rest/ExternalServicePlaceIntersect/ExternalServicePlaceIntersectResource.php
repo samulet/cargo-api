@@ -15,10 +15,6 @@ class ExternalServicePlaceIntersectResource extends AbstractResourceListener
      */
     protected $intersectModel;
     /**
-     * @var \User\Identity\IdentityProvider
-     */
-    protected $identityProvider;
-    /**
      * @var \Place\Model\PlaceModel
      */
     protected $placeModel;
@@ -26,16 +22,13 @@ class ExternalServicePlaceIntersectResource extends AbstractResourceListener
     /**
      * @param \ExtService\Model\ExternalPunctIntersectModel $intersectModel
      * @param \Place\Model\PlaceModel $placeModel
-     * @param \User\Identity\IdentityProvider $identityProvider
      */
     public function __construct(
         ExternalPunctIntersectModel $intersectModel,
-        PlaceModel $placeModel,
-        IdentityProvider $identityProvider
+        PlaceModel $placeModel
     ) {
         $this->intersectModel = $intersectModel;
         $this->placeModel = $placeModel;
-        $this->identityProvider = $identityProvider;
     }
 
     /**

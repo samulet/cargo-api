@@ -9,12 +9,10 @@ use ZF\Rest\AbstractResourceListener;
 class CargoResource extends AbstractResourceListener
 {
     protected $cargoModel;
-    protected $userEntity;
 
-    public function __construct($cargoModel = null, $userEntity = null)
+    public function __construct($cargoModel)
     {
         $this->cargoModel = $cargoModel;
-        $this->userEntity = $userEntity;
     }
 
     /**
