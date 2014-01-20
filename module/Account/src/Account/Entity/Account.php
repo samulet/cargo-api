@@ -3,6 +3,7 @@
 namespace Account\Entity;
 
 use Application\Entity\BaseEntity;
+use Application\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
@@ -10,6 +11,7 @@ use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 /**
  *
  * @ODM\Document(collection="account", repositoryClass="Account\Repository\AccountRepository")
+ * @ODM\HasLifecycleCallbacks
  * @Gedmo\SoftDeleteable(fieldName="deleted")
  */
 class Account extends BaseEntity
@@ -19,11 +21,6 @@ class Account extends BaseEntity
      * @ODM\Field(type="string")
      */
     protected $uuid;
-    /**
-     * @ODM\ObjectId
-     * @var int
-     */
-    protected $ownerId;
     /**
      * @var bool
      * @ODM\Field(type="boolean")
@@ -55,7 +52,7 @@ class Account extends BaseEntity
      *
      * @param string $activated
      *
-     * @return $this
+     * @return Account
      */
     public function setActivated($activated)
     {
@@ -77,23 +74,12 @@ class Account extends BaseEntity
      * Set title.
      *
      * @param string $title
-     * @return $this
+     *
+     * @return Account
      */
-
     public function setTitle($title)
     {
         $this->title = $title;
-        return $this;
-    }
-
-    public function getOwnerId()
-    {
-        return $this->ownerId;
-    }
-
-    public function setOwnerId($ownerId)
-    {
-        $this->ownerId = $ownerId;
         return $this;
     }
 
@@ -106,5 +92,41 @@ class Account extends BaseEntity
     {
         $this->uuid = $uuid;
         return $this;
+    }
+
+    /**
+     * @param array $staff
+     */
+    public function setStaff($staff)
+    {
+        $this->staff = $staff;
+    }
+
+    /**
+     * @return array
+     */
+    public function getStaff()
+    {
+        return $this->staff;
+    }
+
+    /**
+     * @param string $uuid
+     */
+    public function addStaff($uuid)
+    {
+        if (!in_array($uuid, $this->staff)) {
+            $this->staff[] = $uuid;
+        }
+    }
+
+    /**
+     * @ODM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        if (empty($this->uuid)) {
+            $this->uuid = $this->getGenerator()->generateV4();
+        }
     }
 }

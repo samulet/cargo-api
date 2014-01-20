@@ -48,11 +48,7 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
      */
     public function create($data)
     {
-        if (!$this->authorizationService->isGranted('account.create')) {
-            throw new UnauthorizedException('Insufficient permissions to perform the account creation', 403);
-        }
-
-        $data = $this->accountModel->createOrUpdate(get_object_vars($data));
+        $data = $this->accountModel->create(get_object_vars($data));
         if (!empty($data)) {
             return new AccountEntity(array('uuid' => $data->getUuid(), 'title' => $data->getTitle()));
         } else {

@@ -63,6 +63,11 @@ db.getCollection("auth_token").insert({
     "user": ObjectId("52a4b7519e534607468b4560"),
     "createdAt": ISODate("2013-12-09T18:09:36.0Z")
 });
+db.getCollection("auth_token").insert({
+    "token": "ff3df763a0a89fc86cac89977e1f4794013265d773a2b7f9e488f14d3814bfa3",
+    "user": ObjectId("52b010469e53462e6e8b456c"),
+    "createdAt": ISODate("2013-12-09T18:09:36.0Z")
+});
 
 // user records
 db.getCollection("user").remove();

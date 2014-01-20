@@ -5,6 +5,7 @@ use Account\Entity\Account as AccountEntity;
 use Application\Service\AuthorizationServiceAwareInterface;
 use Application\Service\AuthorizationServiceAwareTrait;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\Hydrator\HydratorInterface;
 use QueryBuilder\Model\QueryBuilderModel;
 use User\Identity\IdentityProvider;
 use Zend\EventManager\EventManagerAwareInterface;
@@ -36,6 +37,10 @@ class AccountModel implements AuthorizationServiceAwareInterface, EventManagerAw
      * @var \User\Identity\IdentityProvider
      */
     protected $provider;
+    /**
+     * @var HydratorInterface
+     */
+    protected $hydrator;
 
     public function __construct(DocumentManager $documentManager, $queryBuilderModel, IdentityProvider $provider)
     {
@@ -57,6 +62,34 @@ class AccountModel implements AuthorizationServiceAwareInterface, EventManagerAw
     public function createOrUpdate($data, $uuid = null)
     {
         return $this->queryBuilderModel->createOrUpdate('Account\Entity\Account', $data, $uuid);
+    }
+
+    /**
+     * Создает новый аккаунт
+     *
+     * @param array $data
+     *
+     * @throws \ZfcRbac\Exception\UnauthorizedException
+     * @return AccountEntity
+     */
+    public function create($data)
+    {
+        if (!$this->authorizationService->isGranted(self::PERMISSION_CREATE)) {
+            throw new UnauthorizedException('Insufficient permissions to perform the account creation', 403);
+        }
+
+        $entity = new AccountEntity();
+
+        $this->getHydrator()->hydrate($entity, $data);
+        $entity->setCreator($this->provider->getIdentity());
+        $entity->addStaff($this->provider->getIdentity()->getUuid());
+
+        $this->getEventManager()->trigger('account.create.pre', $this, array('entity' => $entity));
+        $this->documentManager->persist($entity);
+        $this->documentManager->flush();
+        $this->getEventManager()->trigger('account.create.post', $this, array('entity' => $entity));
+
+        return $entity;
     }
 
     /**
@@ -105,6 +138,23 @@ class AccountModel implements AuthorizationServiceAwareInterface, EventManagerAw
     public function delete($uuid)
     {
         $this->queryBuilderModel->delete('Account\Entity\Account', array('uuid' => $uuid));
+    }
+
+    /**
+     * @param \Doctrine\ODM\MongoDB\Hydrator\HydratorInterface $hydrator
+     */
+    public function setHydrator($hydrator)
+    {
+        $this->hydrator = $hydrator;
+    }
+
+    /**
+     * @throws \RuntimeException
+     * @return \Doctrine\ODM\MongoDB\Hydrator\HydratorInterface
+     */
+    public function getHydrator()
+    {
+        return $this->hydrator;
     }
 
     /**
