@@ -5,6 +5,7 @@ use Account\Entity\Account as AccountEntity;
 use Application\Service\AuthorizationServiceAwareInterface;
 use Application\Service\AuthorizationServiceAwareTrait;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\DocumentNotFoundException;
 use Doctrine\ODM\MongoDB\Hydrator\HydratorInterface;
 use QueryBuilder\Model\QueryBuilderModel;
 use User\Identity\IdentityProvider;
@@ -88,6 +89,54 @@ class AccountModel implements AuthorizationServiceAwareInterface, EventManagerAw
         $this->documentManager->persist($entity);
         $this->documentManager->flush();
         $this->getEventManager()->trigger('account.create.post', $this, array('entity' => $entity));
+
+        return $entity;
+    }
+
+    /**
+     * Обновляет продуктовую группу
+     *
+     * Обновление выполняется путем удаления старой записи и создания новой.
+     * Новая запись создается из данных предыдущей версии
+     *
+     * @param string $uuid код продуктовой группы для удаления
+     * @param array $data
+     *
+     * @throws \Doctrine\ODM\MongoDB\DocumentNotFoundException
+     * @throws \ZfcRbac\Exception\UnauthorizedException
+     * @return AccountEntity
+     */
+    public function update($uuid, array $data)
+    {
+        $this->getLogger()->debug('Change account', ['uuid' => $uuid, 'data' => $data, '_method' => __METHOD__]);
+
+        if (!$this->getAuthorizationService()->isGranted(self::PERMISSION_UPDATE)) {
+            $this->getLogger()->debug('Insufficient rights to change a record', ['uuid' => $uuid, '_method' => __METHOD__]);
+            throw new UnauthorizedException('Insufficient rights to change an account');
+        }
+
+        /** @var AccountEntity $entity */
+        $entity = $this->getRepository()->exists()->uuid($uuid)->fetchOne();
+        if (empty($entity)) {
+            $this->getLogger()->debug('Account not found', ['uuid' => $uuid, '_method' => __METHOD__]);
+            throw DocumentNotFoundException::documentNotFound('Account\\Entity\\Account', $uuid);
+        }
+        $roles = $this->authorizationService->getIdentityRoles();
+        if (!in_array('system', $roles) && !in_array('account.admin.' . $uuid, $roles)) {
+            throw new UnauthorizedException('Insufficient permissions to perform the account change', 403);
+        }
+
+        $newEntity = new AccountEntity();
+        $newEntity->setData($entity->getData());
+        $newEntity->setDeleted(new \DateTime());
+
+        $this->getHydrator()->hydrate($entity, $data);
+        $entity->incrementVersion();
+
+        $this->documentManager->persist($entity);
+        $this->documentManager->persist($newEntity);
+
+        $this->documentManager->flush();
 
         return $entity;
     }

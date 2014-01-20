@@ -141,7 +141,8 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
      */
     public function patch($id, $data)
     {
-        return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
+        $entity = $this->accountModel->update($id, get_object_vars($data));
+        return new AccountEntity($entity->getData());
     }
 
     /**
