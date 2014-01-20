@@ -37,6 +37,7 @@ db.getCollection("account").insert({
     "updated": ISODate("2013-11-05T17:31:12.0Z"),
     "activated": true,
     "title": "Рога и Ко",
+    "staff": ["c9579582de5940b0853c7b07c1112576"],
     "lastItemNumber": "0"
 });
 db.getCollection("account").insert({
@@ -46,6 +47,7 @@ db.getCollection("account").insert({
     "updated": ISODate("2013-11-05T17:31:12.0Z"),
     "activated": true,
     "title": "Трансэнергосбыт",
+    "staff": ["c9579582de5940b0853c7b07c1112576"],
     "lastItemNumber": "0"
 });
 
