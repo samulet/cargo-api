@@ -84,6 +84,7 @@ class AccountModel implements AuthorizationServiceAwareInterface, EventManagerAw
         $this->getHydrator()->hydrate($entity, $data);
         $entity->setCreator($this->provider->getIdentity());
         $entity->addStaff($this->provider->getIdentity()->getUuid());
+        $entity->activate();
 
         $this->getEventManager()->trigger('account.create.pre', $this, array('entity' => $entity));
         $this->documentManager->persist($entity);

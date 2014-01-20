@@ -25,7 +25,7 @@ class Account extends BaseEntity
      * @var bool
      * @ODM\Field(type="boolean")
      */
-    protected $activated;
+    protected $activated = true;
     /**
      * @var string
      * @ODM\Field(type="string")
@@ -50,13 +50,13 @@ class Account extends BaseEntity
     /**
      * Set activated.
      *
-     * @param string $activated
+     * @param bool $activated
      *
      * @return Account
      */
     public function setActivated($activated)
     {
-        $this->activated = $activated;
+        $this->activated = (bool) $activated;
         return $this;
     }
 
@@ -118,6 +118,22 @@ class Account extends BaseEntity
         if (!in_array($uuid, $this->staff)) {
             $this->staff[] = $uuid;
         }
+    }
+
+    /**
+     * Активирует аккаунт
+     */
+    public function activate()
+    {
+        $this->setActivated(true);
+    }
+
+    /**
+     * Дизактивирует аккаунт
+     */
+    public function disactivate()
+    {
+        $this->setActivated(false);
     }
 
     /**
