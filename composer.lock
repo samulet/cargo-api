@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "86e92ce76d19f03343bfd3c0ae3aec77",
+    "hash": "f9942ebe77fd64b8dbfb3e2638f46a29",
     "packages": [
         {
             "name": "bladeofsteel/zfc-user-doctrine-mongo-odm",
@@ -60,12 +60,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bshaffer/oauth2-server-php.git",
-                "reference": "e08a1d7727db9d1d4a2ee128cd0a86a48fcab9e4"
+                "reference": "05078f71e651d9e22bc80702a3f35c324141d20d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bshaffer/oauth2-server-php/zipball/e08a1d7727db9d1d4a2ee128cd0a86a48fcab9e4",
-                "reference": "e08a1d7727db9d1d4a2ee128cd0a86a48fcab9e4",
+                "url": "https://api.github.com/repos/bshaffer/oauth2-server-php/zipball/05078f71e651d9e22bc80702a3f35c324141d20d",
+                "reference": "05078f71e651d9e22bc80702a3f35c324141d20d",
                 "shasum": ""
             },
             "require": {
@@ -95,7 +95,7 @@
                 "oauth",
                 "oauth2"
             ],
-            "time": "2014-01-14 11:09:38"
+            "time": "2014-01-19 13:39:24"
         },
         {
             "name": "doctrine/annotations",
@@ -476,12 +476,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineMongoODMModule.git",
-                "reference": "91308681081a86df12be37ddcb9d68a19323c9e2"
+                "reference": "15dbced56c4fd20521a598131a66905dd51b8eae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineMongoODMModule/zipball/91308681081a86df12be37ddcb9d68a19323c9e2",
-                "reference": "91308681081a86df12be37ddcb9d68a19323c9e2",
+                "url": "https://api.github.com/repos/doctrine/DoctrineMongoODMModule/zipball/15dbced56c4fd20521a598131a66905dd51b8eae",
+                "reference": "15dbced56c4fd20521a598131a66905dd51b8eae",
                 "shasum": ""
             },
             "require": {
@@ -544,7 +544,7 @@
                 "odm",
                 "zf2"
             ],
-            "time": "2013-10-18 21:47:34"
+            "time": "2014-01-16 20:43:19"
         },
         {
             "name": "doctrine/inflector",
@@ -750,12 +750,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/mongodb-odm.git",
-                "reference": "baab4bc755e69986385d5727387d4a3eb5ba23a1"
+                "reference": "46875a8ad51d4c4665aa2a13f18561e13e045832"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/baab4bc755e69986385d5727387d4a3eb5ba23a1",
-                "reference": "baab4bc755e69986385d5727387d4a3eb5ba23a1",
+                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/46875a8ad51d4c4665aa2a13f18561e13e045832",
+                "reference": "46875a8ad51d4c4665aa2a13f18561e13e045832",
                 "shasum": ""
             },
             "require": {
@@ -820,7 +820,7 @@
                 "odm",
                 "persistence"
             ],
-            "time": "2014-01-14 00:48:18"
+            "time": "2014-01-20 15:30:25"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -828,12 +828,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/l3pp4rd/DoctrineExtensions.git",
-                "reference": "35adcaae1a3f50d0d5b73aa50ed8fd28ee35ce54"
+                "reference": "231588f210a2cc42243cd8e45f4e05dae0a2c4ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/l3pp4rd/DoctrineExtensions/zipball/35adcaae1a3f50d0d5b73aa50ed8fd28ee35ce54",
-                "reference": "35adcaae1a3f50d0d5b73aa50ed8fd28ee35ce54",
+                "url": "https://api.github.com/repos/l3pp4rd/DoctrineExtensions/zipball/231588f210a2cc42243cd8e45f4e05dae0a2c4ea",
+                "reference": "231588f210a2cc42243cd8e45f4e05dae0a2c4ea",
                 "shasum": ""
             },
             "require": {
@@ -900,7 +900,7 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2014-01-12 16:34:06"
+            "time": "2014-01-20 19:22:29"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -1021,12 +1021,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "0353c921bd12980399e3e6404ea3931b3356e15a"
+                "reference": "bf9956b6345a606a206ba77484d750676e0e5805"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/0353c921bd12980399e3e6404ea3931b3356e15a",
-                "reference": "0353c921bd12980399e3e6404ea3931b3356e15a",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/bf9956b6345a606a206ba77484d750676e0e5805",
+                "reference": "bf9956b6345a606a206ba77484d750676e0e5805",
                 "shasum": ""
             },
             "require": {
@@ -1058,7 +1058,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2013-11-27 19:33:56"
+            "time": "2014-01-20 16:24:18"
         },
         {
             "name": "ocramius/code-generator-utils",
@@ -1458,12 +1458,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "92c92833bc80feb56bc03f19cff8fc7c3b66f4f9"
+                "reference": "f92a07bc3f5cbd49a518ee880b1451f357c71376"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf2/zipball/92c92833bc80feb56bc03f19cff8fc7c3b66f4f9",
-                "reference": "92c92833bc80feb56bc03f19cff8fc7c3b66f4f9",
+                "url": "https://api.github.com/repos/zendframework/zf2/zipball/f92a07bc3f5cbd49a518ee880b1451f357c71376",
+                "reference": "f92a07bc3f5cbd49a518ee880b1451f357c71376",
                 "shasum": ""
             },
             "require": {
@@ -1568,7 +1568,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2014-01-16 17:00:46"
+            "time": "2014-01-17 10:38:18"
         },
         {
             "name": "zf-commons/zfc-base",
@@ -1816,12 +1816,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zfcampus/zf-apigility.git",
-                "reference": "f8ff781c3a3c3113ae81a9b9cc7ef18dc11bee49"
+                "reference": "632da5e71e690405f484d8ab521948ad73e09ab6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zfcampus/zf-apigility/zipball/f8ff781c3a3c3113ae81a9b9cc7ef18dc11bee49",
-                "reference": "f8ff781c3a3c3113ae81a9b9cc7ef18dc11bee49",
+                "url": "https://api.github.com/repos/zfcampus/zf-apigility/zipball/632da5e71e690405f484d8ab521948ad73e09ab6",
+                "reference": "632da5e71e690405f484d8ab521948ad73e09ab6",
                 "shasum": ""
             },
             "require": {
@@ -1869,7 +1869,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2014-01-08 23:41:43"
+            "time": "2014-01-17 14:53:35"
         },
         {
             "name": "zfcampus/zf-configuration",
@@ -1930,12 +1930,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zfcampus/zf-content-negotiation.git",
-                "reference": "2c94ef707b42807af1bb1badeb0d409a377711c7"
+                "reference": "76b577c2bb51f8dc4d33f5d1bf09701a53318d70"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zfcampus/zf-content-negotiation/zipball/2c94ef707b42807af1bb1badeb0d409a377711c7",
-                "reference": "2c94ef707b42807af1bb1badeb0d409a377711c7",
+                "url": "https://api.github.com/repos/zfcampus/zf-content-negotiation/zipball/76b577c2bb51f8dc4d33f5d1bf09701a53318d70",
+                "reference": "76b577c2bb51f8dc4d33f5d1bf09701a53318d70",
                 "shasum": ""
             },
             "require": {
@@ -1973,7 +1973,7 @@
                 "zend",
                 "zf2"
             ],
-            "time": "2014-01-13 20:15:19"
+            "time": "2014-01-17 22:25:43"
         },
         {
             "name": "zfcampus/zf-content-validation",
@@ -2033,12 +2033,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zfcampus/zf-hal.git",
-                "reference": "743dbddd48c43ccbef8a26aa3231f2255c99d4a9"
+                "reference": "f164e9d9ce7f5828606d762ad303134aee9ce05d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zfcampus/zf-hal/zipball/743dbddd48c43ccbef8a26aa3231f2255c99d4a9",
-                "reference": "743dbddd48c43ccbef8a26aa3231f2255c99d4a9",
+                "url": "https://api.github.com/repos/zfcampus/zf-hal/zipball/f164e9d9ce7f5828606d762ad303134aee9ce05d",
+                "reference": "f164e9d9ce7f5828606d762ad303134aee9ce05d",
                 "shasum": ""
             },
             "require": {
@@ -2090,7 +2090,7 @@
                 "zend",
                 "zf2"
             ],
-            "time": "2014-01-13 20:26:12"
+            "time": "2014-01-17 18:10:10"
         },
         {
             "name": "zfcampus/zf-mvc-auth",
@@ -2149,12 +2149,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zfcampus/zf-oauth2.git",
-                "reference": "7622253c42a4ce1fadab22e83df26d5e6c081a02"
+                "reference": "a029df9a4a4b8c9a464039b66e3c7b7a0490ad01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zfcampus/zf-oauth2/zipball/7622253c42a4ce1fadab22e83df26d5e6c081a02",
-                "reference": "7622253c42a4ce1fadab22e83df26d5e6c081a02",
+                "url": "https://api.github.com/repos/zfcampus/zf-oauth2/zipball/a029df9a4a4b8c9a464039b66e3c7b7a0490ad01",
+                "reference": "a029df9a4a4b8c9a464039b66e3c7b7a0490ad01",
                 "shasum": ""
             },
             "require": {
@@ -2193,7 +2193,7 @@
                 "oauth2",
                 "zf2"
             ],
-            "time": "2014-01-13 20:18:12"
+            "time": "2014-01-17 15:40:36"
         },
         {
             "name": "zfcampus/zf-rest",
@@ -2376,12 +2376,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Mink.git",
-                "reference": "7ae005d9ce7ec0104de5083b4733c94da653aec0"
+                "reference": "57b45734de851cd2f6e310ea453db134ddeddb1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Mink/zipball/7ae005d9ce7ec0104de5083b4733c94da653aec0",
-                "reference": "7ae005d9ce7ec0104de5083b4733c94da653aec0",
+                "url": "https://api.github.com/repos/Behat/Mink/zipball/57b45734de851cd2f6e310ea453db134ddeddb1a",
+                "reference": "57b45734de851cd2f6e310ea453db134ddeddb1a",
                 "shasum": ""
             },
             "require": {
@@ -2423,7 +2423,7 @@
                 "testing",
                 "web"
             ],
-            "time": "2014-01-15 10:44:59"
+            "time": "2014-01-20 11:02:48"
         },
         {
             "name": "behat/mink-browserkit-driver",
@@ -2431,12 +2431,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/MinkBrowserKitDriver.git",
-                "reference": "c4e94b1413d0eabf533ea46f1d47e0aeffed90f4"
+                "reference": "c61ef01fe755e88fb2b819f55897e82f591ec61d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/MinkBrowserKitDriver/zipball/c4e94b1413d0eabf533ea46f1d47e0aeffed90f4",
-                "reference": "c4e94b1413d0eabf533ea46f1d47e0aeffed90f4",
+                "url": "https://api.github.com/repos/Behat/MinkBrowserKitDriver/zipball/c61ef01fe755e88fb2b819f55897e82f591ec61d",
+                "reference": "c61ef01fe755e88fb2b819f55897e82f591ec61d",
                 "shasum": ""
             },
             "require": {
@@ -2478,7 +2478,7 @@
                 "browser",
                 "testing"
             ],
-            "time": "2013-12-27 10:08:33"
+            "time": "2014-01-20 00:35:34"
         },
         {
             "name": "behat/mink-goutte-driver",
@@ -2486,12 +2486,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/MinkGoutteDriver.git",
-                "reference": "fd078a2ae55025a24f6dd58b37001c760aac78fe"
+                "reference": "ac290e03bc28a5c2542d38271095c9b5d9dcc8d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/MinkGoutteDriver/zipball/fd078a2ae55025a24f6dd58b37001c760aac78fe",
-                "reference": "fd078a2ae55025a24f6dd58b37001c760aac78fe",
+                "url": "https://api.github.com/repos/Behat/MinkGoutteDriver/zipball/ac290e03bc28a5c2542d38271095c9b5d9dcc8d9",
+                "reference": "ac290e03bc28a5c2542d38271095c9b5d9dcc8d9",
                 "shasum": ""
             },
             "require": {
@@ -2530,7 +2530,7 @@
                 "headless",
                 "testing"
             ],
-            "time": "2013-12-27 10:08:53"
+            "time": "2014-01-20 00:34:34"
         },
         {
             "name": "behat/mink-selenium2-driver",
@@ -2538,12 +2538,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/MinkSelenium2Driver.git",
-                "reference": "d97f184aa1ebefe44c0f091ff39204ea7ef21f52"
+                "reference": "00707a23d936f7afa09d6f4e4b811ac4610bab18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/MinkSelenium2Driver/zipball/d97f184aa1ebefe44c0f091ff39204ea7ef21f52",
-                "reference": "d97f184aa1ebefe44c0f091ff39204ea7ef21f52",
+                "url": "https://api.github.com/repos/Behat/MinkSelenium2Driver/zipball/00707a23d936f7afa09d6f4e4b811ac4610bab18",
+                "reference": "00707a23d936f7afa09d6f4e4b811ac4610bab18",
                 "shasum": ""
             },
             "require": {
@@ -2588,7 +2588,7 @@
                 "testing",
                 "webdriver"
             ],
-            "time": "2013-12-27 10:09:11"
+            "time": "2014-01-20 11:17:21"
         },
         {
             "name": "codeception/codeception",
@@ -2663,12 +2663,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Goutte.git",
-                "reference": "91653aacc36f47e8d3a07c8607e885af5ec1d43a"
+                "reference": "e83f8f9d133dbf9b0254c2874f9c5c6287a3a8e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Goutte/zipball/91653aacc36f47e8d3a07c8607e885af5ec1d43a",
-                "reference": "91653aacc36f47e8d3a07c8607e885af5ec1d43a",
+                "url": "https://api.github.com/repos/fabpot/Goutte/zipball/e83f8f9d133dbf9b0254c2874f9c5c6287a3a8e0",
+                "reference": "e83f8f9d133dbf9b0254c2874f9c5c6287a3a8e0",
                 "shasum": ""
             },
             "require": {
@@ -2711,7 +2711,7 @@
             "keywords": [
                 "scraper"
             ],
-            "time": "2014-01-12 19:53:04"
+            "time": "2014-01-18 19:09:49"
         },
         {
             "name": "facebook/webdriver",
@@ -3013,12 +3013,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/padraic/mockery.git",
-                "reference": "0c200b8a360ff6353bb0e55eb1052cb272ead116"
+                "reference": "0163f082dee93c895497571afd458a04c48b0b7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/0c200b8a360ff6353bb0e55eb1052cb272ead116",
-                "reference": "0c200b8a360ff6353bb0e55eb1052cb272ead116",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/0163f082dee93c895497571afd458a04c48b0b7a",
+                "reference": "0163f082dee93c895497571afd458a04c48b0b7a",
                 "shasum": ""
             },
             "require": {
@@ -3026,7 +3026,8 @@
                 "php": ">=5.3.2"
             },
             "require-dev": {
-                "hamcrest/hamcrest-php": "~1.1"
+                "hamcrest/hamcrest-php": "~1.1",
+                "satooshi/php-coveralls": "dev-master"
             },
             "type": "library",
             "extra": {
@@ -3069,7 +3070,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2014-01-16 09:48:17"
+            "time": "2014-01-19 20:55:32"
         },
         {
             "name": "monolog/monolog",
@@ -3077,12 +3078,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "01a01a4841ea749426834d127c897f4dc9d62611"
+                "reference": "7f783c0ab09dc341f858882e2d2ce6fc36ca1351"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/01a01a4841ea749426834d127c897f4dc9d62611",
-                "reference": "01a01a4841ea749426834d127c897f4dc9d62611",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/7f783c0ab09dc341f858882e2d2ce6fc36ca1351",
+                "reference": "7f783c0ab09dc341f858882e2d2ce6fc36ca1351",
                 "shasum": ""
             },
             "require": {
@@ -3094,7 +3095,7 @@
                 "doctrine/couchdb": "dev-master",
                 "mlehner/gelf-php": "1.0.*",
                 "phpunit/phpunit": "~3.7.0",
-                "raven/raven": "0.5.*",
+                "raven/raven": "~0.5",
                 "ruflin/elastica": "0.90.*"
             },
             "suggest": {
@@ -3136,7 +3137,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-01-15 09:37:32"
+            "time": "2014-01-17 14:16:06"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -3520,12 +3521,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "65f363ac44058796a8e1428cf41e6d92d8a75ddc"
+                "reference": "a78d6504ff5d4367497785ab2ade91db3a9fbe11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/65f363ac44058796a8e1428cf41e6d92d8a75ddc",
-                "reference": "65f363ac44058796a8e1428cf41e6d92d8a75ddc",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/a78d6504ff5d4367497785ab2ade91db3a9fbe11",
+                "reference": "a78d6504ff5d4367497785ab2ade91db3a9fbe11",
                 "shasum": ""
             },
             "type": "library",
@@ -3555,7 +3556,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2013-12-25 11:17:50"
+            "time": "2014-01-18 15:33:09"
         },
         {
             "name": "symfony/browser-kit",
@@ -3985,12 +3986,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zfcampus/zf-apigility-admin.git",
-                "reference": "a074576f9f64a62ea29aa0ea96769bcfd28d5e5e"
+                "reference": "c1f6e13d7a765765dd3e18d9c90e3ab60e989cfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zfcampus/zf-apigility-admin/zipball/a074576f9f64a62ea29aa0ea96769bcfd28d5e5e",
-                "reference": "a074576f9f64a62ea29aa0ea96769bcfd28d5e5e",
+                "url": "https://api.github.com/repos/zfcampus/zf-apigility-admin/zipball/c1f6e13d7a765765dd3e18d9c90e3ab60e989cfa",
+                "reference": "c1f6e13d7a765765dd3e18d9c90e3ab60e989cfa",
                 "shasum": ""
             },
             "require": {
@@ -4041,7 +4042,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2014-01-13 20:39:32"
+            "time": "2014-01-20 20:32:18"
         },
         {
             "name": "zfcampus/zf-apigility-welcome",
@@ -4096,6 +4097,7 @@
     "stability-flags": {
         "zfcampus/zf-apigility": 20,
         "zfcampus/zf-configuration": 20,
+        "gedmo/doctrine-extensions": 20,
         "bladeofsteel/zfc-user-doctrine-mongo-odm": 20,
         "masha-i-medvedi/auth-token": 20,
         "doctrine/doctrine-mongo-odm-module": 20,

@@ -21,7 +21,7 @@
         "php": ">=5.4.8",
         "zfcampus/zf-apigility": "dev-master",
         "zfcampus/zf-configuration": "dev-master",
-        "gedmo/doctrine-extensions": "*",
+        "gedmo/doctrine-extensions": "@dev",
         "bladeofsteel/zfc-user-doctrine-mongo-odm": "@dev",
         "masha-i-medvedi/auth-token": "@dev",
         "doctrine/doctrine-mongo-odm-module": "dev-master",
