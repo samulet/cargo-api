@@ -168,17 +168,17 @@ class PlacesEntity
     }
 
     /**
-     * @param \Place\Entity\User $user
+     * @param \Application\Entity\User $user
      *
      * @return array|null
      */
-    protected function extractUser(\Place\Entity\User $user = null)
+    protected function extractUser(\Application\Entity\User $user = null)
     {
         if (!$user) {
             return null;
         }
 
-        $config = new \GeneratedHydrator\Configuration('Place\\Entity\\User');
+        $config = new \GeneratedHydrator\Configuration('Application\\Entity\\User');
         $hydratorClass = $config->createFactory()->getHydratorClass();
         $hydrator = new $hydratorClass();
 

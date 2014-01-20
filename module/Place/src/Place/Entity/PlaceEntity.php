@@ -108,36 +108,6 @@ class PlaceEntity extends BaseEntity
      * @ODM\Field(type="int")
      */
     protected $rating;
-    /**
-     * Пользователь, создавший запись
-     *
-     * @var User
-     * @ODM\EmbedOne(targetDocument="Place\Entity\User")
-     */
-    protected $creator;
-    /**
-     * Пользователь, акцептовавший запись
-     *
-     * @var User
-     * @ODM\EmbedOne(targetDocument="Place\Entity\User")
-     */
-    protected $acceptor;
-
-    /**
-     * @param User $user
-     */
-    public function setAcceptor($user)
-    {
-        $this->acceptor = new User($user);
-    }
-
-    /**
-     * @return User
-     */
-    public function getAcceptor()
-    {
-        return $this->acceptor;
-    }
 
     /**
      * @param boolean $active
@@ -217,22 +187,6 @@ class PlaceEntity extends BaseEntity
     public function getCoordinates()
     {
         return $this->coordinates;
-    }
-
-    /**
-     * @param \User\Entity\User $user
-     */
-    public function setCreator(\User\Entity\User $user)
-    {
-        $this->creator = new User($user);
-    }
-
-    /**
-     * @return User
-     */
-    public function getCreator()
-    {
-        return $this->creator;
     }
 
     /**
@@ -371,13 +325,5 @@ class PlaceEntity extends BaseEntity
         if (empty($this->uuid)) {
             $this->uuid = $this->getGenerator()->generateV4();
         }
-    }
-
-    /**
-     * @return UuidGenerator
-     */
-    protected function getGenerator()
-    {
-        return new UuidGenerator;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace Application\Entity;
 
+use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -36,6 +37,20 @@ class BaseEntity
      * @ODM\Field(type="increment", name="v")
      */
     protected $version = 0;
+    /**
+     * Пользователь, создавший запись
+     *
+     * @var User
+     * @ODM\EmbedOne(targetDocument="\Application\Entity\User")
+     */
+    protected $creator;
+    /**
+     * Пользователь, акцептовавший запись
+     *
+     * @var User
+     * @ODM\EmbedOne(targetDocument="\Application\Entity\User")
+     */
+    protected $acceptor;
 
     /**
      * Устанавливает свойства документа из переданного массива
@@ -180,5 +195,45 @@ class BaseEntity
     public function incrementVersion()
     {
         ++$this->version;
+    }
+
+    /**
+     * @param \User\Entity\User $user
+     */
+    public function setCreator(\User\Entity\User $user)
+    {
+        $this->creator = new User($user);
+    }
+
+    /**
+     * @return \Application\Entity\User
+     */
+    public function getCreator()
+    {
+        return $this->creator;
+    }
+
+    /**
+     * @param \User\Entity\User $user
+     */
+    public function setAcceptor(\User\Entity\User $user)
+    {
+        $this->acceptor = new User($user);
+    }
+
+    /**
+     * @return User
+     */
+    public function getAcceptor()
+    {
+        return $this->acceptor;
+    }
+
+    /**
+     * @return UuidGenerator
+     */
+    protected function getGenerator()
+    {
+        return new UuidGenerator;
     }
 }
