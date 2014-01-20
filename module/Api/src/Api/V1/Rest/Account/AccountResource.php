@@ -94,14 +94,15 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
      */
     public function fetch($id)
     {
-        $data = $this->accountModel->fetch(array('uuid' => $id, 'activated' => '1', 'deletedAt' => null));
-        if (!empty($data)) {
-            $dataArray = $data->getData();
-            $dataCompanies = $this->companyModel->fetchAll(array('ownerAccUuid' => $dataArray['uuid']));
-            return new AccountEntity($dataArray, $dataCompanies);
-        } else {
-            return ApiStaticErrorList::getError(404);
+        $entity = $this->accountModel->fetch($id);
+
+        if (empty($entity)) {
+            return false;
         }
+
+        $dataCompanies = $this->companyModel->fetchAll(array('ownerAccUuid' => $entity->getUuid()));
+
+        return new AccountEntity($entity->getData(), $dataCompanies);
     }
 
     /**

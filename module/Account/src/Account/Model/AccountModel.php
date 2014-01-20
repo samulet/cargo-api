@@ -93,15 +93,33 @@ class AccountModel implements AuthorizationServiceAwareInterface, EventManagerAw
     }
 
     /**
-     * Возвращает сущность аккаунта по массиву поисковых параметров, однозначность результата дает указание uuid в массиве findParams
+     * Возвращает сущность аккаунта по унакальному идентификатору
      *
-     * @param array $findParams ассоциативный массив
+     * @param string $uuid
      *
+     * @throws \ZfcRbac\Exception\UnauthorizedException
      * @return \Account\Entity\Account|null
      */
-    public function fetch($findParams)
+    public function fetch($uuid)
     {
-        return $this->queryBuilderModel->fetch('Account\Entity\Account', $findParams);
+        if (!$this->authorizationService->isGranted(self::PERMISSION_READ)) {
+            throw new UnauthorizedException('Insufficient permissions to perform the account fetching', 403);
+        }
+
+        /** @var \Account\Entity\Account $entity */
+        $entity = $this->getRepository()->exists()->active()->uuid($uuid)->fetchOne();
+        if (empty($entity)) {
+            return null;
+        }
+
+        if (!in_array('system', $this->authorizationService->getIdentityRoles())) {
+            $user = $this->provider->getIdentity()->getUuid();
+            if (!in_array($user, $entity->getStaff())) {
+                throw new UnauthorizedException('Insufficient permissions to perform the account fetching', 403);
+            }
+        }
+
+        return $entity;
     }
 
     /**

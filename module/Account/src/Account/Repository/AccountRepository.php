@@ -48,6 +48,17 @@ class AccountRepository extends DocumentRepository
         return $this;
     }
 
+    /**
+     * @param string $value
+     *
+     * @return AccountRepository
+     */
+    public function uuid($value)
+    {
+        $this->getQueryBuilder()->field('uuid')->equals($value);
+        return $this;
+    }
+
     public function fetchAll()
     {
         return $this->getQueryBuilder()->getQuery()->execute();
