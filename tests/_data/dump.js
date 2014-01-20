@@ -2,51 +2,67 @@ db.getCollection("externalCompany").drop();
 db.getCollection("externalCompany").ensureIndex({
     "source": 1,
     "id": 1
-},{uniq:1});
+}, {uniq: 1});
 db.getCollection("externalPlace").drop();
 db.getCollection("externalPlace").ensureIndex({
     "source": 1,
     "type": 1,
     "id": 1
-},{uniq:1});
+}, {uniq: 1});
 
 // account records
 db.getCollection("account").remove();
 db.getCollection("account").insert({
     "uuid": "b21295c8a94c4bb0a4de07bd2d76ed38",
-    "ownerId": ObjectId("52a4b7519e534607468b456f"),
     "created": ISODate("2013-10-28T17:44:59.0Z"),
     "updated": ISODate("2013-10-28T17:44:59.0Z"),
-    "activated": "1",
+    "activated": true,
     "title": "Аккаунт нумбер ван",
-    "lastItemNumber": "0"
+    "staff": ["93456a97789c4538ba8d0e8d7419e658"],
+    "creator": {
+        "id" : ObjectId("52a4b7519e534607468b456f") ,
+        "name" : "Some User" ,
+        "uuid" : "93456a97789c4538ba8d0e8d7419e658"
+    }
 });
 db.getCollection("account").insert({
     "uuid": "e1c9c7a50e2c446e9864b29e1064ad39",
-    "ownerId": ObjectId("52a4b7519e534607468b456f"),
     "created": ISODate("2013-11-05T17:31:12.0Z"),
     "updated": ISODate("2013-11-05T17:31:12.0Z"),
-    "activated": "1",
+    "activated": true,
     "title": "ТЭК Продрезерв",
-    "lastItemNumber": "0"
+    "staff": ["93456a97789c4538ba8d0e8d7419e658"],
+    "creator": {
+        "id" : ObjectId("52a4b7519e534607468b456f") ,
+        "name" : "Some User" ,
+        "uuid" : "93456a97789c4538ba8d0e8d7419e658"
+    }
 });
 db.getCollection("account").insert({
     "uuid": "a2c9c7a50e2c446e9864b29e1064ad40",
-    "ownerId": ObjectId("52a4b7519e534607468b456f"),
     "created": ISODate("2013-11-05T17:31:12.0Z"),
     "updated": ISODate("2013-11-05T17:31:12.0Z"),
-    "activated": "1",
+    "activated": true,
     "title": "Рога и Ко",
-    "lastItemNumber": "0"
+    "staff": ["c9579582de5940b0853c7b07c1112576", "93456a97789c4538ba8d0e8d7419e658"],
+    "creator": {
+        "id" : ObjectId("52a4b7519e534607468b456f") ,
+        "name" : "Some User" ,
+        "uuid" : "93456a97789c4538ba8d0e8d7419e658"
+    }
 });
 db.getCollection("account").insert({
     "uuid": "11c1c7a50e2c446e9864b29e1064ad30",
-    "ownerId": ObjectId("52b00f009e534607468b4579"),
     "created": ISODate("2013-11-05T17:31:12.0Z"),
     "updated": ISODate("2013-11-05T17:31:12.0Z"),
-    "activated": "1",
+    "activated": true,
     "title": "Трансэнергосбыт",
-    "lastItemNumber": "0"
+    "staff": ["c9579582de5940b0853c7b07c1112576"],
+    "creator": {
+        "id" : ObjectId("52b00f009e534607468b4579") ,
+        "name" : "Василий Сквозняковский" ,
+        "uuid": "7e64b31bc7874340bb6ed61cd4735eb3"
+    }
 });
 
 // auth_token records
@@ -61,6 +77,11 @@ db.getCollection("auth_token").insert({
     "user": ObjectId("52a4b7519e534607468b4560"),
     "createdAt": ISODate("2013-12-09T18:09:36.0Z")
 });
+db.getCollection("auth_token").insert({
+    "token": "ff3df763a0a89fc86cac89977e1f4794013265d773a2b7f9e488f14d3814bfa3",
+    "user": ObjectId("52b010469e53462e6e8b456c"),
+    "createdAt": ISODate("2013-12-09T18:09:36.0Z")
+});
 
 // user records
 db.getCollection("user").remove();
@@ -73,7 +94,14 @@ db.getCollection("user").insert({
     "state": NumberInt(1),
     "created": ISODate("2013-12-08T18:15:45.0Z"),
     "updated": ISODate("2013-12-08T18:15:45.0Z"),
-    "roles": [ "user" ],
+    "roles": [
+        "user",
+        "system",
+        "account.admin",
+        "account.admin.b21295c8a94c4bb0a4de07bd2d76ed38",
+        "account.admin.e1c9c7a50e2c446e9864b29e1064ad39",
+        "account.admin.a2c9c7a50e2c446e9864b29e1064ad40"
+    ],
     "name": [ ],
     "docs": [ ],
     "phone": [ ],
@@ -119,22 +147,22 @@ db.getCollection("user").insert({
     "status": [ ]
 });
 db.getCollection("user").insert({
-    "_id" : ObjectId("52b00f009e534607468b4579"),
-    "uuid" : "7e64b31bc7874340bb6ed61cd4735eb3",
-    "email" : "email-two@mail.ru",
-    "displayName" : "Василий Сквозняковский",
-    "password" : "mailruToLocalUser",
-    "state" : 1,
-    "created" : ISODate("2013-12-17T08:44:48Z"),
-    "updated" : ISODate("2013-12-17T08:44:48Z"),
-    "roles" : [  "user" ],
-    "name" : [ ],
-    "docs" : [ ],
-    "phone" : [ ],
-    "site" : [ ],
-    "sign" : [ ],
-    "social" : [ ],
-    "status" : [ ]
+    "_id": ObjectId("52b00f009e534607468b4579"),
+    "uuid": "7e64b31bc7874340bb6ed61cd4735eb3",
+    "email": "email-two@mail.ru",
+    "displayName": "Василий Сквозняковский",
+    "password": "mailruToLocalUser",
+    "state": 1,
+    "created": ISODate("2013-12-17T08:44:48Z"),
+    "updated": ISODate("2013-12-17T08:44:48Z"),
+    "roles": [  "user", "account.admin", "account.admin.11c1c7a50e2c446e9864b29e1064ad30" ],
+    "name": [ ],
+    "docs": [ ],
+    "phone": [ ],
+    "site": [ ],
+    "sign": [ ],
+    "social": [ ],
+    "status": [ ]
 });
 
 // user_provider records
@@ -152,16 +180,16 @@ db.getCollection("user_provider").insert({
     "provider": "mailru"
 });
 db.getCollection("user_provider").insert({
-    "_id" : ObjectId("52b00f009e534607468b457a"),
-    "userId" : "52b00f009e534607468b4579",
-    "providerId" : "8524538222726473009",
-    "provider" : "mailru"
+    "_id": ObjectId("52b00f009e534607468b457a"),
+    "userId": "52b00f009e534607468b4579",
+    "providerId": "8524538222726473009",
+    "provider": "mailru"
 });
 db.getCollection("user_provider").insert({
-    "_id" : ObjectId("52b010469e53462e6e8b456d"),
-    "userId" : "52b010469e53462e6e8b456c",
-    "providerId" : "11994362226096226506",
-    "provider" : "mailru"
+    "_id": ObjectId("52b010469e53462e6e8b456d"),
+    "userId": "52b010469e53462e6e8b456c",
+    "providerId": "11994362226096226506",
+    "provider": "mailru"
 });
 
 // company records

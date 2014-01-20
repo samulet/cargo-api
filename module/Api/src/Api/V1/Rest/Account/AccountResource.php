@@ -48,11 +48,7 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
      */
     public function create($data)
     {
-        if (!$this->authorizationService->isGranted('account.create')) {
-            throw new UnauthorizedException('Insufficient permissions to perform the account creation', 403);
-        }
-
-        $data = $this->accountModel->createOrUpdate(get_object_vars($data));
+        $data = $this->accountModel->create(get_object_vars($data));
         if (!empty($data)) {
             return new AccountEntity(array('uuid' => $data->getUuid(), 'title' => $data->getTitle()));
         } else {
@@ -98,14 +94,15 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
      */
     public function fetch($id)
     {
-        $data = $this->accountModel->fetch(array('uuid' => $id, 'activated' => '1', 'deletedAt' => null));
-        if (!empty($data)) {
-            $dataArray = $data->getData();
-            $dataCompanies = $this->companyModel->fetchAll(array('ownerAccUuid' => $dataArray['uuid']));
-            return new AccountEntity($dataArray, $dataCompanies);
-        } else {
-            return ApiStaticErrorList::getError(404);
+        $entity = $this->accountModel->fetch($id);
+
+        if (empty($entity)) {
+            return false;
         }
+
+        $dataCompanies = $this->companyModel->fetchAll(array('ownerAccUuid' => $entity->getUuid()));
+
+        return new AccountEntity($entity->getData(), $dataCompanies);
     }
 
     /**
@@ -144,7 +141,8 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
      */
     public function patch($id, $data)
     {
-        return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
+        $entity = $this->accountModel->update($id, get_object_vars($data));
+        return new AccountEntity($entity->getData());
     }
 
     /**

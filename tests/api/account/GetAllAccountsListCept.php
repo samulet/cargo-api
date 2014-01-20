@@ -1,20 +1,18 @@
 <?php
 $I = new ApiGuy($scenario);
 $I->am('System Moderator');
-$I->wantTo('Get a list of available accounts');
+$I->wantTo('Get a list of all available accounts');
 
 $I->haveHttpHeader('Content-Type','application/json');
 $I->haveHttpHeader('Accept','*/*');
 $I->haveHttpHeader('Authorization', 'Token token="db057553f1a4989210ae84a2825982e1d04d6879a2690365e1fcecb619fb77e2"');
-$I->sendGET('accounts?page=1');
+$I->sendGET('accounts');
 
 $I->seeResponseCodeIs(200);
 $I->seeResponseIsJson();
 $I->seeResponseContainsJson([
     '_links' => [
-        'self' => ['href' => "http://cargo.dev/api/accounts?page=1"],
-        'first' => ['href' => "http://cargo.dev/api/accounts"],
-        'last' => ['href' => "http://cargo.dev/api/accounts?page=1"],
+        'self' => ['href' => "http://cargo.dev/api/accounts"],
     ]
 ]);
 $I->seeResponseContainsJson([
@@ -34,6 +32,22 @@ $I->seeResponseContainsJson([
                 'created' => 1383672672,
                 '_links' => [
                     'self' => ['href' => "http://cargo.dev/api/accounts/e1c9c7a50e2c446e9864b29e1064ad39"],
+                ]
+            ],
+            [
+                'uuid' => "a2c9c7a50e2c446e9864b29e1064ad40",
+                'title' => 'Рога и Ко',
+                'created' => 1383672672,
+                '_links' => [
+                    'self' => ['href' => "http://cargo.dev/api/accounts/a2c9c7a50e2c446e9864b29e1064ad40"],
+                ]
+            ],
+            [
+                'uuid' => "11c1c7a50e2c446e9864b29e1064ad30",
+                'title' => 'Трансэнергосбыт',
+                'created' => 1383672672,
+                '_links' => [
+                    'self' => ['href' => "http://cargo.dev/api/accounts/11c1c7a50e2c446e9864b29e1064ad30"],
                 ]
             ],
         ]
