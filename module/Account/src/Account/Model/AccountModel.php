@@ -23,7 +23,7 @@ class AccountModel implements AuthorizationServiceAwareInterface, EventManagerAw
     const PERMISSION_CREATE = 'account.create';
     const PERMISSION_DELETE = 'account.delete';
     const PERMISSION_UPDATE = 'account.update';
-    const PERMISSION_LIST   = 'account.list';
+    const PERMISSION_READ   = 'account.read';
 
     /**
      * @var \Doctrine\ODM\MongoDB\DocumentManager
@@ -114,7 +114,7 @@ class AccountModel implements AuthorizationServiceAwareInterface, EventManagerAw
      */
     public function fetchAll($findParams)
     {
-        if (!$this->authorizationService->isGranted(self::PERMISSION_LIST)) {
+        if (!$this->authorizationService->isGranted(self::PERMISSION_READ)) {
             throw new UnauthorizedException('Insufficient permissions to perform the account creation', 403);
         }
 
