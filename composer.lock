@@ -750,12 +750,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/mongodb-odm.git",
-                "reference": "46875a8ad51d4c4665aa2a13f18561e13e045832"
+                "reference": "a7dbf77bfb8edd75f28be57cffc145c35e27ed25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/46875a8ad51d4c4665aa2a13f18561e13e045832",
-                "reference": "46875a8ad51d4c4665aa2a13f18561e13e045832",
+                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/a7dbf77bfb8edd75f28be57cffc145c35e27ed25",
+                "reference": "a7dbf77bfb8edd75f28be57cffc145c35e27ed25",
                 "shasum": ""
             },
             "require": {
@@ -820,7 +820,7 @@
                 "odm",
                 "persistence"
             ],
-            "time": "2014-01-20 15:30:25"
+            "time": "2014-01-21 16:03:43"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -1759,12 +1759,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zfcampus/zf-api-problem.git",
-                "reference": "c1a59f13f6db22d7f2957565d9cd49cc691725cd"
+                "reference": "f5e983b71c72d37b70daef64a574457a66387a3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zfcampus/zf-api-problem/zipball/c1a59f13f6db22d7f2957565d9cd49cc691725cd",
-                "reference": "c1a59f13f6db22d7f2957565d9cd49cc691725cd",
+                "url": "https://api.github.com/repos/zfcampus/zf-api-problem/zipball/f5e983b71c72d37b70daef64a574457a66387a3b",
+                "reference": "f5e983b71c72d37b70daef64a574457a66387a3b",
                 "shasum": ""
             },
             "require": {
@@ -1808,7 +1808,7 @@
                 "zend",
                 "zf2"
             ],
-            "time": "2014-01-13 20:10:07"
+            "time": "2014-01-21 14:42:46"
         },
         {
             "name": "zfcampus/zf-apigility",
@@ -1877,12 +1877,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zfcampus/zf-configuration.git",
-                "reference": "f234ebb3def1582316d3122ba1b811e8daf7f7f1"
+                "reference": "05bd8ac427e6539db2437983c464dc1d64fc2b4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zfcampus/zf-configuration/zipball/f234ebb3def1582316d3122ba1b811e8daf7f7f1",
-                "reference": "f234ebb3def1582316d3122ba1b811e8daf7f7f1",
+                "url": "https://api.github.com/repos/zfcampus/zf-configuration/zipball/05bd8ac427e6539db2437983c464dc1d64fc2b4a",
+                "reference": "05bd8ac427e6539db2437983c464dc1d64fc2b4a",
                 "shasum": ""
             },
             "require": {
@@ -1922,7 +1922,7 @@
                 "zend",
                 "zf2"
             ],
-            "time": "2013-12-07 20:33:38"
+            "time": "2014-01-21 14:52:52"
         },
         {
             "name": "zfcampus/zf-content-negotiation",
@@ -2033,12 +2033,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zfcampus/zf-hal.git",
-                "reference": "f164e9d9ce7f5828606d762ad303134aee9ce05d"
+                "reference": "b7fee7d5425d54d8b66fc9c8f2386ae2deb72ce0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zfcampus/zf-hal/zipball/f164e9d9ce7f5828606d762ad303134aee9ce05d",
-                "reference": "f164e9d9ce7f5828606d762ad303134aee9ce05d",
+                "url": "https://api.github.com/repos/zfcampus/zf-hal/zipball/b7fee7d5425d54d8b66fc9c8f2386ae2deb72ce0",
+                "reference": "b7fee7d5425d54d8b66fc9c8f2386ae2deb72ce0",
                 "shasum": ""
             },
             "require": {
@@ -2090,7 +2090,7 @@
                 "zend",
                 "zf2"
             ],
-            "time": "2014-01-17 18:10:10"
+            "time": "2014-01-21 16:28:28"
         },
         {
             "name": "zfcampus/zf-mvc-auth",
@@ -2201,12 +2201,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zfcampus/zf-rest.git",
-                "reference": "dcba4d281aa723f08715a98d08f09a13024f9d52"
+                "reference": "79d74be5b0a14ad56d8646f4e295a63f6c850a91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zfcampus/zf-rest/zipball/dcba4d281aa723f08715a98d08f09a13024f9d52",
-                "reference": "dcba4d281aa723f08715a98d08f09a13024f9d52",
+                "url": "https://api.github.com/repos/zfcampus/zf-rest/zipball/79d74be5b0a14ad56d8646f4e295a63f6c850a91",
+                "reference": "79d74be5b0a14ad56d8646f4e295a63f6c850a91",
                 "shasum": ""
             },
             "require": {
@@ -2258,7 +2258,7 @@
                 "zend",
                 "zf2"
             ],
-            "time": "2014-01-13 20:25:11"
+            "time": "2014-01-21 14:36:59"
         },
         {
             "name": "zfcampus/zf-rpc",
@@ -2266,12 +2266,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zfcampus/zf-rpc.git",
-                "reference": "24d339e941d7e3c7a4da14821d5f3fd6323617b8"
+                "reference": "25467c854d17e4d8f181df8e7fa8d396b3c2d68e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zfcampus/zf-rpc/zipball/24d339e941d7e3c7a4da14821d5f3fd6323617b8",
-                "reference": "24d339e941d7e3c7a4da14821d5f3fd6323617b8",
+                "url": "https://api.github.com/repos/zfcampus/zf-rpc/zipball/25467c854d17e4d8f181df8e7fa8d396b3c2d68e",
+                "reference": "25467c854d17e4d8f181df8e7fa8d396b3c2d68e",
                 "shasum": ""
             },
             "require": {
@@ -2306,7 +2306,7 @@
                 "zend",
                 "zf2"
             ],
-            "time": "2013-12-07 21:13:35"
+            "time": "2014-01-21 14:35:27"
         },
         {
             "name": "zfcampus/zf-versioning",
@@ -3986,12 +3986,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zfcampus/zf-apigility-admin.git",
-                "reference": "c1f6e13d7a765765dd3e18d9c90e3ab60e989cfa"
+                "reference": "0198fbebe975312dde84473986c14376d3fa8f36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zfcampus/zf-apigility-admin/zipball/c1f6e13d7a765765dd3e18d9c90e3ab60e989cfa",
-                "reference": "c1f6e13d7a765765dd3e18d9c90e3ab60e989cfa",
+                "url": "https://api.github.com/repos/zfcampus/zf-apigility-admin/zipball/0198fbebe975312dde84473986c14376d3fa8f36",
+                "reference": "0198fbebe975312dde84473986c14376d3fa8f36",
                 "shasum": ""
             },
             "require": {
@@ -4042,7 +4042,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2014-01-20 20:32:18"
+            "time": "2014-01-21 16:26:25"
         },
         {
             "name": "zfcampus/zf-apigility-welcome",
