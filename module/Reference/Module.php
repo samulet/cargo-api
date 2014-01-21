@@ -1,7 +1,6 @@
 <?php
 namespace Reference;
 
-use Zend\Db\ResultSet\ResultSet;
 use Reference\Entity\ReferenceList;
 
 class Module
@@ -27,7 +26,6 @@ class Module
 
     public function getServiceConfig()
     {
-
         return array(
             'factories' => array(
                 'Reference\Entity\ReferenceList' => function ($sm) {

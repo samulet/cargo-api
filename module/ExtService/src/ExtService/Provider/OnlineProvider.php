@@ -1,5 +1,4 @@
 <?php
-
 namespace ExtService\Provider;
 
 class OnlineProvider
@@ -11,12 +10,14 @@ class OnlineProvider
         $this->config=$config;
     }
 
-    public function getList() {
+    public function getList()
+    {
         return array_keys($this->config);
     }
 
-    public function getServiceInfo($code) {
-        if(!empty($this->config[$code])) {
+    public function getServiceInfo($code)
+    {
+        if (!empty($this->config[$code])) {
             return $this->config[$code];
         } else {
             return null;

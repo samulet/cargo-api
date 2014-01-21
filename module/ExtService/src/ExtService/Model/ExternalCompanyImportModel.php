@@ -1,11 +1,7 @@
 <?php
-
 namespace ExtService\Model;
 
-use Doctrine\MongoDB\Connection;
-use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use ExtService\Entity\ExternalCompany;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
@@ -94,6 +90,7 @@ class ExternalCompanyImportModel
                 array_push($resultArray, $res);
             }
         }
+
         return $resultArray;
     }
 
@@ -116,6 +113,7 @@ class ExternalCompanyImportModel
                         'external_code' => $onlineName
                     );
                 }
+
                 return $res;
             }
         } else {
@@ -131,6 +129,7 @@ class ExternalCompanyImportModel
             if (!empty($data->companies)) {
                 $statistic = $this->onlineChangeFindUpdate($data->companies, $onlineCode);
                 $statistic['processed'] = count($data->companies);
+
                 return $statistic;
             } else {
                 return 'Список компаний пуст';

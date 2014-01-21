@@ -84,6 +84,7 @@ class BaseEntity
         foreach (array_keys(get_object_vars($this)) as $key) {
             $data[$key] = $this->$key;
         }
+
         return $data;
     }
 
@@ -102,7 +103,7 @@ class BaseEntity
      *
      * @param int $id
      */
-    function setId($id)
+    public function setId($id)
     {
         $this->id = $id;
     }

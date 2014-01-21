@@ -24,7 +24,7 @@ class CompanyModel
     /**
      * Создать ии обновить компанию. Возвращает сущность созданной или модифицированой комнпании.
      *
-     * @param array $data записываемый массив данных
+     * @param array  $data записываемый массив данных
      * @param string $uuid uuid модифицируемого аккаунта
      *
      * @return \Account\Entity\Company|null
@@ -58,6 +58,7 @@ class CompanyModel
         if (!isset($findParams['deleted'])) {
             $findParams['deleted'] = null;
         }
+
         return $this->queryBuilderModel->fetchAll('Account\Entity\Company', $findParams);
     }
 

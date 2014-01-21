@@ -3,7 +3,6 @@ namespace Api\V1\Rest\ExtServiceCompanyIntersect;
 
 use Account\Model\CompanyModel;
 use ExtService\Model\ExternalCompanyIntersectModel;
-use User\Identity\IdentityProvider;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 use Zend\Paginator\Adapter\ArrayAdapter;
@@ -30,7 +29,8 @@ class CompanyIntersectResource extends AbstractResourceListener
     /**
      * Create a resource
      *
-     * @param  mixed $data
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function create($data)
@@ -40,13 +40,15 @@ class CompanyIntersectResource extends AbstractResourceListener
         if (empty($entity)) {
             return false;
         }
+
         return new ExtServiceCompanyIntersectEntity($entity->getData());
     }
 
     /**
      * Delete a resource
      *
-     * @param  mixed $id
+     * @param mixed $id
+     *
      * @return ApiProblem|mixed
      */
     public function delete($id)
@@ -56,13 +58,15 @@ class CompanyIntersectResource extends AbstractResourceListener
             return false;
         }
         list($source, $id) = explode('-', $id);
+
         return $this->intersectModel->deleteCompanyIntersect($source, $id);
     }
 
     /**
      * Delete a collection, or members of a collection
      *
-     * @param  mixed $data
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function deleteList($data)
@@ -73,7 +77,8 @@ class CompanyIntersectResource extends AbstractResourceListener
     /**
      * Fetch a resource
      *
-     * @param  mixed $id
+     * @param mixed $id
+     *
      * @return ApiProblem|mixed
      */
     public function fetch($id)
@@ -84,7 +89,7 @@ class CompanyIntersectResource extends AbstractResourceListener
     /**
      * Fetch all or a subset of resources
      *
-     * @param  \Zend\Stdlib\Parameters|array $params
+     * @param \Zend\Stdlib\Parameters|array $params
      *
      * @return array|ExtServiceCompanyIntersectCollection
      */
@@ -106,8 +111,9 @@ class CompanyIntersectResource extends AbstractResourceListener
     /**
      * Patch (partial in-place update) a resource
      *
-     * @param  mixed $id
-     * @param  mixed $data
+     * @param mixed $id
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function patch($id, $data)
@@ -118,7 +124,8 @@ class CompanyIntersectResource extends AbstractResourceListener
     /**
      * Replace a collection or members of a collection
      *
-     * @param  mixed $data
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function replaceList($data)
@@ -129,8 +136,9 @@ class CompanyIntersectResource extends AbstractResourceListener
     /**
      * Update a resource
      *
-     * @param  mixed $id
-     * @param  mixed $data
+     * @param mixed $id
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function update($id, $data)

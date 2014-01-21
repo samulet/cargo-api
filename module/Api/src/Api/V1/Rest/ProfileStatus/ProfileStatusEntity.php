@@ -1,8 +1,8 @@
 <?php
 namespace Api\V1\Rest\ProfileStatus;
 
-
-class ProfileStatusEntity{
+class ProfileStatusEntity
+{
     protected $profile_uuid;
     protected $code;
     protected $title;

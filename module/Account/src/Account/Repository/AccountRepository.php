@@ -16,6 +16,7 @@ class AccountRepository extends DocumentRepository
     public function exists()
     {
         $this->getQueryBuilder()->field('deleted')->equals(null);
+
         return $this;
     }
 
@@ -25,6 +26,7 @@ class AccountRepository extends DocumentRepository
     public function active()
     {
         $this->getQueryBuilder()->field('activated')->equals(true);
+
         return $this;
     }
 
@@ -34,6 +36,7 @@ class AccountRepository extends DocumentRepository
     public function notActive()
     {
         $this->getQueryBuilder()->field('activated')->equals(false);
+
         return $this;
     }
 
@@ -45,6 +48,7 @@ class AccountRepository extends DocumentRepository
     public function user($value)
     {
         $this->getQueryBuilder()->field('staff')->equals($value);
+
         return $this;
     }
 
@@ -56,6 +60,7 @@ class AccountRepository extends DocumentRepository
     public function uuid($value)
     {
         $this->getQueryBuilder()->field('uuid')->equals($value);
+
         return $this;
     }
 

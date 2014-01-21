@@ -51,6 +51,7 @@ class ExternalPunctIntersectModel
         $object->setLink($data['place']);
         $this->documentManager->persist($object);
         $this->documentManager->flush();
+
         return $object;
     }
 
@@ -62,6 +63,7 @@ class ExternalPunctIntersectModel
             $object->setLink(null);
             $this->documentManager->persist($object);
             $this->documentManager->flush();
+
             return true;
         } else {
             return false;

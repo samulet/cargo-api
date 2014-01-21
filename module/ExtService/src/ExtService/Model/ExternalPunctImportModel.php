@@ -1,11 +1,7 @@
 <?php
-
 namespace ExtService\Model;
 
-use Doctrine\MongoDB\Connection;
-use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use ExtService\Entity\ExternalPunct;
 use ExtService\Provider\OnlineProvider;
@@ -65,6 +61,7 @@ class ExternalPunctImportModel
                 array_push($resultArray, $res);
             }
         }
+
         return $resultArray;
     }
 
@@ -77,6 +74,7 @@ class ExternalPunctImportModel
                     'processed' => sizeof($result->delivery_points),
                 );
                 $resultArray = $resultArray + $this->onlineChangeFindUpdate($result->delivery_points, $onlineCode);
+
                 return $resultArray;
             } else {
                 return 'Список пунктов доставки пуст';
@@ -114,7 +112,7 @@ class ExternalPunctImportModel
                 $resVars['type'] = 'dp';
             }
 
-            $resVars = array_map('strval', (array)$resVars);
+            $resVars = array_map('strval', (array) $resVars);
             $resVars = $this->queryBuilderModel->camelCaseKeys($resVars);
 
             if (!empty($cityTmp)) {
@@ -151,12 +149,13 @@ class ExternalPunctImportModel
             $this->documentManager->persist($hydrator->hydrate($resVars, $object));
         }
         $this->documentManager->flush();
+
         return $resultArray;
     }
 
     /**
      * @param ExternalPunct $object
-     * @param array $resVars
+     * @param array         $resVars
      *
      * @return array
      */
@@ -192,6 +191,7 @@ class ExternalPunctImportModel
                 $result[$k] = $v;
             }
         }
+
         return $result;
     }
 
@@ -214,6 +214,7 @@ class ExternalPunctImportModel
                         'external_code' => $onlineName
                     );
                 }
+
                 return $res;
             }
         } else {

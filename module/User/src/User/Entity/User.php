@@ -119,6 +119,7 @@ class User extends BaseEntity implements UserInterface, IdentityInterface
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -130,6 +131,7 @@ class User extends BaseEntity implements UserInterface, IdentityInterface
     public function setDocs($docs)
     {
         $this->docs = $docs;
+
         return $this;
     }
 
@@ -141,6 +143,7 @@ class User extends BaseEntity implements UserInterface, IdentityInterface
     public function setSnils($snils)
     {
         $this->snils = $snils;
+
         return $this;
     }
 
@@ -152,6 +155,7 @@ class User extends BaseEntity implements UserInterface, IdentityInterface
     public function setInn($inn)
     {
         $this->inn = $inn;
+
         return $this;
     }
 
@@ -163,6 +167,7 @@ class User extends BaseEntity implements UserInterface, IdentityInterface
     public function setPhone($phone)
     {
         $this->phone = $phone;
+
         return $this;
     }
 
@@ -174,6 +179,7 @@ class User extends BaseEntity implements UserInterface, IdentityInterface
     public function setSite($site)
     {
         $this->site = $site;
+
         return $this;
     }
 
@@ -185,6 +191,7 @@ class User extends BaseEntity implements UserInterface, IdentityInterface
     public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
+
         return $this;
     }
 
@@ -196,6 +203,7 @@ class User extends BaseEntity implements UserInterface, IdentityInterface
     public function setSign($sign)
     {
         $this->sign = $sign;
+
         return $this;
     }
 
@@ -207,6 +215,7 @@ class User extends BaseEntity implements UserInterface, IdentityInterface
     public function setSocial($social)
     {
         $this->social = $social;
+
         return $this;
     }
 
@@ -240,6 +249,7 @@ class User extends BaseEntity implements UserInterface, IdentityInterface
     public function setUsername($username)
     {
         $this->username = $username;
+
         return $this;
     }
 
@@ -263,6 +273,7 @@ class User extends BaseEntity implements UserInterface, IdentityInterface
     public function setEmail($email)
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -286,6 +297,7 @@ class User extends BaseEntity implements UserInterface, IdentityInterface
     public function setDisplayName($displayName)
     {
         $this->displayName = $displayName;
+
         return $this;
     }
 
@@ -309,6 +321,7 @@ class User extends BaseEntity implements UserInterface, IdentityInterface
     public function setPassword($password)
     {
         $this->password = $password;
+
         return $this;
     }
 
@@ -332,6 +345,7 @@ class User extends BaseEntity implements UserInterface, IdentityInterface
     public function setStatus($status)
     {
         $this->status = $status;
+
         return $this;
     }
 
@@ -355,6 +369,7 @@ class User extends BaseEntity implements UserInterface, IdentityInterface
     public function setState($state)
     {
         $this->state = $state;
+
         return $this;
     }
 
@@ -393,6 +408,7 @@ class User extends BaseEntity implements UserInterface, IdentityInterface
     public function setUuid($uuid)
     {
         $this->uuid = $uuid;
+
         return $this;
     }
 

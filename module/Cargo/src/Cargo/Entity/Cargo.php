@@ -4,7 +4,6 @@ namespace Cargo\Entity;
 use Application\Entity\BaseEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
 /**
  * @ODM\Document(collection="cargo")
@@ -42,11 +41,13 @@ class Cargo extends BaseEntity
      * Set activated.
      *
      * @param string $activated
+     *
      * @return UserInterface
      */
     public function setActivated($activated)
     {
         $this->activated = $activated;
+
         return $this;
     }
 
@@ -58,6 +59,7 @@ class Cargo extends BaseEntity
     public function setOwnerAccId($ownerAccId)
     {
         $this->ownerAccId = $ownerAccId;
+
         return $this;
     }
 
@@ -69,6 +71,7 @@ class Cargo extends BaseEntity
     public function setUuid($uuid = null)
     {
         $this->uuid = $uuid;
+
         return $this;
     }
 }

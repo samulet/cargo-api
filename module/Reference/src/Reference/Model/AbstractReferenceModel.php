@@ -25,7 +25,7 @@ abstract class AbstractReferenceModel
     /**
      * Создать или обновить аккаунт. Возвращает сущность созданного или модифицированого аккаунта
      *
-     * @param array $data записываемый массив данных
+     * @param array  $data записываемый массив данных
      * @param string $uuid uuid модифицируемого аккаунта
      *
      * @return \Reference\Entity\Reference|null
@@ -73,6 +73,7 @@ abstract class AbstractReferenceModel
         );
         $this->documentManager->remove($qb3);
         $this->documentManager->flush();
+
         return $uuid;
     }
 }

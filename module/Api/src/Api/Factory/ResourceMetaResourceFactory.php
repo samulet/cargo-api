@@ -11,6 +11,7 @@ class ResourceMetaResourceFactory implements FactoryInterface
     {
         $config = $serviceLocator->get('Config');
         $routes = !empty($config['router']['routes']) ? $config['router']['routes'] : array();
+
         return new Controller($routes);
     }
 }

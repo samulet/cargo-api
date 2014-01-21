@@ -30,6 +30,7 @@ class ReferenceEntity
                 }
             }
         }
+
         return $this;
 
     }
@@ -40,6 +41,7 @@ class ReferenceEntity
         foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
             $data[$key] = $this->$key;
         }
+
         return $data;
     }
 

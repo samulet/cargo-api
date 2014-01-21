@@ -42,6 +42,7 @@ class IdentityProvider implements IdentityProviderInterface
         if (empty($this->entity)) {
             $this->entity = $this->userModel->fetch(array('uuid' => $this->userId));
         }
+
         return $this->entity;
     }
 }

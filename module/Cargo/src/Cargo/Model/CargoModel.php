@@ -1,17 +1,8 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: solov
- * Date: 4/24/13
- * Time: 1:35 PM
- * To change this template use File | Settings | File Templates.
- */
 namespace Cargo\Model;
 
 use Cargo\Entity\Cargo;
-
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
 class CargoModel
@@ -30,7 +21,7 @@ class CargoModel
     /**
      * Создать или обновить груз. Возвращает сущность созданного или модифицированого груза
      *
-     * @param array $data записываемый массив данных
+     * @param array  $data записываемый массив данных
      * @param string $uuid uuid модифицируемого груза
      *
      * @return \Cargo\Entity\Cargo|null

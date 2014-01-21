@@ -19,7 +19,8 @@ class ResourceMetaResource extends AbstractResourceListener
     /**
      * Create a resource
      *
-     * @param  mixed $data
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function create($data)
@@ -30,7 +31,8 @@ class ResourceMetaResource extends AbstractResourceListener
     /**
      * Delete a resource
      *
-     * @param  mixed $id
+     * @param mixed $id
+     *
      * @return ApiProblem|mixed
      */
     public function delete($id)
@@ -41,7 +43,8 @@ class ResourceMetaResource extends AbstractResourceListener
     /**
      * Delete a collection, or members of a collection
      *
-     * @param  mixed $data
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function deleteList($data)
@@ -52,7 +55,8 @@ class ResourceMetaResource extends AbstractResourceListener
     /**
      * Fetch a resource
      *
-     * @param  mixed $id
+     * @param mixed $id
+     *
      * @return ApiProblem|mixed
      */
     public function fetch($id)
@@ -63,7 +67,8 @@ class ResourceMetaResource extends AbstractResourceListener
     /**
      * Fetch all or a subset of resources
      *
-     * @param  array $params
+     * @param array $params
+     *
      * @return ApiProblem|mixed
      */
     public function fetchAll($params = array())
@@ -81,6 +86,7 @@ class ResourceMetaResource extends AbstractResourceListener
             if (!empty($params['page'])) {
                 $adapter = new ArrayAdapter(array($object));
                 $collection = new ResourceMetaCollection($adapter);
+
                 return $collection;
             } else {
                 return array($object);
@@ -93,8 +99,9 @@ class ResourceMetaResource extends AbstractResourceListener
     /**
      * Patch (partial in-place update) a resource
      *
-     * @param  mixed $id
-     * @param  mixed $data
+     * @param mixed $id
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function patch($id, $data)
@@ -105,7 +112,8 @@ class ResourceMetaResource extends AbstractResourceListener
     /**
      * Replace a collection or members of a collection
      *
-     * @param  mixed $data
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function replaceList($data)
@@ -116,8 +124,9 @@ class ResourceMetaResource extends AbstractResourceListener
     /**
      * Update a resource
      *
-     * @param  mixed $id
-     * @param  mixed $data
+     * @param mixed $id
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function update($id, $data)

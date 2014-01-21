@@ -437,6 +437,7 @@ class ExternalPunct extends BaseEntity
         foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
             $data[$key] = $this->$key;
         }
+
         return $data;
     }
 
@@ -481,6 +482,7 @@ class ExternalPunct extends BaseEntity
                 }
             }
         }
+
         return $this;
 
     }

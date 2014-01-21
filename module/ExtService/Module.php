@@ -1,8 +1,6 @@
 <?php
 namespace ExtService;
 
-use Zend\Db\ResultSet\ResultSet;
-
 class Module
 {
     public function getAutoloaderConfig()

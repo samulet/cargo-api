@@ -6,7 +6,6 @@ use Application\Service\AuthorizationServiceAwareInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\DocumentNotFoundException;
 use Doctrine\ODM\MongoDB\Hydrator\HydratorInterface;
-use QueryBuilder\Model\QueryBuilderModel;
 use Reference\Entity\ProductGroup;
 use Zend\Log\LoggerAwareInterface;
 use Zend\Log\LoggerAwareTrait;
@@ -93,6 +92,7 @@ class ProductGroupModel implements AuthorizationServiceAwareInterface, LoggerAwa
         foreach ($this->getRepository()->exists()->fetchAll() as $doc) {
             $result[] = new ReferenceProductGroupEntity($doc->getData());
         }
+
         return $result;
     }
 
@@ -132,7 +132,7 @@ class ProductGroupModel implements AuthorizationServiceAwareInterface, LoggerAwa
      * Новая запись создается из данных предыдущей версии
      *
      * @param string $code код продуктовой группы для удаления
-     * @param array $data
+     * @param array  $data
      *
      * @throws \Doctrine\ODM\MongoDB\DocumentNotFoundException
      * @throws \ZfcRbac\Exception\UnauthorizedException

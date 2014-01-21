@@ -61,6 +61,7 @@ class ExternalCompanyIntersectModel
         $object->setLink($data['company']);
         $this->documentManager->persist($object);
         $this->documentManager->flush();
+
         return $object;
     }
 
@@ -72,6 +73,7 @@ class ExternalCompanyIntersectModel
             $object->setLink(null);
             $this->documentManager->persist($object);
             $this->documentManager->flush();
+
             return true;
         } else {
             return false;

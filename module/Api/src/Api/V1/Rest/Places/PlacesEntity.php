@@ -164,6 +164,7 @@ class PlacesEntity
 
         $result = $hydrator->extract($company);
         unset($result['id']);
+
         return $result;
     }
 
@@ -184,6 +185,7 @@ class PlacesEntity
 
         $result = $hydrator->extract($user);
         unset($result['id']);
+
         return $result;
     }
 }

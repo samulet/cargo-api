@@ -47,11 +47,13 @@ class CompanyUser extends BaseEntity
      * Set activated.
      *
      * @param string $activated
+     *
      * @return UserInterface
      */
     public function setActivated($activated)
     {
         $this->activated = $activated;
+
         return $this;
     }
 
@@ -60,9 +62,10 @@ class CompanyUser extends BaseEntity
         return $this->accUuid;
     }
 
-    function setAccId($accUuid)
+    public function setAccId($accUuid)
     {
         $this->accUuid = $accUuid;
+
         return $this;
     }
 
@@ -71,14 +74,16 @@ class CompanyUser extends BaseEntity
         return $this->userUuid;
     }
 
-    function setUserId($userUuid)
+    public function setUserId($userUuid)
     {
         $this->userUuid = $userUuid;
+
         return $this;
     }
     public function setCompanyUuid($companyUuid)
     {
         $this->companyUuid = $companyUuid;
+
         return $this;
     }
     public function getCompanyUuid()
@@ -91,14 +96,16 @@ class CompanyUser extends BaseEntity
         return $this->userRights;
     }
 
-    function setUserRights($userRights)
+    public function setUserRights($userRights)
     {
         $this->userRights = $userRights;
+
         return $this;
     }
     public function setUuid($uuid)
     {
         $this->uuid = $uuid;
+
         return $this;
     }
     public function getUuid()

@@ -3,10 +3,8 @@
 namespace Account\Entity;
 
 use Application\Entity\BaseEntity;
-use Application\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 
 /**
  *
@@ -57,6 +55,7 @@ class Account extends BaseEntity
     public function setActivated($activated)
     {
         $this->activated = (bool) $activated;
+
         return $this;
     }
 
@@ -80,6 +79,7 @@ class Account extends BaseEntity
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -91,6 +91,7 @@ class Account extends BaseEntity
     public function setUuid($uuid = null)
     {
         $this->uuid = $uuid;
+
         return $this;
     }
 

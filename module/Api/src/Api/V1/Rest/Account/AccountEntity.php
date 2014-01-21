@@ -44,6 +44,7 @@ class AccountEntity
         if (!empty($this->created)) {
             $this->created = $this->created->getTimestamp();
         }
+
         return $this;
 
     }
@@ -54,6 +55,7 @@ class AccountEntity
         foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
             $data[$key] = $this->$key;
         }
+
         return $data;
     }
 
@@ -70,6 +72,7 @@ class AccountEntity
     public function setUuid($account_uuid)
     {
         $this->uuid = $account_uuid;
+
         return $this;
     }
 
@@ -88,6 +91,7 @@ class AccountEntity
             );
             array_push($this->_embedded['companies'], $arr);
         }
+
         return $this;
     }
 

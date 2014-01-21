@@ -55,7 +55,7 @@ class AccountModel implements AuthorizationServiceAwareInterface, EventManagerAw
     /**
      * Создать или обновить аккаунт. Возвращает сущность созданного или модифицированого аккаунта
      *
-     * @param array $data записываемый массив данных
+     * @param array  $data записываемый массив данных
      * @param string $uuid uuid модифицируемого аккаунта
      *
      * @return \Account\Entity\Account|null
@@ -101,7 +101,7 @@ class AccountModel implements AuthorizationServiceAwareInterface, EventManagerAw
      * Новая запись создается из данных предыдущей версии
      *
      * @param string $uuid код продуктовой группы для удаления
-     * @param array $data
+     * @param array  $data
      *
      * @throws \Doctrine\ODM\MongoDB\DocumentNotFoundException
      * @throws \ZfcRbac\Exception\UnauthorizedException

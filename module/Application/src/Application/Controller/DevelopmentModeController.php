@@ -15,7 +15,7 @@ class DevelopmentModeController extends AbstractActionController
     public function setEventManager(EventManagerInterface $events)
     {
         parent::setEventManager($events);
-        $events->attach('dispatch', function($e) {
+        $events->attach('dispatch', function ($e) {
             $request = $e->getRequest();
             if (!$request instanceof ConsoleRequest) {
                 throw new \RuntimeException(sprintf(
@@ -24,6 +24,7 @@ class DevelopmentModeController extends AbstractActionController
                 ));
             }
         }, 100);
+
         return $this;
     }
 
@@ -34,6 +35,7 @@ class DevelopmentModeController extends AbstractActionController
             return "Already in development mode!\n";
         }
         copy('config/development.config.php.dist', 'config/development.config.php');
+
         return "You are now in development mode.\n";
     }
 
@@ -44,6 +46,7 @@ class DevelopmentModeController extends AbstractActionController
             return "Development mode was already disabled.\n";
         }
         unlink('config/development.config.php');
+
         return "Development mode is now disabled.\n";
     }
 }

@@ -1,9 +1,6 @@
 <?php
 namespace QueryBuilder;
 
-use Zend\Db\ResultSet\ResultSet;
-use QueryBuilder\Model\QueryBuilderModel;
-
 class Module
 {
     public function getAutoloaderConfig()

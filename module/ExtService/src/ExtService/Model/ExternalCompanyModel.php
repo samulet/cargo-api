@@ -1,16 +1,8 @@
 <?php
-
 namespace ExtService\Model;
 
-use Doctrine\MongoDB\Connection;
-use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-use Zend\Http\Client;
-use Zend\Http\ClientStatic;
-use ExtService\Entity\ExtServiceCompany;
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 
 class ExternalCompanyModel
 {
@@ -28,6 +20,7 @@ class ExternalCompanyModel
     /**
      * @param $data
      * @param null $uuid
+     *
      * @return mixed
      */
     public function createOrUpdate($data, $uuid = null)

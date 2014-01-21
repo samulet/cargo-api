@@ -9,7 +9,8 @@ class CompanyPartnerResource extends AbstractResourceListener
     /**
      * Create a resource
      *
-     * @param  mixed $data
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function create($data)
@@ -20,7 +21,8 @@ class CompanyPartnerResource extends AbstractResourceListener
     /**
      * Delete a resource
      *
-     * @param  mixed $id
+     * @param mixed $id
+     *
      * @return ApiProblem|mixed
      */
     public function delete($id)
@@ -31,7 +33,8 @@ class CompanyPartnerResource extends AbstractResourceListener
     /**
      * Delete a collection, or members of a collection
      *
-     * @param  mixed $data
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function deleteList($data)
@@ -42,7 +45,8 @@ class CompanyPartnerResource extends AbstractResourceListener
     /**
      * Fetch a resource
      *
-     * @param  mixed $id
+     * @param mixed $id
+     *
      * @return ApiProblem|mixed
      */
     public function fetch($id)
@@ -53,7 +57,8 @@ class CompanyPartnerResource extends AbstractResourceListener
     /**
      * Fetch all or a subset of resources
      *
-     * @param  array $params
+     * @param array $params
+     *
      * @return ApiProblem|mixed
      */
     public function fetchAll($params = array())
@@ -64,8 +69,9 @@ class CompanyPartnerResource extends AbstractResourceListener
     /**
      * Patch (partial in-place update) a resource
      *
-     * @param  mixed $id
-     * @param  mixed $data
+     * @param mixed $id
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function patch($id, $data)
@@ -76,7 +82,8 @@ class CompanyPartnerResource extends AbstractResourceListener
     /**
      * Replace a collection or members of a collection
      *
-     * @param  mixed $data
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function replaceList($data)
@@ -87,8 +94,9 @@ class CompanyPartnerResource extends AbstractResourceListener
     /**
      * Update a resource
      *
-     * @param  mixed $id
-     * @param  mixed $data
+     * @param mixed $id
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function update($id, $data)

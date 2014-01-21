@@ -1,7 +1,6 @@
 <?php
 namespace Api\Factory;
 
-use Api\V1\Rest\AccessDenied\AccessDeniedResource;
 use Api\V1\Rest\Reference\ReferenceResource as Controller;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;

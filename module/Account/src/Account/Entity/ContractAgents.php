@@ -56,11 +56,13 @@ class ContractAgents extends BaseEntity
      * Set Description.
      *
      * @param string $description
+     *
      * @return UserInterface
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -78,11 +80,13 @@ class ContractAgents extends BaseEntity
      * Set activated.
      *
      * @param string $activated
+     *
      * @return UserInterface
      */
     public function setActivated($activated)
     {
         $this->activated = $activated;
+
         return $this;
     }
 
@@ -94,6 +98,7 @@ class ContractAgents extends BaseEntity
     public function setUUID($uuid)
     {
         $this->uuid = $uuid;
+
         return $this;
     }
 
@@ -105,6 +110,7 @@ class ContractAgents extends BaseEntity
     public function setRequisites($requisites)
     {
         $this->requisites = $requisites;
+
         return $this;
     }
 
@@ -116,6 +122,7 @@ class ContractAgents extends BaseEntity
     public function setAddressFact($addressFact)
     {
         $this->addressFact = $addressFact;
+
         return $this;
     }
 
@@ -127,6 +134,7 @@ class ContractAgents extends BaseEntity
     public function setAddressReg($addressReg)
     {
         $this->addressReg = $addressReg;
+
         return $this;
     }
 
@@ -138,6 +146,7 @@ class ContractAgents extends BaseEntity
     public function setGeneralManager($generalManager)
     {
         $this->generalManager = $generalManager;
+
         return $this;
     }
 
@@ -149,6 +158,7 @@ class ContractAgents extends BaseEntity
     public function setTelephone($telephone)
     {
         $this->telephone = $telephone;
+
         return $this;
     }
 
@@ -160,6 +170,7 @@ class ContractAgents extends BaseEntity
     public function setEmail($email)
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -171,6 +182,7 @@ class ContractAgents extends BaseEntity
     public function setOwnerOrgId($ownerAccId)
     {
         $this->ownerAccId = $ownerAccId;
+
         return $this;
     }
 
@@ -183,11 +195,13 @@ class ContractAgents extends BaseEntity
      * Set type.
      *
      * @param string $type
+     *
      * @return AccountInterface
      */
     public function setType($type)
     {
         $this->type = $type;
+
         return $this;
     }
 
@@ -200,12 +214,14 @@ class ContractAgents extends BaseEntity
      * Set name.
      *
      * @param string $name
+     *
      * @return AccountInterface
      */
 
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 }

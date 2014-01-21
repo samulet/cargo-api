@@ -175,6 +175,7 @@ class Company extends BaseEntity
     public function setUuid($uuid = null)
     {
         $this->uuid = $uuid;
+
         return $this;
     }
 
@@ -202,11 +203,13 @@ class Company extends BaseEntity
      * Set activated.
      *
      * @param string $activated
+     *
      * @return UserInterface
      */
     public function setActivated($activated)
     {
         $this->activated = $activated;
+
         return $this;
     }
 
@@ -218,9 +221,9 @@ class Company extends BaseEntity
     public function setOwnerAccId($ownerAccId)
     {
         $this->ownerAccId = $ownerAccId;
+
         return $this;
     }
-
 
     public function getName()
     {
@@ -231,12 +234,14 @@ class Company extends BaseEntity
      * Set name.
      *
      * @param string $name
+     *
      * @return AccountInterface
      */
 
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -248,6 +253,7 @@ class Company extends BaseEntity
     public function setShort($short)
     {
         $this->short = $short;
+
         return $this;
     }
 
@@ -259,6 +265,7 @@ class Company extends BaseEntity
     public function setProperty($property)
     {
         $this->property = $property;
+
         return $this;
     }
 
@@ -270,6 +277,7 @@ class Company extends BaseEntity
     public function setInn($inn)
     {
         $this->inn = $inn;
+
         return $this;
     }
 
@@ -281,6 +289,7 @@ class Company extends BaseEntity
     public function setOgrn($ogrn)
     {
         $this->ogrn = $ogrn;
+
         return $this;
     }
 
@@ -292,6 +301,7 @@ class Company extends BaseEntity
     public function setKpp($kpp)
     {
         $this->kpp = $kpp;
+
         return $this;
     }
 
@@ -303,6 +313,7 @@ class Company extends BaseEntity
     public function setTax($tax)
     {
         $this->tax = $tax;
+
         return $this;
     }
 
@@ -314,6 +325,7 @@ class Company extends BaseEntity
     public function setAddresses($addresses)
     {
         $this->addresses = $addresses;
+
         return $this;
     }
 
@@ -325,6 +337,7 @@ class Company extends BaseEntity
     public function setContacts($contacts)
     {
         $this->contacts = $contacts;
+
         return $this;
     }
 
@@ -336,6 +349,7 @@ class Company extends BaseEntity
     public function setFormingMethod($formingMethod)
     {
         $this->formingMethod = $formingMethod;
+
         return $this;
     }
 
@@ -347,6 +361,7 @@ class Company extends BaseEntity
     public function setCapital($capital)
     {
         $this->capital = $capital;
+
         return $this;
     }
 
@@ -358,6 +373,7 @@ class Company extends BaseEntity
     public function setFounderCount($founderCount)
     {
         $this->founderCount = $founderCount;
+
         return $this;
     }
 
@@ -369,6 +385,7 @@ class Company extends BaseEntity
     public function setFounders($founders)
     {
         $this->founders = $founders;
+
         return $this;
     }
 
@@ -380,6 +397,7 @@ class Company extends BaseEntity
     public function setAuthorizedPersons($authorizedPersons)
     {
         $this->authorizedPersons = $authorizedPersons;
+
         return $this;
     }
 
@@ -391,6 +409,7 @@ class Company extends BaseEntity
     public function setOkved($okved)
     {
         $this->okved = $okved;
+
         return $this;
     }
 
@@ -402,6 +421,7 @@ class Company extends BaseEntity
     public function setPfr($pfr)
     {
         $this->pfr = $pfr;
+
         return $this;
     }
 
@@ -413,6 +433,7 @@ class Company extends BaseEntity
     public function setFms($fms)
     {
         $this->fms = $fms;
+
         return $this;
     }
 
@@ -424,6 +445,7 @@ class Company extends BaseEntity
     public function setLicenses($licenses)
     {
         $this->licenses = $licenses;
+
         return $this;
     }
 
@@ -435,6 +457,7 @@ class Company extends BaseEntity
     public function setApplicants($applicants)
     {
         $this->applicants = $applicants;
+
         return $this;
     }
 
@@ -446,6 +469,7 @@ class Company extends BaseEntity
     public function setAccounts($accounts)
     {
         $this->accounts = $accounts;
+
         return $this;
     }
 
@@ -457,6 +481,7 @@ class Company extends BaseEntity
     public function setPersons($persons)
     {
         $this->persons = $persons;
+
         return $this;
     }
 
@@ -468,6 +493,7 @@ class Company extends BaseEntity
     public function setSites($sites)
     {
         $this->sites = $sites;
+
         return $this;
     }
 

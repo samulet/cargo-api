@@ -17,7 +17,8 @@ class ProfileStatusResource extends AbstractResourceListener
     /**
      * Create a resource
      *
-     * @param  mixed $data
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function create($data)
@@ -28,7 +29,8 @@ class ProfileStatusResource extends AbstractResourceListener
     /**
      * Delete a resource
      *
-     * @param  mixed $id
+     * @param mixed $id
+     *
      * @return ApiProblem|mixed
      */
     public function delete($id)
@@ -39,7 +41,8 @@ class ProfileStatusResource extends AbstractResourceListener
     /**
      * Delete a collection, or members of a collection
      *
-     * @param  mixed $data
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function deleteList($data)
@@ -50,7 +53,8 @@ class ProfileStatusResource extends AbstractResourceListener
     /**
      * Fetch a resource
      *
-     * @param  mixed $id
+     * @param mixed $id
+     *
      * @return ApiProblem|mixed
      */
     public function fetch($id)
@@ -66,7 +70,8 @@ class ProfileStatusResource extends AbstractResourceListener
     /**
      * Fetch all or a subset of resources
      *
-     * @param  array $params
+     * @param array $params
+     *
      * @return ApiProblem|mixed
      */
     public function fetchAll($params = array())
@@ -77,8 +82,9 @@ class ProfileStatusResource extends AbstractResourceListener
     /**
      * Patch (partial in-place update) a resource
      *
-     * @param  mixed $id
-     * @param  mixed $data
+     * @param mixed $id
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function patch($id, $data)
@@ -89,7 +95,8 @@ class ProfileStatusResource extends AbstractResourceListener
     /**
      * Replace a collection or members of a collection
      *
-     * @param  mixed $data
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function replaceList($data)
@@ -100,8 +107,9 @@ class ProfileStatusResource extends AbstractResourceListener
     /**
      * Update a resource
      *
-     * @param  mixed $id
-     * @param  mixed $data
+     * @param mixed $id
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function update($id, $data)

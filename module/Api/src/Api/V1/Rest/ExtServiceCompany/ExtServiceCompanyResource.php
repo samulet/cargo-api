@@ -2,7 +2,6 @@
 namespace Api\V1\Rest\ExtServiceCompany;
 
 use ExtService\Model\ExternalCompanyImportModel;
-use User\Entity\User;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
@@ -22,7 +21,8 @@ class ExtServiceCompanyResource extends AbstractResourceListener
     /**
      * Create a resource
      *
-     * @param  mixed $data
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function create($data)
@@ -33,7 +33,8 @@ class ExtServiceCompanyResource extends AbstractResourceListener
     /**
      * Delete a resource
      *
-     * @param  mixed $id
+     * @param mixed $id
+     *
      * @return ApiProblem|mixed
      */
     public function delete($id)
@@ -44,7 +45,8 @@ class ExtServiceCompanyResource extends AbstractResourceListener
     /**
      * Delete a collection, or members of a collection
      *
-     * @param  mixed $data
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function deleteList($data)
@@ -55,7 +57,8 @@ class ExtServiceCompanyResource extends AbstractResourceListener
     /**
      * Fetch a resource
      *
-     * @param  mixed $id
+     * @param mixed $id
+     *
      * @return ApiProblem|mixed
      */
     public function fetch($id)
@@ -66,7 +69,8 @@ class ExtServiceCompanyResource extends AbstractResourceListener
     /**
      * Fetch all or a subset of resources
      *
-     * @param  array $params
+     * @param array $params
+     *
      * @return ApiProblem|array
      */
     public function fetchAll($params = array())
@@ -88,8 +92,9 @@ class ExtServiceCompanyResource extends AbstractResourceListener
     /**
      * Patch (partial in-place update) a resource
      *
-     * @param  mixed $id
-     * @param  mixed $data
+     * @param mixed $id
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function patch($id, $data)
@@ -100,7 +105,8 @@ class ExtServiceCompanyResource extends AbstractResourceListener
     /**
      * Replace a collection or members of a collection
      *
-     * @param  mixed $data
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function replaceList($data)
@@ -111,8 +117,9 @@ class ExtServiceCompanyResource extends AbstractResourceListener
     /**
      * Update a resource
      *
-     * @param  mixed $id
-     * @param  mixed $data
+     * @param mixed $id
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function update($id, $data)

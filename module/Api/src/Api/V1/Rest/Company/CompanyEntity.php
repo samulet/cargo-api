@@ -49,6 +49,7 @@ class CompanyEntity
                 }
             }
         }
+
         return $this;
 
     }
@@ -59,6 +60,7 @@ class CompanyEntity
         foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
             $data[$key] = $this->$key;
         }
+
         return $data;
     }
 
@@ -70,6 +72,7 @@ class CompanyEntity
     public function setUuid($company_uuid = null)
     {
         $this->uuid = $company_uuid;
+
         return $this;
     }
 
@@ -91,6 +94,7 @@ class CompanyEntity
     public function setOwnerAccId($ownerAccId)
     {
         $this->ownerAccId = $ownerAccId;
+
         return $this;
     }
 
@@ -102,6 +106,7 @@ class CompanyEntity
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -113,6 +118,7 @@ class CompanyEntity
     public function setShort($short)
     {
         $this->short = $short;
+
         return $this;
     }
 
@@ -124,6 +130,7 @@ class CompanyEntity
     public function setProperty($property)
     {
         $this->property = $property;
+
         return $this;
     }
 
@@ -135,6 +142,7 @@ class CompanyEntity
     public function setInn($inn)
     {
         $this->inn = $inn;
+
         return $this;
     }
 
@@ -146,6 +154,7 @@ class CompanyEntity
     public function setOgrn($ogrn)
     {
         $this->ogrn = $ogrn;
+
         return $this;
     }
 
@@ -157,6 +166,7 @@ class CompanyEntity
     public function setKpp($kpp)
     {
         $this->kpp = $kpp;
+
         return $this;
     }
 
@@ -168,6 +178,7 @@ class CompanyEntity
     public function setTax($tax)
     {
         $this->tax = $tax;
+
         return $this;
     }
 
@@ -179,6 +190,7 @@ class CompanyEntity
     public function setAddresses($addresses)
     {
         $this->addresses = $addresses;
+
         return $this;
     }
 
@@ -190,6 +202,7 @@ class CompanyEntity
     public function setContacts($contacts)
     {
         $this->contacts = $contacts;
+
         return $this;
     }
 
@@ -201,6 +214,7 @@ class CompanyEntity
     public function setFormingMethod($formingMethod)
     {
         $this->formingMethod = $formingMethod;
+
         return $this;
     }
 
@@ -212,6 +226,7 @@ class CompanyEntity
     public function setCapital($capital)
     {
         $this->capital = $capital;
+
         return $this;
     }
 
@@ -223,6 +238,7 @@ class CompanyEntity
     public function setFounderCount($founderCount)
     {
         $this->founderCount = $founderCount;
+
         return $this;
     }
 
@@ -234,6 +250,7 @@ class CompanyEntity
     public function setFounders($founders)
     {
         $this->founders = $founders;
+
         return $this;
     }
 
@@ -245,6 +262,7 @@ class CompanyEntity
     public function setAuthorizedPersons($authorizedPersons)
     {
         $this->authorizedPersons = $authorizedPersons;
+
         return $this;
     }
 
@@ -256,6 +274,7 @@ class CompanyEntity
     public function setOkved($okved)
     {
         $this->okved = $okved;
+
         return $this;
     }
 
@@ -267,6 +286,7 @@ class CompanyEntity
     public function setPfr($pfr)
     {
         $this->pfr = $pfr;
+
         return $this;
     }
 
@@ -278,6 +298,7 @@ class CompanyEntity
     public function setFms($fms)
     {
         $this->fms = $fms;
+
         return $this;
     }
 
@@ -289,6 +310,7 @@ class CompanyEntity
     public function setLicenses($licenses)
     {
         $this->licenses = $licenses;
+
         return $this;
     }
 
@@ -300,6 +322,7 @@ class CompanyEntity
     public function setApplicants($applicants)
     {
         $this->applicants = $applicants;
+
         return $this;
     }
 
@@ -311,6 +334,7 @@ class CompanyEntity
     public function setAccounts($accounts)
     {
         $this->accounts = $accounts;
+
         return $this;
     }
 
@@ -322,6 +346,7 @@ class CompanyEntity
     public function setPersons($persons)
     {
         $this->persons = $persons;
+
         return $this;
     }
 
@@ -333,6 +358,7 @@ class CompanyEntity
     public function setSites($sites)
     {
         $this->sites = $sites;
+
         return $this;
     }
 }

@@ -2,7 +2,6 @@
 namespace Place\Entity;
 
 use Application\Entity\BaseEntity;
-use Doctrine\ODM\MongoDB\Id\UuidGenerator;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Mapping\Annotation as Gedmo;
 

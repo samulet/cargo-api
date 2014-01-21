@@ -53,6 +53,7 @@ class ProfileEntity
     public function setUuid($profile_uuid)
     {
         $this->uuid = $profile_uuid;
+
         return $this;
     }
 
@@ -64,6 +65,7 @@ class ProfileEntity
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -75,6 +77,7 @@ class ProfileEntity
     public function setDocs($docs)
     {
         $this->docs = $docs;
+
         return $this;
     }
 
@@ -86,6 +89,7 @@ class ProfileEntity
     public function setSnils($snils)
     {
         $this->snils = $snils;
+
         return $this;
     }
 
@@ -97,6 +101,7 @@ class ProfileEntity
     public function setInn($inn)
     {
         $this->inn = $inn;
+
         return $this;
     }
 
@@ -108,6 +113,7 @@ class ProfileEntity
     public function setPhone($phone)
     {
         $this->phone = $phone;
+
         return $this;
     }
 
@@ -119,6 +125,7 @@ class ProfileEntity
     public function setSite($site)
     {
         $this->site = $site;
+
         return $this;
     }
 
@@ -130,6 +137,7 @@ class ProfileEntity
     public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
+
         return $this;
     }
 
@@ -141,6 +149,7 @@ class ProfileEntity
     public function setSign($sign)
     {
         $this->sign = $sign;
+
         return $this;
     }
 
@@ -152,6 +161,7 @@ class ProfileEntity
     public function setSocial($social)
     {
         $this->social = $social;
+
         return $this;
     }
 
@@ -185,6 +195,7 @@ class ProfileEntity
     public function setUsername($username)
     {
         $this->username = $username;
+
         return $this;
     }
 
@@ -208,6 +219,7 @@ class ProfileEntity
     public function setEmail($email)
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -231,6 +243,7 @@ class ProfileEntity
     public function setDisplayName($displayName)
     {
         $this->displayName = $displayName;
+
         return $this;
     }
 
@@ -254,6 +267,7 @@ class ProfileEntity
     public function setPassword($password)
     {
         $this->password = $password;
+
         return $this;
     }
 
@@ -270,6 +284,7 @@ class ProfileEntity
     public function setStatus($status)
     {
         $this->status = $status;
+
         return $this;
     }
 
@@ -293,6 +308,7 @@ class ProfileEntity
     public function setState($state)
     {
         $this->state = $state;
+
         return $this;
     }
 
@@ -349,6 +365,7 @@ class ProfileEntity
         foreach (array_keys(get_class_vars(__CLASS__)) as $key) {
             $data[$key] = $this->$key;
         }
+
         return $data;
     }
 

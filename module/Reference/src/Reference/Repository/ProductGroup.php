@@ -16,6 +16,7 @@ class ProductGroup extends DocumentRepository
     public function exists()
     {
         $this->getQueryBuilder()->field('deleted')->equals(null);
+
         return $this;
     }
 
@@ -27,6 +28,7 @@ class ProductGroup extends DocumentRepository
     public function code($value)
     {
         $this->getQueryBuilder()->field('code')->equals($value);
+
         return $this;
     }
 

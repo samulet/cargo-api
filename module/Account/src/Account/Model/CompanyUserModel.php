@@ -10,12 +10,10 @@
 namespace Account\Model;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\ODM\MongoDB\Id\UuidGenerator;
-use Zend\Crypt\Password\Bcrypt;
 
-class CompanyUserModel {
-
+class CompanyUserModel
+{
     protected $documentManager;
     protected $uuidGenerator;
     protected $queryBuilderModel;
@@ -26,7 +24,6 @@ class CompanyUserModel {
         $this->documentManager=$documentManager;
         $this->queryBuilderModel=$queryBuilderModel;
     }
-
 
     public function addRole($userId, $roles, $comUuid)
     {
@@ -49,7 +46,6 @@ class CompanyUserModel {
         }
     }
 
-
     public function getRoles($userId, $comUuid)
     {
         if (empty($comUuid)) {
@@ -61,18 +57,20 @@ class CompanyUserModel {
         $rolesObject = $objectManager->getRepository('Account\Entity\CompanyUser')->findOneBy(
             array('userId' => new \MongoId($userId), 'companyId' => new \MongoId($comId))
         );
+
         return $rolesObject->roles;
     }
 
     /**
      * Добавил или обновить юзера в компании. Возвращает сущность модифицированого юзера в компании.
      *
-     * @param array $data записываемый массив данных
+     * @param array  $data записываемый массив данных
      * @param string $uuid uuid модифицируемого юзера
      *
      * @return \Account\Entity\Company|null
      */
-    public function createOrUpdate($data, $uuid = null) {
+    public function createOrUpdate($data, $uuid = null)
+    {
         return $this->queryBuilderModel->fetch('Account\Entity\CompanyUser',$data,$uuid);
     }
 

@@ -37,6 +37,7 @@ class ProductGroup extends BaseEntity
     public function setCode($code)
     {
         $this->code = $code;
+
         return $this;
     }
 
@@ -48,6 +49,7 @@ class ProductGroup extends BaseEntity
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this;
     }
 }

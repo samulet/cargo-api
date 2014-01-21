@@ -56,7 +56,7 @@ class UserModel implements LoggerAwareInterface
 
     /**
      * @param string $uuid
-     * @param array $data
+     * @param array  $data
      *
      * @return \User\Entity\User
      */
@@ -117,6 +117,7 @@ class UserModel implements LoggerAwareInterface
         $user = $this->queryBuilderModel->fetch('User\Entity\User', array('uuid' => $uuid));
         $status = $user->getStatus();
         $status['uuid'] = $user->getUuid();
+
         return $status;
     }
 

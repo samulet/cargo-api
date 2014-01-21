@@ -8,9 +8,9 @@ class Place extends DocumentRepository
     /**
      * Возвращает список Пунктов без пометки "удалено"
      *
-     * @param array $sort критерии сортировки возвращаемых записей
+     * @param array    $sort  критерии сортировки возвращаемых записей
      * @param int|null $limit количество возращаемых данных
-     * @param int|null $skip количество пропускаемых записей
+     * @param int|null $skip  количество пропускаемых записей
      *
      * @throws \InvalidArgumentException
      * @return \Doctrine\ODM\MongoDB\Cursor

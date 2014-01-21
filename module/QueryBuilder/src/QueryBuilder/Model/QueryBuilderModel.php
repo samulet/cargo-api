@@ -24,6 +24,7 @@ class QueryBuilderModel
         foreach ($searchArray as $key => $value) {
             $qb->field($key)->equals($value);
         }
+
         return $qb;
     }
 
@@ -32,6 +33,7 @@ class QueryBuilderModel
         foreach ($searchArray as $key => $value) {
             $qb->field($key)->set($value);
         }
+
         return $qb;
     }
 
@@ -71,6 +73,7 @@ class QueryBuilderModel
         foreach ($resultArray as &$el) {
             $el = unserialize($el);
         }
+
         return $resultArray;
     }
 
@@ -80,6 +83,7 @@ class QueryBuilderModel
         foreach ($items as $item) {
             array_push($resultArray, $item->getData());
         }
+
         return $resultArray;
     }
 
@@ -87,8 +91,8 @@ class QueryBuilderModel
      * Создать или обновить айтем. Возвращает сущность созданного или модифицированого айтема
      *
      * @param string $entityLink путь к айтему
-     * @param array $data записываемый массив данных
-     * @param string $uuid uuid модифицируемого аккаунта
+     * @param array  $data       записываемый массив данных
+     * @param string $uuid       uuid модифицируемого аккаунта
      *
      * @return ?|null
      */
@@ -110,6 +114,7 @@ class QueryBuilderModel
         $item = $hydrator->hydrate($data, $item);
         $this->documentManager->persist($item);
         $this->documentManager->flush();
+
         return $item;
     }
 
@@ -117,7 +122,7 @@ class QueryBuilderModel
      * Возвращает сущность, определяемую по $entityLink, однозначность результата дает указание uuid в массиве findParams
      *
      * @param string $entityLink линк на стандартизованную сущность
-     * @param array $findParams ассоциативный массив
+     * @param array  $findParams ассоциативный массив
      *
      * @return ?|null
      */
@@ -135,7 +140,7 @@ class QueryBuilderModel
      * Возвращает сущность, определяемую по $entityLink
      *
      * @param string $entityLink линк на стандартизованную сущность
-     * @param array $findParams ассоциативный массив
+     * @param array  $findParams ассоциативный массив
      *
      * @return array(?)|null
      */
@@ -157,6 +162,7 @@ class QueryBuilderModel
         try {
             $this->documentManager->remove($qb3);
             $this->documentManager->flush();
+
             return $findParams;
         } catch (Exception $e) {
             return null;
@@ -166,14 +172,17 @@ class QueryBuilderModel
     public function fillEntity($entityLink, $objectNew, $objectOld)
     {
         $hydrator = new DoctrineHydrator($this->documentManager, $entityLink);
+
         return $hydrator->hydrate($hydrator->extract($objectOld), $objectNew);
     }
 
     /**
      * Convert under_score type array's keys to camelCase type array's keys
-     * @param   array $array array to convert
-     * @param   array $arrayHolder parent array holder for recursive array
-     * @return  array   camelCase array
+     *
+     * @param array $array       array to convert
+     * @param array $arrayHolder parent array holder for recursive array
+     *
+     * @return array camelCase array
      */
     public function camelCaseKeys($array, $arrayHolder = array())
     {
@@ -194,6 +203,7 @@ class QueryBuilderModel
                 $camelCaseArray[$newKey] = $this->camelCaseKeys($val, $camelCaseArray[$newKey]);
             }
         }
+
         return $camelCaseArray;
     }
 

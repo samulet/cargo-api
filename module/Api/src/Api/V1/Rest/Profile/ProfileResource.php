@@ -2,7 +2,6 @@
 namespace Api\V1\Rest\Profile;
 
 use Api\Entity\ApiStaticErrorList;
-use User\Identity\IdentityProvider;
 use User\Model\UserModel;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use ZF\ApiProblem\ApiProblem;
@@ -23,7 +22,7 @@ class ProfileResource extends AbstractResourceListener
     /**
      * Create a resource
      *
-     * @param  mixed $data
+     * @param mixed $data
      *
      * @return ProfileEntity
      */
@@ -32,6 +31,7 @@ class ProfileResource extends AbstractResourceListener
         try {
             $entity = $this->userModel->create(get_object_vars($data));
             $profileEntity = new ProfileEntity($entity->getData());
+
             return $profileEntity;
         } catch (\Exception $e) {
             error_log($e);
@@ -42,7 +42,7 @@ class ProfileResource extends AbstractResourceListener
     /**
      * Delete a resource
      *
-     * @param  mixed $id
+     * @param mixed $id
      *
      * @return ApiProblem|mixed
      */
@@ -54,7 +54,7 @@ class ProfileResource extends AbstractResourceListener
     /**
      * Delete a collection, or members of a collection
      *
-     * @param  mixed $data
+     * @param mixed $data
      *
      * @return ApiProblem|mixed
      */
@@ -66,7 +66,7 @@ class ProfileResource extends AbstractResourceListener
     /**
      * Fetch a resource
      *
-     * @param  mixed $id
+     * @param mixed $id
      *
      * @return ApiProblem|mixed
      */
@@ -83,7 +83,8 @@ class ProfileResource extends AbstractResourceListener
     /**
      * Fetch all or a subset of resources
      *
-     * @param  array $params
+     * @param array $params
+     *
      * @return ApiProblem|mixed
      */
     public function fetchAll($params = array())
@@ -115,20 +116,23 @@ class ProfileResource extends AbstractResourceListener
     /**
      * Patch (partial in-place update) a resource
      *
-     * @param  mixed $id
-     * @param  mixed $data
+     * @param mixed $id
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function patch($id, $data)
     {
         $entity = $this->userModel->update($id, get_object_vars($data));
+
         return new ProfileEntity($entity->getData());
     }
 
     /**
      * Replace a collection or members of a collection
      *
-     * @param  mixed $data
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function replaceList($data)
@@ -139,8 +143,9 @@ class ProfileResource extends AbstractResourceListener
     /**
      * Update a resource
      *
-     * @param  mixed $id
-     * @param  mixed $data
+     * @param mixed $id
+     * @param mixed $data
+     *
      * @return ApiProblem|mixed
      */
     public function update($id, $data)

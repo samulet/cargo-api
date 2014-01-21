@@ -10,6 +10,7 @@ class ProductGroupModelFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $documentManager = $serviceLocator->get('doctrine.documentmanager.odm_default');
+
         return new Model($documentManager);
     }
 }

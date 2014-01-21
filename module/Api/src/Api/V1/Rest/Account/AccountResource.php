@@ -41,7 +41,7 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
     /**
      * Create a resource
      *
-     * @param  mixed $data
+     * @param mixed $data
      *
      * @throws \ZfcRbac\Exception\UnauthorizedException
      * @return ApiProblem|AccountEntity
@@ -59,7 +59,7 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
     /**
      * Delete a resource
      *
-     * @param  mixed $id
+     * @param mixed $id
      *
      * @return ApiProblem|mixed
      */
@@ -76,7 +76,7 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
     /**
      * Delete a collection, or members of a collection
      *
-     * @param  mixed $data
+     * @param mixed $data
      *
      * @return ApiProblem|mixed
      */
@@ -88,7 +88,7 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
     /**
      * Fetch a resource
      *
-     * @param  mixed $id
+     * @param mixed $id
      *
      * @return ApiProblem|mixed
      */
@@ -108,7 +108,7 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
     /**
      * Fetch all or a subset of resources
      *
-     * @param  array $params
+     * @param array $params
      *
      * @return ApiProblem|mixed
      */
@@ -134,21 +134,22 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
     /**
      * Patch (partial in-place update) a resource
      *
-     * @param  mixed $id
-     * @param  mixed $data
+     * @param mixed $id
+     * @param mixed $data
      *
      * @return ApiProblem|mixed
      */
     public function patch($id, $data)
     {
         $entity = $this->accountModel->update($id, get_object_vars($data));
+
         return new AccountEntity($entity->getData());
     }
 
     /**
      * Replace a collection or members of a collection
      *
-     * @param  mixed $data
+     * @param mixed $data
      *
      * @return ApiProblem|mixed
      */
@@ -160,8 +161,8 @@ class AccountResource extends AbstractResourceListener implements AuthorizationS
     /**
      * Update a resource
      *
-     * @param  mixed $id
-     * @param  mixed $data
+     * @param mixed $id
+     * @param mixed $data
      *
      * @return ApiProblem|mixed
      */

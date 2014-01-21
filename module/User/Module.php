@@ -1,7 +1,6 @@
 <?php
 namespace User;
 
-use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
 class Module

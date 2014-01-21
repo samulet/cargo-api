@@ -2,7 +2,6 @@
 namespace Api\V1\Rest\AccountCompany;
 
 use Api\Entity\ApiStaticErrorList;
-use Api\V1\Rest\Company;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use Zend\Stdlib\Parameters;
 use ZF\ApiProblem\ApiProblem;
@@ -28,7 +27,7 @@ class AccountCompanyResource extends AbstractResourceListener
     /**
      * Create a resource
      *
-     * @param  mixed $data
+     * @param mixed $data
      *
      * @return ApiProblem
      */
@@ -47,7 +46,7 @@ class AccountCompanyResource extends AbstractResourceListener
     /**
      * Delete a resource
      *
-     * @param  mixed $id
+     * @param mixed $id
      *
      * @return ApiProblem
      */
@@ -59,7 +58,7 @@ class AccountCompanyResource extends AbstractResourceListener
     /**
      * Delete a collection, or members of a collection
      *
-     * @param  mixed $data
+     * @param mixed $data
      *
      * @return ApiProblem
      */
@@ -71,7 +70,7 @@ class AccountCompanyResource extends AbstractResourceListener
     /**
      * Fetch a resource
      *
-     * @param  mixed $id
+     * @param mixed $id
      *
      * @return ApiProblem
      */
@@ -112,8 +111,8 @@ class AccountCompanyResource extends AbstractResourceListener
     /**
      * Patch (partial in-place update) a resource
      *
-     * @param  mixed $id
-     * @param  mixed $data
+     * @param mixed $id
+     * @param mixed $data
      *
      * @return ApiProblem
      */
@@ -125,7 +124,7 @@ class AccountCompanyResource extends AbstractResourceListener
     /**
      * Replace a collection or members of a collection
      *
-     * @param  mixed $data
+     * @param mixed $data
      *
      * @return ApiProblem
      */
@@ -137,8 +136,8 @@ class AccountCompanyResource extends AbstractResourceListener
     /**
      * Update a resource
      *
-     * @param  mixed $id
-     * @param  mixed $data
+     * @param mixed $id
+     * @param mixed $data
      *
      * @return ApiProblem
      */

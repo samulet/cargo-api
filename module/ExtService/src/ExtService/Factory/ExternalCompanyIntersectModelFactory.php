@@ -1,8 +1,6 @@
 <?php
-
 namespace ExtService\Factory;
 
-use Zend\Log\Logger;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use ExtService\Model\ExternalCompanyIntersectModel;
