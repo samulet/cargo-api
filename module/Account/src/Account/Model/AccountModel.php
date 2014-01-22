@@ -25,6 +25,10 @@ class AccountModel implements AuthorizationServiceAwareInterface, EventManagerAw
     const PERMISSION_DELETE = 'account.delete';
     const PERMISSION_UPDATE = 'account.update';
     const PERMISSION_READ   = 'account.read';
+    const PERMISSION_SYSTEM_CREATE = 'account.create.all';
+    const PERMISSION_SYSTEM_DELETE = 'account.delete.all';
+    const PERMISSION_SYSTEM_UPDATE = 'account.update.all';
+    const PERMISSION_SYSTEM_READ   = 'account.read.all';
 
     /**
      * @var \Doctrine\ODM\MongoDB\DocumentManager
@@ -111,20 +115,16 @@ class AccountModel implements AuthorizationServiceAwareInterface, EventManagerAw
     {
         $this->getLogger()->debug('Change account', ['uuid' => $uuid, 'data' => $data, '_method' => __METHOD__]);
 
-        if (!$this->getAuthorizationService()->isGranted(self::PERMISSION_UPDATE)) {
-            $this->getLogger()->debug('Insufficient rights to change a record', ['uuid' => $uuid, '_method' => __METHOD__]);
-            throw new UnauthorizedException('Insufficient rights to change an account');
-        }
-
         /** @var AccountEntity $entity */
         $entity = $this->getRepository()->exists()->uuid($uuid)->fetchOne();
         if (empty($entity)) {
             $this->getLogger()->debug('Account not found', ['uuid' => $uuid, '_method' => __METHOD__]);
             throw DocumentNotFoundException::documentNotFound('Account\\Entity\\Account', $uuid);
         }
-        $roles = $this->authorizationService->getIdentityRoles();
-        if (!in_array('system', $roles) && !in_array('account.admin.' . $uuid, $roles)) {
-            throw new UnauthorizedException('Insufficient permissions to perform the account change', 403);
+
+        if (!$this->getAuthorizationService()->isGranted(self::PERMISSION_UPDATE, $entity)) {
+            $this->getLogger()->debug('Insufficient rights to change a record', ['uuid' => $uuid, '_method' => __METHOD__]);
+            throw new UnauthorizedException('Insufficient rights to change an account', 403);
         }
 
         $newEntity = new AccountEntity();
@@ -152,21 +152,14 @@ class AccountModel implements AuthorizationServiceAwareInterface, EventManagerAw
      */
     public function fetch($uuid)
     {
-        if (!$this->authorizationService->isGranted(self::PERMISSION_READ)) {
-            throw new UnauthorizedException('Insufficient permissions to perform the account fetching', 403);
-        }
-
         /** @var \Account\Entity\Account $entity */
         $entity = $this->getRepository()->exists()->active()->uuid($uuid)->fetchOne();
         if (empty($entity)) {
             return null;
         }
 
-        if (!in_array('system', $this->authorizationService->getIdentityRoles())) {
-            $user = $this->provider->getIdentity()->getUuid();
-            if (!in_array($user, $entity->getStaff())) {
-                throw new UnauthorizedException('Insufficient permissions to perform the account fetching', 403);
-            }
+        if (!$this->authorizationService->isGranted(self::PERMISSION_READ, $entity)) {
+            throw new UnauthorizedException('Insufficient permissions to perform the account fetching', 403);
         }
 
         return $entity;
@@ -188,7 +181,7 @@ class AccountModel implements AuthorizationServiceAwareInterface, EventManagerAw
 
         $query = $this->getRepository()->exists()->active();
 
-        if (!in_array('system', $this->authorizationService->getIdentityRoles())) {
+        if (!$this->authorizationService->isGranted(self::PERMISSION_SYSTEM_READ)) {
             $uuid = $this->provider->getIdentity()->getUuid();
             $query->user($uuid);
         }

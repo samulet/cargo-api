@@ -34,4 +34,10 @@ return array(
             'Account\\Model\\AccountModel' => 'Account\\Factory\\AccountModelFactory',
         ),
     ),
+    'zfc_rbac' => [
+        'assertion_map' => [
+            'account.update' => 'Account\\Assertion\\MustBeAdminAssertion',
+            'account.read' => 'Account\\Assertion\\MustBeEmployeeAssertion',
+        ]
+    ],
 );

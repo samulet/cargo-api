@@ -31,28 +31,11 @@ return [
         'identity_provider' => 'User\\Identity\\IdentityProvider',
 
         /**
-         * This option allows to specify if you want the Rbac container to automatically create roles inside the
-         * container when it has not been added
-         *
-         * For instance, if you have a role that has a parent role that has not been added yet, if you set this
-         * option to true, then the parent role will be created
-         */
-        // 'create_missing_roles' => true,
-
-        /**
          * Set the guest role
          *
          * This role is used by the authorization service when the authentication service returns no identity
          */
         // 'guest_role' => 'guest',
-
-        /**
-         * Allow to force the reload of roles and permissions each time "isGranted" is called in the
-         * AuthorizationService. This can be useful if you have custom role and permission providers that lazy
-         * load roles and permissions based on the current identity roles and asked permission (especially if
-         * you have tons of roles/permissions)
-         */
-        // 'force_reload' => false,
 
         /**
          * Set the guards
@@ -71,66 +54,101 @@ return [
          * As soon as one rule for either route or controller is specified, a guard will be automatically
          * created and will start to hook into the MVC loop.
          *
-         * If the protection policy is set to DENY (default), then any route/controller will be denied by
+         * If the protection policy is set to DENY, then any route/controller will be denied by
          * default UNLESS it is explicitly added as a rule. On the other hand, if it is set to ALLOW, then
          * not specified route/controller will be implicitly approved.
          *
          * DENY is the most secure way, but it is more work for the developer
          */
-        // 'protection_policy' => GuardInterface::DENY,
+        // 'protection_policy' => \ZfcRbac\Guard\GuardInterface::POLICY_ALLOW,
 
         /**
-         * Configuration for role providers
+         * Configuration for role provider
          *
-         * It must be an array of array that contains configuration for each role provider. Each provider config
+         * It must be an array that contains configuration for the role provider. The provider config
          * must follow the following format:
          *
          *      'ZfcRbac\Role\InMemoryRoleProvider' => [
-         *          'role1',
-         *          'children' => 'parent'
+         *          'role1' => [
+         *              'children'    => ['children1', 'children2'], // OPTIONAL
+         *              'permissions' => ['edit', 'read'] // OPTIONAL
+         *          ]
          *      ]
          *
          * Supported options depend of the role provider, so please refer to the official documentation
          */
-        'role_providers' => [
+        'role_provider' => [
             'ZfcRbac\Role\InMemoryRoleProvider' => [
-                'user',
-                'system' => 'user',
-                'system.moderator' => 'system',
-                'system.admin' => 'system.moderator',
-                'account' => 'user',
-                'account.admin' => 'account',
-                'company' => 'user',
-                'company.admin' => 'company',
-                'company.manager' => 'company',
-                'company.dispatcher' => 'company',
-            ]
-        ],
-
-        /**
-         * Configuration for permission providers
-         *
-         * It must be an array of array that contains configuration for each permission provider. Each provider
-         * config must follow the following format:
-         *
-         *      'ZfcRbac\Permission\InMemoryRoleProvider' => [
-         *          'permission1' => ['role1', 'role2']
-         *      ]
-         *
-         * Supported options depend of the permission provider, so please refer to the official documentation
-         */
-        'permission_providers' => [
-            'ZfcRbac\Permission\InMemoryPermissionProvider' => [
-                'account.create' => ['user'],
-                'account.update' => ['account.admin', 'system'],
-                'account.read'   => ['user', 'system'],
-                'account.delete' => ['account.admin', 'system'],
-                'company.create' => ['account.admin', 'system'],
-                'get.places' => ['user'],
-                'get.places.all' => ['system'],
-                'ref.create' => ['system'],
-                'ref.delete' => ['system'],
-                'ref.update' => ['system'],
+                'user' => [
+                    'permissions' => [
+                        'account.create',
+                        'account.read',
+                        'get.places',
+                    ],
+                ],
+                'system' => [
+                    'children' => ['user'],
+                    'permissions' => [
+                        'account.update',
+                        'account.read',
+                        'account.delete',
+                        'company.create',
+                        'ref.create',
+                        'ref.delete',
+                        'ref.update',
+                        'account.update.all',
+                        'account.read.all',
+                        'account.delete.all',
+                        'company.create.all',
+                        'get.places.all',
+                        'ref.create.all',
+                        'ref.delete.all',
+                        'ref.update.all',
+                    ],
+                ],
+                'system.moderator' => [
+                    'children' => ['system'],
+                    'permissions' => [
+                    ],
+                ],
+                'system.admin' => [
+                    'children' => ['system.moderator'],
+                    'permissions' => [
+                    ],
+                ],
+                'account' => [
+                    'children' => ['user'],
+                    'permissions' => [
+                    ],
+                ],
+                'account.admin' => [
+                    'children' => ['account'],
+                    'permissions' => [
+                        'account.update',
+                        'account.delete',
+                        'company.create',
+                    ],
+                ],
+                'company' => [
+                    'children' => ['user'],
+                    'permissions' => [
+                    ],
+                ],
+                'company.admin' => [
+                    'children' => ['company'],
+                    'permissions' => [
+                    ],
+                ],
+                'company.manager' => [
+                    'children' => ['company'],
+                    'permissions' => [
+                    ],
+                ],
+                'company.dispatcher' => [
+                    'children' => ['company'],
+                    'permissions' => [
+                    ],
+                ],
             ]
         ],
 
@@ -150,9 +168,14 @@ return [
          */
         'redirect_strategy' => [
             /**
-             * Set the route to redirect (of course, it must exist!)
+             * Set the route to redirect when user is connected (of course, it must exist!)
              */
-            // 'redirect_to_route' => 'login',
+            // 'redirect_to_route_connected' => 'home',
+
+            /**
+             * Set the route to redirect when user is disconnected (of course, it must exist!)
+             */
+            // 'redirect_to_route_disconnected' => 'login',
 
             /**
              * If a user is unauthorized and redirected to another route (login, for instance), should we
@@ -168,11 +191,10 @@ return [
         ],
 
         /**
-         * Various plugin managers for guards, role providers and permission providers. Each of them must
-         * follow a common plugin manager config format, and can be used to create your custom objects
+         * Various plugin managers for guards and role providers. Each of them must follow a common
+         * plugin manager config format, and can be used to create your custom objects
          */
         // 'guard_manager'               => [],
-        // 'role_provider_manager'       => [],
-        // 'permission_provider_manager' => [],
+        // 'role_provider_manager'       => []
     ]
 ];

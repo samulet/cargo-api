@@ -96,11 +96,8 @@ db.getCollection("user").insert({
     "updated": ISODate("2013-12-08T18:15:45.0Z"),
     "roles": [
         "user",
-        "system",
+        "system.moderator",
         "account.admin",
-        "account.admin.b21295c8a94c4bb0a4de07bd2d76ed38",
-        "account.admin.e1c9c7a50e2c446e9864b29e1064ad39",
-        "account.admin.a2c9c7a50e2c446e9864b29e1064ad40"
     ],
     "name": [ ],
     "docs": [ ],
@@ -155,7 +152,7 @@ db.getCollection("user").insert({
     "state": 1,
     "created": ISODate("2013-12-17T08:44:48Z"),
     "updated": ISODate("2013-12-17T08:44:48Z"),
-    "roles": [  "user", "account.admin", "account.admin.11c1c7a50e2c446e9864b29e1064ad30" ],
+    "roles": [  "user", "account.admin" ],
     "name": [ ],
     "docs": [ ],
     "phone": [ ],
